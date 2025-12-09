@@ -188,6 +188,46 @@
         <p>&copy; 2024 Faizan Saiyed. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Chatbot Button -->
+    <button class="chatbot-toggle" id="chatbotToggle">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- Chatbot Container -->
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-header">
+            <div class="chatbot-header-info">
+                <div class="chatbot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div>
+                    <h3>AI Assistant</h3>
+                    <p class="chatbot-status">
+                        <span class="status-dot"></span>
+                        Online
+                    </p>
+                </div>
+            </div>
+            <button class="chatbot-close" id="chatbotClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-iframe-wrapper">
+            <!-- Bot will be loaded here dynamically -->
+            <div id="chatbotContent">
+                <div class="header">
+                    <h2>💬 Chat with Faizan's AI</h2>
+                    <p>👋 Ask me about skills, projects, or background!</p>
+                </div>
+                <div id="chat-box" class="chat-box"></div>
+                <div class="input-container">
+                    <input type="text" id="user-input" placeholder="Type your message..." />
+                    <button id="send-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="script.js"></script>
 </body>
 </html>
