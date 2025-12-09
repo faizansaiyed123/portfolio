@@ -9,40 +9,55 @@
 </head>
 
 <body>
+    <div class="bg-animation"></div>
 
-    <!-- NAVBAR -->
-    <header class="navbar">
-        <div class="logo">Faizan<span>.</span></div>
-        <nav>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">Faizan.</div>
+        <div class="nav-links">
             <a href="#home">Home</a>
             <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
-        </nav>
-    </header>
+        </div>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
 
-    <!-- HERO SECTION -->
+    <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-text">
-            <h1>Hi, I'm <span class="highlight">Faizan Saiyed</span></h1>
+        <div class="hero-content">
+            <div class="hero-tag">👋 Welcome to my portfolio</div>
+            <h1>Hi, I'm Faizan Saiyed</h1>
             <h2>Backend Developer • API Engineer • FastAPI Specialist</h2>
-            <p>I build scalable APIs, asynchronous microservices, and cloud-ready systems.</p>
-
-            <div class="buttons">
-                <a href="#projects" class="btn">View Projects</a>
-                <a href="#contact" class="btn outline">Contact Me</a>
+            <p>I build scalable APIs, asynchronous microservices, and cloud-ready systems that power modern applications.</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">
+                    View Projects
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#contact" class="btn btn-secondary">
+                    Get in Touch
+                </a>
             </div>
         </div>
-
-        <div class="hero-img">
-            <img src="assets/profile.jpeg" alt="Faizan" />
+        <div class="hero-image">
+            <div class="hero-image-wrapper">
+                <img src="assets/profile.jpeg" alt="Faizan Saiyed" />
+            </div>
         </div>
     </section>
 
-    <!-- SKILLS SECTION -->
+    <!-- Skills Section -->
     <section id="skills" class="skills">
-        <h2 class="section-title">Technical Skills</h2>
-
+        <div class="section-header">
+            <div class="section-tag">💡 What I Do</div>
+            <h2 class="section-title">Technical Skills</h2>
+            <p class="section-subtitle">Technologies I work with to build amazing products</p>
+        </div>
         <div class="skills-grid">
             <div class="skill-card">
                 <i class="fab fa-python"></i>
@@ -54,15 +69,14 @@
             </div>
             <div class="skill-card">
                 <i class="fab fa-react"></i>
-                <p>ReactJs</p>
+                <p>React</p>
             </div>
             <div class="skill-card">
-                <img src="assets/icons/fastapi.svg" alt="FastAPI" class="skill-icon">
+                <i class="fas fa-bolt"></i>
                 <p>FastAPI</p>
             </div>
-
             <div class="skill-card">
-                <img src="assets/icons/flask.svg" alt="Flask" class="skill-icon">
+                <i class="fas fa-flask"></i>
                 <p>Flask</p>
             </div>
             <div class="skill-card">
@@ -84,57 +98,95 @@
         </div>
     </section>
 
-    <!-- PROJECTS SECTION -->
+    <!-- Projects Section -->
     <section id="projects" class="projects">
-        <h2 class="section-title">Projects</h2>
-
-        <div class="project-grid">
-
+        <div class="section-header">
+            <div class="section-tag">🚀 My Work</div>
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-subtitle">Real-world applications I've built from the ground up</p>
+        </div>
+        <div class="projects-grid">
             <div class="project-card">
-                <h3>AI Chat Backend System</h3>
-                <p>OTP login, chatrooms, AI workflows, Redis queues, Stripe subscriptions.</p>
-                <span class="tech">FastAPI • PostgreSQL • Redis • Docker</span>
+                <div class="project-content">
+                    <div class="project-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>AI Chat Backend System</h3>
+                    <p>Complete authentication system with OTP login, real-time chatrooms, AI-powered workflows, Redis job queues, and Stripe payment integration.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Redis</span>
+                        <span class="tech-tag">Docker</span>
+                    </div>
+                </div>
             </div>
 
             <div class="project-card">
-                <h3>Focus Journal App</h3>
-                <p>Full-stack journaling app with AI sentiment analysis and weekly insights.</p>
-                <span class="tech">FastAPI • PostgreSQL • React • AI</span>
+                <div class="project-content">
+                    <div class="project-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Focus Journal App</h3>
+                    <p>Full-stack journaling application with AI-powered sentiment analysis, mood tracking, and automated weekly insights generation.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">AI/ML</span>
+                    </div>
+                </div>
             </div>
 
             <div class="project-card">
-                <h3>Institute Management Platform</h3>
-                <p>Student records, exams, attendance, scheduling APIs.</p>
-                <span class="tech">FastAPI • PostgreSQL • Docker</span>
+                <div class="project-content">
+                    <div class="project-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Institute Management Platform</h3>
+                    <p>Comprehensive management system for educational institutions with student records, examination modules, attendance tracking, and scheduling APIs.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Docker</span>
+                    </div>
+                </div>
             </div>
-
         </div>
     </section>
 
-    <!-- CONTACT -->
+    <!-- Contact Section -->
     <section id="contact" class="contact">
-    <h2 class="section-title">Contact</h2>
-
-        <div class="contact-box">
-            <p>Email: 
-                <a href="mailto:saiyedfaizan842@gmail.com" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-envelope"></i> saiyedfaizan842@gmail.com
-                </a>
-            </p>
-            <br>
-            <p>GitHub: 
-                <a href="https://github.com/faizansaiyed123" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-github"></i> github.com/faizansaiyed123
-                </a>
-            </p>
-            <br>
-            <p>LinkedIn: 
-                <a href="https://www.linkedin.com/in/faizan-saiyed-52b289228/" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-linkedin"></i> Faizan Saiyed
-                </a>
-            </p>
+        <div class="contact-container">
+            <div class="section-header">
+                <div class="section-tag">📬 Get in Touch</div>
+                <h2 class="section-title">Let's Work Together</h2>
+                <p class="section-subtitle">Have a project in mind? Let's discuss how I can help</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email</h3>
+                    <a href="mailto:saiyedfaizan842@gmail.com">saiyedfaizan842@gmail.com</a>
+                </div>
+                <div class="contact-card">
+                    <i class="fab fa-github"></i>
+                    <h3>GitHub</h3>
+                    <a href="https://github.com/faizansaiyed123" target="_blank" rel="noopener noreferrer">github.com/faizansaiyed123</a>
+                </div>
+                <div class="contact-card">
+                    <i class="fab fa-linkedin"></i>
+                    <h3>LinkedIn</h3>
+                    <a href="https://www.linkedin.com/in/faizan-saiyed-52b289228/" target="_blank" rel="noopener noreferrer">Faizan Saiyed</a>
+                </div>
+            </div>
         </div>
     </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Faizan Saiyed. All rights reserved.</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
