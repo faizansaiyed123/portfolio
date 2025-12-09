@@ -1,11 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Faizan Saiyed | Backend Developer</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="logo">Faizan<span>.</span></div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero">
+        <div class="hero-text">
+            <h1>Hi, I'm <span class="highlight">Faizan Saiyed</span></h1>
+            <h2>Backend Developer • API Engineer • FastAPI Specialist</h2>
+            <p>I build scalable APIs, asynchronous microservices, and cloud-ready systems.</p>
+
+            <div class="buttons">
+                <a href="#projects" class="btn">View Projects</a>
+                <a href="#contact" class="btn outline">Contact Me</a>
+            </div>
+        </div>
+
+        <div class="hero-img">
+            <img src="assets/profile.png" alt="Faizan" />
+        </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills" class="skills">
+        <h2 class="section-title">Technical Skills</h2>
+
+        <div class="skills-grid">
+            <div class="skill-card">Python</div>
+            <div class="skill-card">FastAPI</div>
+            <div class="skill-card">Flask</div>
+            <div class="skill-card">PostgreSQL</div>
+            <div class="skill-card">Redis</div>
+            <div class="skill-card">Docker</div>
+            <div class="skill-card">OAuth2 / JWT</div>
+            <div class="skill-card">GitHub Actions</div>
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="projects">
+        <h2 class="section-title">Projects</h2>
+
+        <div class="project-grid">
+
+            <div class="project-card">
+                <h3>AI Chat Backend System</h3>
+                <p>OTP login, chatrooms, AI workflows, Redis queues, Stripe subscriptions.</p>
+                <span class="tech">FastAPI • PostgreSQL • Redis • Docker</span>
+            </div>
+
+            <div class="project-card">
+                <h3>Focus Journal App</h3>
+                <p>Full-stack journaling app with AI sentiment analysis and weekly insights.</p>
+                <span class="tech">FastAPI • PostgreSQL • React • AI</span>
+            </div>
+
+            <div class="project-card">
+                <h3>Institute Management Platform</h3>
+                <p>Student records, exams, attendance, scheduling APIs.</p>
+                <span class="tech">FastAPI • PostgreSQL • Docker</span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+        <h2 class="section-title">Contact</h2>
+
+        <div class="contact-box">
+            <p>Email: <a href="mailto:saiyedfaizan842@gmail.com">saiyedfaizan842@gmail.com</a></p>
+            <p>GitHub: <a href="https://github.com/faizansaiyed123">github.com/faizansaiyed123</a></p>
+            <p>LinkedIn: <a href="https://www.linkedin.com/in/faizan-saiyed-52b289228/">Faizan Saiyed</a></p>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
 </body>
 </html>
