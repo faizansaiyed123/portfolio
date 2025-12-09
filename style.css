@@ -1,0 +1,146 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: #0f0f0f;
+    color: #fff;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(255,255,255,0.03);
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(8px);
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.logo span {
+    color: #4af7ff;
+}
+
+.navbar nav a {
+    margin-left: 25px;
+    color: #aaa;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navbar nav a:hover {
+    color: #4af7ff;
+}
+
+/* HERO SECTION */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    padding: 100px 60px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.hero-text h1 {
+    font-size: 48px;
+}
+
+.highlight {
+    color: #4af7ff;
+}
+
+.hero-text .buttons {
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background: #4af7ff;
+    color: #000;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-right: 15px;
+    font-weight: 600;
+}
+
+.btn.outline {
+    background: transparent;
+    border: 2px solid #4af7ff;
+    color: #4af7ff;
+}
+
+.hero-img img {
+    width: 300px;
+    border-radius: 50%;
+}
+
+/* SECTIONS */
+.section-title {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* SKILLS */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 0 60px;
+}
+
+.skill-card {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.skill-card:hover {
+    background: #4af7ff;
+    color: #000;
+}
+
+/* PROJECTS */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 0 60px;
+}
+
+.project-card {
+    background: #1a1a1a;
+    padding: 25px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    background: #181818;
+}
+
+/* CONTACT */
+.contact {
+    padding: 70px 60px;
+}
+
+.contact-box a {
+    color: #4af7ff;
+}
+
+/* FADE ANIMATION */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
