@@ -42,6 +42,10 @@
                 <a href="#contact" class="btn btn-secondary">
                     Get in Touch
                 </a>
+                <button id="resumeBtn" class="btn btn-secondary">
+                    <i class="fas fa-file-pdf"></i>
+                    View Resume
+                </button>
             </div>
         </div>
         <div class="hero-image">
@@ -99,6 +103,23 @@
         <img src="assets/icons/redis.svg" alt="Redis" />
         <p>Redis</p>
     </div>
+    <div class="skill-card">
+        <img src="assets/icons/html.svg" alt="Html" />
+        <p>Html</p>
+    </div>
+    <div class="skill-card">
+        <img src="assets/icons/css.svg" alt="Css" />
+        <p>Css</p>
+    </div>
+    <div class="skill-card">
+        <img src="assets/icons/tailwind.svg" alt="Tailwind" />
+        <p>Tailwind</p>
+    </div>
+    <div class="skill-card">
+        <img src="assets/icons/bootstrap.svg" alt="Bootstrap" />
+        <p>Bootstrap</p>
+    </div>
+    
         </div>
     </section>
 
@@ -186,6 +207,26 @@
             </div>
         </div>
     </section>
+   <!-- Resume Modal -->
+     <div class="resume-modal" id="resumeModal">
+        <div class="resume-modal-content">
+            <div class="resume-modal-header">
+                <h2><i class="fas fa-file-pdf"></i> Resume Preview</h2>
+                <button class="resume-close" id="resumeClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <iframe class="resume-iframe" id="resumeIframe" src=""></iframe>
+            <div class="resume-actions">
+                <button class="btn btn-primary" id="downloadResume">
+                    <i class="fas fa-download"></i> Download PDF
+                </button>
+                <button class="btn btn-secondary" id="printResume">
+                    <i class="fas fa-print"></i> Print
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
