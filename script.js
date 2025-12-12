@@ -54,27 +54,55 @@ document.querySelectorAll('.skill-card, .project-card, .contact-card, .stat-card
 
 // ========== TERMINAL ANIMATION ==========
 const terminalLines = [
-    '$ initializing backend server...',
-    '> FastAPI server started on port 8000',
-    '> Database connection established',
-    '  └─ PostgreSQL@14.5 connected',
-    '> Redis cache connected',
-    '  └─ Redis@7.0 ready on port 6379',
-    '> Loading authentication modules...',
-    '  ✓ JWT middleware configured',
-    '  ✓ OAuth2 endpoints ready',
-    '> Starting API endpoints...',
-    '  ✓ POST /api/auth/login',
-    '  ✓ GET  /api/users/{id}',
-    '  ✓ GET  /api/analytics',
-    '  ✓ POST /api/data/process',
-    '> Docker containers running',
-    '  ├─ app: healthy',
-    '  ├─ db: healthy',
-    '  └─ redis: healthy',
-    '> Server running successfully! 🚀',
-    '> Ready to handle requests...'
+    "$ booting portfolio_system --profile=faizan_saiyed",
+    "> Loading developer identity...",
+    "  • Name: Faizan Saiyed",
+    "  • Role: Backend Developer (Python | FastAPI | Microservices)",
+    "  • Email: saiyedfaizan842@gmail.com",
+    "  • GitHub: github.com/faizansaiyed123",
+    "  • LinkedIn: linkedin.com/in/faizan-saiyed-52b289228/",
+    "",
+    "$ initializing backend environment...",
+    "> FastAPI server started on port 8000",
+    "> Database connection established",
+    "  └─ PostgreSQL 14.5 connected",
+    "> Redis cache active",
+    "  └─ Redis 7.0 running on port 6379",
+    "",
+    "> Authentication modules loading...",
+    "  ✓ JWT middleware configured",
+    "  ✓ OAuth2 endpoints active",
+    "",
+    "> Registering API endpoints...",
+    "  ✓ POST /api/auth/login",
+    "  ✓ POST /api/auth/otp",
+    "  ✓ GET  /api/users/{id}",
+    "  ✓ GET  /api/analytics",
+    "  ✓ POST /api/data/process",
+    "",
+    "> Microservices & async tasks...",
+    "  • Upstash Redis queues active",
+    "  • Background workers online",
+    "",
+    "> Docker containers status:",
+    "  ├─ app-container: healthy",
+    "  ├─ postgres-db: healthy",
+    "  └─ redis-cache: healthy",
+    "",
+    "> Loading developer projects...",
+    "  • AI Chat Backend System (FastAPI + Redis + Stripe)",
+    "  • Educational Institute Management Platform",
+    "  • Focus Journal (Full Stack: React + FastAPI + PostgreSQL)",
+    "",
+    "> Skills loaded successfully:",
+    "  • Python | FastAPI | Flask | Django REST",
+    "  • PostgreSQL | Redis | SQLAlchemy",
+    "  • Docker | CI/CD | OAuth2 | JWT",
+    "",
+    "> All systems operational! ⚡",
+    "> Portfolio ready. Initializing UI... 🚀"
 ];
+
 
 let terminalLineIndex = 0;
 let terminalAnimationStarted = false;
@@ -316,6 +344,7 @@ function copyResponse(responseId) {
 }
 
 // ========== RESUME MODAL ==========
+// Getting DOM elements
 const resumeModal = document.getElementById('resumeModal');
 const resumeBtn = document.getElementById('resumeBtn');
 const resumeClose = document.getElementById('resumeClose');
@@ -326,34 +355,40 @@ const printResume = document.getElementById('printResume');
 const RESUME_URL = 'https://github.com/faizansaiyed123/resume/raw/main/Faizan_Saiyed_Resume.pdf';
 const RESUME_VIEWER_URL = `https://docs.google.com/viewer?url=${encodeURIComponent(RESUME_URL)}&embedded=true`;
 
+// Open the resume modal
 function openResumeModal() {
-    resumeIframe.src = RESUME_VIEWER_URL;
-    resumeModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    resumeIframe.src = RESUME_VIEWER_URL; // Set the iframe source
+    resumeModal.classList.add('active'); // Show the modal
+    document.body.style.overflow = 'hidden'; // Disable body scroll
 }
 
+// Close the resume modal
 function closeResumeModal() {
-    resumeModal.classList.remove('active');
-    document.body.style.overflow = '';
+    resumeModal.classList.remove('active'); // Hide the modal
+    document.body.style.overflow = ''; // Enable body scroll
     setTimeout(() => {
-        resumeIframe.src = '';
+        resumeIframe.src = ''; // Clear the iframe source after the modal closes
     }, 300);
 }
 
+// Open modal when the "View Resume" button is clicked
 if (resumeBtn) {
     resumeBtn.addEventListener('click', openResumeModal);
 }
 
+// Close the modal when the close button is clicked
 if (resumeClose) {
     resumeClose.addEventListener('click', closeResumeModal);
 }
 
+// Close the modal if clicked outside the modal content
 resumeModal.addEventListener('click', (e) => {
     if (e.target === resumeModal) {
         closeResumeModal();
     }
 });
 
+// Download the resume when the download button is clicked
 if (downloadResume) {
     downloadResume.addEventListener('click', () => {
         const link = document.createElement('a');
@@ -366,22 +401,19 @@ if (downloadResume) {
     });
 }
 
+// Open the resume in a new tab for printing
 if (printResume) {
     printResume.addEventListener('click', () => {
         window.open(RESUME_URL, '_blank');
     });
 }
 
+// Close the modal when the Escape key is pressed
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && resumeModal.classList.contains('active')) {
         closeResumeModal();
     }
 });
-
-// ========== THEME TOGGLE ==========
-function toggleTheme() {
-    alert('Theme toggle feature coming soon! Currently showing dark mode.');
-}
 
 // ========== CHATBOT ==========
 const chatbotToggle = document.getElementById('chatbotToggle');
