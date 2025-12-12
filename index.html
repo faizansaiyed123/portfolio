@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Faizan Saiyed | Backend Developer</title>
+    <title>Faizan Saiyed | Backend Developer Portfolio</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
@@ -16,9 +16,15 @@
         <div class="logo">Faizan.</div>
         <div class="nav-links">
             <a href="#home">Home</a>
+            <a href="#stats">Stats</a>
+            <a href="#playground">API Demo</a>
             <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
+            <a href="#github">GitHub</a>
             <a href="#contact">Contact</a>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+            </button>
         </div>
         <div class="menu-toggle">
             <span></span>
@@ -35,22 +41,166 @@
             <h2>Full Stack Developer • Backend-Focused API Engineer</h2>
             <p>I specialize in building scalable, high-performance backend systems and APIs. While I have full-stack knowledge, my expertise is in creating robust backend solutions that power modern applications.</p>
             <div class="hero-buttons">
-                <a href="#projects" class="btn btn-primary">
+                <a href="#playground" class="btn btn-primary">
+                    <i class="fas fa-code"></i> Try Live API
+                </a>
+                <a href="#projects" class="btn btn-secondary">
                     View Projects
                     <i class="fas fa-arrow-right"></i>
-                </a>
-                <a href="#contact" class="btn btn-secondary">
-                    Get in Touch
                 </a>
                 <button id="resumeBtn" class="btn btn-secondary">
                     <i class="fas fa-file-pdf"></i>
                     View Resume
                 </button>
+                <button class="btn btn-secondary" onclick="toggleTerminal()">
+                    <i class="fas fa-terminal"></i>
+                    <span id="terminalToggleText">Show Terminal</span>
+                </button>
             </div>
         </div>
-        <div class="hero-image">
+        
+        <!-- Profile Image (Default) -->
+        <div class="hero-image" id="heroImage">
             <div class="hero-image-wrapper">
                 <img src="assets/profile.jpeg" alt="Faizan Saiyed" />
+            </div>
+        </div>
+        
+        <!-- Terminal (Hidden by default) -->
+        <div class="terminal-wrapper" id="terminalWrapper" style="display: none;">
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-button red"></div>
+                    <div class="terminal-button yellow"></div>
+                    <div class="terminal-button green"></div>
+                    <span class="terminal-title">terminal ~ bash</span>
+                </div>
+                <div class="terminal-body" id="terminalBody"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Counter Section -->
+    <section id="stats" class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-code"></i></div>
+                <div class="stat-number" data-target="50000">0</div>
+                <div class="stat-label">Lines of Code</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-project-diagram"></i></div>
+                <div class="stat-number" data-target="15">0</div>
+                <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-server"></i></div>
+                <div class="stat-number" data-target="30">0</div>
+                <div class="stat-label">APIs Built</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-tools"></i></div>
+                <div class="stat-number" data-target="20">0</div>
+                <div class="stat-label">Technologies Mastered</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Playground Section -->
+    <section id="playground" class="api-playground">
+        <div class="section-header">
+            <div class="section-tag">🚀 Interactive Demo</div>
+            <h2 class="section-title">Live API Playground</h2>
+            <p class="section-subtitle">Test my backend APIs in real-time</p>
+        </div>
+        <div class="playground-container">
+            <div class="playground-tabs">
+                <div class="playground-tab active" onclick="switchAPITab(0)">
+                    <i class="fas fa-lock"></i> Authentication
+                </div>
+                <div class="playground-tab" onclick="switchAPITab(1)">
+                    <i class="fas fa-user"></i> User Data
+                </div>
+                <div class="playground-tab" onclick="switchAPITab(2)">
+                    <i class="fas fa-chart-line"></i> Analytics
+                </div>
+            </div>
+            <div class="playground-content">
+                <!-- Authentication Panel -->
+                <div class="playground-panel active">
+                    <h3>🔐 Test Authentication API</h3>
+                    <p class="api-description">Simulate a login request with JWT token generation</p>
+                    <form class="api-form" onsubmit="testAuthAPI(event)">
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope"></i> Email Address</label>
+                            <input type="email" id="authEmail" placeholder="test@example.com" value="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-key"></i> Password</label>
+                            <input type="password" id="authPassword" placeholder="Enter password" value="demo123" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Request
+                        </button>
+                    </form>
+                    <div class="api-response-container">
+                        <div class="response-header">
+                            <span><i class="fas fa-terminal"></i> Response</span>
+                            <button class="copy-btn" onclick="copyResponse('authResponse')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                        <div class="api-response" id="authResponse">
+                            <pre>Waiting for request...</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Data Panel -->
+                <div class="playground-panel">
+                    <h3>👤 Get User Data API</h3>
+                    <p class="api-description">Fetch user information by ID</p>
+                    <form class="api-form" onsubmit="testUserDataAPI(event)">
+                        <div class="form-group">
+                            <label><i class="fas fa-id-card"></i> User ID</label>
+                            <input type="text" id="userId" placeholder="12345" value="12345" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Fetch Data
+                        </button>
+                    </form>
+                    <div class="api-response-container">
+                        <div class="response-header">
+                            <span><i class="fas fa-terminal"></i> Response</span>
+                            <button class="copy-btn" onclick="copyResponse('userResponse')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                        <div class="api-response" id="userResponse">
+                            <pre>Waiting for request...</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Panel -->
+                <div class="playground-panel">
+                    <h3>📊 System Analytics API</h3>
+                    <p class="api-description">Get real-time system performance metrics</p>
+                    <button class="btn btn-primary" onclick="getAnalyticsAPI()">
+                        <i class="fas fa-sync-alt"></i> Get Live Stats
+                    </button>
+                    <div class="api-response-container" style="margin-top: 20px;">
+                        <div class="response-header">
+                            <span><i class="fas fa-terminal"></i> Response</span>
+                            <button class="copy-btn" onclick="copyResponse('analyticsResponse')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                        <div class="api-response" id="analyticsResponse">
+                            <pre>Click button to load analytics...</pre>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -80,7 +230,7 @@
                 <p>FastAPI</p>
             </div>
             <div class="skill-card">
-                 <img src="assets/icons/Flask.svg" alt="Flask" />
+                <img src="assets/icons/Flask.svg" alt="Flask" />
                 <p>Flask</p>
             </div>
             <div class="skill-card">
@@ -96,30 +246,29 @@
                 <p>OAuth2 / JWT</p>
             </div>
             <div class="skill-card">
-                 <img src="assets/icons/github.svg" alt="GitHub" />
+                <img src="assets/icons/github.svg" alt="GitHub" />
                 <p>GitHub</p>
             </div>
             <div class="skill-card">
-        <img src="assets/icons/redis.svg" alt="Redis" />
-        <p>Redis</p>
-    </div>
-    <div class="skill-card">
-        <img src="assets/icons/html.svg" alt="Html" />
-        <p>Html</p>
-    </div>
-    <div class="skill-card">
-        <img src="assets/icons/css.svg" alt="Css" />
-        <p>Css</p>
-    </div>
-    <div class="skill-card">
-        <img src="assets/icons/tailwind.svg" alt="Tailwind" />
-        <p>Tailwind</p>
-    </div>
-    <div class="skill-card">
-        <img src="assets/icons/bootstrap.svg" alt="Bootstrap" />
-        <p>Bootstrap</p>
-    </div>
-    
+                <img src="assets/icons/redis.svg" alt="Redis" />
+                <p>Redis</p>
+            </div>
+            <div class="skill-card">
+                <img src="assets/icons/html.svg" alt="Html" />
+                <p>HTML5</p>
+            </div>
+            <div class="skill-card">
+                <img src="assets/icons/css.svg" alt="Css" />
+                <p>CSS3</p>
+            </div>
+            <div class="skill-card">
+                <img src="assets/icons/tailwind.svg" alt="Tailwind" />
+                <p>Tailwind</p>
+            </div>
+            <div class="skill-card">
+                <img src="assets/icons/bootstrap.svg" alt="Bootstrap" />
+                <p>Bootstrap</p>
+            </div>
         </div>
     </section>
 
@@ -132,6 +281,9 @@
         </div>
         <div class="projects-grid">
             <div class="project-card">
+                <div class="project-preview">
+                    <i class="fas fa-comments"></i>
+                </div>
                 <div class="project-content">
                     <div class="project-icon">
                         <i class="fas fa-comments"></i>
@@ -144,10 +296,21 @@
                         <span class="tech-tag">Redis</span>
                         <span class="tech-tag">Docker</span>
                     </div>
+                    <div class="project-links">
+                        <a href="https://your-live-demo.com" target="_blank" class="project-btn project-btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/faizansaiyed123" target="_blank" class="project-btn project-btn-secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <div class="project-card">
+                <div class="project-preview">
+                    <i class="fas fa-book"></i>
+                </div>
                 <div class="project-content">
                     <div class="project-icon">
                         <i class="fas fa-book"></i>
@@ -160,10 +323,21 @@
                         <span class="tech-tag">React</span>
                         <span class="tech-tag">AI/ML</span>
                     </div>
+                    <div class="project-links">
+                        <a href="https://your-journal-demo.com" target="_blank" class="project-btn project-btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/faizansaiyed123" target="_blank" class="project-btn project-btn-secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <div class="project-card">
+                <div class="project-preview">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
                 <div class="project-content">
                     <div class="project-icon">
                         <i class="fas fa-graduation-cap"></i>
@@ -175,40 +349,97 @@
                         <span class="tech-tag">PostgreSQL</span>
                         <span class="tech-tag">Docker</span>
                     </div>
+                    <div class="project-links">
+                        <a href="https://your-institute-demo.com" target="_blank" class="project-btn project-btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/faizansaiyed123" target="_blank" class="project-btn project-btn-secondary">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="contact-container">
-            <div class="section-header">
-                <div class="section-tag">📬 Get in Touch</div>
-                <h2 class="section-title">Let's Work Together</h2>
-                <p class="section-subtitle">Have a project in mind? Let's discuss how I can help</p>
+    <!-- GitHub Activity Section -->
+    <section id="github" class="github-section">
+        <div class="section-header">
+            <div class="section-tag">📊 Activity</div>
+            <h2 class="section-title">GitHub Statistics</h2>
+            <p class="section-subtitle">My coding journey and contributions</p>
+        </div>
+        <div class="github-container">
+            <div class="github-stats">
+                <div class="github-stat">
+                    <div class="github-stat-number">500+</div>
+                    <div class="stat-label">Total Contributions</div>
+                </div>
+                <div class="github-stat">
+                    <div class="github-stat-number">15</div>
+                    <div class="stat-label">Public Repositories</div>
+                </div>
+                <div class="github-stat">
+                    <div class="github-stat-number">1.2K</div>
+                    <div class="stat-label">Total Commits</div>
+                </div>
+                <div class="github-stat">
+                    <div class="github-stat-number">8</div>
+                    <div class="stat-label">Pull Requests</div>
+                </div>
             </div>
-            <div class="contact-grid">
-                <div class="contact-card">
-                    <i class="fas fa-envelope"></i>
-                    <h3>Email</h3>
-                    <a href="mailto:saiyedfaizan842@gmail.com">saiyedfaizan842@gmail.com</a>
-                </div>
-                <div class="contact-card">
-                    <i class="fab fa-github"></i>
-                    <h3>GitHub</h3>
-                    <a href="https://github.com/faizansaiyed123" target="_blank" rel="noopener noreferrer">github.com/faizansaiyed123</a>
-                </div>
-                <div class="contact-card">
-                    <i class="fab fa-linkedin"></i>
-                    <h3>LinkedIn</h3>
-                    <a href="https://www.linkedin.com/in/faizan-saiyed-52b289228/" target="_blank" rel="noopener noreferrer">Faizan Saiyed</a>
-                </div>
+            <div class="github-link">
+                <a href="https://github.com/faizansaiyed123" target="_blank" class="btn btn-primary">
+                    <i class="fab fa-github"></i> View GitHub Profile
+                </a>
             </div>
         </div>
     </section>
-   <!-- Resume Modal -->
-     <div class="resume-modal" id="resumeModal">
+
+
+    <!-- Contact Section -->
+<section id="contact" class="contact">
+    <div class="contact-container">
+        <div class="section-header">
+            <div class="section-tag">📬 Get in Touch</div>
+            <h2 class="section-title">Let's Work Together</h2>
+            <p class="section-subtitle">Have a project in mind? Let's discuss how I can help</p>
+        </div>
+        <div class="contact-grid">
+            <!-- Email Card -->
+            <div class="contact-card">
+                <a href="mailto:saiyedfaizan842@gmail.com">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email</h3>
+                    <p>saiyedfaizan842@gmail.com</p>
+                </a>
+            </div>
+
+            <!-- GitHub Card -->
+            <div class="contact-card">
+                <a href="https://github.com/faizansaiyed123" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i>
+                    <h3>GitHub</h3>
+                    <p>github.com/faizansaiyed123</p>
+                </a>
+            </div>
+
+            <!-- LinkedIn Card -->
+            <div class="contact-card">
+                <a href="https://www.linkedin.com/in/faizan-saiyed-52b289228/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin"></i>
+                    <h3>LinkedIn</h3>
+                    <p>Faizan Saiyed</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+    <!-- Resume Modal -->
+    <div class="resume-modal" id="resumeModal">
         <div class="resume-modal-content">
             <div class="resume-modal-header">
                 <h2><i class="fas fa-file-pdf"></i> Resume Preview</h2>
@@ -230,7 +461,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Faizan Saiyed. All rights reserved.</p>
+        <p>&copy; 2024 Faizan Saiyed. All rights reserved. Made with ❤️ and lots of ☕</p>
     </footer>
 
     <!-- Chatbot Button -->
@@ -258,7 +489,6 @@
             </button>
         </div>
         <div class="chatbot-iframe-wrapper">
-            <!-- Bot will be loaded here dynamically -->
             <div id="chatbotContent">
                 <div class="header">
                     <h2>💬 Chat with Faizan's AI</h2>
@@ -273,6 +503,6 @@
         </div>
     </div>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
