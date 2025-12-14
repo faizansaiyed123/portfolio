@@ -68,6 +68,7 @@ body {
 }
 
 /* ========== NAVBAR ========== */
+
 .navbar {
     position: sticky;
     top: 0;
@@ -134,10 +135,7 @@ body {
     width: 100%;
 }
 
-.nav-links a:focus {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
-}
+
 
 .theme-toggle {
     background: rgba(255, 255, 255, 0.05);
