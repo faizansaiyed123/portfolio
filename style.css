@@ -228,7 +228,7 @@ section.animate {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 140px 5% 80px;
+    padding: 50px 5% 80px;
     gap: 80px;
 }
 
@@ -3317,4 +3317,22 @@ footer a {
     .btn:focus {
         outline-width: 3px;
     }
+}
+#backToTopBtn {
+  display: none; /* Hidden by default */
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #0af; /* neon/cyberpunk color */
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1000;
+  transition: opacity 0.3s;
+}
+#backToTopBtn:hover {
+  background: #09c;
 }
