@@ -632,3 +632,490 @@ if ('serviceWorker' in navigator) {
         });
     });
 }
+
+
+// ========== CUSTOM ANIMATIONS FOR PORTFOLIO ==========
+
+// ========== 1. TYPEWRITER EFFECT FOR HERO ==========
+class Typewriter {
+    constructor(element, words, wait = 3000) {
+        this.element = element;
+        this.words = words;
+        this.txt = '';
+        this.wordIndex = 0;
+        this.wait = parseInt(wait, 10);
+        this.isDeleting = false;
+        this.type();
+    }
+
+    type() {
+        const current = this.wordIndex % this.words.length;
+        const fullTxt = this.words[current];
+
+        if (this.isDeleting) {
+            this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+            this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+
+        this.element.innerHTML = `<span class="txt">${this.txt}</span><span class="cursor">|</span>`;
+
+        let typeSpeed = 100;
+
+        if (this.isDeleting) {
+            typeSpeed /= 2;
+        }
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+            typeSpeed = this.wait;
+            this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+            this.isDeleting = false;
+            this.wordIndex++;
+            typeSpeed = 500;
+        }
+
+        setTimeout(() => this.type(), typeSpeed);
+    }
+}
+
+// ========== 2. SCROLL REVEAL ANIMATIONS ==========
+class ScrollReveal {
+    constructor() {
+        this.sections = document.querySelectorAll('section');
+        this.cards = document.querySelectorAll('.project-card, .stat-card, .contact-card, .blog-card, .testimonial-card');
+        this.init();
+    }
+
+    init() {
+        this.observeSections();
+        this.observeCards();
+    }
+
+    observeSections() {
+        const options = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, options);
+
+        this.sections.forEach(section => {
+            observer.observe(section);
+        });
+    }
+
+    observeCards() {
+        const options = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, options);
+
+        this.cards.forEach(card => {
+            card.style.opacity = '0';
+            observer.observe(card);
+        });
+    }
+}
+
+// ========== 3. FLOATING PARTICLES BACKGROUND ==========
+class ParticleBackground {
+    constructor() {
+        this.canvas = document.createElement('canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+        this.particleCount = 50;
+        this.init();
+    }
+
+    init() {
+        this.canvas.id = 'particleCanvas';
+        this.canvas.style.position = 'fixed';
+        this.canvas.style.top = '0';
+        this.canvas.style.left = '0';
+        this.canvas.style.width = '100%';
+        this.canvas.style.height = '100%';
+        this.canvas.style.zIndex = '-1';
+        this.canvas.style.pointerEvents = 'none';
+        document.querySelector('.bg-animation').appendChild(this.canvas);
+
+        this.resize();
+        this.createParticles();
+        this.animate();
+
+        window.addEventListener('resize', () => this.resize());
+    }
+
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+
+    createParticles() {
+        for (let i = 0; i < this.particleCount; i++) {
+            this.particles.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 2 + 1,
+                opacity: Math.random() * 0.5 + 0.2
+            });
+        }
+    }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.particles.forEach(particle => {
+            particle.x += particle.vx;
+            particle.y += particle.vy;
+
+            if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
+            if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
+
+            this.ctx.beginPath();
+            this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            this.ctx.fillStyle = `rgba(0, 245, 255, ${particle.opacity})`;
+            this.ctx.fill();
+        });
+
+        // Draw connections
+        this.particles.forEach((p1, i) => {
+            this.particles.slice(i + 1).forEach(p2 => {
+                const dx = p1.x - p2.x;
+                const dy = p1.y - p2.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 150) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(p1.x, p1.y);
+                    this.ctx.lineTo(p2.x, p2.y);
+                    this.ctx.strokeStyle = `rgba(0, 245, 255, ${0.2 * (1 - distance / 150)})`;
+                    this.ctx.lineWidth = 0.5;
+                    this.ctx.stroke();
+                }
+            });
+        });
+
+        requestAnimationFrame(() => this.animate());
+    }
+}
+
+// ========== 4. SMOOTH NUMBER COUNTER ==========
+class NumberCounter {
+    constructor() {
+        this.counters = document.querySelectorAll('.stat-number');
+        this.hasAnimated = false;
+        this.init();
+    }
+
+    init() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !this.hasAnimated) {
+                    this.hasAnimated = true;
+                    this.animateCounters();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            observer.observe(statsSection);
+        }
+    }
+
+    animateCounters() {
+        this.counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+
+            const updateCounter = () => {
+                current += step;
+                if (current < target) {
+                    counter.textContent = Math.floor(current).toLocaleString();
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = target.toLocaleString();
+                }
+            };
+
+            updateCounter();
+        });
+    }
+}
+
+// ========== 5. PARALLAX EFFECT ==========
+class ParallaxEffect {
+    constructor() {
+        this.heroImage = document.querySelector('.hero-image-wrapper');
+        this.init();
+    }
+
+    init() {
+        if (!this.heroImage) return;
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * 0.3;
+            this.heroImage.style.transform = `translateY(${rate}px)`;
+        });
+    }
+}
+
+// ========== 6. MAGNETIC BUTTONS ==========
+class MagneticButtons {
+    constructor() {
+        this.buttons = document.querySelectorAll('.btn, .project-btn');
+        this.init();
+    }
+
+    init() {
+        this.buttons.forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                button.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            });
+
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'translate(0, 0)';
+            });
+        });
+    }
+}
+
+// ========== 7. TEXT REVEAL ON SCROLL ==========
+class TextReveal {
+    constructor() {
+        this.elements = document.querySelectorAll('.section-title, .section-subtitle, .about-text p');
+        this.init();
+    }
+
+    init() {
+        this.elements.forEach(el => {
+            const text = el.textContent;
+            el.innerHTML = '';
+            
+            text.split('').forEach((char, i) => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.style.opacity = '0';
+                span.style.display = 'inline-block';
+                span.style.animation = `fadeInChar 0.05s ease forwards ${i * 0.02}s`;
+                el.appendChild(span);
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('span').forEach((span, i) => {
+                        span.style.animation = `fadeInChar 0.05s ease forwards ${i * 0.02}s`;
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        this.elements.forEach(el => observer.observe(el));
+    }
+}
+
+// ========== 8. CURSOR TRAIL EFFECT ==========
+class CursorTrail {
+    constructor() {
+        this.trail = [];
+        this.maxTrail = 20;
+        this.init();
+    }
+
+    init() {
+        document.addEventListener('mousemove', (e) => {
+            this.addTrailDot(e.clientX, e.clientY);
+        });
+    }
+
+    addTrailDot(x, y) {
+        const dot = document.createElement('div');
+        dot.className = 'cursor-trail-dot';
+        dot.style.left = x + 'px';
+        dot.style.top = y + 'px';
+        document.body.appendChild(dot);
+
+        this.trail.push(dot);
+
+        setTimeout(() => {
+            dot.remove();
+            this.trail.shift();
+        }, 500);
+
+        if (this.trail.length > this.maxTrail) {
+            this.trail[0].remove();
+            this.trail.shift();
+        }
+    }
+}
+
+// ========== 9. PROGRESS BAR ANIMATION ==========
+class ProgressBarAnimation {
+    constructor() {
+        this.bars = document.querySelectorAll('.bar');
+        this.hasAnimated = false;
+        this.init();
+    }
+
+    init() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !this.hasAnimated) {
+                    this.hasAnimated = true;
+                    this.animateBars();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const skillsSection = document.querySelector('.skills');
+        if (skillsSection) {
+            observer.observe(skillsSection);
+        }
+    }
+
+    animateBars() {
+        this.bars.forEach((bar, index) => {
+            const width = bar.style.width;
+            bar.style.width = '0%';
+            setTimeout(() => {
+                bar.style.width = width;
+                bar.style.transition = 'width 1.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            }, index * 100);
+        });
+    }
+}
+
+// ========== INITIALIZE ALL ANIMATIONS ==========
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (!prefersReducedMotion) {
+        // Typewriter effect for hero subtitle
+        const typewriterElement = document.querySelector('.hero h2');
+        if (typewriterElement) {
+            const originalText = typewriterElement.textContent;
+            const words = [
+                'Full Stack Developer',
+                'Backend-Focused API Engineer',
+                'FastAPI Specialist',
+                'Building Scalable Systems'
+            ];
+            new Typewriter(typewriterElement, words);
+        }
+
+        // Initialize all animations
+        new ScrollReveal();
+        new ParticleBackground();
+        new NumberCounter();
+        new ParallaxEffect();
+        new MagneticButtons();
+        new ProgressBarAnimation();
+        
+        // Optional: Uncomment for more effects
+        // new TextReveal();
+        // new CursorTrail();
+    }
+});
+
+// ========== CSS ANIMATIONS (Add to your CSS) ==========
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeInChar {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .cursor {
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
+    .cursor-trail-dot {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        background: rgba(0, 245, 255, 0.6);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        animation: trailFade 0.5s ease-out forwards;
+    }
+
+    @keyframes trailFade {
+        to {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+        }
+    }
+
+    /* Smooth transitions for magnetic buttons */
+    .btn, .project-btn {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    /* Card entrance animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+const backToTopBtn = document.getElementById("backToTopBtn");
+
+  window.onscroll = () => {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+      backToTopBtn.style.display = "block";
+    } else {
+      backToTopBtn.style.display = "none";
+    }
+  };
+
+  backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  
