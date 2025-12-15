@@ -783,6 +783,7 @@ section.animate {
     font-size: 20px;
     color: var(--primary);
     width: 24px;
+    flex-shrink: 0;
 }
 
 .level {
@@ -814,6 +815,7 @@ section.animate {
     overflow: hidden;
     flex: 1;
     margin-left: 20px;
+    min-width: 80px;
 }
 
 .bar {
@@ -865,6 +867,7 @@ section.animate {
     width: 16px;
     height: 16px;
     border-radius: 50%;
+    flex-shrink: 0;
 }
 
 .legend.proficient .dot {
@@ -881,7 +884,7 @@ section.animate {
     100% { transform: translateX(100%); }
 }
 
-/* RESPONSIVE IMPROVEMENTS */
+/* TABLET RESPONSIVE */
 @media (max-width: 768px) {
     .skills {
         padding: 60px 4%;
@@ -924,6 +927,7 @@ section.animate {
 
     .progress {
         margin-left: 10px;
+        min-width: 60px;
     }
 
     .skills-legend {
@@ -937,26 +941,58 @@ section.animate {
     }
 }
 
+/* MOBILE RESPONSIVE - Keep everything visible with horizontal scroll */
 @media (max-width: 480px) {
     .skills {
         padding: 50px 3%;
     }
 
-    /* Make table scrollable horizontally */
+    /* Enable horizontal scrolling */
     .skills-table-container {
         margin: 0 -3%;
         border-radius: 0;
         border-left: none;
         border-right: none;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
+    /* Set minimum width to keep all columns visible */
     .skills-table {
-        min-width: 500px; /* Prevent table from becoming too cramped */
+        min-width: 520px;
+        width: 100%;
     }
 
     .skills-table th,
     .skills-table td {
         padding: 12px 10px;
+    }
+
+    /* Force all columns to stay visible */
+    .skills-table th,
+    .skills-table td {
+        display: table-cell !important;
+    }
+
+    /* Technology column */
+    .skills-table th:nth-child(1),
+    .skills-table td:nth-child(1) {
+        width: 50%;
+        min-width: 180px;
+    }
+
+    /* Level column */
+    .skills-table th:nth-child(2),
+    .skills-table td:nth-child(2) {
+        width: 25%;
+        min-width: 90px;
+    }
+
+    /* Progress column - KEEP VISIBLE */
+    .skills-table th:nth-child(3),
+    .skills-table td:nth-child(3) {
+        width: 25%;
+        min-width: 100px;
     }
 
     .category-row h3 {
@@ -978,19 +1014,10 @@ section.animate {
         font-size: 10px;
     }
 
-    /* Keep progress bar visible and adjust size */
-    .skills-table th:nth-child(3) {
-        width: 30%;
-        padding: 12px 8px;
-    }
-
-    .skills-table td:nth-child(3) {
-        padding: 12px 8px;
-    }
-
     .progress {
-        margin-left: 5px;
         height: 8px;
+        margin-left: 6px;
+        min-width: 70px;
     }
 
     .skills-legend {
@@ -1009,35 +1036,109 @@ section.animate {
     }
 }
 
-/* Extra small screens */
+/* EXTRA SMALL SCREENS - Force all columns visible */
 @media (max-width: 360px) {
     .skills-table {
-        min-width: 550px; /* Increased to accommodate progress bar */
+        min-width: 480px;
     }
 
     .skills-table th,
     .skills-table td {
-        padding: 10px 8px;
+        padding: 10px 6px;
+        display: table-cell !important;
+    }
+
+    /* Force columns to display with adjusted widths */
+    .skills-table th:nth-child(1),
+    .skills-table td:nth-child(1) {
+        width: 50%;
+        min-width: 160px;
+    }
+
+    .skills-table th:nth-child(2),
+    .skills-table td:nth-child(2) {
+        width: 25%;
+        min-width: 85px;
+    }
+
+    .skills-table th:nth-child(3),
+    .skills-table td:nth-child(3) {
+        width: 25%;
+        min-width: 90px;
     }
 
     .skill-item {
         font-size: 13px;
+        gap: 4px;
+    }
+
+    .skill-item i {
+        font-size: 12px;
+        width: 16px;
     }
 
     .category-row h3 {
-        font-size: 15px;
+        font-size: 14px;
+        gap: 6px;
     }
 
-    /* Ensure progress bar stays visible */
-    .skills-table th:nth-child(3),
-    .skills-table td:nth-child(3) {
-        display: table-cell !important;
-        width: 35%;
+    .level {
+        padding: 3px 8px;
+        font-size: 9px;
     }
 
     .progress {
         height: 6px;
         margin-left: 4px;
+        min-width: 50px;
+    }
+
+    .bar {
+        border-radius: 3px;
+    }
+}
+
+/* TINY SCREENS (< 320px) */
+@media (max-width: 320px) {
+    .skills-table {
+        min-width: 450px;
+    }
+
+    .skills-table th,
+    .skills-table td {
+        padding: 8px 5px;
+        display: table-cell !important;
+    }
+
+    .skills-table th:nth-child(1),
+    .skills-table td:nth-child(1) {
+        min-width: 150px;
+        width: 50%;
+    }
+
+    .skills-table th:nth-child(2),
+    .skills-table td:nth-child(2) {
+        min-width: 80px;
+        width: 25%;
+    }
+
+    .skills-table th:nth-child(3),
+    .skills-table td:nth-child(3) {
+        min-width: 85px;
+        width: 25%;
+    }
+
+    .skill-item {
+        font-size: 12px;
+    }
+
+    .category-row h3 {
+        font-size: 13px;
+    }
+
+    .progress {
+        min-width: 45px;
+        height: 5px;
     }
 }
 
