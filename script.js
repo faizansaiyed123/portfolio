@@ -823,47 +823,22 @@ class ParticleBackground {
 class NumberCounter {
     constructor() {
         this.counters = document.querySelectorAll('.stat-number');
-        this.hasAnimated = false;
-        this.init();
+        this.loadInstantly();
     }
 
-    init() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !this.hasAnimated) {
-                    this.hasAnimated = true;
-                    this.animateCounters();
-                }
-            });
-        }, { threshold: 0.5 });
-
-        const statsSection = document.querySelector('.stats-section');
-        if (statsSection) {
-            observer.observe(statsSection);
-        }
-    }
-
-    animateCounters() {
+    loadInstantly() {
         this.counters.forEach(counter => {
-            const target = parseInt(counter.getAttribute('data-target'));
-            const duration = 2000;
-            const step = target / (duration / 16);
-            let current = 0;
-
-            const updateCounter = () => {
-                current += step;
-                if (current < target) {
-                    counter.textContent = Math.floor(current).toLocaleString();
-                    requestAnimationFrame(updateCounter);
-                } else {
-                    counter.textContent = target.toLocaleString();
-                }
-            };
-
-            updateCounter();
+            const target = counter.getAttribute('data-target');
+            counter.textContent = Number(target).toLocaleString();
         });
     }
 }
+
+// init
+document.addEventListener("DOMContentLoaded", () => {
+    new NumberCounter();
+});
+
 
 // ========== 5. PARALLAX EFFECT ==========
 class ParallaxEffect {
