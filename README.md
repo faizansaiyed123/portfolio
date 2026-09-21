@@ -1,25 +1,41 @@
 # Faizan Saiyed — Portfolio
 
-A static portfolio site focused on backend and full-stack engineering work.
+A static GitHub Pages portfolio designed as an interactive engineering casebook.
 
-## What the site emphasizes
+## Experience
 
-- Engineering case studies instead of generic project cards
-- Backend APIs, realtime systems, asynchronous processing, data, security, and verification
-- Local assets and plain HTML/CSS/JS so the site does not depend on runtime third-party services
-- Responsive, keyboard-friendly navigation and reduced-motion support
-- A small JavaScript surface for theme preference, section navigation, scroll position, and progressive reveals
+The site is intentionally built without a frontend framework or runtime third-party services.
 
-## Projects
+It combines:
 
-The portfolio currently centers two verifiable systems:
+- Art-directed editorial layout with a systems / instrument-panel visual language
+- Engineering case studies for FrameFlux and Telemetry
+- CSS-native signal visuals and subtle motion
+- Responsive navigation with keyboard support
+- Theme preference with local persistence and system fallback
+- A deterministic, frontend-only portfolio guide that types responses, branches into project/method/stack/contact paths, jumps to relevant sections, and can restart
+- Local profile image with a local fallback asset
+- Reduced-motion support
 
-- **FrameFlux** — FastAPI media processing with PostgreSQL, Redis, ARQ background jobs, FFmpeg, resumable uploads, validation, processing/editing workflows, and backend tests.
-- **Telemetry** — FastAPI observability with synthetic telemetry, authenticated WebSockets, anomaly detection, PostgreSQL persistence, JWT/Argon2 authentication, role-based access control, simulation controls, and backend/browser verification.
+## Source of truth
 
-The project repositories linked from the site are the source of truth for implementation details.
+The portfolio does not invent project outcomes or runtime statistics. The two featured projects link directly to their repositories, where the implementation and documentation remain the source of truth.
 
-## Structure
+### FrameFlux
+
+FastAPI media processing built around PostgreSQL, Redis, ARQ background jobs and FFmpeg, including resumable uploads, validation, processing/editing workflows, progress tracking, projects and backend tests.
+
+- https://github.com/faizansaiyed123/FrameFlux-Backend
+- https://github.com/faizansaiyed123/FrameFlux-Frontend
+
+### Telemetry
+
+FastAPI observability with synthetic telemetry, authenticated WebSockets, anomaly detection, asynchronous PostgreSQL persistence, JWT/Argon2 authentication, role-based access control, simulation controls, and backend/browser verification.
+
+- https://github.com/faizansaiyed123/telemetry-backend
+- https://github.com/faizansaiyed123/telemetry-frontend
+
+## Files
 
 ```text
 /
@@ -34,32 +50,29 @@ The project repositories linked from the site are the source of truth for implem
 
 ## Local preview
 
-No package installation or build step is required.
-
-From the repository root, serve the files with any static HTTP server. For example:
+There is no package installation or build step.
 
 ```bash
 python -m http.server 8080
 ```
 
-Then open:
+Open:
 
 ```text
 http://localhost:8080/
 ```
 
-Opening `index.html` directly also works for the static content, but an HTTP server is closer to the GitHub Pages environment.
+## GitHub Pages
 
-## Deployment
+The site is published at:
 
-The site is deployed as a GitHub Pages project site at:
+https://faizansaiyed123.github.io/portfolio/
 
-**https://faizansaiyed123.github.io/portfolio/**
+Keep asset paths relative so the site remains compatible with the project-site `/portfolio/` path.
 
-Keep local asset paths relative (for example `./assets/profile.jpeg`) so the site remains compatible with the `/portfolio/` project path.
+## Maintenance
 
-## Content updates
-
-Most portfolio copy and links live in `index.html`. Visual tokens, layout and responsive behavior live in `style.css`. Interaction logic is intentionally small and contained in `script.js`.
-
-Important project claims should be kept aligned with the implementation and documentation in the linked source repositories.
+- Update portfolio copy and links in `index.html`.
+- Update design tokens, layout, responsive behavior and motion in `style.css`.
+- Keep interaction logic small and self-contained in `script.js`.
+- Keep featured-project claims aligned with the real repositories.
