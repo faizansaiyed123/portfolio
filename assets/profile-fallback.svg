@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Faizan Saiyed</title>
+  <desc id="desc">Fallback profile mark with the initials FS.</desc>
+  <rect width="800" height="800" fill="#e9e6de"/>
+  <rect x="56" y="56" width="688" height="688" fill="#171a1e"/>
+  <path d="M118 642V158h118l111 265 108-265h116v484H554V304L444 568H350L238 304v338H118Z" fill="#f7f5ef"/>
+  <path d="M118 675h516" stroke="#1d8987" stroke-width="12"/>
+</svg>
