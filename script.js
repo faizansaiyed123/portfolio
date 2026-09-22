@@ -342,6 +342,12 @@
     const element = document.createElement("p");
     element.className = "guide-message guide-message-" + role;
     guideThread?.appendChild(element);
+    if (role === "bot") {
+      guideDock?.classList.add("is-thinking");
+      if (!type || prefersReducedMotion.matches) {
+        window.setTimeout(() => guideDock?.classList.remove("is-thinking"), 140);
+      }
+    }
 
     if (!type || prefersReducedMotion.matches) {
       element.textContent = message;
@@ -360,6 +366,7 @@
         if (index >= message.length) {
           cursor.remove();
           guideState.typing = false;
+          guideDock?.classList.remove("is-thinking");
           if (guideThread) guideThread.scrollTop = guideThread.scrollHeight;
           resolve();
           return;
@@ -424,6 +431,7 @@
     guidePanel.hidden = false;
     guideLauncher?.setAttribute("aria-expanded", "true");
     guideTopButton?.setAttribute("aria-expanded", "true");
+    guideDock?.classList.add("is-open");
     guideDock?.classList.remove("is-attention");
     updateGuideModeUI();
     updateGuideProgress();
@@ -441,6 +449,7 @@
     guidePanel && (guidePanel.hidden = true);
     guideLauncher?.setAttribute("aria-expanded", "false");
     guideTopButton?.setAttribute("aria-expanded", "false");
+    guideDock?.classList.remove("is-open", "is-thinking", "is-tour");
   };
 
   const handleRoute = async (label, action) => {
@@ -522,7 +531,7 @@
   const runTour = async () => {
     if (guideState.typing || guideState.tourRunning) return;
     guideState.tourRunning = true;
-    guideDock?.classList.add("guide-tour-running");
+    guideDock?.classList.add("guide-tour-running", "is-tour");
 
     await appendMessage("GUIDED TOUR STARTED — I’ll take you through evidence → systems → stack → contact.", "bot", true);
 
@@ -540,7 +549,7 @@
     }
 
     guideState.tourRunning = false;
-    guideDock?.classList.remove("guide-tour-running");
+    guideDock?.classList.remove("guide-tour-running", "is-tour");
     renderChoices(modeProfiles[guideState.mode].choices);
   };
 
@@ -631,7 +640,6 @@
   });
   guideTopButton?.addEventListener("click", openGuide);
   $("#hero-guide")?.addEventListener("click", openGuide);
-  $("#hero-guide-card")?.addEventListener("click", openGuide);
   $("#mobile-guide")?.addEventListener("click", () => { closeMenu(); openGuide(); });
   $("#footer-guide")?.addEventListener("click", openGuide);
   guideClose?.addEventListener("click", closeGuide);
