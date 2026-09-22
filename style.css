@@ -173,3 +173,10 @@ button,a{ -webkit-tap-highlight-color:transparent}
   .guide-dock{right:12px;bottom:12px;width:calc(100vw - 24px)}.guide-panel{bottom:66px}.guide-specials{grid-template-columns:1fr}.guide-thread{max-height:220px}
   .footer-cta-copy h2{font-size:57px}.footer-grid{grid-template-columns:1fr}.footer-brand{grid-column:auto}.footer-bottom{grid-template-columns:1fr;gap:9px}
 }
+
+.guide-input-row{display:flex;gap:7px;padding:7px 15px 8px;border-top:1px solid var(--line)}
+.guide-input-row input{min-width:0;flex:1;height:37px;border:1px solid var(--line);outline:0;background:var(--bg);color:var(--text);padding:0 10px;font-size:10px}
+.guide-input-row input::placeholder{color:var(--faint)}
+.guide-input-row input:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(130,247,200,.07)}
+.guide-input-row button{width:38px;height:37px;border:1px solid var(--accent);background:var(--accent);color:#07100c;cursor:pointer;font:500 16px/1 "DM Mono",monospace}
+.guide-input-row button:hover{filter:brightness(1.04);transform:translateY(-1px)}
