@@ -123,6 +123,193 @@
   const guideThread = $("#guide-thread");
   const guideActions = $("#guide-actions");
   const guideRestart = $("#guide-restart");
+  const guideInput = $("#guide-input");
+  const guideForm = $("#guide-form");
+  const guideTour = $("#guide-tour");
+  const guideChallenge = $("#guide-challenge");
+  const guideContextEl = $("#guide-context");
+  const guideProgressEl = $("#guide-progress");
+  const guideDock = $("#guide-dock");
+  const guideModes = $(".guide-mode");
+  let activeGuideMode = "recruiter";
+  const guidePath = new Set();
+
+  try {
+    activeGuideMode = sessionStorage.getItem("portfolio-guide-mode") || "recruiter";
+  } catch {}
+
+  const modeProfiles = {
+    recruiter: {
+      label: "RECRUITER",
+      placeholder: "Ask what stands out, what was built, or how to contact...",
+      message: "Recruiter lens: I’ll keep the signal concise — what was built, why it matters, and where the source evidence lives.",
+      choices: [
+        ["Show the strongest project signal", "projects"],
+        ["What is the engineering focus?", "method"],
+        ["What is the stack?", "stack"],
+        ["Contact Faizan", "contact"]
+      ]
+    },
+    engineer: {
+      label: "ENGINEER",
+      placeholder: "Ask about architecture, state, jobs, security, or realtime...",
+      message: "Engineer lens: I’ll go deeper into boundaries, state, queues, persistence, realtime flow, validation, and verification.",
+      choices: [
+        ["Deep dive FrameFlux", "frameflux"],
+        ["Deep dive Telemetry", "telemetry"],
+        ["Test me with a system challenge", "__challenge__"],
+        ["Show the engineering method", "method"]
+      ]
+    },
+    explorer: {
+      label: "EXPLORER",
+      placeholder: "Ask anything about the portfolio...",
+      message: "Explorer lens: follow whatever catches your attention. I can jump between projects, ideas, tools, and contact without leaving the page.",
+      choices: [
+        ["Show me the two systems", "projects"],
+        ["Take the guided tour", "__tour__"],
+        ["Ask an engineering challenge", "__challenge__"],
+        ["Open the stack", "stack"],
+        ["Contact Faizan", "contact"]
+      ]
+    }
+  };
+
+  const updateGuideProgress = () => {
+    if (guideProgressEl) guideProgressEl.textContent = "PATH " + Math.min(3, guidePath.size) + " / 3";
+  };
+  const setGuideContext = (label) => {
+    if (guideContextEl) guideContextEl.textContent = label;
+  };
+  const saveGuideMode = () => {
+    try { sessionStorage.setItem("portfolio-guide-mode", activeGuideMode); } catch {}
+  };
+  const applyGuideMode = async (mode, announce = true) => {
+    if (!modeProfiles[mode]) return;
+    activeGuideMode = mode;
+    guideModes.forEach((button) => {
+      const active = button.dataset.guideMode === mode;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-selected", String(active));
+    });
+    guideDock?.setAttribute("data-mode", mode);
+    guideInput?.setAttribute("placeholder", modeProfiles[mode].placeholder);
+    saveGuideMode();
+    guidePath.clear();
+    if (guideThread) guideThread.replaceChildren();
+    renderGuideChoices([]);
+    updateGuideProgress();
+    if (announce && guidePanel && !guidePanel.hidden) {
+      await appendGuideMessage(modeProfiles[mode].message, "bot", true);
+      renderGuideChoices(modeProfiles[mode].choices);
+    }
+  };
+  guideModes.forEach((button) => {
+    button.addEventListener("click", () => void applyGuideMode(button.dataset.guideMode || "explorer"));
+  });
+
+  const challengeSet = [
+    {
+      question: "A large upload drops at 72%. What should survive the failed request?",
+      choices: [
+        ["The upload state + received chunks", "durable"],
+        ["Only the browser memory", "wrong"],
+        ["Nothing; start over", "wrong"]
+      ],
+      answers: {
+        durable: "Exactly. FrameFlux treats resumable upload state explicitly, so a dropped request does not have to erase the work already accepted.",
+        wrong: "That would turn a resumable workflow into a restart workflow. The system is designed around explicit upload state."
+      }
+    },
+    {
+      question: "The dashboard says an alert is resolved, but the server still says active. Which side owns the truth?",
+      choices: [
+        ["The backend lifecycle", "backend"],
+        ["Whichever screen the user trusts", "wrong"],
+        ["The browser’s local state", "wrong"]
+      ],
+      answers: {
+        backend: "The backend. Telemetry keeps alert lifecycle and authorization authoritative on the server; the UI renders that state.",
+        wrong: "The interface can display state, but it should not become the authority for security or lifecycle transitions."
+      }
+    },
+    {
+      question: "A media file has an allowed extension but its binary content is suspicious. Where should the expensive processing path stop?",
+      choices: [
+        ["At validation before processing", "validate"],
+        ["After FFmpeg starts", "wrong"],
+        ["After the database records a completed job", "wrong"]
+      ],
+      answers: {
+        validate: "Correct. FrameFlux validates extension, MIME/category, size and binary signature before expensive processing.",
+        wrong: "That waits too long. Validation is useful precisely because it prevents bad input from reaching expensive work."
+      }
+    }
+  ];
+  let challengeIndex = 0;
+
+  const runChallenge = async () => {
+    if (guideTyping) return;
+    challengeIndex = 0;
+    await appendGuideMessage("System challenge mode. Pick an answer, then I’ll explain the design decision behind it.", "bot", true);
+    renderChallenge();
+  };
+  const renderChallenge = () => {
+    const item = challengeSet[challengeIndex];
+    if (!item || !guideActions) return;
+    renderGuideChoices(item.choices.map(([label, id]) => [label, "challenge:" + id]));
+  };
+  const answerChallenge = async (choiceId) => {
+    if (guideTyping) return;
+    const item = challengeSet[challengeIndex];
+    if (!item) return;
+    const key = choiceId.split(":")[1] || "wrong";
+    const label = item.choices.find(([, id]) => id === key)?.[0] || "Selected answer";
+    await appendGuideMessage(label, "user");
+    await appendGuideMessage(item.answers[key] || item.answers.wrong, "bot", true);
+    challengeIndex += 1;
+    if (challengeSet[challengeIndex]) {
+      renderGuideChoices([["Next challenge", "challenge:next"], ["Return to guide", "start"]]);
+    } else {
+      await appendGuideMessage("That’s the end of the challenge set. Now you’ve seen the design rules in action: explicit state, backend authority, and validation before expensive work.", "bot", true);
+      renderGuideChoices(modeProfiles[activeGuideMode].choices);
+    }
+  };
+
+  const runGuideTour = async () => {
+    if (guideTyping) return;
+    guideDock?.classList.add("guide-tour-running");
+    await appendGuideMessage("Guided tour started. I’ll move through the portfolio from work → systems → stack → contact.", "bot", true);
+    const steps = [
+      ["work", "The work section is the evidence layer: FrameFlux for async media processing and Telemetry for realtime observability."],
+      ["systems", "This is the recurring engineering logic behind both projects: boundaries, authority, validation, and verification."],
+      ["stack", "The stack is tied back to those systems instead of presented as an isolated logo wall."],
+      ["contact", "At the endpoint, the site gives visitors a direct email and source links."]
+    ];
+    for (const [id, message] of steps) {
+      scrollTo(id);
+      await new Promise((resolve) => window.setTimeout(resolve, prefersReducedMotion.matches ? 120 : 1100));
+      await appendGuideMessage(message, "bot", true);
+    }
+    guideDock?.classList.remove("guide-tour-running");
+    renderGuideChoices(modeProfiles[activeGuideMode].choices);
+  };
+
+  const normalizeQuery = (value) => value.trim().toLowerCase();
+  const resolveFreeformIntent = (query) => {
+    if (/tour|walk me|show me around/.test(query)) return "__tour__";
+    if (/challenge|quiz|test me|question me/.test(query)) return "__challenge__";
+    if (/frameflux|media|upload|ffmpeg|arq|background job|resumable/.test(query)) return "frameflux";
+    if (/telemetry|websocket|alert|anomaly|observability|realtime|real-time/.test(query)) return "telemetry";
+    if (/stack|technology|technologies|tools|typescript|python|fastapi|postgres/.test(query)) return "stack";
+    if (/method|approach|engineering|design|architecture|how.*build/.test(query)) return "method";
+    if (/contact|email|hire|reach|linkedin|github|connect/.test(query)) return "contact";
+    if (/project|projects|work|built|portfolio/.test(query)) return "projects";
+    if (/who are you|who is faizan|about faizan/.test(query)) return "start";
+    if (/resume|cv/.test(query)) return "contact";
+    return null;
+  };
+
 
   const guideTree = {
     start: {
@@ -250,9 +437,17 @@
       await appendGuideMessage(userLabel, "user");
       guideHistory.push({ role: "user", text: userLabel });
     }
-    await appendGuideMessage(node.message, "bot", true);
-    guideHistory.push({ role: "bot", text: node.message });
-    renderGuideChoices(node.choices);
+    guidePath.add(id);
+    updateGuideProgress();
+    let message = node.message;
+    let choices = node.choices;
+    if (id === "start") {
+      message = modeProfiles[activeGuideMode].message;
+      choices = modeProfiles[activeGuideMode].choices;
+    }
+    await appendGuideMessage(message, "bot", true);
+    guideHistory.push({ role: "bot", text: message });
+    renderGuideChoices(choices);
   };
 
   const scrollTo = (id) => {
@@ -264,6 +459,14 @@
 
   const selectGuideChoice = async (label, id) => {
     if (guideTyping) return;
+    if (id === "__tour__") return runGuideTour();
+    if (id === "__challenge__") return runChallenge();
+    if (id === "challenge:next") {
+      challengeIndex += 0;
+      renderChallenge();
+      return;
+    }
+    if (id.startsWith("challenge:")) return answerChallenge(id);
 
     const routes = {
       "goto-work": () => { activateProject("frameflux"); scrollTo("work"); },
@@ -279,6 +482,8 @@
       await appendGuideMessage(label, "user");
       guideHistory.push({ role: "user", text: label });
       const target = id.replace("goto-", "");
+      guidePath.add(target);
+      updateGuideProgress();
       await appendGuideMessage(id === "github" ? "Opening GitHub." : "Opening " + target + ".", "bot", true);
       routes[id]();
       return;
@@ -287,10 +492,25 @@
     await showGuideNode(id, label);
   };
 
+  const contextNames = { top: "HOME", work: "WORK", systems: "SYSTEMS", stack: "STACK", contact: "CONTACT" };
+  if ("IntersectionObserver" in window) {
+    const contextObserver = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible?.target?.id) setGuideContext(contextNames[visible.target.id] || "HOME");
+    }, { rootMargin: "-35% 0px -55% 0px", threshold: [0.05, 0.2, 0.5] });
+    Object.keys(contextNames).forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) contextObserver.observe(section);
+    });
+  }
+  updateGuideProgress();
+
   const openGuide = () => {
     if (!guidePanel || !guideLauncher) return;
     guidePanel.hidden = false;
     guideLauncher.setAttribute("aria-expanded", "true");
+    applyGuideMode(activeGuideMode, false);
+    updateGuideProgress();
     $(".guide-top-button")?.setAttribute("aria-expanded", "true");
     if (!guideHistory.length) void showGuideNode("start");
     window.setTimeout(() => $("#guide-actions .guide-action")?.focus(), 80);
@@ -308,10 +528,41 @@
   $("#hero-guide-card")?.addEventListener("click", openGuide);
   $("#mobile-guide")?.addEventListener("click", () => { closeMenu(); openGuide(); });
   guideClose?.addEventListener("click", closeGuide);
+  guideForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (guideTyping) return;
+    const value = guideInput?.value || "";
+    const query = normalizeQuery(value);
+    if (!query) return;
+    guideInput.value = "";
+    const intent = resolveFreeformIntent(query);
+    if (!intent) {
+      await appendGuideMessage(value, "user");
+      await appendGuideMessage("I can route that question when it touches the portfolio: projects, FrameFlux, Telemetry, engineering approach, stack, contact, a guided tour, or an engineering challenge.", "bot", true);
+      renderGuideChoices(modeProfiles[activeGuideMode].choices);
+      return;
+    }
+    if (intent === "__tour__") {
+      await appendGuideMessage(value, "user");
+      return runGuideTour();
+    }
+    if (intent === "__challenge__") {
+      await appendGuideMessage(value, "user");
+      return runChallenge();
+    }
+    await showGuideNode(intent, value);
+  });
+
+  guideTour?.addEventListener("click", runGuideTour);
+  guideChallenge?.addEventListener("click", runChallenge);
+
   guideRestart?.addEventListener("click", () => {
     guideHistory.length = 0;
+    guidePath.clear();
+    challengeIndex = 0;
     guideThread?.replaceChildren();
     renderGuideChoices([]);
+    updateGuideProgress();
     void showGuideNode("start");
   });
 
