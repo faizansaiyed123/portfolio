@@ -242,26 +242,32 @@ button,a{ -webkit-tap-highlight-color:transparent}
   .guide-robot-icon,.guide-robot-icon *{animation:none!important}
 }
 
-/* Keep the oversized footer wordmark fully inside the viewport */
+/* Keep the footer wordmark fully inside every viewport */
 .footer-monogram{
-  right:0;
-  max-width:100%;
+  left:0;
+  right:auto;
+  width:100%;
+  max-width:none;
+  box-sizing:border-box;
+  padding-inline:14px;
   overflow:hidden;
-  font-size:clamp(86px,17vw,250px);
+  text-align:right;
+  font-size:clamp(54px,calc(92vw / 6),180px);
   letter-spacing:-.075em;
   white-space:nowrap;
 }
 @media (max-width:800px){
   .footer-monogram{
-    right:0;
-    max-width:100%;
-    font-size:clamp(72px,20vw,150px);
+    width:100%;
+    padding-inline:14px;
+    font-size:clamp(54px,calc(92vw / 6),145px);
     letter-spacing:-.065em;
   }
 }
 @media (max-width:430px){
   .footer-monogram{
-    font-size:clamp(64px,21vw,104px);
+    padding-inline:10px;
+    font-size:clamp(50px,calc(90vw / 6),90px);
     letter-spacing:-.055em;
   }
 }
