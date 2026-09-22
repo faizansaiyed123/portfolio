@@ -188,6 +188,14 @@
     if (!modeProfiles[mode]) return;
     activeGuideMode = mode;
     guideModes.forEach((button) => {
+    const active = button.dataset.guideMode === activeGuideMode;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-selected", String(active));
+  });
+  guideDock?.setAttribute("data-mode", activeGuideMode);
+  guideInput?.setAttribute("placeholder", modeProfiles[activeGuideMode].placeholder);
+
+  guideModes.forEach((button) => {
       const active = button.dataset.guideMode === mode;
       button.classList.toggle("is-active", active);
       button.setAttribute("aria-selected", String(active));
@@ -264,7 +272,6 @@
   const answerChallenge = async (choiceId) => {
     if (guideTyping) return;
     if (choiceId === "challenge:next") {
-      challengeIndex += 1;
       return renderChallengeQuestion();
     }
     const item = challengeSet[challengeIndex];
@@ -532,6 +539,7 @@
   $("#hero-guide")?.addEventListener("click", openGuide);
   $("#hero-guide-card")?.addEventListener("click", openGuide);
   $("#mobile-guide")?.addEventListener("click", () => { closeMenu(); openGuide(); });
+  $("#footer-guide")?.addEventListener("click", openGuide);
   guideClose?.addEventListener("click", closeGuide);
   guideForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
