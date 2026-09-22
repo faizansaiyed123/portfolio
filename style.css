@@ -133,3 +133,43 @@ button,a{ -webkit-tap-highlight-color:transparent}
   .pointer-orb{display:none}
 }
 @supports not (color-mix(in srgb,black 50%,white)){.topbar,.signal-window,.guide-launcher{background:var(--panel)}}
+
+/* --- Interactive guide / premium closing system --- */
+.guide-dock{width:min(460px,calc(100vw - 28px));right:22px;bottom:20px}
+.guide-launcher{min-height:64px;padding:12px 14px}
+.guide-launcher-copy b{font-size:13px}.guide-launcher-copy em{display:none}
+.guide-panel{bottom:74px;max-height:min(690px,78vh);border-radius:2px}
+.guide-status{display:flex;justify-content:space-between;gap:12px;padding:9px 15px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--panel-2) 65%,transparent);font:500 7px/1.2 "DM Mono",monospace;letter-spacing:.09em;color:var(--faint)}
+.guide-context b{color:var(--accent);font-weight:500}.guide-progress{color:var(--muted)}
+.guide-modes{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border-bottom:1px solid var(--line);background:var(--line)}
+.guide-mode{border:0;background:var(--panel);padding:10px 8px;cursor:pointer;font:700 8px/1 "DM Mono",monospace;letter-spacing:.06em;color:var(--faint);text-transform:uppercase}
+.guide-mode:hover{color:var(--text);background:var(--panel-2)}.guide-mode.is-active{color:var(--accent);background:var(--panel-2);box-shadow:inset 0 -2px 0 var(--accent)}
+.guide-thread{max-height:255px;min-height:155px}
+.guide-message{font-size:11px}.guide-message-bot{position:relative}
+.guide-message-bot::before{content:"FS";display:block;margin-bottom:5px;font:500 7px/1 "DM Mono",monospace;letter-spacing:.1em;color:var(--accent)}
+.guide-specials{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:5px 15px 10px;border-top:1px solid var(--line)}
+.guide-specials button{padding:10px 9px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;text-align:left;font:700 8px/1.35 "DM Mono",monospace;letter-spacing:.03em}
+.guide-specials button:hover{color:var(--text);border-color:var(--accent);background:var(--panel-2)}
+.guide-footer-line{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:8px 15px 11px;border-top:1px solid var(--line);font:500 7px/1 "DM Mono",monospace;letter-spacing:.08em;color:var(--faint)}
+.guide-footer-line>span{display:flex;align-items:center;gap:6px}.guide-footer-line>span i{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.guide-footer-line .guide-restart{margin:0;padding:3px 0}
+.guide-tour-running .guide-specials button:first-child{color:var(--accent)}
+.guide-dock.is-attention .guide-launcher{animation:guideAttention 1.8s var(--ease) 1}
+@keyframes guideAttention{0%,100%{transform:none}18%{transform:translateY(-3px)}35%{transform:translateY(0)}52%{transform:translateY(-2px)}70%{transform:translateY(0)}}
+
+.footer{padding:0;background:var(--bg);border-top:1px solid var(--line);overflow:hidden}
+.footer-cta{min-height:55vh;display:flex;justify-content:space-between;align-items:flex-end;gap:55px;padding-top:110px;padding-bottom:88px}
+.footer-cta-copy{max-width:860px}.footer-cta-copy h2{font-size:clamp(58px,8vw,120px);line-height:.88;letter-spacing:-.075em;margin:20px 0 20px;max-width:10ch}.footer-cta-copy h2 em{font-style:normal;color:var(--accent)}.footer-cta-copy p{margin:0;color:var(--muted);font-size:15px}
+.footer-cta-button{display:flex;align-items:center;justify-content:space-between;gap:35px;min-width:245px;padding:17px 16px;border:1px solid var(--line-strong);background:var(--accent);color:#07100c;text-decoration:none;font-size:11px;font-weight:800;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}.footer-cta-button b{font:500 17px/1 "DM Mono",monospace}.footer-cta-button:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.18)}
+.footer-rule{height:1px;background:var(--line)}
+.footer-grid{display:grid;grid-template-columns:1.3fr repeat(3,1fr);gap:32px;padding:48px 0 54px}
+.footer-brand{display:flex;align-items:flex-start;gap:13px}.footer-mark{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--line-strong);font:700 11px/1 "DM Mono",monospace;color:var(--accent)}.footer-brand div{display:grid;gap:5px}.footer-brand b{font-size:11px;letter-spacing:.08em}.footer-brand small{font:500 7px/1.3 "DM Mono",monospace;color:var(--faint);letter-spacing:.08em}
+.footer-column{display:grid;align-content:start;gap:9px}.footer-column>span{margin-bottom:9px;font:500 8px/1 "DM Mono",monospace;letter-spacing:.11em;color:var(--accent)}.footer-column a,.footer-column button{width:max-content;padding:0;border:0;background:transparent;color:var(--muted);text-decoration:none;text-align:left;font-size:11px;cursor:pointer}.footer-column a:hover,.footer-column button:hover{color:var(--text)}
+.footer-bottom{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:18px;padding:15px 0;border-top:1px solid var(--line);font:500 7px/1.3 "DM Mono",monospace;letter-spacing:.08em;color:var(--faint)}.footer-bottom a{color:var(--muted);text-decoration:none;justify-self:end}.footer-bottom a:hover{color:var(--accent)}
+@media (max-width:800px){
+  .footer-cta{display:grid;grid-template-columns:1fr;align-items:start;min-height:auto;padding-top:88px;padding-bottom:62px}.footer-cta-button{width:100%;min-width:0}.footer-grid{grid-template-columns:1fr 1fr;gap:35px}.footer-brand{grid-column:1/-1}.footer-bottom{grid-template-columns:1fr 1fr}.footer-bottom a{justify-self:start}
+}
+@media (max-width:560px){
+  .guide-dock{right:12px;bottom:12px;width:calc(100vw - 24px)}.guide-panel{bottom:66px}.guide-specials{grid-template-columns:1fr}.guide-thread{max-height:220px}
+  .footer-cta-copy h2{font-size:57px}.footer-grid{grid-template-columns:1fr}.footer-brand{grid-column:auto}.footer-bottom{grid-template-columns:1fr;gap:9px}
+}
