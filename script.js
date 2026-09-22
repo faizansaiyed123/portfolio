@@ -248,19 +248,25 @@
   ];
   let challengeIndex = 0;
 
+  const renderChallengeQuestion = async () => {
+    const item = challengeSet[challengeIndex];
+    if (!item) return;
+    await appendGuideMessage("CHALLENGE " + (challengeIndex + 1) + " / " + challengeSet.length, "bot");
+    await appendGuideMessage(item.question, "bot", true);
+    renderGuideChoices(item.choices.map(([label, id]) => [label, "challenge:" + id]));
+  };
   const runChallenge = async () => {
     if (guideTyping) return;
     challengeIndex = 0;
     await appendGuideMessage("System challenge mode. Pick an answer, then I’ll explain the design decision behind it.", "bot", true);
-    renderChallenge();
-  };
-  const renderChallenge = () => {
-    const item = challengeSet[challengeIndex];
-    if (!item || !guideActions) return;
-    renderGuideChoices(item.choices.map(([label, id]) => [label, "challenge:" + id]));
+    await renderChallengeQuestion();
   };
   const answerChallenge = async (choiceId) => {
     if (guideTyping) return;
+    if (choiceId === "challenge:next") {
+      challengeIndex += 1;
+      return renderChallengeQuestion();
+    }
     const item = challengeSet[challengeIndex];
     if (!item) return;
     const key = choiceId.split(":")[1] || "wrong";
@@ -509,7 +515,6 @@
     if (!guidePanel || !guideLauncher) return;
     guidePanel.hidden = false;
     guideLauncher.setAttribute("aria-expanded", "true");
-    applyGuideMode(activeGuideMode, false);
     updateGuideProgress();
     $(".guide-top-button")?.setAttribute("aria-expanded", "true");
     if (!guideHistory.length) void showGuideNode("start");
@@ -636,4 +641,8 @@
   });
 
   $("#year") && ($("#year").textContent = String(new Date().getFullYear()));
+  window.setTimeout(() => {
+    if (!guideHistory.length && guideDock) guideDock.classList.add("is-attention");
+  }, 4200);
+  guideLauncher?.addEventListener("click", () => guideDock?.classList.remove("is-attention"), { once: true });
 })();
