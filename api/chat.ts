@@ -222,6 +222,73 @@ export default async function handler(
     return emptyResponse(response, 204, origin);
   }
 
+  if (method === "GET") {
+    const url = !isFetchRequest(request)
+      ? new URL(request.url || "http://localhost/api/chat", "http://localhost")
+      : new URL(request.url);
+
+    if (url.searchParams.get("interviewer") === "1") {
+      const question = url.searchParams.get("message")?.trim() || "";
+      if (!question) {
+        return json(
+          request,
+          response,
+          { ok: false, code: "EMPTY_MESSAGE", error: "message is required." },
+          400,
+          origin
+        );
+      }
+
+      try {
+        const evidence = await getChatEvidence(question, []);
+        const aiResponse = await generateGroundedAnswer(question, [], evidence);
+        return json(
+          request,
+          response,
+          {
+            ok: true,
+            status: "diagnostic",
+            answer: aiResponse.answer,
+            model: aiResponse.model,
+            keyConfigured: true,
+            kind: evidence.kind,
+            repositories: (evidence.repositories || []).map(publicRepoPayload)
+          },
+          200,
+          origin
+        );
+      } catch (error) {
+        if (error instanceof GeminiApiError) {
+          return json(
+            request,
+            response,
+            {
+              ok: false,
+              code: "AI_PROVIDER_ERROR",
+              error: error.message,
+              keyConfigured: Boolean(process.env.GEMINI_API_KEY)
+            },
+            503,
+            origin
+          );
+        }
+
+        return json(
+          request,
+          response,
+          {
+            ok: false,
+            code: "DIAGNOSTIC_ERROR",
+            error: error instanceof Error ? error.message : "Diagnostic failed.",
+            keyConfigured: Boolean(process.env.GEMINI_API_KEY)
+          },
+          503,
+          origin
+        );
+      }
+    }
+  }
+
   if (method !== "POST") {
     return json(
       request,
