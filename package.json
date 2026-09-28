@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "check": "tsc --noEmit",
-    "test:live": "tsx scripts/live-retrieval-check.ts"
+    "test:live": "tsx scripts/live-retrieval-check.ts",
+    "test:api": "tsx scripts/api-contract-check.ts"
   },
   "dependencies": {
     "@upstash/ratelimit": "^2.0.7",
