@@ -49,8 +49,21 @@ assert(
   "Private repository route should protect the repository rather than exposing source."
 );
 
+
+const casual = await request("Hi");
+assert(
+  casual.response.status === 502,
+  "Casual chat should reach the AI provider instead of repository resolution when Gemini is unavailable in this local contract test."
+);
+assert(
+  casual.payload?.code === "CHAT_UNAVAILABLE" &&
+    !String(casual.payload?.error || "").includes("several public repositories"),
+  "Casual chat should not return repository ambiguity."
+);
+
 console.log("API contract checks passed:", {
   openRepository: true,
   ambiguousProject: true,
-  inaccessibleRepository: true
+  inaccessibleRepository: true,
+  casualConversationRouting: true
 });
