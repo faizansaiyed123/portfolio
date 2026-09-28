@@ -34,7 +34,11 @@ jobs:
         run: node --check script.js
 
       - name: Live GitHub smoke test
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/github-smoke.mjs
 
       - name: Live repository intelligence test
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: npm run test:live
