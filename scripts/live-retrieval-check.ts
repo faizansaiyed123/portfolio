@@ -15,6 +15,21 @@ assert(
   "Live discovery did not include FrameFlux-Backend."
 );
 
+const portfolioWide = await getChatEvidence("What have you built?");
+assert(
+  portfolioWide.kind === "portfolio",
+  "Generic portfolio interview question should use portfolio project evidence."
+);
+assert(
+  portfolioWide.repositories.some((repo) => repo.name === "FrameFlux-Backend") &&
+    portfolioWide.repositories.some((repo) => repo.name === "telemetry-backend"),
+  "Portfolio-wide interview evidence should include the featured FrameFlux and Telemetry repositories."
+);
+assert(
+  portfolioWide.evidence.some((item) => item.type === "readme"),
+  "Portfolio-wide interview evidence should include repository documentation."
+);
+
 const latestRepos = await getChatEvidence("latest repos");
 assert(latestRepos.kind === "list", "Natural latest-repository query should resolve to a live repository list.");
 assert(
