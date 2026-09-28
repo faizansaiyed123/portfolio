@@ -423,6 +423,27 @@ export async function resolveRepositories(query: string): Promise<RepositoryReso
   }
 
   const normalizedQuery = normalize(query);
+
+  // Resolve explicit multi-repository project names before fuzzy scoring.
+  // Projects such as FrameFlux and Telemetry are split into frontend/backend
+  // repositories, but the project name itself is unambiguous.
+  const explicitProjectGroups = new Map<string, RepoSummary[]>();
+  for (const repo of repos) {
+    const normalizedName = normalize(repo.name);
+    const match = normalizedName.match(/^([a-z0-9]+)\s+(?:frontend|backend)$/);
+    if (!match) continue;
+    const stem = match[1];
+    const group = explicitProjectGroups.get(stem) || [];
+    group.push(repo);
+    explicitProjectGroups.set(stem, group);
+  }
+
+  for (const [stem, group] of explicitProjectGroups) {
+    if (group.length >= 2 && normalizedQuery.includes(stem)) {
+      return { status: "group", repositories: group.slice(0, 4), stem };
+    }
+  }
+
   for (const [stem, group] of featuredGroups) {
     if (group.length >= 2 && normalizedQuery.includes(stem)) {
       return { status: "group", repositories: group.slice(0, 4), stem };
@@ -502,6 +523,18 @@ export async function resolveRepositories(query: string): Promise<RepositoryReso
 
   if (stem && featuredCandidates.length >= 2) {
     return { status: "group", repositories: featuredCandidates.slice(0, 4), stem };
+  }
+
+  // An explicit project name shared by the top matches means the user is
+  // asking about one multi-repository project (for example FrameFlux has a
+  // frontend and backend repository), not asking us to choose between them.
+  if (
+    stem &&
+    normalizedQuery.includes(stem) &&
+    candidates.length >= 2 &&
+    candidates.every((repo) => compact(repo.name).startsWith(stem))
+  ) {
+    return { status: "group", repositories: candidates.slice(0, 4), stem };
   }
 
   return { status: "ambiguous", repositories: candidates.slice(0, 5) };
