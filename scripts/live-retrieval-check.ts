@@ -15,6 +15,17 @@ assert(
   "Live discovery did not include FrameFlux-Backend."
 );
 
+const latestRepos = await getChatEvidence("latest repos");
+assert(latestRepos.kind === "list", "Natural latest-repository query should resolve to a live repository list.");
+assert(
+  latestRepos.repositories.length > 0,
+  "Latest repository query returned no public repositories."
+);
+assert(
+  latestRepos.repositories[0]?.updatedAt >= latestRepos.repositories[latestRepos.repositories.length - 1]?.updatedAt,
+  "Repository list should remain ordered by GitHub updated time."
+);
+
 const resolution = await resolveRepositories("FrameFlux");
 assert(
   resolution.status === "group" || resolution.status === "single",
