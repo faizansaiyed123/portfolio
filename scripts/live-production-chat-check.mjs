@@ -60,6 +60,10 @@ for (let attempt = 1; attempt <= 12; attempt += 1) {
         `Production AI integration is unavailable: ${payload.code} ${payload.error || ""}`
       );
     }
+
+    if (payload?.status === "inaccessible") {
+      throw new Error("Production incorrectly treated the public FrameFlux project as inaccessible.");
+    }
   } catch (error) {
     if (attempt === 12) throw error;
     console.log(`Production check not ready yet; retrying (${attempt}/12).`);
