@@ -49,6 +49,17 @@ assert(
   "Private repository route should protect the repository rather than exposing source."
 );
 
+const latestRepos = await request("latest repos");
+assert(latestRepos.response.status === 200, "Latest repository list should return HTTP 200.");
+assert(latestRepos.payload?.ok === true, "Latest repository list should be successful.");
+assert(
+  latestRepos.payload?.status === "answer" &&
+    latestRepos.payload?.kind === "list" &&
+    Array.isArray(latestRepos.payload?.repositories) &&
+    latestRepos.payload.repositories.length > 0,
+  "Latest repository query should return live repository data without requiring Gemini."
+);
+
 
 const casual = await request("Hi");
 assert(
