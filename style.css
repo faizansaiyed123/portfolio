@@ -38,7 +38,7 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .guide-top-button{display:inline-flex;align-items:center;gap:8px;padding:0 11px;font:700 9px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.08em}
 .guide-top-button:hover{border-color:var(--accent)}
 .guide-top-button kbd{padding:3px 5px;border:1px solid var(--line-strong);font:500 9px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;color:var(--faint);margin-left:3px}
-.live-dot,.guide-pulse{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px rgba(130,247,200,.08)}.live-dot{animation:ping 2.2s infinite}
+.guide-state-dot{display:block;width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px rgba(130,247,200,.08)}
 .theme-button{display:inline-flex;align-items:center;gap:7px;padding:0 10px;color:var(--muted);font:600 9px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}.theme-button:hover{color:var(--text);border-color:var(--line-strong)}.theme-indicator{width:10px;height:10px;border-radius:50%;background:var(--text)}
 .menu-button{display:none;width:40px;padding:0 10px}.menu-button span{display:block;width:16px;height:1px;background:var(--text);margin:4px 0;transition:transform .2s var(--ease)}
 .mobile-nav{display:none}
