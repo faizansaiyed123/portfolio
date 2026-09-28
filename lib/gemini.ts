@@ -120,6 +120,12 @@ export async function generateGroundedAnswer(
   }
 
   const model = process.env.GEMINI_MODEL || "gemini-flash-latest";
+  const fallbackModels = (process.env.GEMINI_FALLBACK_MODELS ||
+    "gemini-3.5-flash-lite,gemma-4-31b-it")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+  const models = [...new Set([model, ...fallbackModels])];
 
   const safeHistory = history
     .slice(-8)
@@ -181,28 +187,42 @@ Answer the question directly. Source links are rendered separately by the portfo
     }
   ];
 
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-goog-api-key": apiKey
-      },
-      body: JSON.stringify({
-        systemInstruction: {
-          parts: [{ text: systemInstruction }]
-        },
-        contents,
-        generationConfig: {
-          temperature: 0.2,
-          maxOutputTokens: 1_200
-        }
-      })
-    }
-  );
+  let lastRateLimit: GeminiApiError | null = null;
+  let lastProviderError: GeminiApiError | null = null;
 
-  if (!response.ok) {
+  for (const currentModel of models) {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(currentModel)}:generateContent`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey
+        },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: systemInstruction }]
+          },
+          contents,
+          generationConfig: {
+            temperature: 0.2,
+            maxOutputTokens: 1_200
+          }
+        })
+      }
+    );
+
+    if (response.ok) {
+      const payload = await response.json();
+      const answer = extractOutputText(payload);
+
+      if (!answer) {
+        throw new Error("Gemini returned no text response.");
+      }
+
+      return { answer, model: currentModel };
+    }
+
     const retryAfter = Number(response.headers.get("retry-after"));
     let providerMessage = "";
 
@@ -217,11 +237,20 @@ Answer the question directly. Source links are rendered separately by the portfo
     }
 
     if (response.status === 429) {
-      throw new GeminiApiError(
-        "The free Gemini API quota is temporarily exhausted. Please retry later.",
+      lastRateLimit = new GeminiApiError(
+        "The Gemini API quota is temporarily exhausted.",
         429,
         Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter : undefined
       );
+      continue;
+    }
+
+    if (response.status >= 500) {
+      lastProviderError = new GeminiApiError(
+        providerMessage || "The Gemini API could not complete the request.",
+        response.status
+      );
+      continue;
     }
 
     throw new GeminiApiError(
@@ -230,12 +259,11 @@ Answer the question directly. Source links are rendered separately by the portfo
     );
   }
 
-  const payload = await response.json();
-  const answer = extractOutputText(payload);
+  if (lastRateLimit) throw lastRateLimit;
+  if (lastProviderError) throw lastProviderError;
 
-  if (!answer) {
-    throw new Error("Gemini returned no text response.");
-  }
-
-  return { answer, model };
+  throw new GeminiApiError(
+    "The Gemini API could not complete the request.",
+    503
+  );
 }
