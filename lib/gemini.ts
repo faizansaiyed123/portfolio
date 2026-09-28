@@ -118,7 +118,7 @@ export async function generateGroundedAnswer(
     throw new Error("GEMINI_API_KEY is not configured.");
   }
 
-  const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
+  const model = process.env.GEMINI_MODEL || "gemini-flash-latest";
 
   const safeHistory = history
     .slice(-8)
