@@ -1,4 +1,4 @@
-import { rateLimit } from "../lib/cache.js";
+import { cacheConfigured, rateLimit } from "../lib/cache.js";
 import {
   GithubApiError,
   getChatEvidence,
@@ -161,6 +161,18 @@ export default {
       );
     }
 
+    if (process.env.VERCEL_ENV === "production" && !cacheConfigured()) {
+      return json(
+        {
+          ok: false,
+          code: "CACHE_NOT_CONFIGURED",
+          error: "The production chat service requires its rate-limit/cache store."
+        },
+        503,
+        origin
+      );
+    }
+
     const limit = await rateLimit(`ip:${clientIp(request)}`);
     if (!limit.success) {
       const retryAfter = Math.max(
@@ -234,7 +246,7 @@ export default {
         );
       }
 
-      if (evidence.kind === "private") {
+      if (evidence.kind === "inaccessible") {
         return json(
           {
             ok: true,
