@@ -396,7 +396,7 @@ function commonProjectStem(repos: RepoSummary[]) {
 }
 
 export type RepositoryResolution =
-  | { status: "none"; candidates: RepoSummary[]; privateHint?: boolean }
+  | { status: "none"; candidates: RepoSummary[]; privateHint?: boolean; protectedHint?: boolean }
   | { status: "single"; repositories: RepoSummary[] }
   | { status: "group"; repositories: RepoSummary[]; stem: string }
   | { status: "ambiguous"; repositories: RepoSummary[] };
@@ -414,19 +414,31 @@ export async function resolveRepositories(query: string): Promise<RepositoryReso
     .sort((a, b) => b.score - a.score);
 
   if (!scored.length) {
-    const explicit = query
-      .match(/(?:faizansaiyed123\/)?([A-Za-z0-9][A-Za-z0-9._-]{2,})/i)?.[1];
+    const explicitMatch = query.match(/(?:faizansaiyed123\/)?([A-Za-z0-9][A-Za-z0-9._-]*-[A-Za-z0-9._-]+)/i);
+    const stopWords = new Set([
+      "explain", "tell", "show", "open", "what", "which", "about", "project",
+      "repository", "repo", "github", "use", "using", "built", "does", "the"
+    ]);
+    const strippedTokens = query
+      .split(/\s+/)
+      .map((token) => token.replace(/[^a-z0-9]/gi, ""))
+      .filter((token) => token.length >= 3 && !stopWords.has(token));
+    const guessedName =
+      explicitMatch?.[1] ||
+      (strippedTokens.length >= 2 && strippedTokens.length <= 3
+        ? strippedTokens.join("-")
+        : null);
 
-    if (explicit) {
-      const guess = `${OWNER}/${explicit}`;
+    if (guessedName) {
+      const guess = `${OWNER}/${guessedName}`;
       try {
         const raw = await getRawRepository(guess);
         if (raw.private || raw.visibility !== "public") {
           return { status: "none", candidates: [], privateHint: true };
         }
       } catch (error) {
-        if (error instanceof GithubApiError && error.status === 403) {
-          return { status: "none", candidates: [], privateHint: true };
+        if (error instanceof GithubApiError && (error.status === 403 || error.status === 404)) {
+          return { status: "none", candidates: [], protectedHint: true };
         }
       }
     }
@@ -887,9 +899,9 @@ export async function getChatEvidence(question: string, history: Array<{ role: "
   }
 
   if (resolution.status === "none") {
-    if (resolution.privateHint) {
+    if (resolution.privateHint || resolution.protectedHint) {
       return {
-        kind: "private" as const,
+        kind: "inaccessible" as const,
         repositories: [],
         featuredRepositories: await getPortfolioFeaturedRepositories()
       };
