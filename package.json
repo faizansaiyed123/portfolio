@@ -5,7 +5,8 @@
   "description": "Secure serverless API for the portfolio's live GitHub project intelligence chatbot.",
   "type": "module",
   "scripts": {
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "test:live": "tsx scripts/live-retrieval-check.ts"
   },
   "dependencies": {
     "@upstash/ratelimit": "^2.0.7",
@@ -14,6 +15,7 @@
   },
   "devDependencies": {
     "typescript": "^5.9.2",
-    "@types/node": "^24.10.1"
+    "@types/node": "^24.10.1",
+    "tsx": "^4.19.2"
   }
 }
