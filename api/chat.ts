@@ -62,12 +62,12 @@ function header(request: NodeRequest | FetchLikeRequest, name: string) {
 }
 
 function allowedOrigins() {
-  return new Set(
-    (process.env.CORS_ORIGINS || DEFAULT_ORIGINS.join(","))
-      .split(",")
-      .map((value) => value.trim())
-      .filter(Boolean)
-  );
+  const configured = (process.env.CORS_ORIGINS || "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  return new Set([...DEFAULT_ORIGINS, ...configured]);
 }
 
 function corsHeaders(origin: string | null) {
