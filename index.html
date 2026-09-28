@@ -6,6 +6,7 @@
   <meta name="description" content="Faizan Saiyed — full-stack engineer building backend APIs, realtime systems, asynchronous workflows, data systems, and polished web interfaces.">
   <meta name="author" content="Faizan Saiyed">
   <meta name="theme-color" content="#0a0d0f">
+  <meta name="chat-api-url" content="https://faizan-portfolio-chat.vercel.app/api/chat">
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
   <link rel="stylesheet" href="./style.css?v=20260922-premium-01">
   <title>Faizan Saiyed — Backend / Systems / Full-Stack</title>
@@ -76,8 +77,8 @@
     </div>
   </div>
   <div class="footer-bottom shell">
-    <span>LOCAL GUIDE / NO EXTERNAL AI CALLS</span>
-    <span>STATIC SITE / SOURCE-GROUNDED</span>
+    <span>LIVE GUIDE / GITHUB + AI</span>
+    <span>STATIC SITE / GITHUB PAGES</span>
     <span>© <b id="year"></b> FAIZAN SAIYED</span>
     <a href="#top">BACK TO TOP ↑</a>
   </div>
@@ -96,13 +97,13 @@
         <path class="robot-scan" d="M12 14h20"></path>
       </svg>
     </span>
-    <span class="guide-launcher-copy"><small>PORTFOLIO GUIDE / LOCAL</small><b>Ask Faizan</b></span>
+    <span class="guide-launcher-copy"><small>PORTFOLIO GUIDE / LIVE</small><b>Ask Faizan</b></span>
     <span class="guide-launcher-hint">press /</span>
     <span class="guide-launcher-arrow">↗</span>
   </button>
   <aside class="guide-panel" id="guide-panel" hidden aria-label="Interactive portfolio guide">
     <div class="guide-head">
-      <div><span>FS / GUIDE ONLINE</span><h2>Choose how you want to explore.</h2></div>
+      <div><span>FS / LIVE GITHUB INTELLIGENCE</span><h2>Choose how you want to explore.</h2></div>
       <button id="guide-close" type="button" aria-label="Close guide">×</button>
     </div>
     <div class="guide-status">
@@ -114,10 +115,10 @@
       <button type="button" class="guide-mode" data-guide-mode="engineer" role="tab" aria-selected="false">Engineer</button>
       <button type="button" class="guide-mode" data-guide-mode="explorer" role="tab" aria-selected="false">Explorer</button>
     </div>
-    <div class="guide-thread" id="guide-thread" aria-live="polite"></div>
+    <div class="guide-thread" id="guide-thread" aria-live="polite"></div><div class="guide-evidence" id="guide-evidence" aria-live="polite"></div>
     <div class="guide-actions" id="guide-actions"></div>
     <form class="guide-input-row" id="guide-form">
-      <input id="guide-input" type="text" autocomplete="off" placeholder="Ask about projects, backend, stack..." aria-label="Ask the portfolio guide">
+      <input id="guide-input" type="text" autocomplete="off" placeholder="Ask about projects, GitHub, architecture, stack..." aria-label="Ask the portfolio guide">
       <button type="submit" aria-label="Send question">↗</button>
     </form>
     <div class="guide-specials">
@@ -125,7 +126,7 @@
       <button type="button" id="guide-challenge">⌁ Engineering challenge</button>
     </div>
     <div class="guide-footer-line">
-      <span><i></i> LOCAL / SOURCE-GROUNDED</span>
+      <span><i></i> LIVE / GITHUB-SOURCED</span>
       <button class="guide-restart" id="guide-restart" type="button">Restart</button>
     </div>
   </aside>
