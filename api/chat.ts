@@ -250,20 +250,8 @@ export default async function handler(
     );
   }
 
-  if (process.env.VERCEL_ENV === "production" && !cacheConfigured()) {
-    return json(
-      request,
-      response,
-      {
-        ok: false,
-        code: "CACHE_NOT_CONFIGURED",
-        error: "The production chat service requires its rate-limit/cache store."
-      },
-      503,
-      origin
-    );
-  }
-
+  // Upstash provides durable distributed rate limiting when configured.
+  // The built-in memory fallback keeps the free deployment usable when it is not.
   const limit = await rateLimit(`ip:${clientIp(request)}`);
   if (!limit.success) {
     const retryAfter = Math.max(
