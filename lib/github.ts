@@ -710,23 +710,22 @@ async function retrieveRepositoryEvidence(
 
 const technologyMatchers: Array<{ label: string; patterns: RegExp[]; languages?: string[] }> = [
   { label: "React", patterns: [/\breact\b/i, /@vitejs\/plugin-react/i], languages: ["JavaScript", "TypeScript"] },
-  { label: "Next.js", patterns: [/"next"\s*:/i], languages: ["JavaScript", "TypeScript"] },
+  { label: "Next.js", patterns: [/\bnext(?:\.js|js)\b/i, /"next"\s*:/i], languages: ["JavaScript", "TypeScript"] },
   { label: "FastAPI", patterns: [/\bfastapi\b/i], languages: ["Python"] },
   { label: "Flask", patterns: [/\bflask\b/i], languages: ["Python"] },
   { label: "Django", patterns: [/\bdjango\b/i], languages: ["Python"] },
-  { label: "TypeScript", patterns: [/"typescript"\s*:/i, /typescript/i], languages: ["TypeScript"] },
-  { label: "Tailwind CSS", patterns: [/tailwind/i] },
+  { label: "TypeScript", patterns: [/\btypescript\b/i], languages: ["TypeScript"] },
+  { label: "Tailwind CSS", patterns: [/\btailwind(?:\s+css)?\b/i] },
   { label: "PostgreSQL", patterns: [/postgres(?:ql)?/i, /psycopg/i] },
   { label: "Redis", patterns: [/\bredis\b/i] },
-  { label: "Docker", patterns: [/docker/i] },
+  { label: "Docker", patterns: [/\bdocker(?:file|\s+compose)?\b/i] },
   { label: "WebSockets", patterns: [/websocket|socket\.io/i] },
   { label: "FFmpeg", patterns: [/ffmpeg/i] }
 ];
 
 function detectTechnology(question: string) {
-  const normalized = normalize(question);
   return technologyMatchers.find((matcher) =>
-    matcher.patterns.some((pattern) => pattern.test(normalized))
+    matcher.patterns.some((pattern) => pattern.test(question))
   );
 }
 
@@ -742,39 +741,58 @@ export async function findRepositoriesUsingTechnology(question: string) {
       repo.topics.some((topic) => compact(topic).includes(compact(matcher.label)))
     )
     .concat(
-      repos
-        .filter((repo) => matcher.languages?.includes(repo.language || ""))
-        .slice(0, 20)
+      repos.filter((repo) => !matcher.languages || matcher.languages.includes(repo.language || ""))
     );
 
-  const unique = [...new Map(candidates.map((repo) => [repo.fullName, repo])).values()].slice(0, 24);
-  const matches: Array<RepoSummary & { evidencePath?: string }> = [];
+  const unique = [...new Map(candidates.map((repo) => [repo.fullName, repo])).values()].slice(0, 40);
+  const matches: Array<RepoSummary & {
+    evidencePath?: string;
+    evidenceContent?: string;
+  }> = [];
 
   for (let i = 0; i < unique.length; i += 6) {
     const batch = unique.slice(i, i + 6);
     const results = await Promise.all(batch.map(async (repo) => {
-      const depNames = ["package.json", "pyproject.toml", "requirements.txt", "Pipfile", "go.mod", "Cargo.toml"];
+      const depNames = [
+        "package.json",
+        "pyproject.toml",
+        "requirements.txt",
+        "requirements-dev.txt",
+        "Pipfile",
+        "go.mod",
+        "Cargo.toml"
+      ];
+
       for (const path of depNames) {
         try {
           const file = await getFile(repo.fullName, path, repo.defaultBranch);
           const candidateText = file.content.slice(0, 50_000);
+
           if (matcher.patterns.some((pattern) => pattern.test(candidateText))) {
-            return { repo, evidencePath: path };
+            return {
+              repo,
+              evidencePath: path,
+              evidenceContent: candidateText.slice(0, 8_000)
+            };
           }
         } catch {
           // Try the next dependency manifest.
         }
       }
 
-      if (repo.name.toLowerCase().includes(matcher.label.toLowerCase())) {
-        return { repo };
+      if (repo.name.toLowerCase().includes(matcher.label.toLowerCase().replace(".js", ""))) {
+        return {
+          repo,
+          evidencePath: undefined,
+          evidenceContent: "Repository name matched the requested technology."
+        };
       }
 
       return null;
     }));
 
     for (const result of results) {
-      if (result) matches.push({ ...result.repo, evidencePath: result.evidencePath });
+      if (result) matches.push({ ...result.repo, evidencePath: result.evidencePath, evidenceContent: result.evidenceContent });
     }
   }
 
