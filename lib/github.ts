@@ -199,7 +199,7 @@ export async function getRepositoryDetails(fullName: string): Promise<RepoDetail
         ...publicRepo,
         license: raw.license?.spdx_id || null,
         visibility: raw.visibility || "public",
-        sizeKb: Number(raw.size || publicRepo.stars || 0),
+        sizeKb: Number(raw.size || 0),
         watchers: Number(raw.watchers_count || 0)
       };
     },
@@ -784,7 +784,7 @@ export async function findRepositoriesUsingTechnology(question: string) {
   };
 }
 
-export async function getChatEvidence(question: string) {
+export async function getChatEvidence(question: string, history: Array<{ role: "user" | "assistant"; content: string }> = []) {
   const normalized = normalize(question);
   const isListQuery = /\b(show|list|which|what).*\b(repository|repositories|repos|projects|project)\b|\bgithub repositories\b|\bprojects has faizan built\b/.test(normalized);
   const tech = await findRepositoriesUsingTechnology(question);
@@ -839,7 +839,23 @@ export async function getChatEvidence(question: string) {
     };
   }
 
-  const resolution = await resolveRepositories(question);
+  let resolution = await resolveRepositories(question);
+
+  if (resolution.status === "none") {
+    const previousUserQuestion = [...history]
+      .reverse()
+      .find((message) => message.role === "user" && message.content.trim());
+
+    if (previousUserQuestion) {
+      const contextualResolution = await resolveRepositories(
+        `${previousUserQuestion.content} ${question}`
+      );
+
+      if (contextualResolution.status !== "none") {
+        resolution = contextualResolution;
+      }
+    }
+  }
 
   if (resolution.status === "ambiguous") {
     return {
