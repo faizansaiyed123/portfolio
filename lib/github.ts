@@ -330,7 +330,7 @@ export async function getRecentActivity(fullName: string): Promise<ActivityItem[
 
 async function getPortfolioFeaturedRepositories() {
   return cachedJson(
-    `portfolio:featured:v2:${PORTFOLIO_REPO}`,
+    `portfolio:featured:v3:${PORTFOLIO_REPO}`,
     async () => {
       const details = await getRepositoryDetails(PORTFOLIO_REPO);
       const sources = await Promise.allSettled([
