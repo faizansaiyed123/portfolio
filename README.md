@@ -13,21 +13,21 @@ It combines:
 - CSS-native signal visuals and subtle motion
 - Responsive navigation with keyboard support
 - Theme preference with local persistence and system fallback
-- A deterministic, frontend-only guided interview flow with predefined decision-tree responses
+- A deterministic, frontend-only guided portfolio experience with predefined decision-tree responses
 - Local profile image with a local fallback asset
 - Reduced-motion support
 
-## Guided interview flow
+## Guided portfolio experience
 
-The "Guided Interview" is a static interaction system, not an AI chatbot.
+The "Portfolio Guide" is a static interaction system for visitors exploring the site.
 
-The interviewer cannot enter arbitrary questions. Every step is rendered from predefined data in script.js, including:
+The visitor chooses from curated paths. Every step is rendered from predefined data in script.js, including:
 
 - Start Interview
 - Review Candidate
 - Ask Technical Questions
 - Ask Behavioral Questions
-- End Interview
+- Return / exit paths
 - Project, stack, contact, technical, and behavioral follow-up paths
 
 Responses, actions, and navigation are deterministic. The flow has no API calls, model calls, prompts, streaming, repository discovery, or external chat service.
