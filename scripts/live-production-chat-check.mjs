@@ -1,4 +1,4 @@
-const API_URL = "https://portfolio-saiyedfaizan842-9431.vercel.app/api/chat";
+const API_URL = "https://portfolio-zeta-sandy-t9r8wi4kkz.vercel.app/api/chat";
 const question = "Explain FrameFlux architecture and tell me which APIs it uses.";
 
 function sleep(ms) {
