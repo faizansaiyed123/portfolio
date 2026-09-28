@@ -23,11 +23,11 @@ The "Portfolio Guide" is a static interaction system for visitors exploring the 
 
 The visitor chooses from curated paths. Every step is rendered from predefined data in script.js, including:
 
-- Start Interview
-- Review Candidate
-- Ask Technical Questions
-- Ask Behavioral Questions
-- Return / exit paths
+- Explore projects
+- Explore the engineering approach
+- Explore the technical stack
+- Learn more about Faizan
+- Contact and source links
 - Project, stack, contact, technical, and behavioral follow-up paths
 
 Responses, actions, and navigation are deterministic. The flow has no API calls, model calls, prompts, streaming, repository discovery, or external chat service.
@@ -70,5 +70,5 @@ Keep asset paths relative so the site remains compatible with the project-site /
 
 - Update portfolio copy and links in index.html.
 - Update design tokens, layout, responsive behavior and motion in style.css.
-- Keep the guided interview data and interaction logic self-contained in script.js.
+- Keep the guided portfolio data and interaction logic self-contained in script.js.
 - Keep featured-project claims aligned with the real repositories.
