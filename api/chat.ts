@@ -206,6 +206,15 @@ function isRepositoryNameRequest(question: string) {
   return /\brepository\b|\brepo\b|\bgithub\b/.test(question.toLowerCase());
 }
 
+function isCasualConversation(question: string) {
+  const value = question.trim().toLowerCase().replace(/[!?.,]+$/g, "");
+  if (!value || value.length > 160) return false;
+
+  return /^(hi|hello|hey|hiya|yo|good morning|good afternoon|good evening|how are you|how's it going|how is it going|what's up|whats up|nice to meet you|thanks|thank you|thank you so much|who are you|what can you do|tell me a joke)$/.test(
+    value
+  );
+}
+
 export default async function handler(
   request: NodeRequest | FetchLikeRequest,
   response?: NodeResponse
@@ -317,6 +326,38 @@ export default async function handler(
   }
 
   try {
+    if (isCasualConversation(question)) {
+      const aiResponse = await generateGroundedAnswer(
+        question,
+        history,
+        {
+          kind: "general",
+          repositories: [],
+          evidence: [],
+          featuredRepositories: []
+        },
+        "conversation"
+      );
+
+      return json(
+        request,
+        response,
+        {
+          ok: true,
+          status: "answer",
+          answer: aiResponse.answer,
+          model: aiResponse.model,
+          kind: "conversation",
+          repositories: [],
+          sources: [],
+          featuredRepositories: [],
+          activity: {}
+        },
+        200,
+        origin
+      );
+    }
+
     const evidence = await getChatEvidence(question, history);
     const common = evidencePayload(evidence);
 
