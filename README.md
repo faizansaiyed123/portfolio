@@ -107,7 +107,7 @@ Then add these environment variables in Vercel:
 
 `OPENAI_API_KEY` — required for AI responses.
 
-`OPENAI_MODEL` — optional; defaults to `gpt-6-luna`.
+`OPENAI_MODEL` — optional; defaults to `gpt-5.6-luna`.
 
 `GITHUB_OWNER` — defaults to `faizansaiyed123`.
 
