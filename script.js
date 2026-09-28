@@ -607,7 +607,7 @@
         await appendMessage(message, "bot", true);
         renderLiveResult(payload);
         if (renderChoicesAfter) renderChoices(modeProfiles[guideState.mode].choices);
-        guideState.history.push({ role: "bot", content: message });
+        guideState.history.push({ role: "assistant", content: message });
         return;
       }
 
@@ -619,7 +619,7 @@
       await appendMessage(answer, "bot", true);
       renderLiveResult(payload);
 
-      guideState.history.push({ role: "bot", content: answer });
+      guideState.history.push({ role: "assistant", content: answer });
 
       if (renderChoicesAfter) {
         renderChoices([
@@ -692,7 +692,7 @@
     const choices = id === "start" ? modeProfiles[guideState.mode].choices : node.choices;
 
     await appendMessage(message, "bot", true);
-    guideState.history.push({ role: "bot", content: message });
+    guideState.history.push({ role: "assistant", content: message });
     renderChoices(choices);
   };
 
