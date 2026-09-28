@@ -517,9 +517,9 @@
   ) => {
     if (
       guideState.typing ||
-      guideState.tourRunning ||
       guideState.livePending ||
-      !question
+      !question ||
+      (guideState.tourRunning && !options.allowDuringTour)
     ) return;
 
     const appendUser = options.appendUser !== false;
@@ -527,7 +527,7 @@
 
     if (appendUser && userLabel) {
       await appendMessage(userLabel, "user");
-      guideState.history.push({ role: "user", text: userLabel });
+      guideState.history.push({ role: "user", content: userLabel });
     }
 
     guideState.livePending = true;
@@ -595,7 +595,7 @@
         if (renderChoicesAfter) renderChoices(modeProfiles[guideState.mode].choices);
         guideState.history.push({
           role: "bot",
-          text: payload.message || "Several public repositories matched."
+          content: payload.message || "Several public repositories matched."
         });
         return;
       }
@@ -619,7 +619,7 @@
       await appendMessage(answer, "bot", true);
       renderLiveResult(payload);
 
-      guideState.history.push({ role: "bot", text: answer });
+      guideState.history.push({ role: "bot", content: answer });
 
       if (renderChoicesAfter) {
         renderChoices([
@@ -830,7 +830,7 @@
     await askLiveQuestion(
       liveGuideQueries.projects,
       null,
-      { appendUser: false, renderChoicesAfter: false }
+      { appendUser: false, renderChoicesAfter: false, allowDuringTour: true }
     );
 
     scrollToSection("systems");
@@ -933,7 +933,7 @@
 
     if (intent === "__tour__") {
       await appendMessage(value, "user");
-      guideState.history.push({ role: "user", text: value });
+      guideState.history.push({ role: "user", content: value });
       return runTour();
     }
 
