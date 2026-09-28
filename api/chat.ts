@@ -1,6 +1,6 @@
 export const runtime = "nodejs";
 
-import { cacheConfigured, rateLimit } from "../lib/cache.js";
+import { rateLimit } from "../lib/cache.js";
 import {
   GithubApiError,
   getChatEvidence,
