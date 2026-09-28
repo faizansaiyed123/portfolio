@@ -406,6 +406,31 @@ export default async function handler(
       );
     }
 
+    // Repository list requests are already answered by live GitHub metadata.
+    // Keep them independent from the AI provider so "latest repos" remains
+    // useful even when Gemini has a transient outage or quota issue.
+    if (evidence.kind === "list") {
+      const latest = (common.repositories || []).slice(0, 8);
+      const names = latest.map((repo: any) => repo.name).filter(Boolean);
+      const answer = names.length
+        ? `I found the current public repository set. The latest GitHub-updated repositories include: ${names.join(", ")}.`
+        : "I found the current public repository set, but there are no public repositories to display.";
+
+      return json(
+        request,
+        response,
+        {
+          ok: true,
+          status: "answer",
+          answer,
+          kind: "list",
+          ...common
+        },
+        200,
+        origin
+      );
+    }
+
     const aiResponse =
       isOpenRequest(question) && isRepositoryNameRequest(question)
         ? null
