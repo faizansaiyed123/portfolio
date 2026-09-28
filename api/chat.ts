@@ -61,21 +61,12 @@ function header(request: NodeRequest | FetchLikeRequest, name: string) {
   return typeof value === "string" ? value : null;
 }
 
-function allowedOrigins() {
-  const configured = (process.env.CORS_ORIGINS || "")
-    .split(",")
-    .map((value) => value.trim())
-    .filter(Boolean);
-
-  return new Set([...DEFAULT_ORIGINS, ...configured]);
-}
-
 function corsHeaders(origin: string | null) {
-  const origins = allowedOrigins();
-  const allowOrigin = origin && origins.has(origin) ? origin : DEFAULT_ORIGINS[0];
-
+  // This endpoint is an intentionally public, unauthenticated portfolio API.
+  // CORS is browser compatibility here, not an access-control boundary;
+  // rate limiting remains the abuse-control mechanism.
   return {
-    "Access-Control-Allow-Origin": allowOrigin,
+    "Access-Control-Allow-Origin": origin || "*",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Vary": "Origin",
@@ -222,6 +213,11 @@ export default async function handler(
   const origin = header(request, "origin");
   const method = request.method || "GET";
 
+  console.log("[api/chat] request", {
+    method,
+    origin: origin || "none"
+  });
+
   if (method === "OPTIONS") {
     return emptyResponse(response, 204, origin);
   }
@@ -232,20 +228,6 @@ export default async function handler(
       response,
       { ok: false, code: "METHOD_NOT_ALLOWED", error: "Use POST /api/chat." },
       405,
-      origin
-    );
-  }
-
-  if (origin && !allowedOrigins().has(origin)) {
-    return json(
-      request,
-      response,
-      {
-        ok: false,
-        code: "ORIGIN_NOT_ALLOWED",
-        error: "This client origin is not allowed."
-      },
-      403,
       origin
     );
   }
