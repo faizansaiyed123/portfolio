@@ -408,6 +408,27 @@ export async function resolveRepositories(query: string): Promise<RepositoryReso
   ]);
   const featuredSet = new Set(featured.map((value) => value.toLowerCase()));
 
+  // Resolve a portfolio project group from the live links in the portfolio README.
+  // This prevents ordinary conversational words from overpowering an explicit
+  // project name such as "FrameFlux" or "Telemetry".
+  const featuredGroups = new Map<string, RepoSummary[]>();
+  for (const fullName of featured) {
+    const repo = repos.find((item) => item.fullName.toLowerCase() === fullName.toLowerCase());
+    if (!repo) continue;
+    const stem = normalize(repo.name).split(/\\s+/)[0];
+    if (!stem || stem.length < 4) continue;
+    const group = featuredGroups.get(stem) || [];
+    group.push(repo);
+    featuredGroups.set(stem, group);
+  }
+
+  const normalizedQuery = normalize(query);
+  for (const [stem, group] of featuredGroups) {
+    if (group.length >= 2 && normalizedQuery.includes(stem)) {
+      return { status: "group", repositories: group.slice(0, 4), stem };
+    }
+  }
+
   // Check an explicitly named repository before fuzzy scoring, so generic
   // tokens such as "backend" cannot mask a private/inaccessible exact match.
   const explicitRepositoryMatch = query.match(/([A-Za-z0-9][A-Za-z0-9._-]*-[A-Za-z0-9._-]+)/i)?.[1];
