@@ -42,3 +42,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: npm run test:live
+
+      - name: API contract checks
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npm run test:api
