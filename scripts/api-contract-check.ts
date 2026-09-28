@@ -1,5 +1,5 @@
 process.env.VERCEL_ENV = "development";
-delete process.env.OPENAI_API_KEY;
+delete process.env.GEMINI_API_KEY;
 
 const { default: handler } = await import("../api/chat.ts");
 
