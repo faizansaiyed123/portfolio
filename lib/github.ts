@@ -1015,6 +1015,11 @@ export async function getChatEvidence(question: string, history: Array<{ role: "
       };
     }
 
+    const featured = await getPortfolioFeaturedRepositories();
+    const publicRepos = await listPublicRepositories();
+    const featuredRepos = publicRepos.filter((repo) =>
+      featured.some((name) => name.toLowerCase() === repo.fullName.toLowerCase())
+    );
     const fallback = featuredRepos.slice(0, 4);
 
     return {
