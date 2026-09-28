@@ -23,6 +23,7 @@ function assert(condition: unknown, message: string) {
 }
 
 const open = await request("Open the GitHub repository for FrameFlux.");
+console.log("Open repository payload:", JSON.stringify(open.payload));
 assert(open.response.status === 200, "Open repository route should return HTTP 200.");
 assert(open.payload?.ok === true, "Open repository response should be successful.");
 assert(open.payload?.status === "links", "Open repository response should return links.");
