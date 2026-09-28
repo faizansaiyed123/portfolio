@@ -423,6 +423,27 @@ export async function resolveRepositories(query: string): Promise<RepositoryReso
   }
 
   const normalizedQuery = normalize(query);
+
+  // Resolve explicit multi-repository project names before fuzzy scoring.
+  // Projects such as FrameFlux and Telemetry are split into frontend/backend
+  // repositories, but the project name itself is unambiguous.
+  const explicitProjectGroups = new Map<string, RepoSummary[]>();
+  for (const repo of repos) {
+    const normalizedName = normalize(repo.name);
+    const match = normalizedName.match(/^([a-z0-9]+)\s+(?:frontend|backend)$/);
+    if (!match) continue;
+    const stem = match[1];
+    const group = explicitProjectGroups.get(stem) || [];
+    group.push(repo);
+    explicitProjectGroups.set(stem, group);
+  }
+
+  for (const [stem, group] of explicitProjectGroups) {
+    if (group.length >= 2 && normalizedQuery.includes(stem)) {
+      return { status: "group", repositories: group.slice(0, 4), stem };
+    }
+  }
+
   for (const [stem, group] of featuredGroups) {
     if (group.length >= 2 && normalizedQuery.includes(stem)) {
       return { status: "group", repositories: group.slice(0, 4), stem };
