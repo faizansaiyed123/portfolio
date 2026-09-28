@@ -328,7 +328,7 @@ export async function getRecentActivity(fullName: string): Promise<ActivityItem[
   );
 }
 
-export async function getPortfolioFeaturedRepositories() {
+async function getPortfolioFeaturedRepositories() {
   return cachedJson(
     `portfolio:featured:v3:${PORTFOLIO_REPO}`,
     async () => {
