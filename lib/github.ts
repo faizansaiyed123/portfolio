@@ -993,13 +993,30 @@ export async function getChatEvidence(question: string, history: Array<{ role: "
     }
 
     const featured = await getPortfolioFeaturedRepositories();
-    const fallback = (await listPublicRepositories())
-      .filter((repo) => featured.map((name) => name.toLowerCase()).includes(repo.fullName.toLowerCase()))
-      .slice(0, 4);
+    const publicRepos = await listPublicRepositories();
+    const featuredRepos = publicRepos.filter((repo) =>
+      featured.some((name) => name.toLowerCase() === repo.fullName.toLowerCase())
+    );
+
+    const portfolioWideQuery =
+      /\b(what did (?:faizan|you) build|what have (?:faizan|you) built|what projects? (?:did|has|have) (?:faizan|you) (?:build|built)|tell me about (?:faizan'?s|your) projects?|what is in (?:faizan'?s|your) portfolio|across (?:the )?(?:portfolio|projects?))\b/i.test(
+        normalized
+      );
+
+    if (portfolioWideQuery && featuredRepos.length) {
+      const detail = await retrieveRepositoryEvidence(featuredRepos.slice(0, 4), question);
+      return {
+        kind: "portfolio" as const,
+        ...detail,
+        featuredRepositories: featured
+      };
+    }
+
+    const fallback = featuredRepos.slice(0, 4);
 
     return {
       kind: "general" as const,
-      repositories: fallback.length ? fallback : (await listPublicRepositories()).slice(0, 8),
+      repositories: fallback.length ? fallback : publicRepos.slice(0, 8),
       evidence: [],
       featuredRepositories: featured
     };
