@@ -958,6 +958,28 @@ export async function getChatEvidence(question: string, history: Array<{ role: "
     };
   }
 
+  const portfolioWideQuery =
+    /\\b(what did (?:faizan|you) build|what have (?:faizan|you) built|what did you build|what have you built|what have i built|what projects? (?:did|has|have) (?:faizan|you) (?:build|built)|what projects? have you built|tell me about (?:faizan'?s|your) projects?|what is in (?:faizan'?s|your) portfolio|across (?:the )?(?:portfolio|projects?))\\b/i.test(
+      normalized
+    );
+
+  if (portfolioWideQuery) {
+    const featured = await getPortfolioFeaturedRepositories();
+    const publicRepos = await listPublicRepositories();
+    const featuredRepos = publicRepos.filter((repo) =>
+      featured.some((name) => name.toLowerCase() === repo.fullName.toLowerCase())
+    );
+
+    if (featuredRepos.length) {
+      const detail = await retrieveRepositoryEvidence(featuredRepos.slice(0, 4), question);
+      return {
+        kind: "portfolio" as const,
+        ...detail,
+        featuredRepositories: featured
+      };
+    }
+  }
+
   let resolution = await resolveRepositories(question);
 
   if (resolution.status === "none") {
@@ -990,26 +1012,6 @@ export async function getChatEvidence(question: string, history: Array<{ role: "
         kind: "inaccessible" as const,
         repositories: [],
         featuredRepositories: await getPortfolioFeaturedRepositories()
-      };
-    }
-
-    const featured = await getPortfolioFeaturedRepositories();
-    const publicRepos = await listPublicRepositories();
-    const featuredRepos = publicRepos.filter((repo) =>
-      featured.some((name) => name.toLowerCase() === repo.fullName.toLowerCase())
-    );
-
-    const portfolioWideQuery =
-      /\b(what did (?:faizan|you) build|what have (?:faizan|you) built|what did you build|what have you built|what have i built|what projects? (?:did|has|have) (?:faizan|you) (?:build|built)|tell me about (?:faizan'?s|your) projects?|what is in (?:faizan'?s|your) portfolio|across (?:the )?(?:portfolio|projects?))\b/i.test(
-        normalized
-      );
-
-    if (portfolioWideQuery && featuredRepos.length) {
-      const detail = await retrieveRepositoryEvidence(featuredRepos.slice(0, 4), question);
-      return {
-        kind: "portfolio" as const,
-        ...detail,
-        featuredRepositories: featured
       };
     }
 
