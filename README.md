@@ -105,7 +105,7 @@ Then add these environment variables in Vercel:
 
 `GEMINI_API_KEY` — required for AI responses. Google AI Studio currently offers a free Gemini API tier with free input and output tokens for supported models.
 
-`GEMINI_MODEL` — optional; defaults to `gemini-3.8-flash`.
+`GEMINI_MODEL` — optional; defaults to `gemini-flash-latest`.
 
 `GITHUB_OWNER` — defaults to `faizansaiyed123`.
 
