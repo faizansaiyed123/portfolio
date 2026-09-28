@@ -415,7 +415,7 @@ export async function resolveRepositories(query: string): Promise<RepositoryReso
   for (const fullName of featured) {
     const repo = repos.find((item) => item.fullName.toLowerCase() === fullName.toLowerCase());
     if (!repo) continue;
-    const stem = normalize(repo.name).split(/\\s+/)[0];
+    const stem = normalize(repo.name).split(/\s+/)[0];
     if (!stem || stem.length < 4) continue;
     const group = featuredGroups.get(stem) || [];
     group.push(repo);
