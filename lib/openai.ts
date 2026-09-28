@@ -109,7 +109,7 @@ export async function generateGroundedAnswer(
   }
 
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-  const model = process.env.OPENAI_MODEL || "gpt-6-luna";
+  const model = process.env.OPENAI_MODEL || "gpt-5.6-luna";
 
   const safeHistory = history
     .slice(-8)
