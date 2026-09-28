@@ -149,7 +149,7 @@
     });
   });
 
-  /* ---------- Portfolio guide / live GitHub intelligence ---------- */
+/* ---------- Portfolio guide / deterministic interview flow ---------- */
   const guidePanel = $("#guide-panel");
   const guideLauncher = $("#guide-launcher");
   const guideTopButton = $("#guide-top-button");
@@ -157,176 +157,262 @@
   const guideThread = $("#guide-thread");
   const guideActions = $("#guide-actions");
   const guideRestart = $("#guide-restart");
-  const guideInput = $("#guide-input");
-  const guideForm = $("#guide-form");
-  const guideTour = $("#guide-tour");
-  const guideChallenge = $("#guide-challenge");
+  const guideDock = $("#guide-dock");
   const guideContext = $("#guide-context");
   const guideProgress = $("#guide-progress");
-  const guideDock = $("#guide-dock");
-  const guideModes = $$(".guide-mode");
-  const guideEvidence = $("#guide-evidence");
-
-  const configuredChatApiUrl =
-    document.querySelector('meta[name="chat-api-url"]')?.getAttribute("content")?.trim() || "";
-  const CHAT_API_URL =
-    configuredChatApiUrl ||
-    "https://faizan-portfolio-chat.vercel.app/api/chat";
 
   const guideState = {
-    mode: "recruiter",
     history: [],
-    path: new Set(),
+    path: [],
     typing: false,
-    challengeIndex: 0,
-    tourRunning: false,
-    livePending: false,
-    liveController: null
+    currentNode: "start"
   };
 
-  try {
-    guideState.mode = sessionStorage.getItem("portfolio-guide-mode") || "recruiter";
-  } catch {}
-  if (!["recruiter", "engineer", "explorer"].includes(guideState.mode)) guideState.mode = "recruiter";
-
-  const modeProfiles = {
-    recruiter: {
-      label: "RECRUITER",
-      placeholder: "Ask what was built, what stands out, or how to contact...",
-      intro: "Recruiter lens active. I’ll keep the signal concise, with live GitHub evidence behind project answers.",
-      choices: [
-        ["Show the strongest project signal", "projects"],
-        ["What is the engineering focus?", "method"],
-        ["What is the stack?", "stack"],
-        ["Contact Faizan", "contact"]
-      ]
-    },
-    engineer: {
-      label: "ENGINEER",
-      placeholder: "Ask about architecture, state, queues, security, realtime...",
-      intro: "Engineer lens active. I’ll use the current repositories to explain architecture, state, persistence, realtime flow, security, and verification.",
-      choices: [
-        ["Deep dive FrameFlux", "frameflux"],
-        ["Deep dive Telemetry", "telemetry"],
-        ["Run an engineering challenge", "__challenge__"],
-        ["Show the engineering method", "method"]
-      ]
-    },
-    explorer: {
-      label: "EXPLORER",
-      placeholder: "Ask anything about the portfolio or GitHub projects...",
-      intro: "Explorer lens active. Ask naturally about projects, repositories, architecture, technologies, activity, or contact.",
-      choices: [
-        ["Show the public repositories", "projects"],
-        ["Take the guided tour", "__tour__"],
-        ["Run an engineering challenge", "__challenge__"],
-        ["Open the stack", "stack"],
-        ["Contact Faizan", "contact"]
-      ]
-    }
-  };
-
-  const liveGuideQueries = {
-    projects:
-      "What public GitHub repositories has Faizan built? Summarize the current public repository set and identify which repositories are highlighted by the portfolio.",
-    frameflux:
-      "Explain FrameFlux from its current public GitHub repositories. Cover what it does, why it was built, how it works, main features, architecture, technologies, important files, APIs or external services, and how the parts work together. Use only verifiable repository evidence.",
-    telemetry:
-      "Explain Telemetry from its current public GitHub repositories. Cover what it does, why it was built, how it works, main features, architecture, technologies, important files, APIs or external services, and how the parts work together. Use only verifiable repository evidence.",
-    stack:
-      "What technologies and frameworks are verifiably used across Faizan's current public repositories? Explain the evidence rather than relying on a hardcoded resume list."
-  };
-
-  const guideTree = {
+  const interviewFlow = {
     start: {
-      message: modeProfiles[guideState.mode].intro,
-      choices: modeProfiles[guideState.mode].choices
+      context: "INTERVIEW",
+      message: "Welcome! How would you like to proceed with the interview?",
+      choices: [
+        ["Start Interview", "start-interview"],
+        ["Review Candidate", "review-candidate"],
+        ["Ask Technical Questions", "technical"],
+        ["Ask Behavioral Questions", "behavioral"],
+        ["End Interview", "end"]
+      ]
+    },
+    "start-interview": {
+      context: "START",
+      message: "Let's begin with a structured interview. Choose the area you want to cover first.",
+      choices: [
+        ["Review Candidate", "review-candidate"],
+        ["Ask Technical Questions", "technical"],
+        ["Ask Behavioral Questions", "behavioral"],
+        ["Back to Main Menu", "start"]
+      ]
+    },
+    "review-candidate": {
+      context: "CANDIDATE",
+      message: "Faizan Saiyed is a full-stack engineer focused on backend APIs, realtime systems, asynchronous workflows, data systems, and polished web interfaces. What would you like to review?",
+      choices: [
+        ["Review Selected Projects", "projects"],
+        ["Review Engineering Stack", "stack"],
+        ["Review Engineering Approach", "method"],
+        ["Open Contact", "contact"],
+        ["Back to Main Menu", "start"]
+      ]
+    },
+    projects: {
+      context: "PROJECTS",
+      message: "Two systems are presented as the selected casebook: FrameFlux for asynchronous media workflows and Telemetry for realtime observability.",
+      choices: [
+        ["Review FrameFlux", "frameflux"],
+        ["Review Telemetry", "telemetry"],
+        ["Open Work Casebook", "goto-work"],
+        ["Back to Candidate Review", "review-candidate"]
+      ]
+    },
+    frameflux: {
+      context: "FRAMEFLUX",
+      message: "FrameFlux keeps heavy media work out of the request path. The design uses explicit upload and processing state, validation, background jobs, progress, retries, cancellation, PostgreSQL, Redis/ARQ, FastAPI, and FFmpeg.",
+      choices: [
+        ["Open FrameFlux Case Study", "goto-frameflux"],
+        ["Open Backend Repository", "link-frameflux-backend"],
+        ["Open Frontend Repository", "link-frameflux-frontend"],
+        ["Back to Projects", "projects"]
+      ]
+    },
+    telemetry: {
+      context: "TELEMETRY",
+      message: "Telemetry models live system state for anomaly detection, persistence, alert lifecycle, authenticated streaming, and a realtime dashboard using FastAPI, PostgreSQL, WebSockets, React, and TypeScript.",
+      choices: [
+        ["Open Telemetry Case Study", "goto-telemetry"],
+        ["Open Backend Repository", "link-telemetry-backend"],
+        ["Open Frontend Repository", "link-telemetry-frontend"],
+        ["Back to Projects", "projects"]
+      ]
+    },
+    stack: {
+      context: "STACK",
+      message: "The selected systems provide direct evidence of backend APIs, persistence, asynchronous jobs, realtime streaming, frontend product interfaces, and automated verification.",
+      choices: [
+        ["Review Backend Stack", "stack-backend"],
+        ["Review Frontend Stack", "stack-frontend"],
+        ["Review Systems Stack", "stack-systems"],
+        ["Back to Candidate Review", "review-candidate"]
+      ]
+    },
+    "stack-backend": {
+      context: "STACK / BACKEND",
+      message: "Backend: Python, FastAPI, Flask, Pydantic, SQLAlchemy, Alembic, Uvicorn, and Docker. These cover APIs, validation, persistence, migrations, and deployment/runtime concerns.",
+      choices: [
+        ["Ask Backend Questions", "technical-backend"],
+        ["Back to Stack", "stack"]
+      ]
+    },
+    "stack-frontend": {
+      context: "STACK / FRONTEND",
+      message: "Frontend: React, Next.js, TypeScript, Vite, and Tailwind CSS. The portfolio itself is intentionally framework-free and uses plain HTML, CSS, and JavaScript.",
+      choices: [
+        ["Ask Frontend Questions", "technical-frontend"],
+        ["Back to Stack", "stack"]
+      ]
+    },
+    "stack-systems": {
+      context: "STACK / SYSTEMS",
+      message: "Systems: PostgreSQL for durable state, Redis and ARQ for background work, WebSockets for live updates, FFmpeg for media processing, and GitHub Actions/Playwright for verification.",
+      choices: [
+        ["Ask System Design Questions", "technical-system-design"],
+        ["Back to Stack", "stack"]
+      ]
     },
     method: {
-      message: "The repeated engineering moves are to separate expensive work, keep authority on the backend, validate before spending compute, and verify behavior from the outside in.",
+      context: "APPROACH",
+      message: "The repeated engineering moves are explicit state, backend authority, validation before expensive work, and verification from the outside in.",
       choices: [
-        ["Show the current projects", "projects"],
-        ["Ask the live GitHub stack", "stack"],
-        ["Back to start", "start"]
+        ["Open Systems Thinking", "goto-systems"],
+        ["Review Projects", "projects"],
+        ["Back to Candidate Review", "review-candidate"]
+      ]
+    },
+    technical: {
+      context: "TECHNICAL",
+      message: "Select the technical area you'd like to evaluate:",
+      choices: [
+        ["Frontend", "technical-frontend"],
+        ["Backend", "technical-backend"],
+        ["Database", "technical-database"],
+        ["System Design", "technical-system-design"],
+        ["Git / GitHub", "technical-git"]
+      ]
+    },
+    "technical-frontend": {
+      context: "TECHNICAL / FRONTEND",
+      message: "Suggested question: How would you structure a frontend that consumes backend-owned state without duplicating business authority? Evaluation focus: state boundaries, API contracts, user feedback, and testability.",
+      choices: [
+        ["Next Technical Area", "technical"],
+        ["Review Frontend Stack", "stack-frontend"],
+        ["Back to Main Menu", "start"]
+      ]
+    },
+    "technical-backend": {
+      context: "TECHNICAL / BACKEND",
+      message: "Suggested question: How would you design a long-running operation so the request does not have to stay open? Evaluation focus: explicit job state, retries, cancellation, idempotency, and observability.",
+      choices: [
+        ["Next Technical Area", "technical"],
+        ["Review FrameFlux", "frameflux"],
+        ["Back to Main Menu", "start"]
+      ]
+    },
+    "technical-database": {
+      context: "TECHNICAL / DATABASE",
+      message: "Suggested question: Where should durable workflow state live, and what should be safe to reconstruct? Evaluation focus: ownership, transaction boundaries, indexing, migrations, and recovery after failure.",
+      choices: [
+        ["Next Technical Area", "technical"],
+        ["Review Systems Stack", "stack-systems"],
+        ["Back to Main Menu", "start"]
+      ]
+    },
+    "technical-system-design": {
+      context: "TECHNICAL / SYSTEM DESIGN",
+      message: "Suggested question: A media request can take minutes. Walk through a design that keeps the API responsive while still exposing progress and failure state. Evaluation focus: queues, workers, state machines, backpressure, and status visibility.",
+      choices: [
+        ["Next Technical Area", "technical"],
+        ["Review FrameFlux", "frameflux"],
+        ["Back to Main Menu", "start"]
+      ]
+    },
+    "technical-git": {
+      context: "TECHNICAL / GIT",
+      message: "Suggested question: How do you keep a multi-part feature safe while it is being implemented? Evaluation focus: small commits, focused branches, reviewable changes, verification, and clear history.",
+      choices: [
+        ["Next Technical Area", "technical"],
+        ["Open GitHub", "link-github"],
+        ["Back to Main Menu", "start"]
+      ]
+    },
+    behavioral: {
+      context: "BEHAVIORAL",
+      message: "Select the behavioral area you'd like to evaluate:",
+      choices: [
+        ["Ownership", "behavioral-ownership"],
+        ["Problem Solving", "behavioral-problem-solving"],
+        ["Communication", "behavioral-communication"],
+        ["Reliability", "behavioral-reliability"]
+      ]
+    },
+    "behavioral-ownership": {
+      context: "BEHAVIORAL / OWNERSHIP",
+      message: "Suggested question: Tell me about a system where you had to own the problem beyond the first implementation. Follow-up focus: trade-offs, verification, maintenance, and what changed after feedback.",
+      choices: [
+        ["Next Behavioral Area", "behavioral"],
+        ["Review Engineering Approach", "method"],
+        ["Back to Main Menu", "start"]
+      ]
+    },
+    "behavioral-problem-solving": {
+      context: "BEHAVIORAL / PROBLEM SOLVING",
+      message: "Suggested question: Describe a difficult failure mode you found and how you narrowed it down. Follow-up focus: evidence, hypotheses, debugging discipline, and the final system change.",
+      choices: [
+        ["Next Behavioral Area", "behavioral"],
+        ["Review Projects", "projects"],
+        ["Back to Main Menu", "start"]
+      ]
+    },
+    "behavioral-communication": {
+      context: "BEHAVIORAL / COMMUNICATION",
+      message: "Suggested question: Explain a technical decision to a teammate who does not own the same part of the system. Follow-up focus: clarity, constraints, alternatives, and shared understanding.",
+      choices: [
+        ["Next Behavioral Area", "behavioral"],
+        ["Review Engineering Approach", "method"],
+        ["Back to Main Menu", "start"]
+      ]
+    },
+    "behavioral-reliability": {
+      context: "BEHAVIORAL / RELIABILITY",
+      message: "Suggested question: What do you do when a system is technically working but difficult to trust? Follow-up focus: tests, observability, failure boundaries, documentation, and repeatable verification.",
+      choices: [
+        ["Next Behavioral Area", "behavioral"],
+        ["Review Systems Thinking", "goto-systems"],
+        ["Back to Main Menu", "start"]
       ]
     },
     contact: {
-      message: "The direct channel is email. The portfolio opens your mail client instead of using a third-party contact form.",
+      context: "CONTACT",
+      message: "For a direct conversation, use the contact section or connect through the public profiles linked there.",
       choices: [
         ["Open Contact", "goto-contact"],
-        ["Open GitHub", "github"],
-        ["Back to start", "start"]
+        ["Open LinkedIn", "link-linkedin"],
+        ["Open GitHub", "link-github"],
+        ["Back to Candidate Review", "review-candidate"]
       ]
     },
-    github: {
-      message: "Faizan's public GitHub profile is available directly. Repository discovery in this assistant is live, so new public repositories can appear without updating this page.",
+    end: {
+      context: "END",
+      message: "Interview flow complete. This guide is deterministic: every response and next step comes from predefined interview paths.",
       choices: [
-        ["Show public repositories", "projects"],
-        ["Back to start", "start"]
+        ["Restart Interview", "start"],
+        ["Open Contact", "goto-contact"],
+        ["Close Guide", "close"]
       ]
     }
   };
 
-  const challengeSet = [
-    {
-      question: "A large upload drops at 72%. What should survive the failed request?",
-      choices: [
-        ["The upload state + received chunks", "durable"],
-        ["Only browser memory", "wrong"],
-        ["Nothing; start over", "wrong"]
-      ],
-      answers: {
-        durable: "Correct. A resumable workflow needs explicit upload state so a dropped request does not erase already accepted work.",
-        wrong: "That turns a resumable workflow into a restart workflow. The design is based on explicit upload state."
-      }
-    },
-    {
-      question: "The dashboard shows an alert as resolved, but the server still says active. Which side owns the truth?",
-      choices: [
-        ["The backend lifecycle", "backend"],
-        ["Whichever screen the user trusts", "wrong"],
-        ["The browser’s local state", "wrong"]
-      ],
-      answers: {
-        backend: "Exactly. The backend should remain authoritative for alert lifecycle and authorization; the browser renders that state.",
-        wrong: "The interface can display state, but it should not become the authority for security or lifecycle transitions."
-      }
-    },
-    {
-      question: "A file has an allowed extension but its binary content is suspicious. Where should processing stop?",
-      choices: [
-        ["At validation before processing", "validate"],
-        ["After FFmpeg starts", "wrong"],
-        ["After the job is recorded complete", "wrong"]
-      ],
-      answers: {
-        validate: "Correct. Validation is useful because it keeps suspicious input away from expensive processing.",
-        wrong: "That waits too long. Validation belongs before expensive work starts."
-      }
-    }
-  ];
+  const externalLinks = {
+    "link-frameflux-backend": "https://github.com/faizansaiyed123/FrameFlux-Backend",
+    "link-frameflux-frontend": "https://github.com/faizansaiyed123/FrameFlux-Frontend",
+    "link-telemetry-backend": "https://github.com/faizansaiyed123/telemetry-backend",
+    "link-telemetry-frontend": "https://github.com/faizansaiyed123/telemetry-frontend",
+    "link-github": "https://github.com/faizansaiyed123",
+    "link-linkedin": "https://www.linkedin.com/in/faizan-saiyed-52b289228/"
+  };
 
   const setGuideContext = (value) => {
     if (guideContext) guideContext.textContent = value;
   };
 
   const updateGuideProgress = () => {
-    const count = Math.min(3, guideState.path.size);
-    if (guideProgress) guideProgress.textContent = "PATH " + count + " / 3";
-  };
-
-  const saveGuideMode = () => {
-    try { sessionStorage.setItem("portfolio-guide-mode", guideState.mode); } catch {}
-  };
-
-  const updateGuideModeUI = () => {
-    guideModes.forEach((button) => {
-      const active = button.dataset.guideMode === guideState.mode;
-      button.classList.toggle("is-active", active);
-      button.setAttribute("aria-selected", String(active));
-    });
-    guideDock?.setAttribute("data-mode", guideState.mode);
-    guideInput?.setAttribute("placeholder", modeProfiles[guideState.mode].placeholder);
+    const step = guideState.path.length;
+    if (guideProgress) guideProgress.textContent = "STEP " + Math.min(step, 9);
   };
 
   const appendMessage = (message, role, type = false) => {
@@ -334,320 +420,34 @@
     element.className = "guide-message guide-message-" + role;
     guideThread?.appendChild(element);
 
-    if (role === "bot") {
-      guideDock?.classList.add("is-thinking");
-      if (!type || prefersReducedMotion.matches) {
-        window.setTimeout(() => guideDock?.classList.remove("is-thinking"), 140);
-      }
-    }
-
     if (!type || prefersReducedMotion.matches) {
       element.textContent = message;
-      if (guideThread) guideThread.scrollTop = guideThread.scrollHeight;
+      guideThread && (guideThread.scrollTop = guideThread.scrollHeight);
       return Promise.resolve(element);
     }
 
     guideState.typing = true;
-    const cursor = document.createElement("span");
-    cursor.className = "cursor";
-    element.appendChild(cursor);
+    guideDock?.classList.add("is-thinking");
 
     return new Promise((resolve) => {
       let index = 0;
       const tick = () => {
         if (index >= message.length) {
-          cursor.remove();
           guideState.typing = false;
           guideDock?.classList.remove("is-thinking");
-          if (guideThread) guideThread.scrollTop = guideThread.scrollHeight;
+          guideThread && (guideThread.scrollTop = guideThread.scrollHeight);
           resolve(element);
           return;
         }
-        element.insertBefore(document.createTextNode(message[index]), cursor);
+
+        element.appendChild(document.createTextNode(message[index]));
         index += 1;
-        if (guideThread) guideThread.scrollTop = guideThread.scrollHeight;
-        window.setTimeout(tick, 5);
+        guideThread && (guideThread.scrollTop = guideThread.scrollHeight);
+        window.setTimeout(tick, 6);
       };
+
       tick();
     });
-  };
-
-  const clearGuideEvidence = () => {
-    guideEvidence?.replaceChildren();
-  };
-
-  const safeHttpsUrl = (value) => {
-    try {
-      const url = new URL(value);
-      return url.protocol === "https:" ? url.href : null;
-    } catch {
-      return null;
-    }
-  };
-
-  const renderRepositoryCards = (repositories = []) => {
-    if (!guideEvidence || !repositories.length) return;
-
-    const wrap = document.createElement("div");
-    wrap.className = "guide-repository-list";
-
-    repositories.forEach((repo) => {
-      const card = document.createElement("article");
-      card.className = "guide-repository-card";
-
-      const head = document.createElement("div");
-      head.className = "guide-repository-head";
-
-      const title = document.createElement("a");
-      title.className = "guide-repository-title";
-      title.textContent = repo.name || repo.fullName;
-      title.href = repo.url || "#";
-      title.target = "_blank";
-      title.rel = "noopener noreferrer";
-
-      const mark = document.createElement("span");
-      mark.textContent = repo.archived ? "ARCHIVED" : "PUBLIC";
-      mark.className = repo.archived ? "is-muted" : "";
-
-      head.append(title, mark);
-      card.appendChild(head);
-
-      const description = document.createElement("p");
-      description.textContent = repo.description || "No GitHub description is currently available.";
-      card.appendChild(description);
-
-      const meta = document.createElement("div");
-      meta.className = "guide-repository-meta";
-
-      const metaItems = [
-        ["LANG", repo.language || "—"],
-        ["★", String(repo.stars ?? 0)],
-        ["FORKS", String(repo.forks ?? 0)],
-        ["OPEN", String(repo.openIssues ?? 0)]
-      ];
-
-      metaItems.forEach(([label, value]) => {
-        const item = document.createElement("span");
-        const labelEl = document.createElement("b");
-        labelEl.textContent = label;
-        const valueEl = document.createElement("em");
-        valueEl.textContent = value;
-        item.append(labelEl, valueEl);
-        meta.appendChild(item);
-      });
-
-      card.appendChild(meta);
-
-      if (repo.homepage) {
-        const demo = document.createElement("a");
-        demo.className = "guide-repository-demo";
-        demo.textContent = "Live / demo ↗";
-        demo.href = safeHttpsUrl(repo.homepage) || "#";
-        demo.target = "_blank";
-        demo.rel = "noopener noreferrer";
-        if (demo.href !== "#") card.appendChild(demo);
-      }
-
-      wrap.appendChild(card);
-    });
-
-    guideEvidence.appendChild(wrap);
-  };
-
-  const renderSourceCards = (sources = []) => {
-    if (!guideEvidence || !sources.length) return;
-
-    const filtered = sources
-      .filter((source) => source && source.url)
-      .filter((source, index, list) =>
-        list.findIndex((item) => item.url === source.url) === index
-      )
-      .slice(0, 12);
-
-    if (!filtered.length) return;
-
-    const heading = document.createElement("div");
-    heading.className = "guide-evidence-heading";
-    heading.textContent = "SOURCE EVIDENCE";
-    guideEvidence.appendChild(heading);
-
-    const list = document.createElement("div");
-    list.className = "guide-source-list";
-
-    filtered.forEach((source) => {
-      const link = document.createElement("a");
-      link.className = "guide-source-link";
-      link.href = safeHttpsUrl(source.url) || "#";
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-
-      const title = document.createElement("b");
-      title.textContent = source.path || source.title || source.repository;
-
-      const repo = document.createElement("span");
-      repo.textContent = source.repository;
-
-      link.append(title, repo);
-      list.appendChild(link);
-    });
-
-    guideEvidence.appendChild(list);
-  };
-
-  const renderLiveResult = (payload) => {
-    clearGuideEvidence();
-
-    const repositories = Array.isArray(payload?.repositories)
-      ? payload.repositories
-      : [];
-
-    if (repositories.length) {
-      renderRepositoryCards(repositories);
-    }
-
-    if (Array.isArray(payload?.sources) && payload.sources.length) {
-      renderSourceCards(payload.sources);
-    }
-  };
-
-  const askLiveQuestion = async (
-    question,
-    userLabel = question,
-    options = {}
-  ) => {
-    if (
-      guideState.typing ||
-      guideState.livePending ||
-      !question ||
-      (guideState.tourRunning && !options.allowDuringTour)
-    ) return;
-
-    const appendUser = options.appendUser !== false;
-    const renderChoicesAfter = options.renderChoicesAfter !== false;
-
-    if (appendUser && userLabel) {
-      await appendMessage(userLabel, "user");
-      guideState.history.push({ role: "user", content: userLabel });
-    }
-
-    guideState.livePending = true;
-    guideState.path.add("github");
-    updateGuideProgress();
-    guideDock?.setAttribute("data-live-state", "loading");
-    guideInput && (guideInput.disabled = true);
-    guideActions?.replaceChildren();
-
-    clearGuideEvidence();
-
-    const loading = document.createElement("p");
-    loading.className = "guide-message guide-message-bot guide-message-live-loading";
-    loading.textContent = "LIVE / READING GITHUB EVIDENCE…";
-    guideThread?.appendChild(loading);
-    if (guideThread) guideThread.scrollTop = guideThread.scrollHeight;
-
-    const controller = new AbortController();
-    guideState.liveController = controller;
-
-    try {
-      const response = await fetch(CHAT_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: question,
-          history: guideState.history.slice(-8)
-        }),
-        signal: controller.signal
-      });
-
-      const payload = await response.json().catch(() => null);
-      loading.remove();
-
-      if (!response.ok || !payload?.ok) {
-        if (payload?.code === "RATE_LIMITED" || response.status === 429) {
-          const retry = Number(payload?.retryAfterSeconds || 30);
-          await appendMessage(
-            "The public assistant is rate-limited right now. Please try again in about " +
-              Math.max(1, Math.ceil(retry / 60)) +
-              " minute(s).",
-            "bot",
-            true
-          );
-        } else {
-          await appendMessage(
-            "Live GitHub intelligence is temporarily unavailable. I won't guess about repository details.",
-            "bot",
-            true
-          );
-        }
-
-        if (renderChoicesAfter) renderChoices(modeProfiles[guideState.mode].choices);
-        return;
-      }
-
-      if (payload.status === "ambiguous") {
-        await appendMessage(
-          payload.message ||
-            "I found several public repositories that could match that request. Choose one.",
-          "bot",
-          true
-        );
-        renderLiveResult(payload);
-        if (renderChoicesAfter) renderChoices(modeProfiles[guideState.mode].choices);
-        guideState.history.push({
-          role: "bot",
-          content: payload.message || "Several public repositories matched."
-        });
-        return;
-      }
-
-      if (payload.status === "inaccessible") {
-        const message =
-          payload.message ||
-          "That repository could not be verified as an accessible public repository, so I won't invent details.";
-        await appendMessage(message, "bot", true);
-        renderLiveResult(payload);
-        if (renderChoicesAfter) renderChoices(modeProfiles[guideState.mode].choices);
-        guideState.history.push({ role: "assistant", content: message });
-        return;
-      }
-
-      const answer =
-        payload.answer ||
-        payload.message ||
-        "I found the current GitHub evidence, but there is not enough verified information to answer that confidently.";
-
-      await appendMessage(answer, "bot", true);
-      renderLiveResult(payload);
-
-      guideState.history.push({ role: "assistant", content: answer });
-
-      if (renderChoicesAfter) {
-        renderChoices([
-          ...modeProfiles[guideState.mode].choices.slice(0, 3),
-          ["Back to start", "start"]
-        ]);
-      }
-    } catch (error) {
-      loading.remove();
-
-      if (error?.name === "AbortError") {
-        if (renderChoicesAfter) renderChoices(modeProfiles[guideState.mode].choices);
-        return;
-      }
-
-      await appendMessage(
-        "I couldn't reach the live project service. No repository details were fabricated.",
-        "bot",
-        true
-      );
-
-      if (renderChoicesAfter) renderChoices(modeProfiles[guideState.mode].choices);
-    } finally {
-      guideState.livePending = false;
-      guideState.liveController = null;
-      guideDock?.setAttribute("data-live-state", "ready");
-      if (guideInput) guideInput.disabled = false;
-    }
   };
 
   const renderChoices = (choices = []) => {
@@ -658,42 +458,26 @@
       const button = document.createElement("button");
       button.type = "button";
       button.className = "guide-action";
+      button.setAttribute("aria-label", "Select " + label);
 
       const labelEl = document.createElement("span");
+      labelEl.className = "guide-action-copy";
       labelEl.textContent = label;
 
       const iconEl = document.createElement("span");
+      iconEl.className = "guide-action-icon";
       iconEl.textContent = "↗";
       iconEl.setAttribute("aria-hidden", "true");
 
       button.append(labelEl, iconEl);
-      button.addEventListener("click", () => void handleChoice(label, action));
+      button.addEventListener("click", async () => {
+        if (guideState.typing) return;
+        button.classList.add("is-selected");
+        $$(".guide-action", guideActions).forEach((item) => { item.disabled = true; });
+        await handleChoice(label, action);
+      });
       guideActions.appendChild(button);
     });
-  };
-
-  const showNode = async (id, userLabel) => {
-    if (liveGuideQueries[id]) {
-      return askLiveQuestion(liveGuideQueries[id], userLabel || liveGuideQueries[id]);
-    }
-
-    const node = guideTree[id];
-    if (!node) return;
-
-    if (userLabel) {
-      await appendMessage(userLabel, "user");
-      guideState.history.push({ role: "user", content: userLabel });
-    }
-
-    guideState.path.add(id);
-    updateGuideProgress();
-
-    const message = id === "start" ? modeProfiles[guideState.mode].intro : node.message;
-    const choices = id === "start" ? modeProfiles[guideState.mode].choices : node.choices;
-
-    await appendMessage(message, "bot", true);
-    guideState.history.push({ role: "assistant", content: message });
-    renderChoices(choices);
   };
 
   const scrollToSection = (id) => {
@@ -710,245 +494,98 @@
     guideTopButton?.setAttribute("aria-expanded", "true");
     guideDock?.classList.add("is-open");
     guideDock?.classList.remove("is-attention");
-    updateGuideModeUI();
-    updateGuideProgress();
-
     if (!guideState.history.length) {
       void showNode("start");
     } else {
-      renderChoices(modeProfiles[guideState.mode].choices);
+      renderChoices(interviewFlow[guideState.currentNode]?.choices || []);
     }
-
-    window.setTimeout(() => guideInput?.focus(), 80);
   };
 
   const closeGuide = () => {
-    guideState.liveController?.abort();
     guidePanel && (guidePanel.hidden = true);
     guideLauncher?.setAttribute("aria-expanded", "false");
     guideTopButton?.setAttribute("aria-expanded", "false");
-    guideDock?.classList.remove("is-open", "is-thinking", "is-tour");
+    guideDock?.classList.remove("is-open", "is-thinking");
   };
 
   const handleRoute = async (label, action) => {
     await appendMessage(label, "user");
     guideState.history.push({ role: "user", content: label });
-    guideState.path.add(action.replace("goto-", ""));
+    guideState.path.push(action);
     updateGuideProgress();
 
     const responses = {
       "goto-work": "Opening the selected work casebook.",
-      "goto-frameflux": "Opening FrameFlux. The repository answer above is live.",
-      "goto-telemetry": "Opening Telemetry. The repository answer above is live.",
-      "goto-systems": "Opening the systems-thinking layer.",
-      "goto-stack": "Opening the live stack evidence.",
-      "goto-contact": "Opening the direct contact channel."
+      "goto-frameflux": "Opening FrameFlux in the work casebook.",
+      "goto-telemetry": "Opening Telemetry in the work casebook.",
+      "goto-systems": "Opening the systems-thinking section.",
+      "goto-contact": "Opening the direct contact section."
     };
 
-    await appendMessage(responses[action] || "Opening that section.", "bot", true);
+    await appendMessage(responses[action] || "Opening the selected section.", "bot", true);
 
     if (action === "goto-frameflux") activateProject("frameflux", true);
     else if (action === "goto-telemetry") activateProject("telemetry", true);
-    else if (action === "goto-work") scrollToSection("work");
     else scrollToSection(action.replace("goto-", ""));
   };
 
-  const runChallenge = async () => {
-    if (guideState.typing || guideState.tourRunning || guideState.livePending) return;
+  const handleExternalLink = (label, action) => {
+    const href = externalLinks[action];
+    if (!href) return;
 
-    guideState.challengeIndex = 0;
-    await appendMessage(
-      "ENGINEERING CHALLENGE MODE — answer first, then I’ll explain the design decision.",
-      "bot",
-      true
-    );
-    await renderChallenge();
+    const userMessage = document.createElement("p");
+    userMessage.className = "guide-message guide-message-user";
+    userMessage.textContent = label;
+    guideThread?.appendChild(userMessage);
+    guideState.history.push({ role: "user", content: label });
+    guideState.path.push(action);
+    updateGuideProgress();
+
+    window.open(href, "_blank", "noopener,noreferrer");
+    void appendMessage("Opening the selected public link.", "bot", true);
+    renderChoices(interviewFlow[guideState.currentNode]?.choices || []);
   };
 
-  const renderChallenge = async () => {
-    const item = challengeSet[guideState.challengeIndex];
-    if (!item) return;
+  const showNode = async (id, userLabel) => {
+    const node = interviewFlow[id];
+    if (!node || guideState.typing) return;
 
-    await appendMessage(
-      "CHALLENGE " + (guideState.challengeIndex + 1) + " / " + challengeSet.length,
-      "bot"
-    );
-    await appendMessage(item.question, "bot", true);
-    renderChoices(item.choices.map(([label, key]) => [label, "challenge:" + key]));
-  };
-
-  const answerChallenge = async (action) => {
-    if (guideState.typing || guideState.livePending) return;
-
-    if (action === "challenge:next") {
-      await renderChallenge();
-      return;
+    if (userLabel) {
+      await appendMessage(userLabel, "user");
+      guideState.history.push({ role: "user", content: userLabel });
     }
 
-    const item = challengeSet[guideState.challengeIndex];
-    if (!item) return;
+    guideState.currentNode = id;
+    guideState.path.push(id);
+    updateGuideProgress();
+    setGuideContext(node.context);
 
-    const key = action.split(":")[1] || "wrong";
-    const label = item.choices.find(([, id]) => id === key)?.[0] || "Selected answer";
-
-    await appendMessage(label, "user");
-    await appendMessage(item.answers[key] || item.answers.wrong, "bot", true);
-
-    guideState.challengeIndex += 1;
-
-    if (challengeSet[guideState.challengeIndex]) {
-      renderChoices([
-        ["Next challenge", "challenge:next"],
-        ["Return to guide", "start"]
-      ]);
-    } else {
-      await appendMessage(
-        "Challenge complete. The common thread is explicit state, backend authority, and validation before expensive work.",
-        "bot",
-        true
-      );
-      renderChoices(modeProfiles[guideState.mode].choices);
-    }
-  };
-
-  const runTour = async () => {
-    if (guideState.typing || guideState.tourRunning || guideState.livePending) return;
-
-    guideState.tourRunning = true;
-    guideDock?.classList.add("guide-tour-running", "is-tour");
-
-    await appendMessage(
-      "GUIDED TOUR STARTED — I’ll take you through live project evidence → systems → stack → contact.",
-      "bot",
-      true
-    );
-
-    scrollToSection("work");
-    await new Promise((resolve) =>
-      window.setTimeout(resolve, prefersReducedMotion.matches ? 120 : 700)
-    );
-    await askLiveQuestion(
-      liveGuideQueries.projects,
-      null,
-      { appendUser: false, renderChoicesAfter: false, allowDuringTour: true }
-    );
-
-    scrollToSection("systems");
-    await new Promise((resolve) =>
-      window.setTimeout(resolve, prefersReducedMotion.matches ? 120 : 800)
-    );
-    await appendMessage(
-      "Then the design logic: boundaries, backend authority, validation before expensive work, and verification are the repeated engineering moves.",
-      "bot",
-      true
-    );
-
-    scrollToSection("stack");
-    await new Promise((resolve) =>
-      window.setTimeout(resolve, prefersReducedMotion.matches ? 120 : 800)
-    );
-    await askLiveQuestion(
-      liveGuideQueries.stack,
-      null,
-      { appendUser: false, renderChoicesAfter: false }
-    );
-
-    scrollToSection("contact");
-    await new Promise((resolve) =>
-      window.setTimeout(resolve, prefersReducedMotion.matches ? 120 : 700)
-    );
-    await appendMessage(
-      "Finally, the site closes on a direct human channel and verified source links.",
-      "bot",
-      true
-    );
-
-    guideState.tourRunning = false;
-    guideDock?.classList.remove("guide-tour-running", "is-tour");
-    renderChoices(modeProfiles[guideState.mode].choices);
-  };
-
-  const normalize = (value) => value.trim().toLowerCase();
-
-  const resolveIntent = (query) => {
-    if (/tour|walk me|show me around|take me around/.test(query)) return "__tour__";
-    if (/challenge|quiz|test me|question me/.test(query)) return "__challenge__";
-    if (/contact|email|hire|reach|linkedin|connect/.test(query)) return "contact";
-    if (/systems thinking|engineering focus|engineering method|engineering approach/.test(query)) return "method";
-    if (/^github$|open github|github profile/.test(query)) return "github";
-    return "__ai__";
+    await appendMessage(node.message, "bot", true);
+    guideState.history.push({ role: "assistant", content: node.message });
+    renderChoices(node.choices);
   };
 
   const handleChoice = async (label, action) => {
-    if (guideState.typing || guideState.tourRunning || guideState.livePending) return;
+    if (guideState.typing) return;
 
-    if (action === "__tour__") return runTour();
-    if (action === "__challenge__") return runChallenge();
-    if (action.startsWith("challenge:")) return answerChallenge(action);
-    if (action.startsWith("goto-")) return handleRoute(label, action);
+    if (action === "close") {
+      closeGuide();
+      return;
+    }
 
-    if (liveGuideQueries[action]) {
-      return showNode(action, label);
+    if (externalLinks[action]) {
+      handleExternalLink(label, action);
+      return;
+    }
+
+    if (action.startsWith("goto-")) {
+      await handleRoute(label, action);
+      renderChoices(interviewFlow[guideState.currentNode]?.choices || []);
+      return;
     }
 
     await showNode(action, label);
   };
-
-  guideModes.forEach((button) => {
-    button.addEventListener("click", async () => {
-      if (guideState.typing || guideState.livePending) return;
-
-      const mode = button.dataset.guideMode || "explorer";
-      if (!modeProfiles[mode]) return;
-
-      guideState.mode = mode;
-      saveGuideMode();
-      updateGuideModeUI();
-
-      guideState.history.length = 0;
-      guideState.path.clear();
-      guideState.challengeIndex = 0;
-      guideState.liveController?.abort();
-      guideThread?.replaceChildren();
-      renderChoices([]);
-      clearGuideEvidence();
-      updateGuideProgress();
-
-      await showNode("start");
-    });
-  });
-
-  guideForm?.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    if (guideState.typing || guideState.tourRunning || guideState.livePending) return;
-
-    const value = guideInput?.value || "";
-    const query = normalize(value);
-    if (!query) return;
-
-    if (guideInput) guideInput.value = "";
-
-    const intent = resolveIntent(query);
-
-    if (intent === "__tour__") {
-      await appendMessage(value, "user");
-      guideState.history.push({ role: "user", content: value });
-      return runTour();
-    }
-
-    if (intent === "__challenge__") {
-      await appendMessage(value, "user");
-      guideState.history.push({ role: "user", content: value });
-      return runChallenge();
-    }
-
-    if (intent === "contact" || intent === "method" || intent === "github") {
-      return showNode(intent, value);
-    }
-
-    return askLiveQuestion(value, value);
-  });
 
   guideLauncher?.addEventListener("click", () => {
     if (guidePanel?.hidden) openGuide();
@@ -959,23 +596,20 @@
   $("#mobile-guide")?.addEventListener("click", () => { closeMenu(); openGuide(); });
   $("#footer-guide")?.addEventListener("click", openGuide);
   guideClose?.addEventListener("click", closeGuide);
-  guideTour?.addEventListener("click", runTour);
-  guideChallenge?.addEventListener("click", runChallenge);
 
   guideRestart?.addEventListener("click", () => {
-    guideState.liveController?.abort();
     guideState.history.length = 0;
-    guideState.path.clear();
-    guideState.challengeIndex = 0;
-    guideState.tourRunning = false;
-    guideState.livePending = false;
-    guideDock?.classList.remove("guide-tour-running");
+    guideState.path.length = 0;
+    guideState.currentNode = "start";
     guideThread?.replaceChildren();
     guideActions?.replaceChildren();
-    clearGuideEvidence();
+    setGuideContext("INTERVIEW");
     updateGuideProgress();
     void showNode("start");
   });
+
+  /* ---------- Guide context awareness ---------- */
+
   /* ---------- Guide context awareness ---------- */
   const sectionContext = {
     top: "HOME",

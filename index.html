@@ -6,7 +6,6 @@
   <meta name="description" content="Faizan Saiyed — full-stack engineer building backend APIs, realtime systems, asynchronous workflows, data systems, and polished web interfaces.">
   <meta name="author" content="Faizan Saiyed">
   <meta name="theme-color" content="#0a0d0f">
-  <meta name="chat-api-url" content="https://portfolio-zeta-sandy-t9r8wi4kkz.vercel.app/api/chat">
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
   <link rel="stylesheet" href="./style.css?v=20260922-premium-01">
   <title>Faizan Saiyed — Backend / Systems / Full-Stack</title>
@@ -18,7 +17,7 @@
 <header class="topbar"><div class="topbar-inner shell">
 <a class="brand" href="#top" aria-label="Faizan Saiyed home"><span class="brand-box">FS</span><span class="brand-copy"><b>FAIZAN SAIYED</b><small>ENGINEERING / 2026</small></span></a>
 <nav class="desktop-nav" aria-label="Primary navigation"><a href="#work">Work</a><a href="#systems">Systems</a><a href="#stack">Stack</a><a href="#contact">Contact</a></nav>
-<div class="topbar-actions"><button class="guide-top-button" id="guide-top-button" type="button" aria-controls="guide-panel" aria-expanded="false"><span class="live-dot"></span><span>ASK FAIZAN</span><kbd>/</kbd></button><button class="theme-button" type="button" aria-label="Switch theme" aria-pressed="true"><span class="theme-indicator"></span><span class="theme-label">Dark</span></button><button class="menu-button" id="menu-button" type="button" aria-controls="mobile-nav" aria-expanded="false" aria-label="Open menu"><span></span><span></span></button></div>
+<div class="topbar-actions"><button class="guide-top-button" id="guide-top-button" type="button" aria-controls="guide-panel" aria-expanded="false"><span class="guide-state-dot" aria-hidden="true"></span><span>INTERVIEW GUIDE</span><kbd>/</kbd></button><button class="theme-button" type="button" aria-label="Switch theme" aria-pressed="true"><span class="theme-indicator"></span><span class="theme-label">Dark</span></button><button class="menu-button" id="menu-button" type="button" aria-controls="mobile-nav" aria-expanded="false" aria-label="Open menu"><span></span><span></span></button></div>
 </div><nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation"><a href="#work">01 <span>Work</span></a><a href="#systems">02 <span>Systems</span></a><a href="#stack">03 <span>Stack</span></a><a href="#contact">04 <span>Contact</span></a><button type="button" id="mobile-guide">05 <span>Ask Faizan</span></button></nav></header>
 <main id="content">
 <section id="top" class="hero"><div class="hero-meta shell"><span>PORTFOLIO / 2026</span><span>BACKEND · SYSTEMS · FULL-STACK</span><span>STATIC / INTERACTIVE / ZERO TRACKERS</span></div>
@@ -77,7 +76,7 @@
     </div>
   </div>
   <div class="footer-bottom shell">
-    <span>LIVE GUIDE / GITHUB + AI</span>
+    <span>GUIDED INTERVIEW / STATIC FLOW</span>
     <span>STATIC SITE / GITHUB PAGES</span>
     <span>© <b id="year"></b> FAIZAN SAIYED</span>
     <a href="#top">BACK TO TOP ↑</a>
@@ -85,48 +84,28 @@
 </footer>
 <div class="guide-dock" id="guide-dock">
   <button class="guide-launcher" id="guide-launcher" type="button" aria-controls="guide-panel" aria-expanded="false">
-    <span class="guide-robot-icon" aria-hidden="true">
-      <svg viewBox="0 0 44 44" role="presentation">
-        <path class="robot-antenna" d="M22 7V3"></path>
-        <circle class="robot-tip" cx="22" cy="3" r="1.8"></circle>
-        <rect class="robot-head" x="8" y="9" width="28" height="22" rx="7"></rect>
-        <path class="robot-ear" d="M6 17v7M38 17v7"></path>
-        <circle class="robot-eye robot-eye-left" cx="16" cy="20" r="2.1"></circle>
-        <circle class="robot-eye robot-eye-right" cx="28" cy="20" r="2.1"></circle>
-        <path class="robot-mouth" d="M16 26c3.5 2.3 8.5 2.3 12 0"></path>
-        <path class="robot-scan" d="M12 14h20"></path>
-      </svg>
-    </span>
-    <span class="guide-launcher-copy"><small>PORTFOLIO GUIDE / LIVE</small><b>Ask Faizan</b></span>
+    <span class="guide-monogram" aria-hidden="true">FS</span>
+    <span class="guide-launcher-copy"><small>INTERVIEW GUIDE / STATIC FLOW</small><b>Guided Interview</b></span>
     <span class="guide-launcher-hint">press /</span>
     <span class="guide-launcher-arrow">↗</span>
   </button>
-  <aside class="guide-panel" id="guide-panel" hidden aria-label="Interactive portfolio guide">
+  <aside class="guide-panel" id="guide-panel" hidden aria-label="Predefined interview guide">
     <div class="guide-head">
-      <div><span>FS / LIVE GITHUB INTELLIGENCE</span><h2>Choose how you want to explore.</h2></div>
-      <button id="guide-close" type="button" aria-label="Close guide">×</button>
+      <div><span>FS / PREDEFINED INTERVIEW</span><h2>Choose a path. Every response is predefined.</h2></div>
+      <button id="guide-close" type="button" aria-label="Close interview guide">×</button>
     </div>
     <div class="guide-status">
-      <span class="guide-context">CONTEXT / <b id="guide-context">HOME</b></span>
-      <span class="guide-progress" id="guide-progress">PATH 0 / 3</span>
+      <span>FLOW / <b id="guide-context">INTERVIEW</b></span>
+      <span id="guide-progress">STEP 0</span>
     </div>
-    <div class="guide-modes" role="tablist" aria-label="Guide mode">
-      <button type="button" class="guide-mode is-active" data-guide-mode="recruiter" role="tab" aria-selected="true">Recruiter</button>
-      <button type="button" class="guide-mode" data-guide-mode="engineer" role="tab" aria-selected="false">Engineer</button>
-      <button type="button" class="guide-mode" data-guide-mode="explorer" role="tab" aria-selected="false">Explorer</button>
+    <div class="guide-notice" role="status">
+      <span><i></i> STATIC FLOW</span>
+      <span>Select a predefined option to continue</span>
     </div>
-    <div class="guide-thread" id="guide-thread" aria-live="polite"></div><div class="guide-evidence" id="guide-evidence" aria-live="polite"></div>
-    <div class="guide-actions" id="guide-actions"></div>
-    <form class="guide-input-row" id="guide-form">
-      <input id="guide-input" type="text" autocomplete="off" placeholder="Ask about projects, GitHub, architecture, stack..." aria-label="Ask the portfolio guide">
-      <button type="submit" aria-label="Send question">↗</button>
-    </form>
-    <div class="guide-specials">
-      <button type="button" id="guide-tour">▶ Run guided tour</button>
-      <button type="button" id="guide-challenge">⌁ Engineering challenge</button>
-    </div>
+    <div class="guide-thread" id="guide-thread" aria-live="polite"></div>
+    <div class="guide-actions" id="guide-actions" role="group" aria-label="Predefined interview options"></div>
     <div class="guide-footer-line">
-      <span><i></i> LIVE / GITHUB-SOURCED</span>
+      <span><i></i> NO FREE TEXT / DETERMINISTIC</span>
       <button class="guide-restart" id="guide-restart" type="button">Restart</button>
     </div>
   </aside>
