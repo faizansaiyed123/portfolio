@@ -479,11 +479,7 @@ export async function resolveRepositories(query: string): Promise<RepositoryReso
   const stem = commonProjectStem(candidates.slice(0, 4));
   const featuredCandidates = candidates.filter((repo) => featuredSet.has(repo.fullName.toLowerCase()));
 
-  if (
-    stem &&
-    featuredCandidates.length >= 2 &&
-    query.trim().split(/\s+/).length <= 4
-  ) {
+  if (stem && featuredCandidates.length >= 2) {
     return { status: "group", repositories: featuredCandidates.slice(0, 4), stem };
   }
 
