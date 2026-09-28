@@ -410,7 +410,7 @@ export async function resolveRepositories(query: string): Promise<RepositoryReso
 
   // Check an explicitly named repository before fuzzy scoring, so generic
   // tokens such as "backend" cannot mask a private/inaccessible exact match.
-  const explicitRepositoryMatch = query.match(/(?:faizansaiyed123\\/)?([A-Za-z0-9][A-Za-z0-9._-]*-[A-Za-z0-9._-]+)/i)?.[1];
+  const explicitRepositoryMatch = query.match(/(?:faizansaiyed123\/)?([A-Za-z0-9][A-Za-z0-9._-]*-[A-Za-z0-9._-]+)/i)?.[1];
   if (explicitRepositoryMatch) {
     const exactPublic = repos.find(
       (repo) => repo.name.toLowerCase() === explicitRepositoryMatch.toLowerCase()
