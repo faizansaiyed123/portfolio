@@ -607,7 +607,7 @@
         await appendMessage(message, "bot", true);
         renderLiveResult(payload);
         if (renderChoicesAfter) renderChoices(modeProfiles[guideState.mode].choices);
-        guideState.history.push({ role: "bot", text: message });
+        guideState.history.push({ role: "bot", content: message });
         return;
       }
 
@@ -682,7 +682,7 @@
 
     if (userLabel) {
       await appendMessage(userLabel, "user");
-      guideState.history.push({ role: "user", text: userLabel });
+      guideState.history.push({ role: "user", content: userLabel });
     }
 
     guideState.path.add(id);
@@ -692,7 +692,7 @@
     const choices = id === "start" ? modeProfiles[guideState.mode].choices : node.choices;
 
     await appendMessage(message, "bot", true);
-    guideState.history.push({ role: "bot", text: message });
+    guideState.history.push({ role: "bot", content: message });
     renderChoices(choices);
   };
 
@@ -732,7 +732,7 @@
 
   const handleRoute = async (label, action) => {
     await appendMessage(label, "user");
-    guideState.history.push({ role: "user", text: label });
+    guideState.history.push({ role: "user", content: label });
     guideState.path.add(action.replace("goto-", ""));
     updateGuideProgress();
 
@@ -939,7 +939,7 @@
 
     if (intent === "__challenge__") {
       await appendMessage(value, "user");
-      guideState.history.push({ role: "user", text: value });
+      guideState.history.push({ role: "user", content: value });
       return runChallenge();
     }
 
