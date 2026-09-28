@@ -504,6 +504,18 @@ export async function resolveRepositories(query: string): Promise<RepositoryReso
     return { status: "group", repositories: featuredCandidates.slice(0, 4), stem };
   }
 
+  // An explicit project name shared by the top matches means the user is
+  // asking about one multi-repository project (for example FrameFlux has a
+  // frontend and backend repository), not asking us to choose between them.
+  if (
+    stem &&
+    normalizedQuery.includes(stem) &&
+    candidates.length >= 2 &&
+    candidates.every((repo) => compact(repo.name).startsWith(stem))
+  ) {
+    return { status: "group", repositories: candidates.slice(0, 4), stem };
+  }
+
   return { status: "ambiguous", repositories: candidates.slice(0, 5) };
 }
 
