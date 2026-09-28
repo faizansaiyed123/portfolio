@@ -338,10 +338,11 @@ async function getPortfolioFeaturedRepositories() {
         getReadme(PORTFOLIO_REPO, details.defaultBranch)
       ]);
 
-      const content = sources
-        .filter((result): result is PromiseFulfilledResult<{ content: string }> => result.status === "fulfilled")
-        .map((result) => result.value.content)
-        .find((value) => value.trim()) || "";
+      const content =
+        sources
+          .filter((result) => result.status === "fulfilled")
+          .map((result) => result.value.content)
+          .find((value) => value.trim()) || "";
 
       const matches = [
         ...content.matchAll(/https:\/\/github\.com\/([A-Za-z0-9._-]+)\/([A-Za-z0-9._-]+)/g)
