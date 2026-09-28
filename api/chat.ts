@@ -206,13 +206,26 @@ function isRepositoryNameRequest(question: string) {
   return /\brepository\b|\brepo\b|\bgithub\b/.test(question.toLowerCase());
 }
 
-function isCasualConversation(question: string) {
-  const value = question.trim().toLowerCase().replace(/[!?.,]+$/g, "");
-  if (!value || value.length > 160) return false;
-
-  return /^(hi|hello|hey|hiya|yo|good morning|good afternoon|good evening|how are you|how's it going|how is it going|what's up|whats up|nice to meet you|thanks|thank you|thank you so much|who are you|what can you do|tell me a joke)$/.test(
+function hasProjectSignal(value: string) {
+  return /\b(faizan|portfolio|github|repos?\b|repositories?\b|projects?\b|frameflux|telemetry|nexora|codebase|source code|architecture|api|apis|endpoint|stack|technology|technologies|framework|built|developed|implemented|implementation|features?|frontend|backend|database|worker|queue|security|deployment|deploy|commit|commits|activity|updated|changed|files?|repository tree)\b/i.test(
     value
   );
+}
+
+function isConversationalQuestion(question: string, history: ChatMessage[]) {
+  const value = question.trim().toLowerCase().replace(/[!?.,]+$/g, "");
+  if (!value || value.length > 2_000) return false;
+
+  if (hasProjectSignal(value)) return false;
+
+  const recentContext = history
+    .slice(-4)
+    .map((message) => message.content)
+    .join(" ");
+
+  if (hasProjectSignal(recentContext)) return false;
+
+  return true;
 }
 
 export default async function handler(
@@ -326,7 +339,7 @@ export default async function handler(
   }
 
   try {
-    if (isCasualConversation(question)) {
+    if (isConversationalQuestion(question, history)) {
       const aiResponse = await generateGroundedAnswer(
         question,
         history,
@@ -386,6 +399,30 @@ export default async function handler(
           status: "inaccessible",
           message:
             "I found a repository name that appears to refer to a non-public or inaccessible repository. Its source is intentionally not exposed through this public assistant.",
+          ...common
+        },
+        200,
+        origin
+      );
+    }
+
+    // Repository list requests are already answered by live GitHub metadata.
+    // Keep them independent from the AI provider so "latest repos" remains
+    // useful even when Gemini has a transient outage or quota issue.
+    if (evidence.kind === "list") {
+      const latest = (common.repositories || []).slice(0, 8);
+      const names = latest.map((repo: any) => repo.name).filter(Boolean);
+      const answer = names.length
+        ? `I found the current public repository set. The latest GitHub-updated repositories include: ${names.join(", ")}.`
+        : "I found the current public repository set, but there are no public repositories to display.";
+
+      return json(
+        request,
+        response,
+        {
+          ok: true,
+          status: "answer",
+          answer,
           ...common
         },
         200,
