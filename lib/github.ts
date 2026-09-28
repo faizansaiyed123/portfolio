@@ -408,6 +408,28 @@ export async function resolveRepositories(query: string): Promise<RepositoryReso
   ]);
   const featuredSet = new Set(featured.map((value) => value.toLowerCase()));
 
+  // Check an explicitly named repository before fuzzy scoring, so generic
+  // tokens such as "backend" cannot mask a private/inaccessible exact match.
+  const explicitRepositoryMatch = query.match(/(?:faizansaiyed123\\/)?([A-Za-z0-9][A-Za-z0-9._-]*-[A-Za-z0-9._-]+)/i)?.[1];
+  if (explicitRepositoryMatch) {
+    const exactPublic = repos.find(
+      (repo) => repo.name.toLowerCase() === explicitRepositoryMatch.toLowerCase()
+    );
+
+    if (!exactPublic) {
+      try {
+        const raw = await getRawRepository(`${OWNER}/${explicitRepositoryMatch}`);
+        if (raw.private || raw.visibility !== "public") {
+          return { status: "none", candidates: [], privateHint: true };
+        }
+      } catch (error) {
+        if (error instanceof GithubApiError && (error.status === 403 || error.status === 404)) {
+          return { status: "none", candidates: [], protectedHint: true };
+        }
+      }
+    }
+  }
+
   const scored = repos
     .map((repo) => ({ repo, score: scoreRepository(query, repo, featuredSet) }))
     .filter((entry) => entry.score > 0)
