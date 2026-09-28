@@ -330,10 +330,24 @@ export async function getRecentActivity(fullName: string): Promise<ActivityItem[
 
 async function getPortfolioFeaturedRepositories() {
   return cachedJson(
-    `portfolio:featured:${PORTFOLIO_REPO}`,
+    `portfolio:featured:v3:${PORTFOLIO_REPO}`,
     async () => {
-      const readme = await getReadme(PORTFOLIO_REPO);
-      const matches = [...readme.content.matchAll(/https:\/\/github\.com\/([A-Za-z0-9._-]+)\/([A-Za-z0-9._-]+)/g)];
+      const details = await getRepositoryDetails(PORTFOLIO_REPO);
+      const sources = await Promise.allSettled([
+        getFile(PORTFOLIO_REPO, "index.html", details.defaultBranch),
+        getReadme(PORTFOLIO_REPO, details.defaultBranch)
+      ]);
+
+      const content =
+        sources
+          .filter((result) => result.status === "fulfilled")
+          .map((result) => result.value.content)
+          .find((value) => value.trim()) || "";
+
+      const matches = [
+        ...content.matchAll(/https:\/\/github\.com\/([A-Za-z0-9._-]+)\/([A-Za-z0-9._-]+)/g)
+      ];
+
       return [...new Set(matches.map((match) => `${match[1]}/${match[2]}`))];
     },
     1800
@@ -944,6 +958,28 @@ export async function getChatEvidence(question: string, history: Array<{ role: "
     };
   }
 
+  const portfolioWideQuery =
+    /\b(what did (?:faizan|you) build|what have (?:faizan|you) built|what did you build|what have you built|what have i built|what projects? (?:did|has|have) (?:faizan|you) (?:build|built)|what projects? have you built|tell me about (?:faizan'?s|your) projects?|what is in (?:faizan'?s|your) portfolio|across (?:the )?(?:portfolio|projects?))\b/i.test(
+      normalized
+    );
+
+  if (portfolioWideQuery) {
+    const featured = await getPortfolioFeaturedRepositories();
+    const publicRepos = await listPublicRepositories();
+    const featuredRepos = publicRepos.filter((repo) =>
+      featured.some((name) => name.toLowerCase() === repo.fullName.toLowerCase())
+    );
+
+    if (featuredRepos.length) {
+      const detail = await retrieveRepositoryEvidence(featuredRepos.slice(0, 4), question);
+      return {
+        kind: "portfolio" as const,
+        ...detail,
+        featuredRepositories: featured
+      };
+    }
+  }
+
   let resolution = await resolveRepositories(question);
 
   if (resolution.status === "none") {
@@ -980,13 +1016,15 @@ export async function getChatEvidence(question: string, history: Array<{ role: "
     }
 
     const featured = await getPortfolioFeaturedRepositories();
-    const fallback = (await listPublicRepositories())
-      .filter((repo) => featured.map((name) => name.toLowerCase()).includes(repo.fullName.toLowerCase()))
-      .slice(0, 4);
+    const publicRepos = await listPublicRepositories();
+    const featuredRepos = publicRepos.filter((repo) =>
+      featured.some((name) => name.toLowerCase() === repo.fullName.toLowerCase())
+    );
+    const fallback = featuredRepos.slice(0, 4);
 
     return {
       kind: "general" as const,
-      repositories: fallback.length ? fallback : (await listPublicRepositories()).slice(0, 8),
+      repositories: fallback.length ? fallback : publicRepos.slice(0, 8),
       evidence: [],
       featuredRepositories: featured
     };
