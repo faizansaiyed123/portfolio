@@ -4,11 +4,12 @@ import { cacheConfigured, rateLimit } from "../lib/cache.js";
 import {
   GithubApiError,
   getChatEvidence,
-  listPublicRepositories,
-  probeRepositoryAccess,
   type RepoSummary
 } from "../lib/github.js";
-import { generateGroundedAnswer } from "../lib/openai.js";
+import {
+  GeminiApiError,
+  generateGroundedAnswer
+} from "../lib/gemini.js";
 
 type ChatMessage = {
   role: "user" | "assistant";
@@ -121,216 +122,247 @@ function evidencePayload(evidence: any) {
 
 function isOpenRequest(question: string) {
   const value = question.toLowerCase();
-  return /\b(open|link|url|source)\b/.test(value) &&
-    /\b(repo|repository|github)\b/.test(value);
+  return (
+    /\b(open|link|url|source)\b/.test(value) &&
+    /\b(repo|repository|github)\b/.test(value)
+  );
 }
 
 function isRepositoryNameRequest(question: string) {
   return /\brepository\b|\brepo\b|\bgithub\b/.test(question.toLowerCase());
 }
 
-async function handlePrivateHint(question: string) {
-  const match = question.match(/\b[A-Za-z0-9][A-Za-z0-9._-]{2,}-[A-Za-z0-9._-]{2,}\b/);
-  if (!match) return null;
-
-  return probeRepositoryAccess(match[0]);
-}
-
 export default async function handler(request: Request) {
-    const origin = request.headers.get("origin");
+  const origin = request.headers.get("origin");
 
-    if (request.method === "OPTIONS") {
-      return new Response(null, {
-        status: 204,
-        headers: corsHeaders(origin)
-      });
-    }
+  if (request.method === "OPTIONS") {
+    return new Response(null, {
+      status: 204,
+      headers: corsHeaders(origin)
+    });
+  }
 
-    if (request.method !== "POST") {
+  if (request.method !== "POST") {
+    return json(
+      { ok: false, code: "METHOD_NOT_ALLOWED", error: "Use POST /api/chat." },
+      405,
+      origin
+    );
+  }
+
+  if (origin && !allowedOrigins().has(origin)) {
+    return json(
+      {
+        ok: false,
+        code: "ORIGIN_NOT_ALLOWED",
+        error: "This client origin is not allowed."
+      },
+      403,
+      origin
+    );
+  }
+
+  if (process.env.VERCEL_ENV === "production" && !cacheConfigured()) {
+    return json(
+      {
+        ok: false,
+        code: "CACHE_NOT_CONFIGURED",
+        error: "The production chat service requires its rate-limit/cache store."
+      },
+      503,
+      origin
+    );
+  }
+
+  const limit = await rateLimit(`ip:${clientIp(request)}`);
+  if (!limit.success) {
+    const retryAfter = Math.max(
+      1,
+      Math.ceil((limit.reset - Date.now()) / 1000)
+    );
+
+    return new Response(
+      JSON.stringify({
+        ok: false,
+        code: "RATE_LIMITED",
+        error: "Too many chat requests. Please try again after the current limit resets.",
+        retryAfterSeconds: retryAfter
+      }),
+      {
+        status: 429,
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Retry-After": String(retryAfter),
+          ...corsHeaders(origin)
+        }
+      }
+    );
+  }
+
+  let body: any;
+  try {
+    body = await request.json();
+  } catch {
+    return json(
+      { ok: false, code: "INVALID_JSON", error: "Request body must be valid JSON." },
+      400,
+      origin
+    );
+  }
+
+  const question = typeof body?.message === "string" ? body.message.trim() : "";
+  const history = cleanHistory(body?.history);
+
+  if (!question) {
+    return json(
+      { ok: false, code: "EMPTY_MESSAGE", error: "Message is required." },
+      400,
+      origin
+    );
+  }
+
+  if (question.length > 2_000) {
+    return json(
+      {
+        ok: false,
+        code: "MESSAGE_TOO_LONG",
+        error: "Message must be 2,000 characters or fewer."
+      },
+      413,
+      origin
+    );
+  }
+
+  try {
+    const evidence = await getChatEvidence(question, history);
+    const common = evidencePayload(evidence);
+
+    if (evidence.kind === "ambiguous") {
       return json(
-        { ok: false, code: "METHOD_NOT_ALLOWED", error: "Use POST /api/chat." },
-        405,
+        {
+          ok: true,
+          status: "ambiguous",
+          message:
+            "I found several public repositories that could match that request. Choose the one you mean.",
+          ...common
+        },
+        200,
         origin
       );
     }
 
-    if (origin && !allowedOrigins().has(origin)) {
+    if (evidence.kind === "inaccessible") {
       return json(
-        { ok: false, code: "ORIGIN_NOT_ALLOWED", error: "This client origin is not allowed." },
-        403,
+        {
+          ok: true,
+          status: "inaccessible",
+          message:
+            "I found a repository name that appears to refer to a non-public or inaccessible repository. Its source is intentionally not exposed through this public assistant.",
+          ...common
+        },
+        200,
         origin
       );
     }
 
-    if (process.env.VERCEL_ENV === "production" && !cacheConfigured()) {
+    const response =
+      isOpenRequest(question) && isRepositoryNameRequest(question)
+        ? null
+        : await generateGroundedAnswer(question, history, evidence);
+
+    if (response) {
+      return json(
+        {
+          ok: true,
+          status: "answer",
+          answer: response.answer,
+          model: response.model,
+          ...common
+        },
+        200,
+        origin
+      );
+    }
+
+    return json(
+      {
+        ok: true,
+        status: "links",
+        answer:
+          "Here are the public repository links I could verify for that request.",
+        ...common
+      },
+      200,
+      origin
+    );
+  } catch (error) {
+    if (error instanceof GithubApiError) {
+      if (error.status === 403 || error.status === 429) {
+        return json(
+          {
+            ok: false,
+            code: "GITHUB_RATE_LIMIT",
+            error:
+              "GitHub temporarily limited repository access. Please retry after the limit resets.",
+            retryAfterSeconds: error.retryAfterSeconds
+          },
+          503,
+          origin
+        );
+      }
+
+      if (error.status === 404) {
+        return json(
+          {
+            ok: true,
+            status: "inaccessible",
+            message:
+              "That repository could not be verified as an accessible public repository, so I will not guess about its contents."
+          },
+          200,
+          origin
+        );
+      }
+    }
+
+    if (error instanceof GeminiApiError) {
+      if (error.status === 429) {
+        return json(
+          {
+            ok: false,
+            code: "AI_RATE_LIMIT",
+            error: error.message,
+            retryAfterSeconds: error.retryAfterSeconds
+          },
+          503,
+          origin
+        );
+      }
+
       return json(
         {
           ok: false,
-          code: "CACHE_NOT_CONFIGURED",
-          error: "The production chat service requires its rate-limit/cache store."
+          code: "AI_PROVIDER_ERROR",
+          error: "The AI service could not complete the request right now."
         },
         503,
         origin
       );
     }
 
-    const limit = await rateLimit(`ip:${clientIp(request)}`);
-    if (!limit.success) {
-      const retryAfter = Math.max(
-        1,
-        Math.ceil((limit.reset - Date.now()) / 1000)
-      );
+    const message =
+      error instanceof Error
+        ? error.message
+        : "The assistant could not complete the request.";
 
-      return new Response(
-        JSON.stringify({
-          ok: false,
-          code: "RATE_LIMITED",
-          error: "Too many chat requests. Please try again after the current limit resets.",
-          retryAfterSeconds: retryAfter
-        }),
-        {
-          status: 429,
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            "Retry-After": String(retryAfter),
-            ...corsHeaders(origin)
-          }
-        }
-      );
-    }
-
-    let body: any;
-    try {
-      body = await request.json();
-    } catch {
-      return json(
-        { ok: false, code: "INVALID_JSON", error: "Request body must be valid JSON." },
-        400,
-        origin
-      );
-    }
-
-    const question = typeof body?.message === "string" ? body.message.trim() : "";
-    const history = cleanHistory(body?.history);
-
-    if (!question) {
-      return json(
-        { ok: false, code: "EMPTY_MESSAGE", error: "Message is required." },
-        400,
-        origin
-      );
-    }
-
-    if (question.length > 2_000) {
-      return json(
-        { ok: false, code: "MESSAGE_TOO_LONG", error: "Message must be 2,000 characters or fewer." },
-        413,
-        origin
-      );
-    }
-
-    try {
-      const evidence = await getChatEvidence(question, history);
-      const common = evidencePayload(evidence);
-
-      if (evidence.kind === "ambiguous") {
-        return json(
-          {
-            ok: true,
-            status: "ambiguous",
-            message:
-              "I found several public repositories that could match that request. Choose the one you mean.",
-            ...common
-          },
-          200,
-          origin
-        );
-      }
-
-      if (evidence.kind === "inaccessible") {
-        return json(
-          {
-            ok: true,
-            status: "inaccessible",
-            message:
-              "I found a repository name that appears to refer to a non-public or inaccessible repository. Its source is intentionally not exposed through this public assistant.",
-            ...common
-          },
-          200,
-          origin
-        );
-      }
-
-      const response = isOpenRequest(question) && isRepositoryNameRequest(question)
-        ? null
-        : await generateGroundedAnswer(question, history, evidence);
-
-      if (response) {
-        return json(
-          {
-            ok: true,
-            status: "answer",
-            answer: response.answer,
-            model: response.model,
-            ...common
-          },
-          200,
-          origin
-        );
-      }
-
-      return json(
-        {
-          ok: true,
-          status: "links",
-          answer:
-            "Here are the public repository links I could verify for that request.",
-          ...common
-        },
-        200,
-        origin
-      );
-    } catch (error) {
-      if (error instanceof GithubApiError) {
-        if (error.status === 403 || error.status === 429) {
-          return json(
-            {
-              ok: false,
-              code: "GITHUB_RATE_LIMIT",
-              error:
-                "GitHub temporarily limited repository access. Please retry after the limit resets.",
-              retryAfterSeconds: error.retryAfterSeconds
-            },
-            503,
-            origin
-          );
-        }
-
-        if (error.status === 404) {
-          return json(
-            {
-              ok: true,
-              status: "inaccessible",
-              message:
-                "That repository could not be verified as an accessible public repository, so I will not guess about its contents."
-            },
-            200,
-            origin
-          );
-        }
-      }
-
-      const message =
-        error instanceof Error ? error.message : "The assistant could not complete the request.";
-
-      return json(
-        {
-          ok: false,
-          code: "CHAT_UNAVAILABLE",
-          error: message
-        },
-        502,
-        origin
-      );
-    }
+    return json(
+      {
+        ok: false,
+        code: "CHAT_UNAVAILABLE",
+        error: message
+      },
+      502,
+      origin
+    );
+  }
 }
