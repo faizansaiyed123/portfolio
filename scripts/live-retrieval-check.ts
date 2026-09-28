@@ -1,6 +1,7 @@
 import {
   findRepositoriesUsingTechnology,
   getChatEvidence,
+  getPortfolioFeaturedRepositories,
   resolveRepositories
 } from "../lib/github.ts";
 
@@ -13,6 +14,14 @@ assert(list.kind === "list", "Expected repository list classification.");
 assert(
   list.repositories.some((repo) => repo.fullName === "faizansaiyed123/FrameFlux-Backend"),
   "Live discovery did not include FrameFlux-Backend."
+);
+
+const featuredProjects = await getPortfolioFeaturedRepositories();
+console.log("Featured portfolio projects:", featuredProjects);
+assert(
+  featuredProjects.includes("faizansaiyed123/FrameFlux-Backend") &&
+    featuredProjects.includes("faizansaiyed123/telemetry-backend"),
+  "Portfolio source did not resolve the featured FrameFlux and Telemetry repositories."
 );
 
 const portfolioWide = await getChatEvidence("What have you built?");
