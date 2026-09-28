@@ -888,7 +888,7 @@ export async function findRepositoriesUsingTechnology(question: string) {
 
 export async function getChatEvidence(question: string, history: Array<{ role: "user" | "assistant"; content: string }> = []) {
   const normalized = normalize(question);
-  const isListQuery = /\b(show|list|which|what).*\b(repository|repositories|repos|projects|project)\b|\bgithub repositories\b|\bprojects has faizan built\b/.test(normalized);
+  const isListQuery = /(?:\b(?:show|list|see|view|display|get|give|find|what|which)\b.*\b(?:repository|repositories|repo|repos|project|projects)\b)|(?:\b(?:latest|recent|newest|current|public)\b.*\b(?:repository|repositories|repo|repos|project|projects)\b)|(?:\b(?:repository|repositories|repo|repos|project|projects)\b.*\b(?:latest|recent|newest|current|public|faizan|my)\b)/.test(normalized);
   const tech = await findRepositoriesUsingTechnology(question);
 
   if (tech) {
