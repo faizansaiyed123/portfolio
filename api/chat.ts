@@ -16,11 +16,50 @@ type ChatMessage = {
   content: string;
 };
 
+type NodeRequest = {
+  method?: string;
+  headers: Record<string, string | string[] | undefined> & {
+    get?: undefined;
+  };
+  body?: unknown;
+  socket?: {
+    remoteAddress?: string;
+  };
+};
+
+type NodeResponse = {
+  status(code: number): NodeResponse;
+  json(data: unknown): NodeResponse;
+  setHeader(name: string, value: string | string[]): void;
+  end(): void;
+};
+
+type FetchLikeRequest = Request;
+
 const DEFAULT_ORIGINS = [
   "https://faizansaiyed123.github.io",
   "http://localhost:8080",
   "http://127.0.0.1:8080"
 ];
+
+function isFetchRequest(request: unknown): request is FetchLikeRequest {
+  return (
+    typeof request === "object" &&
+    request !== null &&
+    "headers" in request &&
+    typeof (request as Request).headers?.get === "function"
+  );
+}
+
+function header(request: NodeRequest | FetchLikeRequest, name: string) {
+  if (isFetchRequest(request)) {
+    return request.headers.get(name);
+  }
+
+  const value = request.headers?.[name.toLowerCase()] ?? request.headers?.[name];
+  if (Array.isArray(value)) return value[0] || null;
+  return typeof value === "string" ? value : null;
+}
 
 function allowedOrigins() {
   return new Set(
@@ -44,25 +83,69 @@ function corsHeaders(origin: string | null) {
   };
 }
 
-function json(data: unknown, status = 200, origin: string | null = null) {
+function json(
+  request: NodeRequest | FetchLikeRequest,
+  response: NodeResponse | undefined,
+  data: unknown,
+  status = 200,
+  origin: string | null = null
+) {
+  const headers = corsHeaders(origin);
+
+  if (response) {
+    for (const [name, value] of Object.entries(headers)) {
+      response.setHeader(name, value);
+    }
+    return response.status(status).json(data);
+  }
+
   return Response.json(data, {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      ...corsHeaders(origin)
+      ...headers
     }
   });
 }
 
-function clientIp(request: Request) {
-  const forwarded = request.headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0].trim();
+function emptyResponse(
+  response: NodeResponse | undefined,
+  status: number,
+  origin: string | null
+) {
+  const headers = corsHeaders(origin);
 
+  if (response) {
+    for (const [name, value] of Object.entries(headers)) {
+      response.setHeader(name, value);
+    }
+    response.status(status).end();
+    return;
+  }
+
+  return new Response(null, { status, headers });
+}
+
+function clientIp(request: NodeRequest | FetchLikeRequest) {
   return (
-    request.headers.get("x-real-ip") ||
-    request.headers.get("x-vercel-forwarded-for") ||
+    header(request, "x-forwarded-for")?.split(",")[0].trim() ||
+    header(request, "x-real-ip") ||
+    header(request, "x-vercel-forwarded-for") ||
+    (!isFetchRequest(request) ? request.socket?.remoteAddress : null) ||
     "unknown"
   );
+}
+
+async function requestBody(request: NodeRequest | FetchLikeRequest) {
+  if (isFetchRequest(request)) {
+    return request.json();
+  }
+
+  if (typeof request.body === "string") {
+    return JSON.parse(request.body);
+  }
+
+  return request.body ?? {};
 }
 
 function cleanHistory(value: unknown): ChatMessage[] {
@@ -132,18 +215,21 @@ function isRepositoryNameRequest(question: string) {
   return /\brepository\b|\brepo\b|\bgithub\b/.test(question.toLowerCase());
 }
 
-export default async function handler(request: Request) {
-  const origin = request.headers.get("origin");
+export default async function handler(
+  request: NodeRequest | FetchLikeRequest,
+  response?: NodeResponse
+) {
+  const origin = header(request, "origin");
+  const method = request.method || "GET";
 
-  if (request.method === "OPTIONS") {
-    return new Response(null, {
-      status: 204,
-      headers: corsHeaders(origin)
-    });
+  if (method === "OPTIONS") {
+    return emptyResponse(response, 204, origin);
   }
 
-  if (request.method !== "POST") {
+  if (method !== "POST") {
     return json(
+      request,
+      response,
       { ok: false, code: "METHOD_NOT_ALLOWED", error: "Use POST /api/chat." },
       405,
       origin
@@ -152,6 +238,8 @@ export default async function handler(request: Request) {
 
   if (origin && !allowedOrigins().has(origin)) {
     return json(
+      request,
+      response,
       {
         ok: false,
         code: "ORIGIN_NOT_ALLOWED",
@@ -164,6 +252,8 @@ export default async function handler(request: Request) {
 
   if (process.env.VERCEL_ENV === "production" && !cacheConfigured()) {
     return json(
+      request,
+      response,
       {
         ok: false,
         code: "CACHE_NOT_CONFIGURED",
@@ -180,6 +270,23 @@ export default async function handler(request: Request) {
       1,
       Math.ceil((limit.reset - Date.now()) / 1000)
     );
+
+    if (response) {
+      for (const [name, value] of Object.entries({
+        "Content-Type": "application/json; charset=utf-8",
+        "Retry-After": String(retryAfter),
+        ...corsHeaders(origin)
+      })) {
+        response.setHeader(name, value);
+      }
+
+      return response.status(429).json({
+        ok: false,
+        code: "RATE_LIMITED",
+        error: "Too many chat requests. Please try again after the current limit resets.",
+        retryAfterSeconds: retryAfter
+      });
+    }
 
     return new Response(
       JSON.stringify({
@@ -201,9 +308,11 @@ export default async function handler(request: Request) {
 
   let body: any;
   try {
-    body = await request.json();
+    body = await requestBody(request);
   } catch {
     return json(
+      request,
+      response,
       { ok: false, code: "INVALID_JSON", error: "Request body must be valid JSON." },
       400,
       origin
@@ -215,6 +324,8 @@ export default async function handler(request: Request) {
 
   if (!question) {
     return json(
+      request,
+      response,
       { ok: false, code: "EMPTY_MESSAGE", error: "Message is required." },
       400,
       origin
@@ -223,6 +334,8 @@ export default async function handler(request: Request) {
 
   if (question.length > 2_000) {
     return json(
+      request,
+      response,
       {
         ok: false,
         code: "MESSAGE_TOO_LONG",
@@ -239,6 +352,8 @@ export default async function handler(request: Request) {
 
     if (evidence.kind === "ambiguous") {
       return json(
+        request,
+        response,
         {
           ok: true,
           status: "ambiguous",
@@ -253,6 +368,8 @@ export default async function handler(request: Request) {
 
     if (evidence.kind === "inaccessible") {
       return json(
+        request,
+        response,
         {
           ok: true,
           status: "inaccessible",
@@ -265,18 +382,20 @@ export default async function handler(request: Request) {
       );
     }
 
-    const response =
+    const aiResponse =
       isOpenRequest(question) && isRepositoryNameRequest(question)
         ? null
         : await generateGroundedAnswer(question, history, evidence);
 
-    if (response) {
+    if (aiResponse) {
       return json(
+        request,
+        response,
         {
           ok: true,
           status: "answer",
-          answer: response.answer,
-          model: response.model,
+          answer: aiResponse.answer,
+          model: aiResponse.model,
           ...common
         },
         200,
@@ -285,6 +404,8 @@ export default async function handler(request: Request) {
     }
 
     return json(
+      request,
+      response,
       {
         ok: true,
         status: "links",
@@ -299,6 +420,8 @@ export default async function handler(request: Request) {
     if (error instanceof GithubApiError) {
       if (error.status === 403 || error.status === 429) {
         return json(
+          request,
+          response,
           {
             ok: false,
             code: "GITHUB_RATE_LIMIT",
@@ -313,6 +436,8 @@ export default async function handler(request: Request) {
 
       if (error.status === 404) {
         return json(
+          request,
+          response,
           {
             ok: true,
             status: "inaccessible",
@@ -328,6 +453,8 @@ export default async function handler(request: Request) {
     if (error instanceof GeminiApiError) {
       if (error.status === 429) {
         return json(
+          request,
+          response,
           {
             ok: false,
             code: "AI_RATE_LIMIT",
@@ -340,6 +467,8 @@ export default async function handler(request: Request) {
       }
 
       return json(
+        request,
+        response,
         {
           ok: false,
           code: "AI_PROVIDER_ERROR",
@@ -356,6 +485,8 @@ export default async function handler(request: Request) {
         : "The assistant could not complete the request.";
 
     return json(
+      request,
+      response,
       {
         ok: false,
         code: "CHAT_UNAVAILABLE",
