@@ -813,14 +813,17 @@ export async function getChatEvidence(question: string, history: Array<{ role: "
       repository: repo.fullName,
       title: repo.name,
       url: repo.htmlUrl,
-      content: JSON.stringify({
-        description: repo.description,
-        language: repo.language,
-        stars: repo.stars,
-        forks: repo.forks,
-        pushedAt: repo.pushedAt,
-        dependencyEvidence: repo.evidencePath || null
-      })
+      content: [
+        JSON.stringify({
+          description: repo.description,
+          language: repo.language,
+          stars: repo.stars,
+          forks: repo.forks,
+          pushedAt: repo.pushedAt
+        }),
+        repo.evidencePath ? `Verified dependency manifest: ${repo.evidencePath}` : "Repository-name evidence only.",
+        repo.evidenceContent || ""
+      ].join("\n")
     }));
 
     return {
