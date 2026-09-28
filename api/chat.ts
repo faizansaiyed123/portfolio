@@ -423,7 +423,6 @@ export default async function handler(
           ok: true,
           status: "answer",
           answer,
-          kind: "list",
           ...common
         },
         200,
