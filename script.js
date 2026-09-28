@@ -149,7 +149,7 @@
     });
   });
 
-/* ---------- Portfolio guide / deterministic interview flow ---------- */
+/* ---------- Portfolio guide / guided portfolio companion ---------- */
   const guidePanel = $("#guide-panel");
   const guideLauncher = $("#guide-launcher");
   const guideTopButton = $("#guide-top-button");
@@ -168,231 +168,158 @@
     currentNode: "start"
   };
 
-  const interviewFlow = {
+  const guideFlow = {
     start: {
-      context: "INTERVIEW",
-      message: "Welcome! How would you like to proceed with the interview?",
+      context: "WELCOME",
+      message: "Hi — welcome to Faizan's portfolio. What would you like to explore?",
       choices: [
-        ["Start Interview", "start-interview"],
-        ["Review Candidate", "review-candidate"],
-        ["Ask Technical Questions", "technical"],
-        ["Ask Behavioral Questions", "behavioral"],
-        ["End Interview", "end"]
-      ]
-    },
-    "start-interview": {
-      context: "START",
-      message: "Let's begin with a structured interview. Choose the area you want to cover first.",
-      choices: [
-        ["Review Candidate", "review-candidate"],
-        ["Ask Technical Questions", "technical"],
-        ["Ask Behavioral Questions", "behavioral"],
-        ["Back to Main Menu", "start"]
-      ]
-    },
-    "review-candidate": {
-      context: "CANDIDATE",
-      message: "Faizan Saiyed is a full-stack engineer focused on backend APIs, realtime systems, asynchronous workflows, data systems, and polished web interfaces. What would you like to review?",
-      choices: [
-        ["Review Selected Projects", "projects"],
-        ["Review Engineering Stack", "stack"],
-        ["Review Engineering Approach", "method"],
-        ["Open Contact", "contact"],
-        ["Back to Main Menu", "start"]
+        ["Show me the projects", "projects"],
+        ["How does he approach engineering?", "approach"],
+        ["What's in the stack?", "stack"],
+        ["What kind of engineer is he?", "profile"],
+        ["Get in touch", "contact"]
       ]
     },
     projects: {
       context: "PROJECTS",
-      message: "Two systems are presented as the selected casebook: FrameFlux for asynchronous media workflows and Telemetry for realtime observability.",
+      message: "There are two featured systems here. Pick the one you want to understand first.",
       choices: [
-        ["Review FrameFlux", "frameflux"],
-        ["Review Telemetry", "telemetry"],
-        ["Open Work Casebook", "goto-work"],
-        ["Back to Candidate Review", "review-candidate"]
+        ["Explore FrameFlux", "frameflux"],
+        ["Explore Telemetry", "telemetry"],
+        ["See the full work section", "goto-work"],
+        ["Back to start", "start"]
       ]
     },
     frameflux: {
       context: "FRAMEFLUX",
-      message: "FrameFlux keeps heavy media work out of the request path. The design uses explicit upload and processing state, validation, background jobs, progress, retries, cancellation, PostgreSQL, Redis/ARQ, FastAPI, and FFmpeg.",
+      message: "FrameFlux is an asynchronous media system built to keep heavy processing out of the request path. Explore the architecture, the case study, or the source.",
       choices: [
-        ["Open FrameFlux Case Study", "goto-frameflux"],
-        ["Open Backend Repository", "link-frameflux-backend"],
-        ["Open Frontend Repository", "link-frameflux-frontend"],
-        ["Back to Projects", "projects"]
+        ["See the FrameFlux case study", "goto-frameflux"],
+        ["Architecture & workflow", "frameflux-architecture"],
+        ["Open backend source", "link-frameflux-backend"],
+        ["Open frontend source", "link-frameflux-frontend"],
+        ["Back to projects", "projects"]
+      ]
+    },
+    "frameflux-architecture": {
+      context: "FRAMEFLUX / ARCHITECTURE",
+      message: "The flow is explicit: upload state is persisted, validation happens before expensive work, Redis/ARQ queues background jobs, workers run FFmpeg processing, and progress remains visible to the client.",
+      choices: [
+        ["Open the case study", "goto-frameflux"],
+        ["Explore Telemetry", "telemetry"],
+        ["Back to projects", "projects"]
       ]
     },
     telemetry: {
       context: "TELEMETRY",
-      message: "Telemetry models live system state for anomaly detection, persistence, alert lifecycle, authenticated streaming, and a realtime dashboard using FastAPI, PostgreSQL, WebSockets, React, and TypeScript.",
+      message: "Telemetry is a realtime observability system where the backend owns live state, anomaly detection, alert lifecycle, persistence, authenticated streaming, and dashboard updates.",
       choices: [
-        ["Open Telemetry Case Study", "goto-telemetry"],
-        ["Open Backend Repository", "link-telemetry-backend"],
-        ["Open Frontend Repository", "link-telemetry-frontend"],
-        ["Back to Projects", "projects"]
+        ["See the Telemetry case study", "goto-telemetry"],
+        ["Architecture & realtime flow", "telemetry-architecture"],
+        ["Open backend source", "link-telemetry-backend"],
+        ["Open frontend source", "link-telemetry-frontend"],
+        ["Back to projects", "projects"]
+      ]
+    },
+    "telemetry-architecture": {
+      context: "TELEMETRY / REALTIME",
+      message: "Signals are detected and persisted on the backend, then streamed through WebSockets to the dashboard. The browser presents state; it does not become the authority for lifecycle or access control.",
+      choices: [
+        ["Open the case study", "goto-telemetry"],
+        ["Explore FrameFlux", "frameflux"],
+        ["Back to projects", "projects"]
+      ]
+    },
+    approach: {
+      context: "ENGINEERING APPROACH",
+      message: "The portfolio keeps returning to four ideas: explicit state, clear ownership, validation before expensive work, and verification from the outside in.",
+      choices: [
+        ["Why explicit state?", "approach-state"],
+        ["How is backend authority used?", "approach-authority"],
+        ["How is reliability verified?", "approach-verification"],
+        ["See systems thinking", "goto-systems"],
+        ["Back to start", "start"]
+      ]
+    },
+    "approach-state": {
+      context: "APPROACH / STATE",
+      message: "Long-running and realtime work is easier to trust when its state is explicit. Uploads, jobs, alerts, and simulation state can be observed, resumed, retried, and verified instead of being hidden inside a single request.",
+      choices: [
+        ["See a concrete example", "frameflux"],
+        ["Back to approach", "approach"]
+      ]
+    },
+    "approach-authority": {
+      context: "APPROACH / OWNERSHIP",
+      message: "The interface can guide the user, but important rules live where they can be enforced: backend authorization, durable state transitions, and system lifecycle decisions.",
+      choices: [
+        ["See it in Telemetry", "telemetry"],
+        ["Back to approach", "approach"]
+      ]
+    },
+    "approach-verification": {
+      context: "APPROACH / VERIFICATION",
+      message: "Verification moves from isolated behavior to integration and browser-level behavior. The goal is not just that code runs, but that the system remains understandable and trustworthy from the outside.",
+      choices: [
+        ["See the verification notes", "goto-systems"],
+        ["Back to approach", "approach"]
       ]
     },
     stack: {
       context: "STACK",
-      message: "The selected systems provide direct evidence of backend APIs, persistence, asynchronous jobs, realtime streaming, frontend product interfaces, and automated verification.",
+      message: "The selected systems span backend APIs, durable data, asynchronous work, realtime transport, media processing, frontend applications, and automated verification.",
       choices: [
-        ["Review Backend Stack", "stack-backend"],
-        ["Review Frontend Stack", "stack-frontend"],
-        ["Review Systems Stack", "stack-systems"],
-        ["Back to Candidate Review", "review-candidate"]
+        ["Backend", "stack-backend"],
+        ["Frontend", "stack-frontend"],
+        ["Data & infrastructure", "stack-systems"],
+        ["See the full stack section", "goto-stack"],
+        ["Back to start", "start"]
       ]
     },
     "stack-backend": {
       context: "STACK / BACKEND",
-      message: "Backend: Python, FastAPI, Flask, Pydantic, SQLAlchemy, Alembic, Uvicorn, and Docker. These cover APIs, validation, persistence, migrations, and deployment/runtime concerns.",
+      message: "Python, FastAPI, Flask, Pydantic, SQLAlchemy, Alembic, Uvicorn, and Docker cover the backend work shown across the selected systems.",
       choices: [
-        ["Ask Backend Questions", "technical-backend"],
-        ["Back to Stack", "stack"]
+        ["Explore FrameFlux", "frameflux"],
+        ["Explore Telemetry", "telemetry"],
+        ["Back to stack", "stack"]
       ]
     },
     "stack-frontend": {
       context: "STACK / FRONTEND",
-      message: "Frontend: React, Next.js, TypeScript, Vite, and Tailwind CSS. The portfolio itself is intentionally framework-free and uses plain HTML, CSS, and JavaScript.",
+      message: "React, Next.js, TypeScript, Vite, and Tailwind CSS appear across the frontend work. This portfolio itself is intentionally framework-free.",
       choices: [
-        ["Ask Frontend Questions", "technical-frontend"],
-        ["Back to Stack", "stack"]
+        ["Explore Telemetry", "telemetry"],
+        ["Back to stack", "stack"]
       ]
     },
     "stack-systems": {
       context: "STACK / SYSTEMS",
-      message: "Systems: PostgreSQL for durable state, Redis and ARQ for background work, WebSockets for live updates, FFmpeg for media processing, and GitHub Actions/Playwright for verification.",
+      message: "PostgreSQL provides durable state, Redis/ARQ handles background work, WebSockets carry live updates, FFmpeg handles media processing, and automated tests verify behavior.",
       choices: [
-        ["Ask System Design Questions", "technical-system-design"],
-        ["Back to Stack", "stack"]
+        ["See FrameFlux architecture", "frameflux-architecture"],
+        ["See Telemetry architecture", "telemetry-architecture"],
+        ["Back to stack", "stack"]
       ]
     },
-    method: {
-      context: "APPROACH",
-      message: "The repeated engineering moves are explicit state, backend authority, validation before expensive work, and verification from the outside in.",
+    profile: {
+      context: "ABOUT FAIZAN",
+      message: "Faizan's work is centered on backend and full-stack engineering: APIs, realtime systems, asynchronous workflows, data, and interfaces that expose those systems clearly.",
       choices: [
-        ["Open Systems Thinking", "goto-systems"],
-        ["Review Projects", "projects"],
-        ["Back to Candidate Review", "review-candidate"]
-      ]
-    },
-    technical: {
-      context: "TECHNICAL",
-      message: "Select the technical area you'd like to evaluate:",
-      choices: [
-        ["Frontend", "technical-frontend"],
-        ["Backend", "technical-backend"],
-        ["Database", "technical-database"],
-        ["System Design", "technical-system-design"],
-        ["Git / GitHub", "technical-git"]
-      ]
-    },
-    "technical-frontend": {
-      context: "TECHNICAL / FRONTEND",
-      message: "Suggested question: How would you structure a frontend that consumes backend-owned state without duplicating business authority? Evaluation focus: state boundaries, API contracts, user feedback, and testability.",
-      choices: [
-        ["Next Technical Area", "technical"],
-        ["Review Frontend Stack", "stack-frontend"],
-        ["Back to Main Menu", "start"]
-      ]
-    },
-    "technical-backend": {
-      context: "TECHNICAL / BACKEND",
-      message: "Suggested question: How would you design a long-running operation so the request does not have to stay open? Evaluation focus: explicit job state, retries, cancellation, idempotency, and observability.",
-      choices: [
-        ["Next Technical Area", "technical"],
-        ["Review FrameFlux", "frameflux"],
-        ["Back to Main Menu", "start"]
-      ]
-    },
-    "technical-database": {
-      context: "TECHNICAL / DATABASE",
-      message: "Suggested question: Where should durable workflow state live, and what should be safe to reconstruct? Evaluation focus: ownership, transaction boundaries, indexing, migrations, and recovery after failure.",
-      choices: [
-        ["Next Technical Area", "technical"],
-        ["Review Systems Stack", "stack-systems"],
-        ["Back to Main Menu", "start"]
-      ]
-    },
-    "technical-system-design": {
-      context: "TECHNICAL / SYSTEM DESIGN",
-      message: "Suggested question: A media request can take minutes. Walk through a design that keeps the API responsive while still exposing progress and failure state. Evaluation focus: queues, workers, state machines, backpressure, and status visibility.",
-      choices: [
-        ["Next Technical Area", "technical"],
-        ["Review FrameFlux", "frameflux"],
-        ["Back to Main Menu", "start"]
-      ]
-    },
-    "technical-git": {
-      context: "TECHNICAL / GIT",
-      message: "Suggested question: How do you keep a multi-part feature safe while it is being implemented? Evaluation focus: small commits, focused branches, reviewable changes, verification, and clear history.",
-      choices: [
-        ["Next Technical Area", "technical"],
-        ["Open GitHub", "link-github"],
-        ["Back to Main Menu", "start"]
-      ]
-    },
-    behavioral: {
-      context: "BEHAVIORAL",
-      message: "Select the behavioral area you'd like to evaluate:",
-      choices: [
-        ["Ownership", "behavioral-ownership"],
-        ["Problem Solving", "behavioral-problem-solving"],
-        ["Communication", "behavioral-communication"],
-        ["Reliability", "behavioral-reliability"]
-      ]
-    },
-    "behavioral-ownership": {
-      context: "BEHAVIORAL / OWNERSHIP",
-      message: "Suggested question: Tell me about a system where you had to own the problem beyond the first implementation. Follow-up focus: trade-offs, verification, maintenance, and what changed after feedback.",
-      choices: [
-        ["Next Behavioral Area", "behavioral"],
-        ["Review Engineering Approach", "method"],
-        ["Back to Main Menu", "start"]
-      ]
-    },
-    "behavioral-problem-solving": {
-      context: "BEHAVIORAL / PROBLEM SOLVING",
-      message: "Suggested question: Describe a difficult failure mode you found and how you narrowed it down. Follow-up focus: evidence, hypotheses, debugging discipline, and the final system change.",
-      choices: [
-        ["Next Behavioral Area", "behavioral"],
-        ["Review Projects", "projects"],
-        ["Back to Main Menu", "start"]
-      ]
-    },
-    "behavioral-communication": {
-      context: "BEHAVIORAL / COMMUNICATION",
-      message: "Suggested question: Explain a technical decision to a teammate who does not own the same part of the system. Follow-up focus: clarity, constraints, alternatives, and shared understanding.",
-      choices: [
-        ["Next Behavioral Area", "behavioral"],
-        ["Review Engineering Approach", "method"],
-        ["Back to Main Menu", "start"]
-      ]
-    },
-    "behavioral-reliability": {
-      context: "BEHAVIORAL / RELIABILITY",
-      message: "Suggested question: What do you do when a system is technically working but difficult to trust? Follow-up focus: tests, observability, failure boundaries, documentation, and repeatable verification.",
-      choices: [
-        ["Next Behavioral Area", "behavioral"],
-        ["Review Systems Thinking", "goto-systems"],
-        ["Back to Main Menu", "start"]
+        ["See the projects", "projects"],
+        ["See the engineering approach", "approach"],
+        ["Open contact", "contact"],
+        ["Back to start", "start"]
       ]
     },
     contact: {
       context: "CONTACT",
-      message: "For a direct conversation, use the contact section or connect through the public profiles linked there.",
+      message: "Ready to continue the conversation? Open the contact section, LinkedIn, or GitHub.",
       choices: [
-        ["Open Contact", "goto-contact"],
+        ["Open contact section", "goto-contact"],
         ["Open LinkedIn", "link-linkedin"],
         ["Open GitHub", "link-github"],
-        ["Back to Candidate Review", "review-candidate"]
-      ]
-    },
-    end: {
-      context: "END",
-      message: "Interview flow complete. This guide is deterministic: every response and next step comes from predefined interview paths.",
-      choices: [
-        ["Restart Interview", "start"],
-        ["Open Contact", "goto-contact"],
-        ["Close Guide", "close"]
+        ["Back to start", "start"]
       ]
     }
   };
@@ -411,8 +338,8 @@
   };
 
   const updateGuideProgress = () => {
-    const step = guideState.path.length;
-    if (guideProgress) guideProgress.textContent = "STEP " + Math.min(step, 9);
+    const step = Math.min(9, guideState.path.length);
+    if (guideProgress) guideProgress.textContent = step ? "STEP " + step : "READY";
   };
 
   const appendMessage = (message, role, type = false) => {
@@ -443,9 +370,8 @@
         element.appendChild(document.createTextNode(message[index]));
         index += 1;
         guideThread && (guideThread.scrollTop = guideThread.scrollHeight);
-        window.setTimeout(tick, 6);
+        window.setTimeout(tick, 5);
       };
-
       tick();
     });
   };
@@ -458,7 +384,7 @@
       const button = document.createElement("button");
       button.type = "button";
       button.className = "guide-action";
-      button.setAttribute("aria-label", "Select " + label);
+      button.setAttribute("aria-label", "Choose " + label);
 
       const labelEl = document.createElement("span");
       labelEl.className = "guide-action-copy";
@@ -466,14 +392,19 @@
 
       const iconEl = document.createElement("span");
       iconEl.className = "guide-action-icon";
-      iconEl.textContent = "↗";
+      iconEl.textContent = "→";
       iconEl.setAttribute("aria-hidden", "true");
 
       button.append(labelEl, iconEl);
       button.addEventListener("click", async () => {
         if (guideState.typing) return;
+
+        $$(".guide-action", guideActions).forEach((item) => {
+          item.disabled = true;
+          item.classList.remove("is-selected");
+        });
         button.classList.add("is-selected");
-        $$(".guide-action", guideActions).forEach((item) => { item.disabled = true; });
+
         await handleChoice(label, action);
       });
       guideActions.appendChild(button);
@@ -494,10 +425,11 @@
     guideTopButton?.setAttribute("aria-expanded", "true");
     guideDock?.classList.add("is-open");
     guideDock?.classList.remove("is-attention");
+
     if (!guideState.history.length) {
       void showNode("start");
     } else {
-      renderChoices(interviewFlow[guideState.currentNode]?.choices || []);
+      renderChoices(guideFlow[guideState.currentNode]?.choices || []);
     }
   };
 
@@ -515,11 +447,12 @@
     updateGuideProgress();
 
     const responses = {
-      "goto-work": "Opening the selected work casebook.",
-      "goto-frameflux": "Opening FrameFlux in the work casebook.",
-      "goto-telemetry": "Opening Telemetry in the work casebook.",
-      "goto-systems": "Opening the systems-thinking section.",
-      "goto-contact": "Opening the direct contact section."
+      "goto-work": "Taking you to the selected work.",
+      "goto-frameflux": "Here is the FrameFlux case study.",
+      "goto-telemetry": "Here is the Telemetry case study.",
+      "goto-systems": "Taking you to the systems-thinking section.",
+      "goto-stack": "Taking you to the stack.",
+      "goto-contact": "Taking you to the contact section."
     };
 
     await appendMessage(responses[action] || "Opening the selected section.", "bot", true);
@@ -527,27 +460,26 @@
     if (action === "goto-frameflux") activateProject("frameflux", true);
     else if (action === "goto-telemetry") activateProject("telemetry", true);
     else scrollToSection(action.replace("goto-", ""));
+
+    renderChoices(guideFlow[guideState.currentNode]?.choices || []);
   };
 
-  const handleExternalLink = (label, action) => {
+  const handleExternalLink = async (label, action) => {
     const href = externalLinks[action];
     if (!href) return;
 
-    const userMessage = document.createElement("p");
-    userMessage.className = "guide-message guide-message-user";
-    userMessage.textContent = label;
-    guideThread?.appendChild(userMessage);
+    await appendMessage(label, "user");
     guideState.history.push({ role: "user", content: label });
     guideState.path.push(action);
     updateGuideProgress();
 
     window.open(href, "_blank", "noopener,noreferrer");
-    void appendMessage("Opening the selected public link.", "bot", true);
-    renderChoices(interviewFlow[guideState.currentNode]?.choices || []);
+    await appendMessage("Opening that link in a new tab.", "bot", true);
+    renderChoices(guideFlow[guideState.currentNode]?.choices || []);
   };
 
   const showNode = async (id, userLabel) => {
-    const node = interviewFlow[id];
+    const node = guideFlow[id];
     if (!node || guideState.typing) return;
 
     if (userLabel) {
@@ -574,13 +506,12 @@
     }
 
     if (externalLinks[action]) {
-      handleExternalLink(label, action);
+      await handleExternalLink(label, action);
       return;
     }
 
     if (action.startsWith("goto-")) {
       await handleRoute(label, action);
-      renderChoices(interviewFlow[guideState.currentNode]?.choices || []);
       return;
     }
 
@@ -603,12 +534,13 @@
     guideState.currentNode = "start";
     guideThread?.replaceChildren();
     guideActions?.replaceChildren();
-    setGuideContext("INTERVIEW");
+    setGuideContext("WELCOME");
     updateGuideProgress();
     void showNode("start");
   });
 
-  /* ---------- Guide context awareness ---------- */
+  
+/* ---------- Guide context awareness ---------- */
 
   /* ---------- Guide context awareness ---------- */
   const sectionContext = {
