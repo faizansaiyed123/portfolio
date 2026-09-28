@@ -5,7 +5,7 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function callProduction(message) {
+async function callProduction(message, history = []) {
   const response = await fetch(API_URL, {
     method: "POST",
     headers: {
@@ -14,7 +14,7 @@ async function callProduction(message) {
     },
     body: JSON.stringify({
       message,
-      history: []
+      history
     })
   });
 
@@ -60,6 +60,47 @@ for (let attempt = 1; attempt <= 12; attempt += 1) {
     );
 
     await runCheck(
+      "General AI conversation check",
+      "What can you do?",
+      (response, payload) =>
+        response.ok &&
+        payload?.ok === true &&
+        payload?.status === "answer" &&
+        payload?.kind === "conversation" &&
+        typeof payload?.answer === "string" &&
+        payload.answer.trim().length > 0
+    );
+
+    await runCheck(
+      "Latest public repositories check",
+      "latest repos",
+      (response, payload) =>
+        response.ok &&
+        payload?.ok === true &&
+        payload?.status === "answer" &&
+        payload?.kind === "list" &&
+        Array.isArray(payload.repositories) &&
+        payload.repositories.length > 0
+    );
+
+    await runCheck(
+      "Portfolio-wide interview check",
+      "What have you built?",
+      (response, payload) =>
+        response.ok &&
+        payload?.ok === true &&
+        payload?.status === "answer" &&
+        payload?.kind === "portfolio" &&
+        typeof payload?.answer === "string" &&
+        payload.answer.trim().length > 0 &&
+        Array.isArray(payload.repositories) &&
+        payload.repositories.some((repo) => repo.name === "FrameFlux-Frontend") &&
+        payload.repositories.some((repo) => repo.name === "FrameFlux-Backend") &&
+        payload.repositories.some((repo) => repo.name === "telemetry-frontend") &&
+        payload.repositories.some((repo) => repo.name === "telemetry-backend")
+    );
+
+    await runCheck(
       "Grounded FrameFlux interview check",
       question,
       (response, payload) =>
@@ -72,6 +113,33 @@ for (let attempt = 1; attempt <= 12; attempt += 1) {
         payload.repositories.some((repo) => repo.name === "FrameFlux-Frontend") &&
         payload.repositories.some((repo) => repo.name === "FrameFlux-Backend")
     );
+
+    const followUp = await callProduction("Why did you choose that architecture?", [
+      { role: "user", content: question }
+    ]);
+    console.log("FrameFlux follow-up check", {
+      status: followUp.response.status,
+      ok: followUp.payload?.ok ?? false,
+      chatStatus: followUp.payload?.status ?? null,
+      answer:
+        typeof followUp.payload?.answer === "string"
+          ? followUp.payload.answer.slice(0, 500)
+          : null,
+      repositories: (followUp.payload?.repositories || []).map((repo) => repo.fullName)
+    });
+    if (
+      !followUp.response.ok ||
+      followUp.payload?.ok !== true ||
+      followUp.payload?.status !== "answer" ||
+      typeof followUp.payload?.answer !== "string" ||
+      !followUp.payload.answer.trim() ||
+      !Array.isArray(followUp.payload.repositories) ||
+      !followUp.payload.repositories.some((repo) => repo.name === "FrameFlux-Backend")
+    ) {
+      throw new Error(
+        `FrameFlux follow-up check failed: HTTP ${followUp.response.status} ${followUp.payload?.code || ""} ${followUp.payload?.error || ""}`
+      );
+    }
 
     console.log("Production end-to-end AI interview checks passed.");
     process.exit(0);
