@@ -35,3 +35,6 @@ jobs:
 
       - name: Live GitHub smoke test
         run: node scripts/github-smoke.mjs
+
+      - name: Live repository intelligence test
+        run: npm run test:live
