@@ -49,3 +49,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: npm run test:api
+
+      - name: Production end-to-end AI chat check
+        run: node scripts/live-production-chat-check.mjs
