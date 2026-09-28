@@ -3,9 +3,11 @@ name: Live GitHub Chat Checks
 on:
   push:
     branches:
+      - main
       - feature/live-github-chat
   pull_request:
     branches:
+      - main
       - feature/live-github-chat
   workflow_dispatch:
 
