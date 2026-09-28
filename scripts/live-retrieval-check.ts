@@ -47,6 +47,26 @@ assert(
   "FrameFlux evidence missing relevant source code."
 );
 
+
+const architecture = await getChatEvidence(
+  "Explain FrameFlux architecture and tell me which APIs it uses."
+);
+assert(
+  architecture.kind === "group",
+  "Explicit FrameFlux architecture/API question should resolve the FrameFlux project group."
+);
+assert(
+  architecture.repositories.length === 2 &&
+    architecture.repositories.some((repo) => repo.name === "FrameFlux-Frontend") &&
+    architecture.repositories.some((repo) => repo.name === "FrameFlux-Backend"),
+  "FrameFlux architecture question should include both frontend and backend repositories."
+);
+assert(
+  architecture.evidence.some((item) => item.repository === "faizansaiyed123/FrameFlux-Frontend") &&
+    architecture.evidence.some((item) => item.repository === "faizansaiyed123/FrameFlux-Backend"),
+  "FrameFlux architecture question should retrieve evidence from both repositories."
+);
+
 const followUp = await getChatEvidence(
   "What APIs are used in this project?",
   [{ role: "user", content: "Explain FrameFlux." }]
