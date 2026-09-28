@@ -83,11 +83,17 @@
   </div>
 </footer>
 <div class="guide-dock" id="guide-dock">
-  <button class="guide-launcher" id="guide-launcher" type="button" aria-controls="guide-panel" aria-expanded="false">
-    <span class="guide-mark" aria-hidden="true"><span></span><span></span><span></span></span>
-    <span class="guide-launcher-copy"><small>PORTFOLIO GUIDE / READY</small><b>Explore Faizan</b></span>
-    <span class="guide-launcher-hint">press /</span>
-    <span class="guide-launcher-arrow">↗</span>
+  <button class="guide-launcher" id="guide-launcher" type="button" aria-controls="guide-panel" aria-expanded="false" aria-label="Open portfolio guide">
+    <svg class="guide-bot-icon" viewBox="0 0 48 48" aria-hidden="true">
+      <path class="guide-bot-antenna" d="M24 9V5"></path>
+      <circle class="guide-bot-tip" cx="24" cy="4.5" r="2"></circle>
+      <rect class="guide-bot-head" x="10" y="11" width="28" height="23" rx="8"></rect>
+      <path class="guide-bot-ear" d="M7.5 19v7M40.5 19v7"></path>
+      <circle class="guide-bot-eye" cx="18" cy="22" r="2.2"></circle>
+      <circle class="guide-bot-eye" cx="30" cy="22" r="2.2"></circle>
+      <path class="guide-bot-mouth" d="M18 28c3.2 2.2 8.8 2.2 12 0"></path>
+    </svg>
+    <span class="guide-launcher-label">Explore</span>
   </button>
   <aside class="guide-panel" id="guide-panel" hidden aria-label="Portfolio guide">
     <div class="guide-head">

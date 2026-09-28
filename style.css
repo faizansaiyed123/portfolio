@@ -215,358 +215,66 @@ button,a{ -webkit-tap-highlight-color:transparent}
 
 
 
-/* --- Professional portfolio companion --- */
-.guide-dock{
-  position:fixed;
-  z-index:90;
-  right:22px;
-  bottom:20px;
-  width:min(430px,calc(100vw - 28px));
-}
-.guide-launcher{
-  width:100%;
-  min-height:68px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:11px 13px;
-  border:1px solid var(--line-strong);
-  background:linear-gradient(145deg,var(--panel-2),var(--panel));
-  color:var(--text);
-  cursor:pointer;
-  text-align:left;
-  box-shadow:0 18px 55px rgba(0,0,0,.18);
-  transition:transform .25s var(--ease),border-color .25s var(--ease),box-shadow .25s var(--ease);
-}
-.guide-launcher:hover{
-  transform:translateY(-2px);
-  border-color:var(--accent);
-  box-shadow:0 24px 65px rgba(0,0,0,.25);
-}
-.guide-launcher:focus-visible{
-  outline:2px solid var(--accent);
-  outline-offset:3px;
-}
-.guide-mark{
-  width:39px;
-  height:39px;
-  flex:0 0 auto;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  align-items:end;
-  gap:3px;
-  padding:9px 7px;
-  border:1px solid var(--line-strong);
-  background:var(--bg);
-}
-.guide-mark span{
-  display:block;
-  height:35%;
-  background:var(--accent);
-  transform-origin:bottom;
-  animation:guideSignal 1.6s ease-in-out infinite;
-}
-.guide-mark span:nth-child(2){height:62%;animation-delay:.15s}
-.guide-mark span:nth-child(3){height:45%;animation-delay:.3s}
-.guide-launcher-copy{
-  min-width:0;
-  display:grid;
-  gap:4px;
-}
-.guide-launcher-copy small{
-  font:500 7px/1.2 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  letter-spacing:.12em;
-  color:var(--accent);
-}
-.guide-launcher-copy b{
-  font-size:13px;
-  letter-spacing:-.02em;
-}
-.guide-launcher-hint{
-  margin-left:auto;
-  flex:0 0 auto;
-  padding:5px 6px;
-  border:1px solid var(--line);
-  color:var(--faint);
-  font:500 8px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-}
-.guide-launcher-arrow{
-  flex:0 0 auto;
-  font:500 17px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  color:var(--accent);
-}
-.guide-panel{
-  position:absolute;
-  right:0;
-  bottom:78px;
-  width:100%;
-  max-height:min(720px,78vh);
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-  border:1px solid var(--line-strong);
-  background:var(--panel);
-  box-shadow:0 36px 100px rgba(0,0,0,.38);
-}
+
+/* --- Compact floating portfolio guide --- */
+.guide-dock{position:fixed;z-index:90;right:22px;bottom:20px;width:58px;height:58px}
+.guide-launcher{position:relative;width:58px;height:58px;display:grid;place-items:center;padding:0;border:1px solid var(--line-strong);border-radius:50%;background:linear-gradient(145deg,var(--panel-2),var(--panel));color:var(--text);cursor:pointer;box-shadow:0 14px 38px rgba(0,0,0,.25);transition:transform .25s var(--ease),border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.guide-launcher::after{content:"";position:absolute;inset:-5px;border:1px solid color-mix(in srgb,var(--accent) 32%,transparent);border-radius:50%;opacity:0;transform:scale(.86);transition:opacity .25s var(--ease),transform .25s var(--ease)}
+.guide-launcher:hover{transform:translateY(-2px) scale(1.03);border-color:var(--accent);box-shadow:0 18px 46px rgba(0,0,0,.3)}
+.guide-launcher:hover::after,.guide-dock.is-open .guide-launcher::after{opacity:1;transform:scale(1)}
+.guide-launcher:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.guide-bot-icon{width:34px;height:34px;overflow:visible}
+.guide-bot-antenna,.guide-bot-ear,.guide-bot-mouth{fill:none;stroke:var(--accent);stroke-width:1.7;stroke-linecap:round}
+.guide-bot-head{fill:var(--panel-2);stroke:var(--text);stroke-width:1.7}
+.guide-bot-eye{fill:var(--accent);animation:guideBotBlink 4.5s ease-in-out infinite;transform-origin:center}
+.guide-bot-tip{fill:var(--accent);animation:guideBotPulse 1.8s ease-in-out infinite;transform-origin:center}
+.guide-launcher-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.guide-panel{position:absolute;right:0;bottom:72px;width:min(430px,calc(100vw - 28px));max-height:min(720px,78vh);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line-strong);background:var(--panel);box-shadow:0 36px 100px rgba(0,0,0,.38)}
 .guide-panel[hidden]{display:none}
-.guide-head{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:14px;
-  padding:15px;
-  border-bottom:1px solid var(--line);
-}
-.guide-identity{
-  display:flex;
-  gap:11px;
-  min-width:0;
-  align-items:flex-start;
-}
-.guide-avatar{
-  width:32px;
-  height:32px;
-  flex:0 0 auto;
-  display:grid;
-  place-items:center;
-  border:1px solid var(--accent);
-  background:var(--bg);
-  color:var(--accent);
-  font:700 9px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  letter-spacing:.05em;
-}
-.guide-head>div>span,
-.guide-identity div>span{
-  font:500 7px/1.2 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  letter-spacing:.11em;
-  color:var(--accent);
-}
-.guide-head h2{
-  margin:6px 0 0;
-  font-size:19px;
-  line-height:1.08;
-  letter-spacing:-.035em;
-}
-.guide-head>button{
-  width:30px;
-  height:30px;
-  flex:0 0 auto;
-  border:1px solid var(--line);
-  background:transparent;
-  color:var(--muted);
-  cursor:pointer;
-  font-size:19px;
-  transition:color .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease);
-}
-.guide-head>button:hover{
-  color:var(--text);
-  border-color:var(--accent);
-  background:var(--panel-2);
-}
-.guide-status{
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  align-items:center;
-  gap:10px;
-  padding:8px 15px;
-  border-bottom:1px solid var(--line);
-  background:color-mix(in srgb,var(--panel-2) 58%,transparent);
-  color:var(--faint);
-  font:500 7px/1.2 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  letter-spacing:.08em;
-}
-.guide-status>span:first-child{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  color:var(--accent);
-}
-.guide-status>span:first-child i{
-  width:5px;
-  height:5px;
-  border-radius:50%;
-  background:var(--accent);
-  box-shadow:0 0 0 4px rgba(130,247,200,.07);
-}
-.guide-status>span:nth-child(2){
-  justify-self:center;
-  color:var(--muted);
-}
-.guide-status>span:last-child{
-  justify-self:end;
-}
-.guide-thread{
-  min-height:175px;
-  max-height:335px;
-  overflow:auto;
-  padding:17px 15px 9px;
-  scroll-behavior:smooth;
-  scrollbar-width:thin;
-  scrollbar-color:var(--line-strong) transparent;
-}
-.guide-message{
-  position:relative;
-  max-width:88%;
-  margin:0 0 10px;
-  padding:10px 12px;
-  border:1px solid var(--line);
-  background:var(--bg);
-  color:var(--text);
-  font-size:11px;
-  line-height:1.6;
-  opacity:0;
-  transform:translateY(5px);
-  animation:guideMessageIn .28s var(--ease) forwards;
-}
-.guide-message-bot{
-  border-left:2px solid var(--accent);
-  border-radius:2px 8px 8px 8px;
-}
-.guide-message-user{
-  margin-left:auto;
-  border-right:2px solid var(--line-strong);
-  background:var(--panel-2);
-  border-radius:8px 2px 8px 8px;
-}
-.guide-message-bot::before,
-.guide-message-user::before{
-  display:block;
-  margin-bottom:5px;
-  font:500 7px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  letter-spacing:.1em;
-}
-.guide-message-bot::before{
-  content:"FAIZAN / GUIDE";
-  color:var(--accent);
-}
-.guide-message-user::before{
-  content:"YOU";
-  color:var(--muted);
-}
-.guide-actions{
-  display:grid;
-  gap:7px;
-  padding:8px 15px 15px;
-  border-top:1px solid var(--line);
-}
-.guide-action{
-  width:100%;
-  min-height:44px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  padding:10px 11px;
-  border:1px solid var(--line);
-  background:transparent;
-  color:var(--text);
-  text-align:left;
-  cursor:pointer;
-  font-size:10px;
-  font-weight:800;
-  opacity:0;
-  transform:translateY(4px);
-  animation:guideChoiceIn .25s var(--ease) forwards;
-  transition:border-color .2s var(--ease),background .2s var(--ease),transform .2s var(--ease),opacity .2s var(--ease);
-}
-.guide-action:nth-child(2){animation-delay:.035s}
-.guide-action:nth-child(3){animation-delay:.07s}
-.guide-action:nth-child(4){animation-delay:.105s}
-.guide-action:nth-child(5){animation-delay:.14s}
-.guide-action:hover:not(:disabled){
-  border-color:var(--accent);
-  background:var(--panel-2);
-  transform:translateX(3px);
-}
-.guide-action:focus-visible{
-  outline:2px solid var(--accent);
-  outline-offset:1px;
-}
-.guide-action.is-selected{
-  border-color:var(--accent);
-  background:var(--panel-2);
-}
-.guide-action:disabled{
-  cursor:default;
-}
-.guide-action-copy{
-  min-width:0;
-  line-height:1.35;
-}
-.guide-action-icon{
-  flex:0 0 auto;
-  font:500 15px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  color:var(--accent);
-}
-.guide-footer-line{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:9px 15px 11px;
-  border-top:1px solid var(--line);
-  color:var(--faint);
-  font:500 7px/1.3 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  letter-spacing:.07em;
-}
-.guide-restart{
-  margin:0;
-  padding:4px 0;
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  cursor:pointer;
-  font:500 7px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  letter-spacing:.08em;
-}
-.guide-restart:hover{
-  color:var(--text);
-}
-.guide-dock.is-thinking .guide-mark span{
-  animation-duration:.72s;
-}
-@keyframes guideSignal{
-  0%,100%{transform:scaleY(.72);opacity:.65}
-  50%{transform:scaleY(1);opacity:1}
-}
-@keyframes guideMessageIn{
-  to{opacity:1;transform:none}
-}
-@keyframes guideChoiceIn{
-  to{opacity:1;transform:none}
-}
+.guide-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:15px;border-bottom:1px solid var(--line)}
+.guide-identity{display:flex;gap:11px;min-width:0;align-items:flex-start}
+.guide-avatar{width:32px;height:32px;flex:0 0 auto;display:grid;place-items:center;border:1px solid var(--accent);background:var(--bg);color:var(--accent);font:700 9px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.05em}
+.guide-head>div>span,.guide-identity div>span{font:500 7px/1.2 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.11em;color:var(--accent)}
+.guide-head h2{margin:6px 0 0;font-size:19px;line-height:1.08;letter-spacing:-.035em}
+.guide-head>button{width:30px;height:30px;flex:0 0 auto;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;font-size:19px;transition:color .2s var(--ease),border-color .2s var(--ease),background .2s var(--ease)}
+.guide-head>button:hover{color:var(--text);border-color:var(--accent);background:var(--panel-2)}
+.guide-status{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:8px 15px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--panel-2) 58%,transparent);color:var(--faint);font:500 7px/1.2 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.08em}
+.guide-status>span:first-child{display:flex;align-items:center;gap:6px;color:var(--accent)}
+.guide-status>span:first-child i{width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(130,247,200,.07)}
+.guide-status>span:nth-child(2){justify-self:center;color:var(--muted)}
+.guide-status>span:last-child{justify-self:end}
+.guide-thread{min-height:175px;max-height:335px;overflow:auto;padding:17px 15px 9px;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent}
+.guide-message{position:relative;max-width:88%;margin:0 0 10px;padding:10px 12px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:11px;line-height:1.6;opacity:0;transform:translateY(5px);animation:guideMessageIn .28s var(--ease) forwards}
+.guide-message-bot{border-left:2px solid var(--accent);border-radius:2px 8px 8px 8px}
+.guide-message-user{margin-left:auto;border-right:2px solid var(--line-strong);background:var(--panel-2);border-radius:8px 2px 8px 8px}
+.guide-message-bot::before,.guide-message-user::before{display:block;margin-bottom:5px;font:500 7px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.1em}
+.guide-message-bot::before{content:"FAIZAN / GUIDE";color:var(--accent)}
+.guide-message-user::before{content:"YOU";color:var(--muted)}
+.guide-actions{display:grid;gap:7px;padding:8px 15px 15px;border-top:1px solid var(--line)}
+.guide-action{width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 11px;border:1px solid var(--line);background:transparent;color:var(--text);text-align:left;cursor:pointer;font-size:10px;font-weight:800;opacity:0;transform:translateY(4px);animation:guideChoiceIn .25s var(--ease) forwards;transition:border-color .2s var(--ease),background .2s var(--ease),transform .2s var(--ease),opacity .2s var(--ease)}
+.guide-action:nth-child(2){animation-delay:.035s}.guide-action:nth-child(3){animation-delay:.07s}.guide-action:nth-child(4){animation-delay:.105s}.guide-action:nth-child(5){animation-delay:.14s}
+.guide-action:hover:not(:disabled){border-color:var(--accent);background:var(--panel-2);transform:translateX(3px)}
+.guide-action:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.guide-action.is-selected{border-color:var(--accent);background:var(--panel-2)}
+.guide-action:disabled{cursor:default}
+.guide-action-copy{min-width:0;line-height:1.35}
+.guide-action-icon{flex:0 0 auto;font:500 15px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;color:var(--accent)}
+.guide-footer-line{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 15px 11px;border-top:1px solid var(--line);color:var(--faint);font:500 7px/1.3 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.07em}
+.guide-restart{margin:0;padding:4px 0;border:0;background:transparent;color:var(--muted);cursor:pointer;font:500 7px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.08em}.guide-restart:hover{color:var(--text)}
+.guide-dock.is-thinking .guide-bot-eye{animation-duration:.8s}
+@keyframes guideBotBlink{0%,45%,49%,100%{transform:scaleY(1)}47%{transform:scaleY(.1)}}
+@keyframes guideBotPulse{0%,100%{opacity:.45;transform:scale(.86)}50%{opacity:1;transform:scale(1.08)}}
+@keyframes guideMessageIn{to{opacity:1;transform:none}}
+@keyframes guideChoiceIn{to{opacity:1;transform:none}}
 @media (max-width:560px){
-  .guide-dock{
-    right:12px;
-    bottom:12px;
-    width:calc(100vw - 24px);
-  }
-  .guide-panel{
-    bottom:74px;
-    max-height:78vh;
-  }
-  .guide-status{
-    grid-template-columns:1fr auto;
-  }
-  .guide-status>span:nth-child(2){
-    grid-row:2;
-    grid-column:1/-1;
-    justify-self:start;
-    padding-top:2px;
-  }
-  .guide-thread{
-    max-height:300px;
-  }
-  .guide-launcher-hint{
-    display:none;
-  }
+  .guide-dock{right:14px;bottom:14px;width:54px;height:54px}
+  .guide-launcher{width:54px;height:54px}
+  .guide-bot-icon{width:31px;height:31px}
+  .guide-panel{right:-2px;bottom:68px;max-height:78vh}
+  .guide-status{grid-template-columns:1fr auto}
+  .guide-status>span:nth-child(2){grid-row:2;grid-column:1/-1;justify-self:start;padding-top:2px}
+  .guide-thread{max-height:300px}
 }
 @media (prefers-reduced-motion:reduce){
-  .guide-mark span,
-  .guide-message,
-  .guide-action{
-    animation:none!important;
-    opacity:1!important;
-    transform:none!important;
-  }
+  .guide-bot-eye,.guide-bot-tip,.guide-message,.guide-action{animation:none!important;opacity:1!important;transform:none!important}
 }
