@@ -999,7 +999,7 @@ export async function getChatEvidence(question: string, history: Array<{ role: "
     );
 
     const portfolioWideQuery =
-      /\b(what did (?:faizan|you) build|what have (?:faizan|you) built|what projects? (?:did|has|have) (?:faizan|you) (?:build|built)|tell me about (?:faizan'?s|your) projects?|what is in (?:faizan'?s|your) portfolio|across (?:the )?(?:portfolio|projects?))\b/i.test(
+      /\b(what did (?:faizan|you) build|what have (?:faizan|you) built|what did you build|what have you built|what have i built|what projects? (?:did|has|have) (?:faizan|you) (?:build|built)|tell me about (?:faizan'?s|your) projects?|what is in (?:faizan'?s|your) portfolio|across (?:the )?(?:portfolio|projects?))\b/i.test(
         normalized
       );
 
