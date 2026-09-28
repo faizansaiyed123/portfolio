@@ -1,0 +1,49 @@
+name: Live GitHub Chat Checks
+
+on:
+  push:
+    branches:
+      - feature/live-github-chat
+  pull_request:
+    branches:
+      - feature/live-github-chat
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type check backend
+        run: npm run check
+
+      - name: Syntax check portfolio JavaScript
+        run: node --check script.js
+
+      - name: Live GitHub smoke test
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/github-smoke.mjs
+
+      - name: Live repository intelligence test
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npm run test:live
+
+      - name: API contract checks
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npm run test:api

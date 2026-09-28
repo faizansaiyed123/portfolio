@@ -1,0 +1,24 @@
+{
+  "name": "faizan-portfolio-github-chat",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Secure serverless API for the portfolio's live GitHub project intelligence chatbot.",
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test:live": "tsx scripts/live-retrieval-check.ts",
+    "test:api": "tsx scripts/api-contract-check.ts"
+  },
+  "dependencies": {
+    "@upstash/ratelimit": "^2.0.7",
+    "@upstash/redis": "^1.36.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "@types/node": "^24.10.1",
+    "tsx": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

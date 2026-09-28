@@ -271,3 +271,130 @@ button,a{ -webkit-tap-highlight-color:transparent}
     letter-spacing:-.055em;
   }
 }
+
+
+/* --- Live GitHub intelligence --- */
+.guide-live-loading{
+  color:var(--accent);
+  font-family:"DM Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  letter-spacing:.04em;
+}
+.guide-evidence{
+  border-top:1px solid var(--line);
+  padding:10px 15px 12px;
+  max-height:235px;
+  overflow:auto;
+  background:color-mix(in srgb,var(--panel-2) 45%,transparent);
+}
+.guide-evidence-heading{
+  margin-bottom:7px;
+  font:500 7px/1.2 "DM Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  letter-spacing:.1em;
+  color:var(--accent);
+}
+.guide-repository-list,
+.guide-source-list{
+  display:grid;
+  gap:7px;
+}
+.guide-repository-card{
+  border:1px solid var(--line);
+  background:var(--bg);
+  padding:10px;
+}
+.guide-repository-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+}
+.guide-repository-title{
+  color:var(--text);
+  text-decoration:none;
+  font-size:11px;
+  font-weight:800;
+}
+.guide-repository-title:hover{
+  color:var(--accent);
+}
+.guide-repository-head>span{
+  flex:0 0 auto;
+  font:500 7px/1 "DM Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  letter-spacing:.08em;
+  color:var(--accent);
+}
+.guide-repository-head>span.is-muted{
+  color:var(--faint);
+}
+.guide-repository-card>p{
+  margin:8px 0 9px;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.55;
+}
+.guide-repository-meta{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:5px;
+}
+.guide-repository-meta span{
+  display:grid;
+  gap:3px;
+  padding-top:6px;
+  border-top:1px solid var(--line);
+}
+.guide-repository-meta b{
+  font:500 6px/1 "DM Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  letter-spacing:.08em;
+  color:var(--faint);
+}
+.guide-repository-meta em{
+  font:500 8px/1.2 "DM Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  color:var(--text);
+  font-style:normal;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.guide-repository-demo{
+  display:inline-block;
+  margin-top:8px;
+  color:var(--accent);
+  text-decoration:none;
+  font:700 8px/1 "DM Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+}
+.guide-source-link{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:8px 9px;
+  border:1px solid var(--line);
+  background:transparent;
+  color:var(--text);
+  text-decoration:none;
+}
+.guide-source-link:hover{
+  border-color:var(--accent);
+  background:var(--panel-2);
+}
+.guide-source-link b{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:9px;
+}
+.guide-source-link span{
+  flex:0 0 auto;
+  max-width:48%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:var(--faint);
+  font:500 7px/1 "DM Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+}
+@media (max-width:560px){
+  .guide-evidence{max-height:210px}
+  .guide-repository-meta{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
