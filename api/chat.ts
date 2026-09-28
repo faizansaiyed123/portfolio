@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { cacheConfigured, rateLimit } from "../lib/cache.js";
 import {
   GithubApiError,
@@ -134,8 +136,7 @@ async function handlePrivateHint(question: string) {
   return probeRepositoryAccess(match[0]);
 }
 
-export default {
-  async fetch(request: Request) {
+export default async function handler(request: Request) {
     const origin = request.headers.get("origin");
 
     if (request.method === "OPTIONS") {
@@ -332,5 +333,4 @@ export default {
         origin
       );
     }
-  }
-};
+}
