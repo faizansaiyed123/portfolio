@@ -18,7 +18,13 @@ async function callProduction() {
     })
   });
 
-  const payload = await response.json().catch(() => null);
+  const raw = await response.text();
+  let payload = null;
+  try {
+    payload = raw ? JSON.parse(raw) : null;
+  } catch {
+    console.log("Production chat raw response:", raw);
+  }
   return { response, payload };
 }
 
