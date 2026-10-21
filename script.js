@@ -541,8 +541,6 @@
 
   
 /* ---------- Guide context awareness ---------- */
-
-  /* ---------- Guide context awareness ---------- */
   const sectionContext = {
     top: "HOME",
     work: "WORK",
