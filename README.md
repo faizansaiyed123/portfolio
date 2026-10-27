@@ -10,7 +10,9 @@ It combines:
 
 - Art-directed editorial layout with a systems / instrument-panel visual language
 - Engineering case studies for FrameFlux and Telemetry
-- CSS-native signal visuals and subtle motion
+- Merged open-source contribution cards linking to the original pull requests
+- Two clickable freelance client cards for Jeca Homes and PrintOscar
+- A 19-project personal full-stack gallery with local website captures, architecture/repository previews where a live screen is not claimed, repository links, technology chips, and interactive technology filters
 - Responsive navigation with keyboard support
 - Theme preference with local persistence and system fallback
 - A deterministic, frontend-only guided portfolio experience with predefined decision-tree responses
@@ -31,6 +33,12 @@ The visitor chooses from curated paths. Every step is rendered from predefined d
 - Project, stack, contact, technical, and behavioral follow-up paths
 
 Responses, actions, and navigation are deterministic. The flow has no API calls, model calls, prompts, streaming, repository discovery, or external chat service.
+
+## Project gallery and preview assets
+
+The portfolio is a static site; filtering and navigation run in the browser without a backend. Project summaries and source links are based on the corresponding repositories. Preview images live under `assets/site-previews/` and are stored locally, so the gallery does not need remote image hosting. Deployed-site captures are labeled as live screens; FrameFlux uses an architecture diagram, and LedgerPulse uses a screenshot from its frontend repository walkthrough because a public deployment URL was not verified.
+
+The project cards link to the actual public source repositories. The freelance cards link directly to their client websites and do not expose private source repositories.
 
 ## Source of truth
 
