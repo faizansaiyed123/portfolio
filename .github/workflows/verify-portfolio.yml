@@ -7,8 +7,8 @@ on:
       - style.css
       - script.js
       - assets/site-previews/**
-  permissions:
-    contents: write
+permissions:
+  contents: write
 concurrency:
   group: portfolio-verification
   cancel-in-progress: true
