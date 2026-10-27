@@ -296,7 +296,7 @@
     },
     stack: {
       context: "STACK",
-      message: "The selected systems span backend APIs, durable data, asynchronous work, realtime transport, media processing, frontend applications, and automated verification.",
+      message: "The selected systems span backend APIs, durable data, asynchronous work, realtime transport, local AI inference and retrieval, media processing, frontend applications, and automated verification.",
       choices: [
         ["Backend", "stack-backend"],
         ["Frontend", "stack-frontend"],
@@ -324,7 +324,7 @@
     },
     "stack-systems": {
       context: "STACK / SYSTEMS",
-      message: "PostgreSQL provides durable state, Redis/ARQ handles background work, WebSockets carry live updates, FFmpeg handles media processing, and automated tests verify behavior.",
+      message: "PostgreSQL provides durable state; pgvector supports retrieval for SupportAI, and Ollama runs its local generation model. Redis/ARQ handles background work, WebSockets carry live updates, FFmpeg handles media processing, and automated tests verify behavior.",
       choices: [
         ["See FrameFlux architecture", "frameflux-architecture"],
         ["See Telemetry architecture", "telemetry-architecture"],
