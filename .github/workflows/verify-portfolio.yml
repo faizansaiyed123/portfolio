@@ -1,0 +1,147 @@
+name: Verify portfolio
+on:
+  push:
+    branches: [main]
+    paths:
+      - index.html
+      - style.css
+      - script.js
+      - assets/site-previews/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: portfolio-verification
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Check out portfolio
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check JavaScript syntax
+        run: node --check script.js
+      - name: Check section anchors, project counts, and local assets
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import re
+
+          source = Path("index.html").read_text(encoding="utf-8")
+          class PortfolioParser(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.ids = []
+                  self.anchor_targets = []
+                  self.local_files = []
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if attrs.get("id"):
+                      self.ids.append(attrs["id"])
+                  href = attrs.get("href", "")
+                  src = attrs.get("src", "")
+                  if href.startswith("#"):
+                      self.anchor_targets.append(href[1:])
+                  for value in (href, src):
+                      if value.startswith("./"):
+                          self.local_files.append(value.split("?", 1)[0][2:])
+
+          parser = PortfolioParser()
+          parser.feed(source)
+          duplicates = sorted({value for value in parser.ids if parser.ids.count(value) > 1})
+          missing_anchors = sorted(set(parser.anchor_targets) - set(parser.ids))
+          missing_files = sorted(value for value in parser.local_files if not Path(value).is_file())
+          counts = {
+              "contributions": len(re.findall(r'class="contribution-card"', source)),
+              "freelance": len(re.findall(r'class="freelance-card"', source)),
+              "personal": len(re.findall(r'class="personal-project-card"', source)),
+          }
+          expected = {"contributions": 6, "freelance": 2, "personal": 19}
+          assert counts == expected, f"Unexpected project card counts: {counts}"
+          assert not duplicates, f"Duplicate HTML IDs: {duplicates}"
+          assert not missing_anchors, f"Broken in-page links: {missing_anchors}"
+          assert not missing_files, f"Missing local files: {missing_files}"
+          assert "project-filter-button" in source, "Technology filters are missing"
+          print(f"HTML/assets check passed: {counts}; {len(parser.local_files)} local paths; no broken anchors.")
+          PY
+      - name: Install headless browser
+        run: |
+          npm init -y >/dev/null
+          npm install --no-save --no-audit --no-fund playwright
+          npx playwright install chromium
+      - name: Smoke-test desktop, filters, theme and mobile navigation
+        run: |
+          python3 -m http.server 4173 >/tmp/portfolio-http.log 2>&1 &
+          echo $! >/tmp/portfolio-http.pid
+          node --input-type=module <<'JS'
+          import assert from "node:assert/strict";
+          import { chromium } from "playwright";
+          const browser = await chromium.launch({ headless: true });
+          try {
+            const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+            const pageErrors = [];
+            page.on("pageerror", error => pageErrors.push(error.message));
+            const response = await page.goto("http://127.0.0.1:4173/", { waitUntil: "networkidle" });
+            assert.equal(response?.status(), 200, "Portfolio must load locally");
+            assert.equal(await page.locator(".contribution-card").count(), 6);
+            assert.equal(await page.locator(".freelance-card").count(), 2);
+            assert.equal(await page.locator(".personal-project-card").count(), 19);
+            assert.equal(await page.locator("#opensource").count(), 1);
+            assert.equal(await page.locator("#freelance").count(), 1);
+            assert.equal(await page.locator("#personal-projects").count(), 1);
+
+            const imageResults = await page.locator(".freelance-card img, .personal-project-preview img").evaluateAll(async images => {
+              return await Promise.all(images.map(async img => {
+                img.loading = "eager";
+                try { await img.decode(); return { src: img.getAttribute("src"), ok: img.naturalWidth > 0 }; }
+                catch { return { src: img.getAttribute("src"), ok: false }; }
+              }));
+            });
+            assert.equal(imageResults.length, 21);
+            assert.deepEqual(imageResults.filter(x => !x.ok), [], "Every project preview must load");
+
+            await page.locator('[data-project-filter="fastapi"]').click();
+            const filteredCount = await page.locator(".personal-project-card:not([hidden])").count();
+            assert.ok(filteredCount > 0 && filteredCount < 19, "Technology filter must narrow the gallery");
+            assert.match(await page.locator("#project-results-count").innerText(), new RegExp(String(filteredCount)));
+            await page.locator('[data-project-filter="all"]').click();
+            assert.equal(await page.locator(".personal-project-card:not([hidden])").count(), 19, "All filter must restore every card");
+
+            const initialTheme = await page.locator("html").getAttribute("data-theme");
+            await page.locator(".theme-button").click();
+            assert.notEqual(await page.locator("html").getAttribute("data-theme"), initialTheme, "Theme switch must work");
+            await page.setViewportSize({ width: 390, height: 844 });
+            const gridColumns = await page.locator(".personal-project-grid").evaluate(el => getComputedStyle(el).gridTemplateColumns.trim().split(/\\s+/).length);
+            assert.equal(gridColumns, 1, "Project cards must collapse to one column on mobile");
+            await page.locator("#menu-button").click();
+            assert.ok((await page.locator("#mobile-nav").getAttribute("class")).includes("is-open"), "Mobile menu should open");
+            await page.locator('#mobile-nav a[href="#freelance"]').click();
+            assert.ok(!(await page.locator("#mobile-nav").getAttribute("class")).includes("is-open"), "Mobile menu should close after navigation");
+            assert.deepEqual(pageErrors, [], "No uncaught browser JavaScript errors");
+            console.log(JSON.stringify({ desktop: "pass", cards: { openSource: 6, freelance: 2, personal: 19 }, images: imageResults.length, technologyFilter: "pass", themeToggle: "pass", mobileGrid: "pass", mobileNavigation: "pass", pageErrors }, null, 2));
+          } finally {
+            await browser.close();
+          }
+          JS
+      - name: Remove temporary verification workflow
+        if: always()
+        run: |
+          rm -f package.json package-lock.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -f .github/workflows/verify-portfolio.yml ]; then
+            git rm -f .github/workflows/verify-portfolio.yml
+          fi
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: remove temporary portfolio verification workflow"
+            git push origin HEAD:main
+          fi
