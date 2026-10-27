@@ -12,7 +12,7 @@ It combines:
 - Engineering case studies for FrameFlux and Telemetry
 - Merged open-source contribution cards linking to the original pull requests
 - Two clickable freelance client cards for Jeca Homes and PrintOscar
-- A 19-project personal full-stack gallery with local website captures, architecture/repository previews where a live screen is not claimed, repository links, technology chips, and interactive technology filters
+- An 18-project personal full-stack gallery with local website captures, architecture/repository previews where a live screen is not claimed, repository links, technology chips, and interactive technology filters
 - Responsive navigation with keyboard support
 - Theme preference with local persistence and system fallback
 - A deterministic, frontend-only guided portfolio experience with predefined decision-tree responses
