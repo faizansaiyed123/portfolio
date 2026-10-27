@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+<title id="title">FrameFlux media processing architecture</title>
+<desc id="desc">A system diagram showing a browser uploading media through FastAPI, durable PostgreSQL job state, Redis and ARQ queueing, a background worker, and FFmpeg processing.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d1416"/><stop offset="1" stop-color="#080b0d"/></linearGradient>
+  <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#d9f7eb" stroke-opacity=".06"/></pattern>
+  <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#82f7c8"/><stop offset="1" stop-color="#1db783"/></linearGradient>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#82f7c8"/></marker>
+</defs>
+<rect width="1440" height="900" fill="url(#bg)"/><rect width="1440" height="900" fill="url(#grid)"/>
+<text x="92" y="94" fill="#82f7c8" font-family="monospace" font-size="20" letter-spacing="4">FRAMEFLUX / SYSTEM MAP</text>
+<text x="92" y="150" fill="#edf2ef" font-family="Arial,sans-serif" font-size="42" font-weight="700">Heavy media work, outside the request path.</text>
+<text x="92" y="194" fill="#9da8a5" font-family="Arial,sans-serif" font-size="21">Explicit state · queued processing · visible job lifecycle</text>
+<g font-family="monospace" text-anchor="middle">
+  <rect x="92" y="310" width="250" height="116" rx="12" fill="#151c1e" stroke="#364542"/><text x="217" y="356" fill="#edf2ef" font-size="22">BROWSER</text><text x="217" y="389" fill="#9da8a5" font-size="14">UPLOAD + STATUS</text>
+  <rect x="418" y="310" width="250" height="116" rx="12" fill="#12251f" stroke="#82f7c8" stroke-opacity=".8"/><text x="543" y="356" fill="#82f7c8" font-size="22">FASTAPI</text><text x="543" y="389" fill="#a8c9bc" font-size="14">VALIDATE + AUTHORIZE</text>
+  <rect x="744" y="268" width="250" height="112" rx="12" fill="#151c1e" stroke="#364542"/><text x="869" y="310" fill="#edf2ef" font-size="22">POSTGRESQL</text><text x="869" y="342" fill="#9da8a5" font-size="14">DURABLE JOB STATE</text>
+  <rect x="744" y="440" width="250" height="112" rx="12" fill="#12251f" stroke="#82f7c8" stroke-opacity=".8"/><text x="869" y="482" fill="#82f7c8" font-size="22">REDIS / ARQ</text><text x="869" y="514" fill="#a8c9bc" font-size="14">QUEUE + RETRIES</text>
+  <rect x="1070" y="440" width="276" height="112" rx="12" fill="#12251f" stroke="#82f7c8" stroke-opacity=".8"/><text x="1208" y="482" fill="#82f7c8" font-size="22">WORKER</text><text x="1208" y="514" fill="#a8c9bc" font-size="14">BACKGROUND JOB</text>
+  <rect x="1070" y="610" width="276" height="112" rx="12" fill="#151c1e" stroke="#364542"/><text x="1208" y="652" fill="#edf2ef" font-size="22">FFMPEG</text><text x="1208" y="684" fill="#9da8a5" font-size="14">MEDIA TRANSFORMS</text>
+</g>
+<g fill="none" stroke="url(#accent)" stroke-width="3" marker-end="url(#arrow)" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M342 368H418"/><path d="M668 342H704Q720 342 720 326H744"/><path d="M668 390H704Q720 390 720 496H744"/><path d="M994 496H1070"/><path d="M1208 552V610"/>
+</g>
+<g fill="#82f7c8"><circle cx="342" cy="368" r="4"/><circle cx="668" cy="342" r="4"/><circle cx="668" cy="390" r="4"/></g>
+<rect x="92" y="770" width="1254" height="1" fill="#d9f7eb" fill-opacity=".16"/>
+<text x="92" y="818" fill="#9da8a5" font-family="monospace" font-size="15" letter-spacing="2">STATE IS DURABLE</text><text x="485" y="818" fill="#9da8a5" font-family="monospace" font-size="15" letter-spacing="2">WORK IS ASYNCHRONOUS</text><text x="932" y="818" fill="#9da8a5" font-family="monospace" font-size="15" letter-spacing="2">PROGRESS IS VISIBLE</text>
+</svg>
