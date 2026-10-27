@@ -386,3 +386,5 @@ button,a{ -webkit-tap-highlight-color:transparent}
   .contribution-card,.freelance-card,.freelance-card-media img,.freelance-card-arrow,.personal-project-card,.personal-project-preview img,.project-filter-button{transition:none!important}
   .contribution-card:hover,.freelance-card:hover,.personal-project-card:hover{transform:none}
 }
+/* Typography adjustment for the systems-section heading only. */
+#systems .section-intro h2{font-size:clamp(28px,3vw,38px);font-weight:600;line-height:1.2;letter-spacing:-.025em;max-width:24ch}
