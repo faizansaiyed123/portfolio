@@ -731,6 +731,6 @@
 
   guideLauncher?.addEventListener("click", () => guideDock?.classList.remove("is-attention"), { once: true });
 
-  updateGuideModeUI();
+  // Initialize the guide progress using the current decision-tree state.
   updateGuideProgress();
 })();
