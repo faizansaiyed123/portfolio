@@ -696,7 +696,7 @@
   const applyProjectFilter = (technology = "all") => {
     let visible = 0;
     personalProjectCards.forEach((card) => {
-      const technologies = (card.dataset.techs || "").split(/\\s+/).filter(Boolean);
+      const technologies = (card.dataset.techs || "").split(/\s+/).filter(Boolean);
       const matches = technology === "all" || technologies.includes(technology);
       card.hidden = !matches;
       if (matches) visible += 1;
