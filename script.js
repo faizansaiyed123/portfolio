@@ -182,11 +182,13 @@
     },
     projects: {
       context: "PROJECTS",
-      message: "There are two featured systems here. Pick the one you want to understand first.",
+      message: "Explore the selected engineering case studies, browse the full-stack project index, or see work contributed to other projects.",
       choices: [
         ["Explore FrameFlux", "frameflux"],
         ["Explore Telemetry", "telemetry"],
-        ["See the full work section", "goto-work"],
+        ["Open the full-stack project gallery", "goto-personal-projects"],
+        ["See merged open-source contributions", "goto-opensource"],
+        ["Explore freelance client work", "goto-freelance"],
         ["Back to start", "start"]
       ]
     },
@@ -228,6 +230,33 @@
         ["Open the case study", "goto-telemetry"],
         ["Explore FrameFlux", "frameflux"],
         ["Back to projects", "projects"]
+      ]
+    },
+    "open-source": {
+      context: "OPEN SOURCE",
+      message: "This portfolio lists merged pull requests in the upstream repositories, with each card linking to the original change.",
+      choices: [
+        ["View merged contributions", "goto-opensource"],
+        ["Browse personal projects", "goto-personal-projects"],
+        ["Back to start", "start"]
+      ]
+    },
+    freelance: {
+      context: "FREELANCE WORK",
+      message: "The client-work section links directly to Jeca Homes and PrintOscar and uses genuine captures of their live websites.",
+      choices: [
+        ["Open Jeca Homes and PrintOscar", "goto-freelance"],
+        ["Browse personal projects", "goto-personal-projects"],
+        ["Back to start", "start"]
+      ]
+    },
+    gallery: {
+      context: "PERSONAL PROJECTS",
+      message: "The full-stack gallery contains project screenshots, technology tags, live links when a deployment is verified, and links to the actual source repositories.",
+      choices: [
+        ["Browse the project gallery", "goto-personal-projects"],
+        ["See merged open-source contributions", "goto-opensource"],
+        ["Back to start", "start"]
       ]
     },
     approach: {
@@ -448,6 +477,9 @@
 
     const responses = {
       "goto-work": "Taking you to the selected work.",
+      "goto-opensource": "Here are the merged open-source contributions.",
+      "goto-freelance": "Here are the freelance client projects.",
+      "goto-personal-projects": "Opening the full-stack project index.",
       "goto-frameflux": "Here is the FrameFlux case study.",
       "goto-telemetry": "Here is the Telemetry case study.",
       "goto-systems": "Taking you to the systems-thinking section.",
@@ -544,6 +576,9 @@
   const sectionContext = {
     top: "HOME",
     work: "WORK",
+    opensource: "OPEN SOURCE",
+    freelance: "FREELANCE",
+    "personal-projects": "PROJECT GALLERY",
     systems: "SYSTEMS",
     stack: "STACK",
     contact: "CONTACT"
@@ -569,7 +604,10 @@
   const commandInput = $("#command-input");
   const commandResults = $("#command-results");
   const commands = [
-    ["Selected work", "Work", "work"],
+    ["Selected work", "Engineering case studies", "work"],
+    ["Open-source contributions", "Six merged pull requests", "opensource"],
+    ["Freelance projects", "Jeca Homes and PrintOscar", "freelance"],
+    ["Personal full-stack projects", "Screenshots and technology filters", "personal-projects"],
     ["Systems thinking", "Method", "systems"],
     ["Stack", "Tools", "stack"],
     ["Contact", "Open channel", "contact"],
@@ -649,6 +687,38 @@
       closeMenu();
     }
   });
+
+
+  /* ---------- Personal project technology filters ---------- */
+  const projectFilterButtons = $$(".project-filter-button");
+  const personalProjectCards = $$(".personal-project-card");
+  const projectResultsCount = $("#project-results-count");
+  const applyProjectFilter = (technology = "all") => {
+    let visible = 0;
+    personalProjectCards.forEach((card) => {
+      const technologies = (card.dataset.techs || "").split(/\\s+/).filter(Boolean);
+      const matches = technology === "all" || technologies.includes(technology);
+      card.hidden = !matches;
+      if (matches) visible += 1;
+    });
+
+    projectFilterButtons.forEach((button) => {
+      const active = button.dataset.projectFilter === technology;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+
+    if (projectResultsCount) {
+      projectResultsCount.textContent = technology === "all"
+        ? "Showing all " + visible + " projects"
+        : "Showing " + visible + " of " + personalProjectCards.length + " projects";
+    }
+  };
+
+  projectFilterButtons.forEach((button) => {
+    button.addEventListener("click", () => applyProjectFilter(button.dataset.projectFilter || "all"));
+  });
+  if (projectFilterButtons.length && personalProjectCards.length) applyProjectFilter("all");
 
   /* ---------- Footer / date ---------- */
   const year = $("#year");
