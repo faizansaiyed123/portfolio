@@ -406,3 +406,22 @@ button,a{ -webkit-tap-highlight-color:transparent}
 }
 /* Typography adjustment for the systems-section heading only. */
 #systems .section-intro h2{font-size:clamp(28px,3vw,38px);font-weight:600;line-height:1.2;letter-spacing:-.025em;max-width:24ch}
+
+/* Release credits are presented as shipped achievements. The official release
+   link is stretched over the card; the separate PR link remains independently clickable. */
+.release-credit-card{position:relative;overflow:hidden;border-color:color-mix(in srgb,var(--accent) 23%,var(--line));background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 5%,var(--panel)),var(--panel) 58%);transition:transform .2s var(--ease),border-color .2s var(--ease),box-shadow .2s var(--ease)}
+.release-credit-card::before{position:absolute;inset:0 auto 0 0;width:3px;content:"";background:var(--accent);opacity:.65;pointer-events:none}
+.release-credit-card:hover{transform:translateY(-3px);border-color:var(--line-strong);box-shadow:0 14px 36px color-mix(in srgb,var(--accent) 9%,transparent)}
+.release-credit-card:focus-within{outline:2px solid var(--accent);outline-offset:3px}
+.release-credit-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.release-credit-kind{margin:0}
+.release-credit-status{display:inline-flex;flex:0 0 auto;align-items:center;gap:6px;padding:5px 7px;border:1px solid color-mix(in srgb,var(--accent) 32%,var(--line));background:color-mix(in srgb,var(--accent) 8%,var(--panel));color:var(--accent);font:700 8px/1.2 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.08em}
+.release-credit-status i{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 13%,transparent)}
+.release-credit-card h4{font-size:16px}
+.release-credit-stretched-link::after{position:absolute;inset:0;z-index:1;content:""}
+.release-credit-links{position:relative;z-index:2}
+.release-credit-card .release-credit-links a{position:relative;z-index:2;min-height:28px;padding:6px 8px;border:1px solid var(--line);background:var(--panel-2)}
+.release-credit-card .release-credit-links a:hover{border-color:var(--accent);color:var(--accent)}
+.release-credit-card:hover .release-credit-status{background:color-mix(in srgb,var(--accent) 12%,var(--panel))}
+@media (prefers-reduced-motion:reduce){.release-credit-card{transition:none}.release-credit-card:hover{transform:none}}
+
