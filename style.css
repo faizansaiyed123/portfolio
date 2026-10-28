@@ -307,6 +307,20 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .contribution-card p{margin:13px 0 22px;color:var(--muted);font-size:12px;line-height:1.75}
 .contribution-open{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;padding-top:13px;border-top:1px solid var(--line);font:700 9px/1.5 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.015em;color:var(--text)}
 .contribution-open b,.freelance-card-cta b,.personal-project-links b,.personal-projects-footnote b{color:var(--accent);font-size:14px}
+.release-credits{margin-top:30px;padding-top:24px;border-top:1px solid var(--line)}
+.release-credits-heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.7fr);align-items:end;gap:24px;margin-bottom:16px}
+.release-credits-heading h3{margin:10px 0 0;color:var(--text);font-size:clamp(20px,2vw,28px);line-height:1.2;letter-spacing:-.035em}
+.release-credits-heading>p{margin:0;color:var(--muted);font-size:12px;line-height:1.75}
+.release-credit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.release-credit-card{display:flex;min-width:0;flex-direction:column;padding:18px;background:var(--panel);border:1px solid var(--line)}
+.release-credit-kind{margin-bottom:10px;color:var(--faint);font:600 8px/1.5 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.09em}
+.release-credit-card h4{margin:0;color:var(--text);font-size:15px;line-height:1.45;letter-spacing:-.02em}
+.release-credit-card p{margin:9px 0 16px;color:var(--muted);font-size:11px;line-height:1.75}
+.release-credit-card code{font-size:.95em;color:var(--text)}
+.release-credit-links{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:12px;border-top:1px solid var(--line)}
+.release-credit-links a{display:inline-flex;align-items:center;gap:6px;color:var(--text);text-decoration:none;font:600 8px/1.5 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+.release-credit-links a:hover{color:var(--accent)}
+.release-credit-links b{color:var(--accent);font-size:12px}
 .freelance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .freelance-card{display:flex;min-width:0;flex-direction:column;background:var(--panel);border:1px solid var(--line);text-decoration:none;transition:transform .25s var(--ease),border-color .25s var(--ease),box-shadow .25s var(--ease);overflow:hidden}
 .freelance-card:hover{transform:translateY(-4px);border-color:var(--line-strong);box-shadow:0 18px 50px rgba(0,0,0,.17)}
@@ -365,6 +379,7 @@ button,a{ -webkit-tap-highlight-color:transparent}
   .desktop-nav{gap:14px}
   .portfolio-section .section-intro{grid-template-columns:.34fr .66fr;gap:28px}
   .contribution-grid,.personal-project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .release-credit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .project-gallery-toolbar{grid-template-columns:minmax(0,1fr);gap:12px}
   .project-results-count{margin:0}
   .mobile-nav{max-height:calc(100svh - var(--header));overflow-y:auto;overscroll-behavior:contain}
@@ -373,6 +388,9 @@ button,a{ -webkit-tap-highlight-color:transparent}
   .portfolio-section{padding:78px 0}
   .portfolio-section .section-intro{grid-template-columns:1fr;gap:18px;margin-bottom:32px}
   .contribution-grid,.personal-project-grid,.freelance-grid{grid-template-columns:minmax(0,1fr)}
+  .release-credits-heading,.release-credit-grid{grid-template-columns:minmax(0,1fr)}
+  .release-credits-heading{gap:10px}
+  .release-credit-card{padding:16px}
   .contribution-card{min-height:0;padding:20px}
   .contribution-card-top{margin-bottom:18px}
   .freelance-card-copy{padding:19px}
