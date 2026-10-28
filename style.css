@@ -313,7 +313,7 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .release-credits-heading>p{margin:0;color:var(--muted);font-size:12px;line-height:1.75}
 .release-credit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .release-credit-card{display:flex;min-width:0;flex-direction:column;padding:18px;background:var(--panel);border:1px solid var(--line)}
-.release-credit-kind{margin-bottom:10px;color:var(--faint);font:600 8px/1.5 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.09em}
+.release-credit-kind{margin-bottom:10px;color:var(--accent);font:750 12px/1.5 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.07em}
 .release-credit-card h4{margin:0;color:var(--text);font-size:15px;line-height:1.45;letter-spacing:-.02em}
 .release-credit-card p{margin:9px 0 16px;color:var(--muted);font-size:11px;line-height:1.75}
 .release-credit-card code{font-size:.95em;color:var(--text)}
