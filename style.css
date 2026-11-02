@@ -581,3 +581,47 @@ button,a{ -webkit-tap-highlight-color:transparent}
   mix-blend-mode: screen;
   filter: saturate(1.45);
 }
+
+
+/* Soft multicolour bloom and luminous cursor trail, painted above each project image. */
+.freelance-card-media.has-cursor-effects,
+.personal-project-preview.has-cursor-effects {
+  isolation: isolate;
+}
+
+.portfolio-image-spotlight {
+  background:
+    radial-gradient(circle 115px at var(--image-cursor-x, 50%) var(--image-cursor-y, 50%),
+      rgba(255,255,255,.32) 0%, rgba(255,255,255,.10) 38%, transparent 78%),
+    radial-gradient(circle 230px at calc(var(--image-cursor-x, 50%) - 38px) calc(var(--image-cursor-y, 50%) + 18px),
+      rgba(76,110,255,.48) 0%, rgba(76,110,255,.20) 42%, transparent 78%),
+    radial-gradient(circle 205px at calc(var(--image-cursor-x, 50%) + 48px) calc(var(--image-cursor-y, 50%) - 30px),
+      rgba(184,77,255,.40) 0%, rgba(184,77,255,.16) 46%, transparent 80%),
+    radial-gradient(circle 185px at calc(var(--image-cursor-x, 50%) + 20px) calc(var(--image-cursor-y, 50%) + 48px),
+      rgba(240,68,166,.32) 0%, rgba(240,68,166,.10) 50%, transparent 82%),
+    radial-gradient(circle 170px at calc(var(--image-cursor-x, 50%) - 42px) calc(var(--image-cursor-y, 50%) - 42px),
+      rgba(37,215,242,.30) 0%, transparent 78%);
+  mix-blend-mode: screen;
+  filter: saturate(1.6);
+  transition: opacity 90ms linear;
+}
+
+.portfolio-image-grid {
+  background-image: radial-gradient(circle at center, rgba(190,215,255,.98) .9px, transparent 1.5px);
+  background-size: 17px 17px;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 2px rgba(120,160,255,.6));
+}
+
+.portfolio-image-trail {
+  z-index: 4;
+  display: block;
+  image-rendering: pixelated;
+  mix-blend-mode: screen;
+  filter: saturate(1.55);
+  pointer-events: none;
+}
+
+.is-pointer-active > .portfolio-image-spotlight { opacity: 1; }
+.is-pointer-active > .portfolio-image-grid { opacity: .98; }
+
