@@ -735,12 +735,18 @@
   updateGuideProgress();
 
   /* ---------- Cursor-reactive project image previews ---------- */
-  // Effects are scoped to the existing image frames and never intercept clicks.
+  // A layered colour bloom and fading pixel trail, scoped to each preview image.
   const imagePreviewTargets = $$(".freelance-card-media, .personal-project-preview");
 
   if (imagePreviewTargets.length) {
-    const imageTrailPalette = ["#4E74F8", "#E5484D", "#FFCD56"];
-    const enablePixelTrail = !prefersReducedMotion.matches;
+    const reduceImageMotion = prefersReducedMotion.matches;
+    const imageTrailPalette = [
+      { hex: "#4C6EFF", rgb: "76, 110, 255" },
+      { hex: "#B84DFF", rgb: "184, 77, 255" },
+      { hex: "#F044A6", rgb: "240, 68, 166" },
+      { hex: "#25D7F2", rgb: "37, 215, 242" },
+      { hex: "#FFC247", rgb: "255, 194, 71" }
+    ];
 
     imagePreviewTargets.forEach((preview) => {
       const spotlight = document.createElement("span");
@@ -751,31 +757,58 @@
       dotGrid.className = "portfolio-image-grid";
       dotGrid.setAttribute("aria-hidden", "true");
 
-      preview.classList.add("has-cursor-effects");
-      preview.append(spotlight, dotGrid);
+      const trailCanvas = document.createElement("canvas");
+      trailCanvas.className = "portfolio-image-trail";
+      trailCanvas.setAttribute("aria-hidden", "true");
 
-      let trailCanvas = null;
-      let trailContext = null;
+      preview.classList.add("has-cursor-effects");
+      preview.append(spotlight, dotGrid, trailCanvas);
+
+      const trailContext = trailCanvas.getContext("2d");
       const trailPoints = [];
       let trailFrame = 0;
       let trailColorIndex = 0;
       let previousPoint = null;
-
-      if (enablePixelTrail) {
-        trailCanvas = document.createElement("canvas");
-        trailCanvas.className = "portfolio-image-trail";
-        trailCanvas.setAttribute("aria-hidden", "true");
-        preview.appendChild(trailCanvas);
-        trailContext = trailCanvas.getContext("2d");
-      }
+      let currentPoint = null;
 
       const resizeTrail = () => {
-        if (!trailContext || !trailCanvas) return;
+        if (!trailContext) return;
         const bounds = preview.getBoundingClientRect();
         const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
         trailCanvas.width = Math.max(1, Math.round(bounds.width * pixelRatio));
         trailCanvas.height = Math.max(1, Math.round(bounds.height * pixelRatio));
         trailContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        if (currentPoint) paintStaticGlow();
+      };
+
+      const drawBloom = (x, y, radius, rgb, alpha) => {
+        if (!trailContext || alpha <= 0) return;
+        const gradient = trailContext.createRadialGradient(x, y, 0, x, y, radius);
+        gradient.addColorStop(0, "rgba(" + rgb + ", " + alpha + ")");
+        gradient.addColorStop(0.28, "rgba(" + rgb + ", " + (alpha * 0.62) + ")");
+        gradient.addColorStop(0.62, "rgba(" + rgb + ", " + (alpha * 0.2) + ")");
+        gradient.addColorStop(1, "rgba(" + rgb + ", 0)");
+        trailContext.fillStyle = gradient;
+        trailContext.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+      };
+
+      const paintPointGlow = (point, strength) => {
+        const life = Math.max(0, point.life);
+        const alpha = strength * life;
+        // Three overlapping hues create a blended, colourful aura behind the pointer.
+        drawBloom(point.x - 18, point.y + 8, 126, "76, 110, 255", alpha * 0.78);
+        drawBloom(point.x + 22, point.y - 17, 112, "184, 77, 255", alpha * 0.76);
+        drawBloom(point.x + 5, point.y + 18, 94, "240, 68, 166", alpha * 0.58);
+        drawBloom(point.x + 34, point.y + 30, 104, "37, 215, 242", alpha * 0.44);
+        drawBloom(point.x - 34, point.y - 24, 84, "255, 194, 71", alpha * 0.35);
+      };
+
+      const paintStaticGlow = () => {
+        if (!trailContext || !currentPoint) return;
+        trailContext.clearRect(0, 0, preview.clientWidth, preview.clientHeight);
+        trailContext.globalCompositeOperation = "lighter";
+        paintPointGlow(currentPoint, 0.68);
+        trailContext.globalCompositeOperation = "source-over";
       };
 
       const paintTrail = () => {
@@ -786,62 +819,66 @@
         trailContext.globalCompositeOperation = "lighter";
 
         for (let index = trailPoints.length - 1; index >= 0; index -= 1) {
-          trailPoints[index].life -= 0.035;
+          trailPoints[index].life -= 0.022;
           if (trailPoints[index].life <= 0) trailPoints.splice(index, 1);
         }
 
-        for (let index = 1; index < trailPoints.length; index += 1) {
-          const previous = trailPoints[index - 1];
-          const point = trailPoints[index];
-          const alpha = Math.min(previous.life, point.life) * (index / trailPoints.length);
-          const distance = Math.max(
-            Math.abs(point.x - previous.x),
-            Math.abs(point.y - previous.y)
-          );
-          const stamps = Math.max(1, Math.ceil(distance / 3));
-          const squareSize = alpha > 0.66 ? 9 : 5;
+        trailPoints.forEach((point, index) => {
+          const isNewest = index === trailPoints.length - 1;
+          const strength = isNewest ? 0.62 : 0.23;
+          paintPointGlow(point, strength * (index / Math.max(1, trailPoints.length - 1)) * 0.72 + (isNewest ? 0.3 : 0));
 
-          trailContext.globalAlpha = alpha;
-          trailContext.fillStyle = point.color;
-
-          for (let stamp = 0; stamp <= stamps; stamp += 1) {
-            const progress = stamp / stamps;
-            const x = Math.round((previous.x + (point.x - previous.x) * progress) / 3) * 3;
-            const y = Math.round((previous.y + (point.y - previous.y) * progress) / 3) * 3;
-            trailContext.fillRect(
-              x - squareSize / 2,
-              y - squareSize / 2,
-              squareSize,
-              squareSize
+          if (index > 0) {
+            const previous = trailPoints[index - 1];
+            const alpha = Math.min(previous.life, point.life) * (index / trailPoints.length);
+            const distance = Math.max(
+              Math.abs(point.x - previous.x),
+              Math.abs(point.y - previous.y)
             );
+            const stamps = Math.max(1, Math.ceil(distance / 3));
+            const squareSize = alpha > 0.65 ? 9 : 5;
+
+            trailContext.globalAlpha = alpha * 0.92;
+            trailContext.fillStyle = point.color;
+
+            for (let stamp = 0; stamp <= stamps; stamp += 1) {
+              const progress = stamp / stamps;
+              const x = Math.round((previous.x + (point.x - previous.x) * progress) / 3) * 3;
+              const y = Math.round((previous.y + (point.y - previous.y) * progress) / 3) * 3;
+              trailContext.fillRect(
+                x - squareSize / 2,
+                y - squareSize / 2,
+                squareSize,
+                squareSize
+              );
+            }
           }
-        }
+        });
 
         trailContext.globalAlpha = 1;
+        trailContext.globalCompositeOperation = "source-over";
         if (trailPoints.length) trailFrame = window.requestAnimationFrame(paintTrail);
       };
 
       const onPointerMove = (event) => {
-        // Touch interactions should not create cursor-following visual effects.
         if (event.pointerType === "touch") return;
 
         const bounds = preview.getBoundingClientRect();
         const x = Math.max(0, Math.min(bounds.width, event.clientX - bounds.left));
         const y = Math.max(0, Math.min(bounds.height, event.clientY - bounds.top));
-
         preview.style.setProperty("--image-cursor-x", x + "px");
         preview.style.setProperty("--image-cursor-y", y + "px");
         preview.classList.add("is-pointer-active");
 
-        if (!trailContext) return;
+        const colour = imageTrailPalette[trailColorIndex % imageTrailPalette.length];
+        currentPoint = { x, y, life: 1, color: colour.hex };
 
-        const point = {
-          x,
-          y,
-          life: 1,
-          color: imageTrailPalette[trailColorIndex % imageTrailPalette.length]
-        };
+        if (reduceImageMotion || !trailContext) {
+          paintStaticGlow();
+          return;
+        }
 
+        const point = { ...currentPoint, color: colour.hex };
         if (previousPoint) {
           const distance = Math.hypot(point.x - previousPoint.x, point.y - previousPoint.y);
           if (distance < 2) return;
@@ -849,20 +886,24 @@
 
         trailColorIndex += 1;
         trailPoints.push(point);
-        if (trailPoints.length > 36) trailPoints.shift();
+        if (trailPoints.length > 42) trailPoints.shift();
         previousPoint = point;
-
         if (!trailFrame) trailFrame = window.requestAnimationFrame(paintTrail);
       };
 
       const onPointerLeave = () => {
         preview.classList.remove("is-pointer-active");
         previousPoint = null;
+        currentPoint = null;
+
+        if (reduceImageMotion) {
+          if (trailContext) trailContext.clearRect(0, 0, preview.clientWidth, preview.clientHeight);
+          return;
+        }
 
         trailPoints.forEach((point) => {
-          point.life = Math.min(point.life, 0.35);
+          point.life = Math.min(point.life, 0.28);
         });
-
         if (trailContext && trailPoints.length && !trailFrame) {
           trailFrame = window.requestAnimationFrame(paintTrail);
         }
