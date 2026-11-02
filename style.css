@@ -425,3 +425,105 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .release-credit-card:hover .release-credit-status{background:color-mix(in srgb,var(--accent) 12%,var(--panel))}
 @media (prefers-reduced-motion:reduce){.release-credit-card{transition:none}.release-credit-card:hover{transform:none}}
 
+
+
+/* ---------- SigNoz-inspired cursor effects for project image previews ---------- */
+.freelance-card-media.has-cursor-effects,
+.personal-project-preview.has-cursor-effects {
+  isolation: isolate;
+}
+
+.freelance-card-media img,
+.personal-project-preview img {
+  position: relative;
+  z-index: 0;
+}
+
+.freelance-card-media::after {
+  z-index: 1;
+  pointer-events: none;
+}
+
+.portfolio-image-spotlight,
+.portfolio-image-grid,
+.portfolio-image-trail {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.portfolio-image-spotlight {
+  z-index: 2;
+  opacity: 0;
+  background:
+    radial-gradient(
+      circle 185px at var(--image-cursor-x, 50%) var(--image-cursor-y, 50%),
+      rgba(255, 255, 255, 0.16) 0%,
+      rgba(78, 116, 248, 0.11) 30%,
+      rgba(229, 72, 77, 0.045) 52%,
+      transparent 76%
+    );
+  mix-blend-mode: screen;
+  transition: opacity 180ms ease;
+}
+
+.portfolio-image-grid {
+  z-index: 3;
+  opacity: 0;
+  background-image: radial-gradient(
+    circle at center,
+    rgba(231, 239, 255, 0.78) 0.75px,
+    transparent 1.25px
+  );
+  background-size: 18px 18px;
+  background-position: 0 0;
+  -webkit-mask-image: radial-gradient(
+    circle 178px at var(--image-cursor-x, 50%) var(--image-cursor-y, 50%),
+    #000 0%,
+    rgba(0, 0, 0, 0.74) 42%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle 178px at var(--image-cursor-x, 50%) var(--image-cursor-y, 50%),
+    #000 0%,
+    rgba(0, 0, 0, 0.74) 42%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  transition: opacity 180ms ease;
+}
+
+.portfolio-image-trail {
+  z-index: 4;
+  display: block;
+  image-rendering: pixelated;
+  mix-blend-mode: screen;
+}
+
+.is-pointer-active > .portfolio-image-spotlight {
+  opacity: 1;
+}
+
+.is-pointer-active > .portfolio-image-grid {
+  opacity: 0.88;
+}
+
+.freelance-card-flag,
+.freelance-card-arrow,
+.personal-preview-label,
+.personal-preview-arrow {
+  z-index: 5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-image-spotlight,
+  .portfolio-image-grid {
+    transition: none;
+  }
+
+  .portfolio-image-trail {
+    display: none;
+  }
+}

@@ -733,4 +733,145 @@
 
   // Initialize the guide progress using the current decision-tree state.
   updateGuideProgress();
+
+  /* ---------- Cursor-reactive project image previews ---------- */
+  // Keep the interaction scoped to the existing project preview frames.
+  const imagePreviewTargets = $$(".freelance-card-media, .personal-project-preview");
+  const supportsFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  if (imagePreviewTargets.length && supportsFinePointer && !prefersReducedMotion.matches) {
+    const imageTrailPalette = ["#4E74F8", "#E5484D", "#FFCD56"];
+
+    imagePreviewTargets.forEach((preview) => {
+      const spotlight = document.createElement("span");
+      spotlight.className = "portfolio-image-spotlight";
+      spotlight.setAttribute("aria-hidden", "true");
+
+      const dotGrid = document.createElement("span");
+      dotGrid.className = "portfolio-image-grid";
+      dotGrid.setAttribute("aria-hidden", "true");
+
+      const trailCanvas = document.createElement("canvas");
+      trailCanvas.className = "portfolio-image-trail";
+      trailCanvas.setAttribute("aria-hidden", "true");
+
+      preview.classList.add("has-cursor-effects");
+      preview.append(spotlight, dotGrid, trailCanvas);
+
+      const trailContext = trailCanvas.getContext("2d");
+      const trailPoints = [];
+      let trailFrame = 0;
+      let trailColorIndex = 0;
+      let previousPoint = null;
+
+      const resizeTrail = () => {
+        if (!trailContext) return;
+        const bounds = preview.getBoundingClientRect();
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        trailCanvas.width = Math.max(1, Math.round(bounds.width * pixelRatio));
+        trailCanvas.height = Math.max(1, Math.round(bounds.height * pixelRatio));
+        trailContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      };
+
+      const paintTrail = () => {
+        trailFrame = 0;
+        if (!trailContext) return;
+
+        const width = preview.clientWidth;
+        const height = preview.clientHeight;
+        trailContext.clearRect(0, 0, width, height);
+        trailContext.globalCompositeOperation = "lighter";
+
+        for (let index = trailPoints.length - 1; index >= 0; index -= 1) {
+          trailPoints[index].life -= 0.045;
+          if (trailPoints[index].life <= 0) trailPoints.splice(index, 1);
+        }
+
+        for (let index = 1; index < trailPoints.length; index += 1) {
+          const previous = trailPoints[index - 1];
+          const point = trailPoints[index];
+          const alpha = Math.min(previous.life, point.life) * (index / trailPoints.length);
+          const distance = Math.max(
+            Math.abs(point.x - previous.x),
+            Math.abs(point.y - previous.y)
+          );
+          const stamps = Math.max(1, Math.ceil(distance / 4));
+          const squareSize = alpha > 0.72 ? 7 : 4;
+
+          trailContext.globalAlpha = alpha * 0.82;
+          trailContext.fillStyle = point.color;
+
+          for (let stamp = 0; stamp <= stamps; stamp += 1) {
+            const progress = stamp / stamps;
+            const x = Math.round((previous.x + (point.x - previous.x) * progress) / 4) * 4;
+            const y = Math.round((previous.y + (point.y - previous.y) * progress) / 4) * 4;
+            trailContext.fillRect(
+              x - squareSize / 2,
+              y - squareSize / 2,
+              squareSize,
+              squareSize
+            );
+          }
+        }
+
+        trailContext.globalAlpha = 1;
+        if (trailPoints.length) trailFrame = window.requestAnimationFrame(paintTrail);
+      };
+
+      const onPointerMove = (event) => {
+        const bounds = preview.getBoundingClientRect();
+        const x = event.clientX - bounds.left;
+        const y = event.clientY - bounds.top;
+
+        preview.style.setProperty("--image-cursor-x", x + "px");
+        preview.style.setProperty("--image-cursor-y", y + "px");
+        preview.classList.add("is-pointer-active");
+
+        if (!trailContext) return;
+
+        const point = {
+          x,
+          y,
+          life: 1,
+          color: imageTrailPalette[trailColorIndex % imageTrailPalette.length]
+        };
+
+        if (previousPoint) {
+          const distance = Math.hypot(point.x - previousPoint.x, point.y - previousPoint.y);
+          if (distance < 3) return;
+        }
+
+        trailColorIndex += 1;
+        trailPoints.push(point);
+        if (trailPoints.length > 28) trailPoints.shift();
+        previousPoint = point;
+
+        if (!trailFrame) trailFrame = window.requestAnimationFrame(paintTrail);
+      };
+
+      const onPointerLeave = () => {
+        preview.classList.remove("is-pointer-active");
+        previousPoint = null;
+        trailPoints.forEach((point) => {
+          point.life = Math.min(point.life, 0.32);
+        });
+        if (trailContext && trailPoints.length && !trailFrame) {
+          trailFrame = window.requestAnimationFrame(paintTrail);
+        }
+      };
+
+      resizeTrail();
+      if (typeof ResizeObserver === "function") {
+        const resizeObserver = new ResizeObserver(resizeTrail);
+        resizeObserver.observe(preview);
+      } else {
+        window.addEventListener("resize", resizeTrail, { passive: true });
+      }
+
+      preview.addEventListener("pointermove", onPointerMove, { passive: true });
+      preview.addEventListener("pointerleave", onPointerLeave);
+      preview.addEventListener("pointercancel", onPointerLeave);
+    });
+  }
+
 })();
