@@ -755,6 +755,7 @@
       trailCanvas.className = "portfolio-image-trail";
       trailCanvas.setAttribute("aria-hidden", "true");
 
+      preview.classList.add("has-cursor-effects");
       preview.append(spotlight, dotGrid, trailCanvas);
 
       const trailContext = trailCanvas.getContext("2d");
