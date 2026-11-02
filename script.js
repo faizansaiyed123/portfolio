@@ -735,12 +735,12 @@
   updateGuideProgress();
 
   /* ---------- Cursor-reactive project image previews ---------- */
-  // Keep the interaction scoped to the existing project preview frames.
+  // Effects are scoped to the existing image frames and never intercept clicks.
   const imagePreviewTargets = $$(".freelance-card-media, .personal-project-preview");
-  const supportsFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  if (imagePreviewTargets.length && supportsFinePointer && !prefersReducedMotion.matches) {
+  if (imagePreviewTargets.length) {
     const imageTrailPalette = ["#4E74F8", "#E5484D", "#FFCD56"];
+    const enablePixelTrail = !prefersReducedMotion.matches;
 
     imagePreviewTargets.forEach((preview) => {
       const spotlight = document.createElement("span");
@@ -751,21 +751,26 @@
       dotGrid.className = "portfolio-image-grid";
       dotGrid.setAttribute("aria-hidden", "true");
 
-      const trailCanvas = document.createElement("canvas");
-      trailCanvas.className = "portfolio-image-trail";
-      trailCanvas.setAttribute("aria-hidden", "true");
-
       preview.classList.add("has-cursor-effects");
-      preview.append(spotlight, dotGrid, trailCanvas);
+      preview.append(spotlight, dotGrid);
 
-      const trailContext = trailCanvas.getContext("2d");
+      let trailCanvas = null;
+      let trailContext = null;
       const trailPoints = [];
       let trailFrame = 0;
       let trailColorIndex = 0;
       let previousPoint = null;
 
+      if (enablePixelTrail) {
+        trailCanvas = document.createElement("canvas");
+        trailCanvas.className = "portfolio-image-trail";
+        trailCanvas.setAttribute("aria-hidden", "true");
+        preview.appendChild(trailCanvas);
+        trailContext = trailCanvas.getContext("2d");
+      }
+
       const resizeTrail = () => {
-        if (!trailContext) return;
+        if (!trailContext || !trailCanvas) return;
         const bounds = preview.getBoundingClientRect();
         const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
         trailCanvas.width = Math.max(1, Math.round(bounds.width * pixelRatio));
@@ -777,13 +782,11 @@
         trailFrame = 0;
         if (!trailContext) return;
 
-        const width = preview.clientWidth;
-        const height = preview.clientHeight;
-        trailContext.clearRect(0, 0, width, height);
+        trailContext.clearRect(0, 0, preview.clientWidth, preview.clientHeight);
         trailContext.globalCompositeOperation = "lighter";
 
         for (let index = trailPoints.length - 1; index >= 0; index -= 1) {
-          trailPoints[index].life -= 0.045;
+          trailPoints[index].life -= 0.035;
           if (trailPoints[index].life <= 0) trailPoints.splice(index, 1);
         }
 
@@ -795,16 +798,16 @@
             Math.abs(point.x - previous.x),
             Math.abs(point.y - previous.y)
           );
-          const stamps = Math.max(1, Math.ceil(distance / 4));
-          const squareSize = alpha > 0.72 ? 7 : 4;
+          const stamps = Math.max(1, Math.ceil(distance / 3));
+          const squareSize = alpha > 0.66 ? 9 : 5;
 
-          trailContext.globalAlpha = alpha * 0.82;
+          trailContext.globalAlpha = alpha;
           trailContext.fillStyle = point.color;
 
           for (let stamp = 0; stamp <= stamps; stamp += 1) {
             const progress = stamp / stamps;
-            const x = Math.round((previous.x + (point.x - previous.x) * progress) / 4) * 4;
-            const y = Math.round((previous.y + (point.y - previous.y) * progress) / 4) * 4;
+            const x = Math.round((previous.x + (point.x - previous.x) * progress) / 3) * 3;
+            const y = Math.round((previous.y + (point.y - previous.y) * progress) / 3) * 3;
             trailContext.fillRect(
               x - squareSize / 2,
               y - squareSize / 2,
@@ -819,9 +822,12 @@
       };
 
       const onPointerMove = (event) => {
+        // Touch interactions should not create cursor-following visual effects.
+        if (event.pointerType === "touch") return;
+
         const bounds = preview.getBoundingClientRect();
-        const x = event.clientX - bounds.left;
-        const y = event.clientY - bounds.top;
+        const x = Math.max(0, Math.min(bounds.width, event.clientX - bounds.left));
+        const y = Math.max(0, Math.min(bounds.height, event.clientY - bounds.top));
 
         preview.style.setProperty("--image-cursor-x", x + "px");
         preview.style.setProperty("--image-cursor-y", y + "px");
@@ -838,12 +844,12 @@
 
         if (previousPoint) {
           const distance = Math.hypot(point.x - previousPoint.x, point.y - previousPoint.y);
-          if (distance < 3) return;
+          if (distance < 2) return;
         }
 
         trailColorIndex += 1;
         trailPoints.push(point);
-        if (trailPoints.length > 28) trailPoints.shift();
+        if (trailPoints.length > 36) trailPoints.shift();
         previousPoint = point;
 
         if (!trailFrame) trailFrame = window.requestAnimationFrame(paintTrail);
@@ -852,9 +858,11 @@
       const onPointerLeave = () => {
         preview.classList.remove("is-pointer-active");
         previousPoint = null;
+
         trailPoints.forEach((point) => {
-          point.life = Math.min(point.life, 0.32);
+          point.life = Math.min(point.life, 0.35);
         });
+
         if (trailContext && trailPoints.length && !trailFrame) {
           trailFrame = window.requestAnimationFrame(paintTrail);
         }
