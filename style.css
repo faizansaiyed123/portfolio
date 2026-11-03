@@ -427,6 +427,103 @@ button,a{ -webkit-tap-highlight-color:transparent}
 
 
 
+/* ---------- Cursor-reactive open-source contribution cards ---------- */
+:root{
+  --oss-cursor-blue:76,111,255;
+  --oss-cursor-violet:155,92,255;
+  --oss-cursor-grid:231,239,255;
+}
+html[data-theme="light"]{
+  --oss-cursor-blue:49,87,213;
+  --oss-cursor-violet:117,64,199;
+  --oss-cursor-grid:31,39,51;
+}
+
+#opensource .contribution-card{
+  isolation:isolate;
+}
+
+#opensource .contribution-card > .opensource-cursor-spotlight,
+#opensource .contribution-card > .opensource-cursor-grid,
+#opensource .contribution-card > .opensource-cursor-trail{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  border-radius:inherit;
+}
+
+#opensource .contribution-card > .opensource-cursor-spotlight{
+  z-index:1;
+  opacity:0;
+  background:
+    radial-gradient(
+      circle 190px at var(--oss-cursor-x,50%) var(--oss-cursor-y,50%),
+      rgba(var(--oss-cursor-blue),.14) 0%,
+      rgba(var(--oss-cursor-violet),.10) 32%,
+      transparent 74%
+    );
+  mix-blend-mode:screen;
+  transition:opacity 180ms ease;
+}
+
+#opensource .contribution-card > .opensource-cursor-grid{
+  z-index:1;
+  opacity:0;
+  background-image:radial-gradient(
+    circle at center,
+    rgba(var(--oss-cursor-grid),.72) .7px,
+    transparent 1.15px
+  );
+  background-size:18px 18px;
+  -webkit-mask-image:radial-gradient(
+    circle 176px at var(--oss-cursor-x,50%) var(--oss-cursor-y,50%),
+    #000 0%,
+    rgba(0,0,0,.64) 42%,
+    transparent 100%
+  );
+  mask-image:radial-gradient(
+    circle 176px at var(--oss-cursor-x,50%) var(--oss-cursor-y,50%),
+    #000 0%,
+    rgba(0,0,0,.64) 42%,
+    transparent 100%
+  );
+  mix-blend-mode:screen;
+  transition:opacity 180ms ease;
+}
+
+#opensource .contribution-card > .opensource-cursor-trail{
+  z-index:1;
+  display:block;
+  mix-blend-mode:screen;
+}
+
+#opensource .contribution-card > :not(.opensource-cursor-spotlight):not(.opensource-cursor-grid):not(.opensource-cursor-trail){
+  position:relative;
+  z-index:2;
+}
+
+#opensource .contribution-card.is-oss-pointer-active > .opensource-cursor-spotlight{
+  opacity:1;
+}
+
+#opensource .contribution-card.is-oss-pointer-active > .opensource-cursor-grid{
+  opacity:.82;
+}
+
+@media (prefers-reduced-motion:reduce){
+  #opensource .contribution-card > .opensource-cursor-spotlight,
+  #opensource .contribution-card > .opensource-cursor-grid{
+    transition:none;
+  }
+
+  #opensource .contribution-card > .opensource-cursor-trail{
+    display:none;
+  }
+}
+
+
 /* ---------- SigNoz-inspired cursor effects for project image previews ---------- */
 .freelance-card-media.has-cursor-effects,
 .personal-project-preview.has-cursor-effects {
