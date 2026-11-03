@@ -290,7 +290,7 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .personal-projects-section{background:var(--bg)}
 .section-description{max-width:66ch;margin:18px 0 0;color:var(--muted);font-size:14px;line-height:1.8}
 .contributions-heading{align-content:start}
-.contributions-heading h2{max-width:13ch}
+.contributions-heading h2{max-width:18ch;font-family:Georgia,"Times New Roman",serif;font-size:clamp(34px,3.6vw,48px);font-weight:400;line-height:1.06;letter-spacing:-.04em}
 .contributions-heading-mark{display:grid;place-items:center;width:42px;height:42px;margin-bottom:16px;border:1px solid var(--line-strong);color:var(--accent)}
 .github-mark{display:block;width:20px;height:20px;flex:0 0 auto}
 .contribution-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
