@@ -734,6 +734,210 @@
   // Initialize the guide progress using the current decision-tree state.
   updateGuideProgress();
 
+
+  /* ---------- Cursor-reactive open-source contribution cards ---------- */
+  // A dedicated blue/violet cursor bloom for this section only.
+  const openSourceContributionCards = $("#opensource .contribution-card");
+
+  if (openSourceContributionCards.length) {
+    const reduceOpenSourceMotion = prefersReducedMotion.matches;
+
+    openSourceContributionCards.forEach((card) => {
+      const spotlight = document.createElement("span");
+      spotlight.className = "opensource-cursor-spotlight";
+      spotlight.setAttribute("aria-hidden", "true");
+
+      const dotGrid = document.createElement("span");
+      dotGrid.className = "opensource-cursor-grid";
+      dotGrid.setAttribute("aria-hidden", "true");
+
+      const trailCanvas = document.createElement("canvas");
+      trailCanvas.className = "opensource-cursor-trail";
+      trailCanvas.setAttribute("aria-hidden", "true");
+
+      card.append(spotlight, dotGrid, trailCanvas);
+
+      const trailContext = trailCanvas.getContext("2d");
+      const trailPoints = [];
+      let trailFrame = 0;
+      let previousPoint = null;
+      let currentPoint = null;
+
+      const getPalette = () => (
+        document.documentElement.dataset.theme === "light"
+          ? [
+              { hex: "#3157D5", rgb: "49, 87, 213" },
+              { hex: "#7540C7", rgb: "117, 64, 199" }
+            ]
+          : [
+              { hex: "#4C6FFF", rgb: "76, 111, 255" },
+              { hex: "#9B5CFF", rgb: "155, 92, 255" }
+            ]
+      );
+
+      const resizeTrail = () => {
+        if (!trailContext) return;
+        const bounds = card.getBoundingClientRect();
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        trailCanvas.width = Math.max(1, Math.round(bounds.width * pixelRatio));
+        trailCanvas.height = Math.max(1, Math.round(bounds.height * pixelRatio));
+        trailContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        if (currentPoint) paintStaticGlow();
+      };
+
+      const drawBloom = (x, y, radius, rgb, alpha) => {
+        if (!trailContext || alpha <= 0) return;
+        const gradient = trailContext.createRadialGradient(x, y, 0, x, y, radius);
+        gradient.addColorStop(0, "rgba(" + rgb + ", " + alpha + ")");
+        gradient.addColorStop(.3, "rgba(" + rgb + ", " + (alpha * .58) + ")");
+        gradient.addColorStop(.68, "rgba(" + rgb + ", " + (alpha * .16) + ")");
+        gradient.addColorStop(1, "rgba(" + rgb + ", 0)");
+        trailContext.fillStyle = gradient;
+        trailContext.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+      };
+
+      const paintPointGlow = (point, strength) => {
+        const life = Math.max(0, point.life);
+        const alpha = strength * life;
+        const palette = getPalette();
+
+        drawBloom(point.x - 12, point.y + 7, 108, palette[0].rgb, alpha * .72);
+        drawBloom(point.x + 18, point.y - 14, 96, palette[1].rgb, alpha * .68);
+      };
+
+      const paintStaticGlow = () => {
+        if (!trailContext || !currentPoint) return;
+        trailContext.clearRect(0, 0, card.clientWidth, card.clientHeight);
+        trailContext.globalCompositeOperation = "lighter";
+        paintPointGlow(currentPoint, .56);
+        trailContext.globalCompositeOperation = "source-over";
+      };
+
+      const paintTrail = () => {
+        trailFrame = 0;
+        if (!trailContext) return;
+
+        trailContext.clearRect(0, 0, card.clientWidth, card.clientHeight);
+        trailContext.globalCompositeOperation = "lighter";
+
+        for (let index = trailPoints.length - 1; index >= 0; index -= 1) {
+          trailPoints[index].life -= .026;
+          if (trailPoints[index].life <= 0) trailPoints.splice(index, 1);
+        }
+
+        trailPoints.forEach((point, index) => {
+          const isNewest = index === trailPoints.length - 1;
+          const strength = isNewest ? .56 : .18;
+          const progress = index / Math.max(1, trailPoints.length - 1);
+          paintPointGlow(point, strength * progress + (isNewest ? .24 : 0));
+
+          if (index > 0) {
+            const previous = trailPoints[index - 1];
+            const alpha = Math.min(previous.life, point.life) * progress;
+            const distance = Math.max(
+              Math.abs(point.x - previous.x),
+              Math.abs(point.y - previous.y)
+            );
+            const stamps = Math.max(1, Math.ceil(distance / 4));
+            const squareSize = alpha > .62 ? 7 : 4;
+
+            trailContext.globalAlpha = alpha * .72;
+            trailContext.fillStyle = point.color;
+
+            for (let stamp = 0; stamp <= stamps; stamp += 1) {
+              const step = stamp / stamps;
+              const x = Math.round((previous.x + (point.x - previous.x) * step) / 3) * 3;
+              const y = Math.round((previous.y + (point.y - previous.y) * step) / 3) * 3;
+              trailContext.fillRect(
+                x - squareSize / 2,
+                y - squareSize / 2,
+                squareSize,
+                squareSize
+              );
+            }
+          }
+        });
+
+        trailContext.globalAlpha = 1;
+        trailContext.globalCompositeOperation = "source-over";
+
+        if (trailPoints.length) {
+          trailFrame = window.requestAnimationFrame(paintTrail);
+        }
+      };
+
+      const onPointerMove = (event) => {
+        if (event.pointerType === "touch") return;
+
+        const bounds = card.getBoundingClientRect();
+        const x = Math.max(0, Math.min(bounds.width, event.clientX - bounds.left));
+        const y = Math.max(0, Math.min(bounds.height, event.clientY - bounds.top));
+
+        card.style.setProperty("--oss-cursor-x", x + "px");
+        card.style.setProperty("--oss-cursor-y", y + "px");
+        card.classList.add("is-oss-pointer-active");
+
+        currentPoint = { x, y, life: 1, color: getPalette()[0].hex };
+
+        if (reduceOpenSourceMotion || !trailContext) {
+          paintStaticGlow();
+          return;
+        }
+
+        const palette = getPalette();
+        const colour = palette[trailPoints.length % palette.length];
+        const point = { ...currentPoint, color: colour.hex };
+
+        if (previousPoint) {
+          const distance = Math.hypot(point.x - previousPoint.x, point.y - previousPoint.y);
+          if (distance < 2) return;
+        }
+
+        trailPoints.push(point);
+        if (trailPoints.length > 30) trailPoints.shift();
+        previousPoint = point;
+
+        if (!trailFrame) {
+          trailFrame = window.requestAnimationFrame(paintTrail);
+        }
+      };
+
+      const onPointerLeave = () => {
+        card.classList.remove("is-oss-pointer-active");
+        previousPoint = null;
+        currentPoint = null;
+
+        if (reduceOpenSourceMotion) {
+          if (trailContext) {
+            trailContext.clearRect(0, 0, card.clientWidth, card.clientHeight);
+          }
+          return;
+        }
+
+        trailPoints.forEach((point) => {
+          point.life = Math.min(point.life, .22);
+        });
+
+        if (trailContext && trailPoints.length && !trailFrame) {
+          trailFrame = window.requestAnimationFrame(paintTrail);
+        }
+      };
+
+      resizeTrail();
+
+      if (typeof ResizeObserver === "function") {
+        const resizeObserver = new ResizeObserver(resizeTrail);
+        resizeObserver.observe(card);
+      } else {
+        window.addEventListener("resize", resizeTrail, { passive: true });
+      }
+
+      card.addEventListener("pointermove", onPointerMove, { passive: true });
+      card.addEventListener("pointerleave", onPointerLeave);
+      card.addEventListener("pointercancel", onPointerLeave);
+    });
+  }
+
   /* ---------- Cursor-reactive project image previews ---------- */
   // A layered colour bloom and fading pixel trail, scoped to each preview image.
   const imagePreviewTargets = $$(".freelance-card-media, .personal-project-preview");
