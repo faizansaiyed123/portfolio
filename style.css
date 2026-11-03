@@ -721,4 +721,20 @@ html[data-theme="light"]{
 
 .is-pointer-active > .portfolio-image-spotlight { opacity: 1; }
 .is-pointer-active > .portfolio-image-grid { opacity: .98; }
-
+ 
+/* Open-source heading uses the full section width. */
+.contributions-section .section-intro{
+  grid-template-columns:minmax(0,1fr);
+  gap:22px;
+}
+.contributions-section .section-intro>div{
+  min-width:0;
+}
+.contributions-section .contributions-heading{
+  width:100%;
+  min-width:0;
+}
+.contributions-section .contributions-heading h2{
+  width:100%;
+  max-width:none;
+}
