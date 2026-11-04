@@ -605,7 +605,7 @@
   const commandResults = $("#command-results");
   const commands = [
     ["Selected work", "Engineering case studies", "work"],
-    ["Open-source contributions", "Seven merged pull requests", "opensource"],
+    ["Open-source contributions", "13 merged pull requests", "opensource"],
     ["Freelance projects", "Jeca Homes and PrintOscar", "freelance"],
     ["Personal full-stack projects", "Screenshots and technology filters", "personal-projects"],
     ["Systems thinking", "Method", "systems"],
