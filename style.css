@@ -935,17 +935,17 @@ html[data-theme="light"]{
   transform-box: fill-box;
   transform-origin: center bottom;
 }
-.welcome-mascot.is-entering .mascot-leg-front,
-.welcome-mascot.is-exiting .mascot-leg-front {
+.welcome-mascot.is-entering .mascot-leg-front .mascot-leg-swing,
+.welcome-mascot.is-exiting .mascot-leg-front .mascot-leg-swing {
   animation: faizan-leg-front .34s ease-in-out infinite alternate;
   transform-box: view-box;
-  transform-origin: 64px 104px;
+  transform-origin: 0 0;
 }
-.welcome-mascot.is-entering .mascot-leg-back,
-.welcome-mascot.is-exiting .mascot-leg-back {
+.welcome-mascot.is-entering .mascot-leg-back .mascot-leg-swing,
+.welcome-mascot.is-exiting .mascot-leg-back .mascot-leg-swing {
   animation: faizan-leg-back .34s ease-in-out infinite alternate;
   transform-box: view-box;
-  transform-origin: 48px 103px;
+  transform-origin: 0 0;
 }
 .welcome-mascot.is-entering .mascot-arm-back,
 .welcome-mascot.is-exiting .mascot-arm-back {
@@ -1103,14 +1103,14 @@ html[data-theme="light"]{
   }
   .welcome-mascot.is-entering .mascot-runner,
   .welcome-mascot.is-exiting .mascot-runner,
-  .welcome-mascot.is-entering .mascot-leg-front,
-  .welcome-mascot.is-entering .mascot-leg-back,
+  .welcome-mascot.is-entering .mascot-leg-front .mascot-leg-swing,
+  .welcome-mascot.is-entering .mascot-leg-back .mascot-leg-swing,
   .welcome-mascot.is-entering .mascot-arm-back,
   .welcome-mascot.is-entering .mascot-arm-wave,
   .welcome-mascot.is-greeting .mascot-arm-wave,
   .welcome-mascot.is-greeting .mascot-wave-line,
-  .welcome-mascot.is-exiting .mascot-leg-front,
-  .welcome-mascot.is-exiting .mascot-leg-back,
+  .welcome-mascot.is-exiting .mascot-leg-front .mascot-leg-swing,
+  .welcome-mascot.is-exiting .mascot-leg-back .mascot-leg-swing,
   .welcome-mascot.is-exiting .mascot-arm-back,
   .welcome-mascot.is-exiting .mascot-arm-wave {
     animation: none !important;
