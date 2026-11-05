@@ -1128,7 +1128,7 @@
   }
 
 
-  /* ---------- Mini Faizan welcome runner ---------- */
+  /* ---------- Proper illustrated mini-Faizan welcome runner ---------- */
   const welcomeMascot = $("#welcome-mascot");
   const welcomeReplay = $("#welcome-mascot-replay");
   const welcomeClose = $("#welcome-mascot-close");
@@ -1144,7 +1144,7 @@
     const finishWelcome = () => {
       clearWelcomeTimers();
       welcomeMascot.hidden = true;
-      welcomeMascot.classList.remove("is-visible", "is-entering", "is-greeting", "is-exiting", "is-dismissed");
+      welcomeMascot.classList.remove("is-visible", "is-entering", "is-greeting", "is-running", "is-exiting", "is-dismissed");
       welcomeReplay.hidden = false;
     };
 
@@ -1152,37 +1152,39 @@
       clearWelcomeTimers();
       welcomeReplay.hidden = true;
       welcomeMascot.hidden = false;
-      welcomeMascot.classList.remove("is-visible", "is-entering", "is-greeting", "is-exiting", "is-dismissed");
+      welcomeMascot.classList.remove("is-visible", "is-entering", "is-greeting", "is-running", "is-exiting", "is-dismissed");
       void welcomeMascot.offsetWidth;
-      welcomeMascot.classList.add("is-visible");
+      welcomeMascot.classList.add("is-visible", "is-entering");
 
       if (prefersReducedMotion.matches) {
+        welcomeMascot.classList.remove("is-entering");
         welcomeMascot.classList.add("is-greeting");
         welcomeTimers.push(window.setTimeout(() => {
           welcomeMascot.classList.add("is-dismissed");
-        }, 4300));
-        welcomeTimers.push(window.setTimeout(finishWelcome, 4580));
+        }, 3800));
+        welcomeTimers.push(window.setTimeout(finishWelcome, 4060));
         return;
       }
 
-      welcomeMascot.classList.add("is-entering");
       welcomeTimers.push(window.setTimeout(() => {
         welcomeMascot.classList.remove("is-entering");
         welcomeMascot.classList.add("is-greeting");
-      }, 940));
+      }, 860));
+
       welcomeTimers.push(window.setTimeout(() => {
         welcomeMascot.classList.remove("is-greeting");
-        welcomeMascot.classList.add("is-exiting");
-      }, 4380));
-      welcomeTimers.push(window.setTimeout(finishWelcome, 5180));
+        welcomeMascot.classList.add("is-running", "is-exiting");
+      }, 3600));
+
+      welcomeTimers.push(window.setTimeout(finishWelcome, 5240));
     };
 
     welcomeReplay.addEventListener("click", startWelcome);
     welcomeClose?.addEventListener("click", () => {
       clearWelcomeTimers();
-      welcomeMascot.classList.remove("is-entering", "is-greeting", "is-exiting");
+      welcomeMascot.classList.remove("is-entering", "is-greeting", "is-running", "is-exiting");
       welcomeMascot.classList.add("is-dismissed");
-      welcomeTimers.push(window.setTimeout(finishWelcome, 250));
+      welcomeTimers.push(window.setTimeout(finishWelcome, 240));
     });
 
     let alreadyWelcomed = false;
@@ -1190,13 +1192,13 @@
       alreadyWelcomed = window.sessionStorage.getItem("faizan-portfolio-welcomed") === "1";
       if (!alreadyWelcomed) window.sessionStorage.setItem("faizan-portfolio-welcomed", "1");
     } catch {
-      // If session storage is unavailable, the welcome still works for this page view.
+      // Session storage is optional; the welcome still works for this visit.
     }
 
     if (alreadyWelcomed) {
       welcomeReplay.hidden = false;
     } else {
-      welcomeTimers.push(window.setTimeout(startWelcome, 650));
+      welcomeTimers.push(window.setTimeout(startWelcome, 550));
     }
   }
 

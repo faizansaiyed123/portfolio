@@ -740,379 +740,321 @@ html[data-theme="light"]{
 }
 
 
-/* ---------- Mini Faizan welcome runner ---------- */
+
+
+/* ---------- Proper illustrated mini-Faizan welcome runner ---------- */
 .welcome-mascot[hidden],
 .welcome-mascot-replay[hidden] {
-  display: none !important;
+  display:none !important;
 }
 .welcome-mascot {
-  position: fixed;
-  z-index: 91;
-  left: 18px;
-  bottom: 20px;
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  width: min(372px, calc(100vw - 118px));
-  pointer-events: none;
-  transform: translateX(0);
-  filter: drop-shadow(0 16px 28px rgba(0,0,0,.22));
+  position:fixed;
+  z-index:91;
+  left:18px;
+  bottom:18px;
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+  width:min(400px,calc(100vw - 100px));
+  pointer-events:none;
+  filter:drop-shadow(0 18px 34px rgba(0,0,0,.24));
 }
 .welcome-mascot.is-entering {
-  animation: faizan-welcome-enter .92s cubic-bezier(.18,.82,.26,1) both;
+  animation:mini-faizan-enter .82s cubic-bezier(.18,.8,.22,1) both;
 }
 .welcome-mascot.is-exiting {
-  animation: faizan-welcome-exit .78s cubic-bezier(.55,.02,.86,.36) forwards;
+  animation:mini-faizan-run-across 1.62s cubic-bezier(.45,.03,.78,.42) forwards;
 }
 .welcome-mascot.is-dismissed {
-  animation: faizan-welcome-dismiss .24s ease forwards;
+  animation:mini-faizan-dismiss .22s ease forwards;
 }
 .welcome-mascot-bubble {
-  position: relative;
-  flex: 1 1 auto;
-  min-width: 0;
-  margin-bottom: 27px;
-  padding: 12px 14px 11px;
-  border: 1px solid var(--line-strong);
-  border-radius: 12px 12px 12px 3px;
-  background: color-mix(in srgb,var(--panel) 94%,transparent);
-  color: var(--text);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 15px 45px rgba(0,0,0,.3);
-  opacity: 0;
-  transform: translateY(9px) scale(.96);
+  position:relative;
+  flex:1 1 auto;
+  min-width:0;
+  margin-bottom:22px;
+  padding:12px 14px 11px;
+  border:1px solid var(--line-strong);
+  border-radius:12px 12px 12px 3px;
+  background:color-mix(in srgb,var(--panel) 94%,transparent);
+  color:var(--text);
+  backdrop-filter:blur(18px);
+  box-shadow:0 16px 48px rgba(0,0,0,.28);
+  opacity:0;
+  transform:translateY(9px) scale(.96);
 }
 .welcome-mascot.is-visible .welcome-mascot-bubble {
-  animation: faizan-bubble-pop .38s .48s cubic-bezier(.2,.8,.25,1) forwards;
+  animation:mini-faizan-bubble .36s .34s cubic-bezier(.2,.8,.24,1) forwards;
 }
-.welcome-mascot.is-exiting .welcome-mascot-bubble,
+.welcome-mascot.is-running .welcome-mascot-bubble,
 .welcome-mascot.is-dismissed .welcome-mascot-bubble {
-  opacity: 0;
-  transform: translateY(5px) scale(.98);
-  transition: opacity .16s ease, transform .16s ease;
-  animation: none;
+  opacity:0;
+  transform:translateY(5px) scale(.98);
+  transition:opacity .16s ease,transform .16s ease;
+  animation:none;
 }
 .welcome-mascot-bubble::before {
-  content: "";
-  position: absolute;
-  left: -6px;
-  bottom: 14px;
-  width: 10px;
-  height: 10px;
-  border-left: 1px solid var(--line-strong);
-  border-bottom: 1px solid var(--line-strong);
-  background: var(--panel);
-  transform: rotate(45deg);
+  content:"";
+  position:absolute;
+  left:-6px;
+  bottom:13px;
+  width:10px;
+  height:10px;
+  border-left:1px solid var(--line-strong);
+  border-bottom:1px solid var(--line-strong);
+  background:var(--panel);
+  transform:rotate(45deg);
 }
 .welcome-mascot-bubble-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 5px;
-  color: var(--accent);
-  font: 600 8px/1.2 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  letter-spacing: .14em;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:5px;
+  color:var(--accent);
+  font:600 8px/1.2 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  letter-spacing:.14em;
 }
 .welcome-mascot-bubble-top button {
-  display: grid;
-  place-items: center;
-  width: 20px;
-  height: 20px;
-  margin: -5px -7px -4px 0;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--muted);
-  font-size: 17px;
-  line-height: 1;
-  pointer-events: auto;
-  cursor: pointer;
+  display:grid;
+  place-items:center;
+  width:20px;
+  height:20px;
+  margin:-5px -7px -4px 0;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:transparent;
+  color:var(--muted);
+  font-size:17px;
+  line-height:1;
+  pointer-events:auto;
+  cursor:pointer;
 }
-.welcome-mascot-bubble-top button:hover {
-  background: var(--panel-2);
-  color: var(--text);
-}
+.welcome-mascot-bubble-top button:hover {background:var(--panel-2);color:var(--text)}
 .welcome-mascot-bubble-top button:focus-visible,
-.welcome-mascot-replay:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
-}
-.welcome-mascot-bubble p {
-  margin: 0;
-  font-size: 12px;
-  line-height: 1.48;
-  color: var(--muted);
-}
-.welcome-mascot-bubble p strong {
-  color: var(--text);
-  font-size: 13px;
-}
+.welcome-mascot-replay:focus-visible {outline:2px solid var(--accent);outline-offset:4px}
+.welcome-mascot-bubble p {margin:0;font-size:12px;line-height:1.48;color:var(--muted)}
+.welcome-mascot-bubble p strong {color:var(--text);font-size:13px}
 .welcome-mascot-bubble small {
-  display: block;
-  margin-top: 5px;
-  color: var(--faint);
-  font: 500 8px/1.35 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  letter-spacing: .02em;
+  display:block;
+  margin-top:5px;
+  color:var(--faint);
+  font:500 8px/1.35 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
 }
 .welcome-mascot-person {
-  position: relative;
-  flex: 0 0 100px;
-  width: 100px;
-  height: 150px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
+  position:relative;
+  flex:0 0 118px;
+  width:118px;
+  height:160px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
 }
 .welcome-mascot-svg {
-  display: block;
-  width: 100%;
-  height: 142px;
-  overflow: visible;
+  display:block;
+  width:118px;
+  height:160px;
+  overflow:visible;
 }
 .welcome-mascot-name {
-  position: absolute;
-  left: 50%;
-  bottom: -1px;
-  transform: translateX(-50%);
-  color: var(--muted);
-  font: 600 7px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  letter-spacing: .16em;
+  position:absolute;
+  left:50%;
+  bottom:-1px;
+  transform:translateX(-50%);
+  color:var(--muted);
+  font:600 7px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  letter-spacing:.16em;
 }
-.mascot-shadow {
-  fill: rgba(0,0,0,.28);
-  transform-box: fill-box;
-  transform-origin: center;
+.mini-ground-shadow {fill:rgba(0,0,0,.26);transform-origin:center}
+.mini-runner {transform-box:fill-box;transform-origin:center bottom}
+.mini-runner,
+.mini-front-leg,
+.mini-back-leg,
+.mini-wave-arm,
+.mini-run-arm-back {
+  transform-box:fill-box;
 }
-.mascot-shirt {
-  fill: #173b31;
-  stroke: #82f7c8;
-  stroke-opacity: .52;
-  stroke-width: 1.2;
+.mini-front-leg {transform-origin:76px 141px}
+.mini-back-leg {transform-origin:69px 140px}
+.mini-wave-arm {transform-origin:45px 77px}
+.mini-run-arm-back {transform-origin:104px 79px}
+.mini-speed-line {opacity:0}
+.mini-wave-mark {opacity:.18}
+.welcome-mascot.is-entering .mini-runner {
+  animation:mini-faizan-body-bob .22s ease-in-out infinite alternate;
 }
-.mascot-shirt-seam {
-  fill: none;
-  stroke: rgba(216,255,240,.45);
-  stroke-width: 1.4;
-  stroke-linecap: round;
+.welcome-mascot.is-entering .mini-front-leg,
+.welcome-mascot.is-entering .mini-back-leg,
+.welcome-mascot.is-entering .mini-run-arm-back {
+  animation:mini-faizan-run-limb .28s ease-in-out infinite alternate;
 }
-.mascot-head-outline {
-  fill: #18231f;
-  stroke: rgba(130,247,200,.55);
-  stroke-width: 1.2;
+.welcome-mascot.is-greeting .mini-wave-arm {
+  animation:mini-faizan-wave .48s ease-in-out 3;
 }
-.mascot-back-head {
-  fill: #25312d;
-  opacity: 0;
-  transition: opacity .14s ease;
+.welcome-mascot.is-greeting .mini-wave-mark {
+  animation:mini-faizan-wave-mark .48s ease-in-out 3;
 }
-.mascot-face-photo {
-  opacity: 1;
-  transition: opacity .14s ease;
+.welcome-mascot.is-running .mini-runner {
+  animation:mini-faizan-body-bob .19s ease-in-out infinite alternate;
 }
-.mascot-face-outline {
-  fill: none;
-  stroke: rgba(255,255,255,.58);
-  stroke-width: .8;
+.welcome-mascot.is-running .mini-front-leg {
+  animation:mini-faizan-front-leg .24s ease-in-out infinite alternate;
 }
-.mascot-ground-mark {
-  opacity: .45;
+.welcome-mascot.is-running .mini-back-leg {
+  animation:mini-faizan-back-leg .24s ease-in-out infinite alternate;
 }
-.welcome-mascot.is-exiting .mascot-face-photo {
-  opacity: 0;
+.welcome-mascot.is-running .mini-wave-arm {
+  animation:mini-faizan-run-arm .24s ease-in-out infinite alternate;
 }
-.welcome-mascot.is-exiting .mascot-back-head {
-  opacity: 1;
+.welcome-mascot.is-running .mini-run-arm-back {
+  animation:mini-faizan-run-arm-back .24s ease-in-out infinite alternate;
 }
-.welcome-mascot.is-exiting .welcome-mascot-person {
-  transform: scaleX(-1);
-  transition: transform .14s ease;
+.welcome-mascot.is-running .mini-speed-one {
+  animation:mini-faizan-speed .38s linear infinite;
 }
-.welcome-mascot.is-entering .mascot-runner,
-.welcome-mascot.is-exiting .mascot-runner {
-  animation: faizan-run-bob .18s ease-in-out infinite alternate;
-  transform-box: fill-box;
-  transform-origin: center bottom;
-}
-.welcome-mascot.is-entering .mascot-leg-front .mascot-leg-swing,
-.welcome-mascot.is-exiting .mascot-leg-front .mascot-leg-swing {
-  animation: faizan-leg-front .34s ease-in-out infinite alternate;
-  transform-box: view-box;
-  transform-origin: 0 0;
-}
-.welcome-mascot.is-entering .mascot-leg-back .mascot-leg-swing,
-.welcome-mascot.is-exiting .mascot-leg-back .mascot-leg-swing {
-  animation: faizan-leg-back .34s ease-in-out infinite alternate;
-  transform-box: view-box;
-  transform-origin: 0 0;
-}
-.welcome-mascot.is-entering .mascot-arm-back,
-.welcome-mascot.is-exiting .mascot-arm-back {
-  animation: faizan-arm-back .34s ease-in-out infinite alternate;
-  transform-box: view-box;
-  transform-origin: 38px 75px;
-}
-.welcome-mascot.is-entering .mascot-arm-wave,
-.welcome-mascot.is-exiting .mascot-arm-wave {
-  animation: faizan-arm-run .34s ease-in-out infinite alternate;
-  transform-box: view-box;
-  transform-origin: 70px 73px;
-}
-.welcome-mascot.is-greeting .mascot-arm-wave {
-  animation: faizan-wave .58s ease-in-out 3;
-  transform-box: view-box;
-  transform-origin: 70px 73px;
-}
-.welcome-mascot.is-greeting .mascot-wave-line {
-  animation: faizan-wave-spark .58s ease-in-out 3;
+.welcome-mascot.is-running .mini-speed-two {
+  animation:mini-faizan-speed .38s .14s linear infinite;
 }
 .welcome-mascot-replay {
-  position: fixed;
-  z-index: 91;
-  left: 18px;
-  bottom: 18px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0;
-  width: 42px;
-  height: 42px;
-  padding: 2px;
-  overflow: hidden;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  background: var(--panel);
-  color: var(--text);
-  box-shadow: 0 12px 34px rgba(0,0,0,.24);
-  cursor: pointer;
-  transition: width .28s var(--ease), border-color .25s var(--ease), transform .25s var(--ease);
+  position:fixed;
+  z-index:91;
+  left:18px;
+  bottom:18px;
+  display:inline-flex;
+  align-items:center;
+  gap:0;
+  width:42px;
+  height:42px;
+  padding:2px;
+  overflow:hidden;
+  border:1px solid var(--line-strong);
+  border-radius:999px;
+  background:var(--panel);
+  color:var(--text);
+  box-shadow:0 12px 34px rgba(0,0,0,.24);
+  cursor:pointer;
+  transition:width .28s var(--ease),border-color .25s var(--ease),transform .25s var(--ease);
 }
-.welcome-mascot-replay img {
-  display: block;
-  flex: 0 0 36px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  object-fit: cover;
+.welcome-mascot-replay-glyph {
+  display:grid;
+  place-items:center;
+  width:36px;
+  height:36px;
+  flex:0 0 36px;
+  border-radius:50%;
+  background:#141b1e;
+  border:1px solid rgba(130,247,200,.42);
+  color:var(--accent);
+  font:700 9px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  letter-spacing:.08em;
 }
-.welcome-mascot-replay span {
-  overflow: hidden;
-  max-width: 0;
-  white-space: nowrap;
-  opacity: 0;
-  font: 600 9px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
-  transition: max-width .25s var(--ease), opacity .2s ease;
+.welcome-mascot-replay span:last-child {
+  overflow:hidden;
+  max-width:0;
+  margin-left:0;
+  white-space:nowrap;
+  opacity:0;
+  font:600 9px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  transition:max-width .25s var(--ease),opacity .2s ease,margin .2s ease;
 }
 .welcome-mascot-replay:hover {
-  width: 126px;
-  border-color: var(--accent);
-  transform: translateY(-2px);
+  width:126px;
+  border-color:var(--accent);
+  transform:translateY(-2px);
 }
-.welcome-mascot-replay:hover span,
-.welcome-mascot-replay:focus-visible span {
-  max-width: 82px;
-  margin-left: 8px;
-  opacity: 1;
+.welcome-mascot-replay:hover span:last-child,
+.welcome-mascot-replay:focus-visible span:last-child {
+  max-width:82px;
+  margin-left:8px;
+  opacity:1;
 }
-@keyframes faizan-welcome-enter {
-  0% { opacity: 0; transform: translate3d(calc(-100% - 30px), 12px, 0); }
-  68% { opacity: 1; transform: translate3d(7px, -2px, 0); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+@keyframes mini-faizan-enter {
+  0% {opacity:0;transform:translate3d(calc(-100% - 40px),10px,0)}
+  70% {opacity:1;transform:translate3d(8px,-2px,0)}
+  100% {opacity:1;transform:none}
 }
-@keyframes faizan-welcome-exit {
-  0% { opacity: 1; transform: translate3d(0, 0, 0); }
-  18% { transform: translate3d(-8px, -4px, 0); }
-  100% { opacity: 0; transform: translate3d(calc(-100% - 42px), 8px, 0); }
+@keyframes mini-faizan-run-across {
+  0% {opacity:1;transform:translate3d(0,0,0)}
+  10% {transform:translate3d(6px,-2px,0)}
+  100% {opacity:0;transform:translate3d(calc(100vw + 430px),-2px,0)}
 }
-@keyframes faizan-welcome-dismiss {
-  to { opacity: 0; transform: translate3d(-18px, 5px, 0) scale(.98); }
+@keyframes mini-faizan-dismiss {
+  to {opacity:0;transform:translate3d(-20px,4px,0) scale(.98)}
 }
-@keyframes faizan-bubble-pop {
-  to { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes mini-faizan-bubble {
+  to {opacity:1;transform:none}
 }
-@keyframes faizan-run-bob {
-  from { transform: translateY(0) rotate(-1.5deg); }
-  to { transform: translateY(-4px) rotate(1.5deg); }
+@keyframes mini-faizan-body-bob {
+  from {transform:translateY(0)}
+  to {transform:translateY(-3px)}
 }
-@keyframes faizan-leg-front {
-  from { transform: rotate(-24deg); }
-  to { transform: rotate(25deg); }
+@keyframes mini-faizan-run-limb {
+  from {transform:rotate(-16deg)}
+  to {transform:rotate(18deg)}
 }
-@keyframes faizan-leg-back {
-  from { transform: rotate(25deg); }
-  to { transform: rotate(-24deg); }
+@keyframes mini-faizan-wave {
+  0%,100% {transform:rotate(0)}
+  28% {transform:rotate(-24deg)}
+  62% {transform:rotate(12deg)}
 }
-@keyframes faizan-arm-back {
-  from { transform: rotate(24deg); }
-  to { transform: rotate(-26deg); }
+@keyframes mini-faizan-wave-mark {
+  0%,100% {opacity:.18}
+  40%,65% {opacity:1}
 }
-@keyframes faizan-arm-run {
-  from { transform: rotate(-24deg); }
-  to { transform: rotate(28deg); }
+@keyframes mini-faizan-front-leg {
+  from {transform:rotate(-30deg)}
+  to {transform:rotate(28deg)}
 }
-@keyframes faizan-wave {
-  0%,100% { transform: rotate(0); }
-  30% { transform: rotate(-28deg); }
-  65% { transform: rotate(13deg); }
+@keyframes mini-faizan-back-leg {
+  from {transform:rotate(28deg)}
+  to {transform:rotate(-30deg)}
 }
-@keyframes faizan-wave-spark {
-  0%,100% { opacity: .15; }
-  35%,65% { opacity: 1; }
+@keyframes mini-faizan-run-arm {
+  from {transform:rotate(-22deg)}
+  to {transform:rotate(28deg)}
+}
+@keyframes mini-faizan-run-arm-back {
+  from {transform:rotate(28deg)}
+  to {transform:rotate(-22deg)}
+}
+@keyframes mini-faizan-speed {
+  0% {opacity:0;transform:translateX(12px)}
+  25% {opacity:1}
+  100% {opacity:0;transform:translateX(-18px)}
 }
 @media (max-width:560px) {
-  .welcome-mascot {
-    left: 10px;
-    bottom: 12px;
-    width: calc(100vw - 94px);
-    gap: 7px;
-  }
-  .welcome-mascot-person {
-    flex-basis: 82px;
-    width: 82px;
-    height: 130px;
-  }
-  .welcome-mascot-svg {
-    height: 124px;
-  }
-  .welcome-mascot-bubble {
-    margin-bottom: 22px;
-    padding: 10px 11px 9px;
-  }
-  .welcome-mascot-bubble p { font-size: 11px; }
-  .welcome-mascot-bubble p strong { font-size: 12px; }
-  .welcome-mascot-bubble small { font-size: 7px; }
-  .welcome-mascot-replay { left: 10px; bottom: 10px; }
+  .welcome-mascot {left:10px;bottom:11px;width:calc(100vw - 78px);gap:6px}
+  .welcome-mascot-person {flex-basis:90px;width:90px;height:128px}
+  .welcome-mascot-svg {width:90px;height:128px}
+  .welcome-mascot-bubble {margin-bottom:18px;padding:10px 11px 9px}
+  .welcome-mascot-bubble p {font-size:11px}
+  .welcome-mascot-bubble p strong {font-size:12px}
+  .welcome-mascot-bubble small {font-size:7px}
+  .welcome-mascot-replay {left:10px;bottom:10px}
 }
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion:reduce) {
   .welcome-mascot.is-entering,
   .welcome-mascot.is-exiting,
   .welcome-mascot.is-dismissed {
-    animation: none !important;
+    animation:none !important;
   }
   .welcome-mascot.is-visible .welcome-mascot-bubble {
-    animation: none !important;
-    opacity: 1;
-    transform: none;
+    animation:none !important;
+    opacity:1;
+    transform:none;
   }
-  .welcome-mascot-person,
-  .mascot-face-photo,
-  .mascot-back-head,
   .welcome-mascot-replay,
   .welcome-mascot-bubble {
-    transition: none !important;
+    transition:none !important;
   }
-  .welcome-mascot.is-entering .mascot-runner,
-  .welcome-mascot.is-exiting .mascot-runner,
-  .welcome-mascot.is-entering .mascot-leg-front .mascot-leg-swing,
-  .welcome-mascot.is-entering .mascot-leg-back .mascot-leg-swing,
-  .welcome-mascot.is-entering .mascot-arm-back,
-  .welcome-mascot.is-entering .mascot-arm-wave,
-  .welcome-mascot.is-greeting .mascot-arm-wave,
-  .welcome-mascot.is-greeting .mascot-wave-line,
-  .welcome-mascot.is-exiting .mascot-leg-front .mascot-leg-swing,
-  .welcome-mascot.is-exiting .mascot-leg-back .mascot-leg-swing,
-  .welcome-mascot.is-exiting .mascot-arm-back,
-  .welcome-mascot.is-exiting .mascot-arm-wave {
-    animation: none !important;
+  .mini-runner,
+  .mini-front-leg,
+  .mini-back-leg,
+  .mini-wave-arm,
+  .mini-run-arm-back,
+  .mini-speed-line,
+  .mini-wave-mark {
+    animation:none !important;
   }
 }
