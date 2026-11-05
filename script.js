@@ -1127,4 +1127,77 @@
     });
   }
 
+
+  /* ---------- Mini Faizan welcome runner ---------- */
+  const welcomeMascot = $("#welcome-mascot");
+  const welcomeReplay = $("#welcome-mascot-replay");
+  const welcomeClose = $("#welcome-mascot-close");
+
+  if (welcomeMascot && welcomeReplay) {
+    let welcomeTimers = [];
+
+    const clearWelcomeTimers = () => {
+      welcomeTimers.forEach((timer) => window.clearTimeout(timer));
+      welcomeTimers = [];
+    };
+
+    const finishWelcome = () => {
+      clearWelcomeTimers();
+      welcomeMascot.hidden = true;
+      welcomeMascot.classList.remove("is-visible", "is-entering", "is-greeting", "is-exiting", "is-dismissed");
+      welcomeReplay.hidden = false;
+    };
+
+    const startWelcome = () => {
+      clearWelcomeTimers();
+      welcomeReplay.hidden = true;
+      welcomeMascot.hidden = false;
+      welcomeMascot.classList.remove("is-visible", "is-entering", "is-greeting", "is-exiting", "is-dismissed");
+      void welcomeMascot.offsetWidth;
+      welcomeMascot.classList.add("is-visible");
+
+      if (prefersReducedMotion.matches) {
+        welcomeMascot.classList.add("is-greeting");
+        welcomeTimers.push(window.setTimeout(() => {
+          welcomeMascot.classList.add("is-dismissed");
+        }, 4300));
+        welcomeTimers.push(window.setTimeout(finishWelcome, 4580));
+        return;
+      }
+
+      welcomeMascot.classList.add("is-entering");
+      welcomeTimers.push(window.setTimeout(() => {
+        welcomeMascot.classList.remove("is-entering");
+        welcomeMascot.classList.add("is-greeting");
+      }, 940));
+      welcomeTimers.push(window.setTimeout(() => {
+        welcomeMascot.classList.remove("is-greeting");
+        welcomeMascot.classList.add("is-exiting");
+      }, 4380));
+      welcomeTimers.push(window.setTimeout(finishWelcome, 5180));
+    };
+
+    welcomeReplay.addEventListener("click", startWelcome);
+    welcomeClose?.addEventListener("click", () => {
+      clearWelcomeTimers();
+      welcomeMascot.classList.remove("is-entering", "is-greeting", "is-exiting");
+      welcomeMascot.classList.add("is-dismissed");
+      welcomeTimers.push(window.setTimeout(finishWelcome, 250));
+    });
+
+    let alreadyWelcomed = false;
+    try {
+      alreadyWelcomed = window.sessionStorage.getItem("faizan-portfolio-welcomed") === "1";
+      if (!alreadyWelcomed) window.sessionStorage.setItem("faizan-portfolio-welcomed", "1");
+    } catch {
+      // If session storage is unavailable, the welcome still works for this page view.
+    }
+
+    if (alreadyWelcomed) {
+      welcomeReplay.hidden = false;
+    } else {
+      welcomeTimers.push(window.setTimeout(startWelcome, 650));
+    }
+  }
+
 })();

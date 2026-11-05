@@ -7,7 +7,7 @@
   <meta name="author" content="Faizan Saiyed">
   <meta name="theme-color" content="#0a0d0f">
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
-  <link rel="stylesheet" href="./style.css?v=20261102-multicolour-glow-02">
+  <link rel="stylesheet" href="./style.css?v=20261105-mini-faizan-welcome-01">
   <title>Faizan Saiyed — Backend / Systems / Full-Stack</title>
 </head>
 <body>
@@ -407,6 +407,64 @@
     <a href="#top">BACK TO TOP ↑</a>
   </div>
 </footer>
+
+<div class="welcome-mascot" id="welcome-mascot" hidden>
+  <div class="welcome-mascot-bubble" role="status" aria-live="polite">
+    <div class="welcome-mascot-bubble-top">
+      <span>FAIZAN / HELLO</span>
+      <button type="button" id="welcome-mascot-close" aria-label="Dismiss welcome message">×</button>
+    </div>
+    <p><strong>Hey, welcome!</strong> I'm Faizan. Glad you're here.</p>
+    <small>Take a look around — make yourself at home.</small>
+  </div>
+  <div class="welcome-mascot-person" aria-hidden="true">
+    <svg class="welcome-mascot-svg" viewBox="0 0 110 150" role="presentation">
+      <defs>
+        <clipPath id="mini-faizan-face-clip">
+          <ellipse cx="55" cy="35" rx="18.5" ry="22"></ellipse>
+        </clipPath>
+      </defs>
+      <ellipse class="mascot-shadow" cx="55" cy="143" rx="29" ry="4.5"></ellipse>
+      <g class="mascot-runner">
+        <g class="mascot-leg mascot-leg-back" transform="translate(48 103)">
+          <g class="mascot-leg-swing">
+            <path d="M0 0 C-5 10 -10 20 -16 29" fill="none" stroke="#25312f" stroke-width="11" stroke-linecap="round"></path>
+            <path d="M-16 29 Q-12 33 -3 29" fill="none" stroke="#82f7c8" stroke-width="7" stroke-linecap="round"></path>
+          </g>
+        </g>
+        <g class="mascot-leg mascot-leg-front" transform="translate(64 104)">
+          <g class="mascot-leg-swing">
+            <path d="M0 0 C6 10 8 20 15 29" fill="none" stroke="#34413e" stroke-width="11" stroke-linecap="round"></path>
+            <path d="M15 29 Q21 31 24 26" fill="none" stroke="#82f7c8" stroke-width="7" stroke-linecap="round"></path>
+          </g>
+        </g>
+        <path class="mascot-shirt" d="M39 67 Q55 59 71 67 L78 105 Q55 114 32 105 Z"></path>
+        <path class="mascot-shirt-seam" d="M47 68 Q55 75 63 68"></path>
+        <g class="mascot-arm mascot-arm-back">
+          <path d="M39 74 C29 79 25 89 29 99" fill="none" stroke="#26332f" stroke-width="9" stroke-linecap="round"></path>
+          <circle cx="30" cy="101" r="5.2" fill="#bd866b"></circle>
+        </g>
+        <g class="mascot-arm mascot-arm-wave">
+          <path d="M70 73 C81 67 85 56 83 47" fill="none" stroke="#26332f" stroke-width="9" stroke-linecap="round"></path>
+          <circle cx="83" cy="43" r="5.5" fill="#bd866b"></circle>
+          <path class="mascot-wave-line" d="M87 36 Q93 31 91 25" fill="none" stroke="#82f7c8" stroke-width="1.8" stroke-linecap="round"></path>
+        </g>
+        <path d="M48 57 L48 68 Q55 73 62 68 L62 56" fill="#bd866b"></path>
+        <ellipse class="mascot-head-outline" cx="55" cy="35" rx="20.5" ry="24.5"></ellipse>
+        <ellipse class="mascot-back-head" cx="55" cy="35" rx="19" ry="23"></ellipse>
+        <image class="mascot-face-photo" href="https://avatars.githubusercontent.com/u/194621340?v=4" x="36.5" y="13" width="37" height="44" preserveAspectRatio="xMidYMid slice" clip-path="url(#mini-faizan-face-clip)"></image>
+        <ellipse class="mascot-face-outline" cx="55" cy="35" rx="18.5" ry="22"></ellipse>
+      </g>
+      <path class="mascot-ground-mark" d="M37 145 Q55 148 73 145" fill="none" stroke="rgba(130,247,200,.5)" stroke-width="1.2" stroke-linecap="round"></path>
+    </svg>
+    <span class="welcome-mascot-name">FAIZAN</span>
+  </div>
+</div>
+<button class="welcome-mascot-replay" id="welcome-mascot-replay" type="button" aria-label="Show Faizan's welcome again" title="Say hi again" hidden>
+  <img src="https://avatars.githubusercontent.com/u/194621340?v=4" alt="" width="38" height="38">
+  <span>Say hi again</span>
+</button>
+
 <div class="guide-dock" id="guide-dock">
   <button class="guide-launcher" id="guide-launcher" type="button" aria-controls="guide-panel" aria-expanded="false" aria-label="Open portfolio guide">
     <svg class="guide-bot-icon" viewBox="0 0 48 48" aria-hidden="true">
@@ -445,6 +503,6 @@
   </aside>
 </div>
 <div class="command-bar" id="command-bar" hidden><div class="command-inner"><span class="command-key">/</span><input id="command-input" type="text" placeholder="Jump to work, systems, stack, contact..." aria-label="Jump command"><button type="button" id="command-close" aria-label="Close command palette">Esc</button></div><div class="command-results" id="command-results"></div></div>
-<script src="./script.js?v=20261104-qwen-code-oss-card-01"></script>
+<script src="./script.js?v=20261105-mini-faizan-welcome-01"></script>
 </body>
 </html>
