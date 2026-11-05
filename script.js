@@ -1128,7 +1128,7 @@
   }
 
 
-  /* ---------- Proper illustrated mini-Faizan welcome runner ---------- */
+  /* ---------- Mini Faizan artwork welcome sequence ---------- */
   const welcomeMascot = $("#welcome-mascot");
   const welcomeReplay = $("#welcome-mascot-replay");
   const welcomeClose = $("#welcome-mascot-close");
@@ -1161,22 +1161,22 @@
         welcomeMascot.classList.add("is-greeting");
         welcomeTimers.push(window.setTimeout(() => {
           welcomeMascot.classList.add("is-dismissed");
-        }, 3800));
-        welcomeTimers.push(window.setTimeout(finishWelcome, 4060));
+        }, 3900));
+        welcomeTimers.push(window.setTimeout(finishWelcome, 4160));
         return;
       }
 
       welcomeTimers.push(window.setTimeout(() => {
         welcomeMascot.classList.remove("is-entering");
         welcomeMascot.classList.add("is-greeting");
-      }, 860));
+      }, 820));
 
       welcomeTimers.push(window.setTimeout(() => {
         welcomeMascot.classList.remove("is-greeting");
         welcomeMascot.classList.add("is-running", "is-exiting");
-      }, 3600));
+      }, 3300));
 
-      welcomeTimers.push(window.setTimeout(finishWelcome, 5240));
+      welcomeTimers.push(window.setTimeout(finishWelcome, 4650));
     };
 
     welcomeReplay.addEventListener("click", startWelcome);
