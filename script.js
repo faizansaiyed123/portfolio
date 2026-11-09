@@ -189,7 +189,7 @@
         ["Explore Telemetry", "telemetry"],
         ["Open the full-stack project gallery", "goto-personal-projects"],
         ["See merged open-source contributions", "goto-opensource"],
-        ["Explore freelance client work", "goto-freelance"],
+        ["Explore client and industry work", "goto-freelance"],
         ["View professional experience", "goto-experience"],
         ["Back to start", "start"]
       ]
@@ -236,7 +236,7 @@
     },
     experience: {
       context: "PROFESSIONAL EXPERIENCE",
-      message: "This section covers backend work contributed during Faizan's internship at IT Idol Technologies, including Gyansetu AI and its Python, Flask, PostgreSQL, and AWS stack.",
+      message: "Faizan contributed to the existing Gyansetu AI backend during his internship at IT Idol Technologies, refactoring Python/Flask code and working with PostgreSQL. The card includes the AWS technology tag and links to the live product and company.",
       choices: [
         ["View the experience card", "goto-experience"],
         ["Open Gyansetu AI", "link-gyansetu"],
@@ -255,9 +255,9 @@
     },
     freelance: {
       context: "FREELANCE WORK",
-      message: "The client-work section links directly to Jeca Homes and PrintOscar and uses genuine captures of their live websites.",
+      message: "This section brings together two client-facing websites with genuine captures and Gyansetu AI, the education product Faizan contributed to during his backend internship.",
       choices: [
-        ["Open Jeca Homes and PrintOscar", "goto-freelance"],
+        ["Browse the client and industry cards", "goto-freelance"],
         ["Browse personal projects", "goto-personal-projects"],
         ["Back to start", "start"]
       ]
@@ -493,7 +493,7 @@
       "goto-work": "Taking you to the selected work.",
       "goto-experience": "Here is the professional experience card.",
       "goto-opensource": "Here are the merged open-source contributions.",
-      "goto-freelance": "Here are the freelance client projects.",
+      "goto-freelance": "Here are the client and industry project cards.",
       "goto-personal-projects": "Opening the full-stack project index.",
       "goto-frameflux": "Here is the FrameFlux case study.",
       "goto-telemetry": "Here is the Telemetry case study.",
@@ -593,7 +593,7 @@
     work: "WORK",
     experience: "PROFESSIONAL EXPERIENCE",
     opensource: "OPEN SOURCE",
-    freelance: "FREELANCE",
+    freelance: "CLIENT + INDUSTRY WORK",
     "personal-projects": "PROJECT GALLERY",
     systems: "SYSTEMS",
     stack: "STACK",
@@ -623,7 +623,7 @@
     ["Selected work", "Engineering case studies", "work"],
     ["Professional experience", "IT Idol Technologies · Gyansetu AI", "experience"],
     ["Open-source contributions", "16 merged pull requests", "opensource"],
-    ["Freelance projects", "Jeca Homes and PrintOscar", "freelance"],
+    ["Client + industry work", "Jeca Homes · PrintOscar · Gyansetu AI", "freelance"],
     ["Personal full-stack projects", "Screenshots and technology filters", "personal-projects"],
     ["Systems thinking", "Method", "systems"],
     ["Stack", "Tools", "stack"],
