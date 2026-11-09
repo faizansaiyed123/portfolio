@@ -97,6 +97,56 @@
     portrait.alt = "Faizan Saiyed — local profile fallback";
   }, { once: true });
 
+  /* ---------- Project preview image loading states ---------- */
+  // Each client and personal-project preview owns its own loading indicator.
+  const projectPreviewImages = Array.from(document.querySelectorAll(".freelance-card-media, .personal-project-preview"));
+
+  projectPreviewImages.forEach((preview) => {
+    const image = $("img", preview);
+    if (!image) return;
+
+    const loader = document.createElement("span");
+    loader.className = "preview-image-loader";
+    loader.setAttribute("aria-hidden", "true");
+
+    const loaderRing = document.createElement("span");
+    loaderRing.className = "preview-image-loader-ring";
+
+    const loaderLabel = document.createElement("span");
+    loaderLabel.className = "preview-image-loader-label";
+    loaderLabel.textContent = "Loading preview";
+
+    loader.append(loaderRing, loaderLabel);
+    preview.classList.add("is-image-loading");
+    preview.append(loader);
+
+    const markLoaded = () => {
+      preview.classList.remove("is-image-loading", "is-image-error");
+      preview.classList.add("is-image-loaded");
+      loader.remove();
+    };
+
+    const markFailed = () => {
+      preview.classList.remove("is-image-loading", "is-image-loaded");
+      preview.classList.add("is-image-error");
+      loader.classList.add("is-error");
+      loaderRing.replaceWith(Object.assign(document.createElement("span"), {
+        className: "preview-image-loader-error-mark",
+        textContent: "!"
+      }));
+      loaderLabel.textContent = "Preview unavailable";
+    };
+
+    image.addEventListener("load", markLoaded, { once: true });
+    image.addEventListener("error", markFailed, { once: true });
+
+    // Cached images may finish before this script attaches its listeners.
+    if (image.complete) {
+      if (image.naturalWidth > 0) markLoaded();
+      else markFailed();
+    }
+  });
+
   /* ---------- Project switcher ---------- */
   const projectTabs = $$(".project-tab");
   const projectPanels = $$(".project-panel");
