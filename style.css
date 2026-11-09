@@ -1011,3 +1011,51 @@ html[data-theme="light"]{
     transition: none !important;
   }
 }
+
+
+/* ---------- Professional experience card ---------- */
+.experience-section{background:var(--bg-soft)}
+.experience-card{position:relative;overflow:hidden;padding:27px;border:1px solid var(--line-strong);background:linear-gradient(140deg,color-mix(in srgb,var(--accent) 5%,var(--panel)),var(--panel) 48%);transition:border-color .22s var(--ease),transform .22s var(--ease),box-shadow .22s var(--ease)}
+.experience-card::before{position:absolute;inset:0 auto 0 0;width:3px;content:"";background:var(--accent);opacity:.8;pointer-events:none}
+.experience-card:hover{transform:translateY(-3px);border-color:var(--line-strong);box-shadow:0 16px 42px rgba(0,0,0,.14)}
+.experience-card-top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-bottom:15px;border-bottom:1px solid var(--line);color:var(--faint);font:600 8px/1.4 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.1em}
+.experience-card-status{display:inline-flex;align-items:center;gap:7px;color:var(--accent)}
+.experience-card-status i{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 12%,transparent)}
+.experience-card-main{display:grid;grid-template-columns:minmax(220px,.72fr) minmax(0,1.28fr);gap:34px;padding-top:27px}
+.experience-company{display:grid;grid-template-columns:54px minmax(0,1fr);align-content:start;align-items:center;gap:13px}
+.experience-company-mark{display:grid;width:54px;height:54px;place-items:center;border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));background:color-mix(in srgb,var(--accent) 8%,var(--panel-2));color:var(--accent);font:700 17px/1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:-.06em}
+.experience-meta-label{display:block;color:var(--faint);font:600 8px/1.4 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.1em}
+.experience-company-copy h3{margin:5px 0 3px;color:var(--text);font-size:clamp(20px,2.1vw,27px);line-height:1.15;letter-spacing:-.045em}
+.experience-company-copy p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
+.experience-company-link,.experience-product-link{display:inline-flex;align-items:center;justify-content:space-between;gap:16px;width:max-content;max-width:100%;min-height:34px;padding:8px 10px;border:1px solid var(--line);background:var(--panel-2);color:var(--text);text-decoration:none;font:650 9px/1.3 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;transition:border-color .18s var(--ease),color .18s var(--ease),background .18s var(--ease)}
+.experience-company-link{grid-column:1/-1;margin-top:12px}
+.experience-company-link b,.experience-product-link b{color:var(--accent);font-size:13px}
+.experience-company-link:hover,.experience-product-link:hover{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 5%,var(--panel))}
+.experience-project{min-width:0;padding-left:32px;border-left:1px solid var(--line)}
+.experience-project-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px}
+.experience-project-heading h4{margin:6px 0 0;color:var(--text);font-size:clamp(27px,3vw,38px);line-height:1;letter-spacing:-.055em}
+.experience-product-link{flex:0 0 auto}
+.experience-summary{max-width:68ch;margin:15px 0 19px;color:var(--muted);font-size:12px;line-height:1.8}
+.experience-contributions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.experience-contributions>div{min-width:0;padding:14px;border:1px solid var(--line);background:color-mix(in srgb,var(--panel-2) 72%,transparent)}
+.experience-contributions span{color:var(--accent);font:600 8px/1.4 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.09em}
+.experience-contributions p{margin:7px 0 0;color:var(--muted);font-size:11px;line-height:1.65}
+.experience-tech-row{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:14px;margin-top:18px;padding-top:15px;border-top:1px solid var(--line)}
+.experience-tech-tags{gap:6px}
+.experience-card a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:800px){
+  .experience-card-main{grid-template-columns:minmax(0,1fr);gap:22px}
+  .experience-project{padding:22px 0 0;border-left:0;border-top:1px solid var(--line)}
+}
+@media (max-width:560px){
+  .experience-card{padding:19px}
+  .experience-card-top{align-items:flex-start}
+  .experience-project-heading{align-items:flex-start;flex-direction:column;gap:13px}
+  .experience-contributions{grid-template-columns:minmax(0,1fr)}
+  .experience-tech-row{grid-template-columns:minmax(0,1fr);gap:9px}
+  .experience-company-copy h3{font-size:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  .experience-card,.experience-company-link,.experience-product-link{transition:none}
+  .experience-card:hover{transform:none}
+}
