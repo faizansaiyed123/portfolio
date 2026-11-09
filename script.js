@@ -174,6 +174,7 @@
       message: "Hi — welcome to Faizan's portfolio. What would you like to explore?",
       choices: [
         ["Show me the projects", "projects"],
+        ["View professional experience", "experience"],
         ["How does he approach engineering?", "approach"],
         ["What's in the stack?", "stack"],
         ["What kind of engineer is he?", "profile"],
@@ -189,6 +190,7 @@
         ["Open the full-stack project gallery", "goto-personal-projects"],
         ["See merged open-source contributions", "goto-opensource"],
         ["Explore freelance client work", "goto-freelance"],
+        ["View professional experience", "goto-experience"],
         ["Back to start", "start"]
       ]
     },
@@ -230,6 +232,16 @@
         ["Open the case study", "goto-telemetry"],
         ["Explore FrameFlux", "frameflux"],
         ["Back to projects", "projects"]
+      ]
+    },
+    experience: {
+      context: "PROFESSIONAL EXPERIENCE",
+      message: "This section covers backend work contributed during Faizan's internship at IT Idol Technologies, including Gyansetu AI and its Python, Flask, PostgreSQL, and AWS stack.",
+      choices: [
+        ["View the experience card", "goto-experience"],
+        ["Open Gyansetu AI", "link-gyansetu"],
+        ["Visit IT Idol Technologies", "link-itidol"],
+        ["Back to start", "start"]
       ]
     },
     "open-source": {
@@ -358,6 +370,8 @@
     "link-frameflux-frontend": "https://github.com/faizansaiyed123/FrameFlux-Frontend",
     "link-telemetry-backend": "https://github.com/faizansaiyed123/telemetry-backend",
     "link-telemetry-frontend": "https://github.com/faizansaiyed123/telemetry-frontend",
+    "link-gyansetu": "https://www.gyansetu.ai/",
+    "link-itidol": "https://itidoltechnologies.com/",
     "link-github": "https://github.com/faizansaiyed123",
     "link-linkedin": "https://www.linkedin.com/in/faizan-saiyed-52b289228/"
   };
@@ -477,6 +491,7 @@
 
     const responses = {
       "goto-work": "Taking you to the selected work.",
+      "goto-experience": "Here is the professional experience card.",
       "goto-opensource": "Here are the merged open-source contributions.",
       "goto-freelance": "Here are the freelance client projects.",
       "goto-personal-projects": "Opening the full-stack project index.",
@@ -576,6 +591,7 @@
   const sectionContext = {
     top: "HOME",
     work: "WORK",
+    experience: "PROFESSIONAL EXPERIENCE",
     opensource: "OPEN SOURCE",
     freelance: "FREELANCE",
     "personal-projects": "PROJECT GALLERY",
@@ -605,6 +621,7 @@
   const commandResults = $("#command-results");
   const commands = [
     ["Selected work", "Engineering case studies", "work"],
+    ["Professional experience", "IT Idol Technologies · Gyansetu AI", "experience"],
     ["Open-source contributions", "16 merged pull requests", "opensource"],
     ["Freelance projects", "Jeca Homes and PrintOscar", "freelance"],
     ["Personal full-stack projects", "Screenshots and technology filters", "personal-projects"],
