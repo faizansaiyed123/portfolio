@@ -7,10 +7,9 @@
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
   /* ---------- Theme ---------- */
-  const readTheme = () => {
-    try { return localStorage.getItem("portfolio-theme") || "dark"; }
-    catch { return "dark"; }
-  };
+  // Every page load starts in dark mode for every visitor.
+  // The theme toggle remains available for the current visit only.
+  const readTheme = () => "dark";
 
   const applyTheme = (theme) => {
     const isDark = theme === "dark";
@@ -28,7 +27,6 @@
   $(".theme-button")?.addEventListener("click", () => {
     const next = root.dataset.theme === "dark" ? "light" : "dark";
     applyTheme(next);
-    try { localStorage.setItem("portfolio-theme", next); } catch {}
   });
 
   /* ---------- Mobile navigation ---------- */
