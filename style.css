@@ -321,7 +321,7 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .release-credit-links a{display:inline-flex;align-items:center;gap:6px;color:var(--text);text-decoration:none;font:600 8px/1.5 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
 .release-credit-links a:hover{color:var(--accent)}
 .release-credit-links b{color:var(--accent);font-size:12px}
-.freelance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.freelance-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .freelance-card{display:flex;min-width:0;flex-direction:column;background:var(--panel);border:1px solid var(--line);text-decoration:none;transition:transform .25s var(--ease),border-color .25s var(--ease),box-shadow .25s var(--ease);overflow:hidden}
 .freelance-card:hover{transform:translateY(-4px);border-color:var(--line-strong);box-shadow:0 18px 50px rgba(0,0,0,.17)}
 .freelance-card-media,.personal-project-preview{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;background:var(--panel-2);border-bottom:1px solid var(--line)}
@@ -378,7 +378,7 @@ button,a{ -webkit-tap-highlight-color:transparent}
 @media (max-width:1020px){
   .desktop-nav{gap:14px}
   .portfolio-section .section-intro{grid-template-columns:.34fr .66fr;gap:28px}
-  .contribution-grid,.personal-project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .contribution-grid,.personal-project-grid,.freelance-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .release-credit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .project-gallery-toolbar{grid-template-columns:minmax(0,1fr);gap:12px}
   .project-results-count{margin:0}
@@ -1013,29 +1013,9 @@ html[data-theme="light"]{
 }
 
 
-/* ---------- Professional experience project card ---------- */
-.experience-section{background:var(--bg-soft)}
-.experience-card-grid{display:grid;grid-template-columns:minmax(0,620px);gap:14px}
-.experience-project-card{border-color:color-mix(in srgb,var(--accent) 23%,var(--line))}
-.experience-project-card:hover{box-shadow:0 16px 42px color-mix(in srgb,var(--accent) 8%,transparent)}
-.experience-preview{position:relative;background:#0b1112}
-.experience-preview img{object-fit:cover;object-position:center}
-.experience-preview::after{background:linear-gradient(180deg,rgba(0,0,0,.08),transparent 48%,rgba(0,0,0,.2))}
-.experience-preview .personal-preview-label i{background:var(--accent)}
-.experience-preview-index{position:absolute;z-index:2;top:12px;right:12px;max-width:calc(100% - 24px);padding:7px 9px;border:1px solid rgba(255,255,255,.18);background:rgba(8,11,13,.86);color:#edf2ef;font:600 7px/1.3 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.08em}
+/* ---------- Gyansetu internship card in the client + industry grid ---------- */
+.experience-client-card .freelance-card-media{text-decoration:none}
 .experience-role{margin:-2px 0 12px!important;color:var(--accent)!important;font:650 9px/1.45 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace!important;letter-spacing:.07em;text-transform:uppercase}
-.experience-contribution{margin:0 0 15px;padding:12px 13px;border-left:2px solid var(--accent);background:color-mix(in srgb,var(--accent) 5%,var(--panel-2))}
-.experience-contribution span{display:block;color:var(--accent);font:650 8px/1.4 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.09em}
-.experience-contribution p{margin:6px 0 0;color:var(--muted);font-size:11px;line-height:1.7}
-.experience-tech-tags{margin-bottom:15px}
-.experience-card-links{margin-top:0}
-.experience-card-links a{min-height:32px}
-.experience-project-card a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-@media (max-width:680px){
-  .experience-card-grid{grid-template-columns:minmax(0,1fr)}
-  .experience-project-card .personal-project-copy{padding:17px}
-  .experience-preview-index{font-size:6px}
-}
-@media (prefers-reduced-motion:reduce){
-  .experience-project-card:hover{transform:none;box-shadow:none}
-}
+.experience-company-link{display:inline-flex;align-items:center;align-self:flex-start;gap:6px;margin-top:10px;color:var(--faint);text-decoration:none;font:600 8px/1.5 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;letter-spacing:.03em}
+.experience-company-link:hover{color:var(--accent)}
+.experience-company-link b{color:var(--accent);font-size:12px}
