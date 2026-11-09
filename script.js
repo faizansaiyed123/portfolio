@@ -99,7 +99,7 @@
 
   /* ---------- Project preview image loading states ---------- */
   // Each client and personal-project preview owns its own loading indicator.
-  const projectPreviewImages = $(".freelance-card-media, .personal-project-preview");
+  const projectPreviewImages = Array.from(document.querySelectorAll(".freelance-card-media, .personal-project-preview"));
 
   projectPreviewImages.forEach((preview) => {
     const image = $("img", preview);
