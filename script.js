@@ -670,7 +670,7 @@
   const commands = [
     ["Selected work", "Engineering case studies", "work"],
     ["Professional experience", "IT Idol Technologies · Gyansetu AI", "experience"],
-    ["Open-source contributions", "16 merged pull requests", "opensource"],
+    ["Open-source contributions", "17 merged pull requests", "opensource"],
     ["Client + industry work", "Jeca Homes · PrintOscar · Gyansetu AI", "freelance"],
     ["Personal full-stack projects", "Screenshots and technology filters", "personal-projects"],
     ["Systems thinking", "Method", "systems"],
