@@ -99,8 +99,7 @@ jobs:
                 contributionsCollection(
                   from: $from,
                   to: $to,
-                  includePrivateContributions: false
-                ) {
+                          ) {
                   contributionCalendar {
                     totalContributions
                     weeks {
