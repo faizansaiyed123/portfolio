@@ -484,12 +484,6 @@
     ).join("");
   };
 
-  const updateActivityFreshness = (activity) => {
-    const element = $("#activity-updated");
-    if (!element) return;
-    element.textContent = "Snapshot · " + formatDate(activity.fetchedAt);
-  };
-
   const ACTIVITY_DATA_BASE = "https://raw.githubusercontent.com/faizansaiyed123/portfolio/activity-data/data/";
   const loadAll = async () => {
     const [projectsResult, activityResult, calendarResult, releasesResult] = await Promise.allSettled([
@@ -514,7 +508,6 @@
       renderContributionGraph();
       renderContributionFilters();
       renderContributionList();
-      updateActivityFreshness(activityResult.value);
     } else {
       setLoadingError("#activity-list", "Contribution records are temporarily unavailable.");
       heatmap && (heatmap.innerHTML = "");
