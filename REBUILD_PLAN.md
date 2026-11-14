@@ -68,7 +68,7 @@ For every project, use the same evidence-first checklist before building its vis
 - Build the project's dedicated demo path and technical tour.
 - Run the project's available tests/build checks and verify the public demo path before marking it ready.
 
-Initial order (revisit after each audit):
+Initial order (revisit after each audit; Mintline removed as internship assignment):
 1. FrameFlux
 2. Telemetry
 3. Sayphora
@@ -79,14 +79,13 @@ Initial order (revisit after each audit):
 8. Orbit Campaigns
 9. Product Analytics
 10. Gemini Chat Platform
-11. Mintline (Credit Management)
-12. AgencyOS
-13. CleanFlow
-14. FlowDesk
-15. SupportAI
-16. Service Agreement Manager
-17. AutoFix
-18. LedgerPulse
+11. AgencyOS
+12. CleanFlow
+13. FlowDesk
+14. SupportAI
+15. Service Agreement Manager
+16. AutoFix
+17. LedgerPulse
 
 ### Phase 3 — Contributions and proof
 - [x] Build the contribution graph from dated, verified merged external PR data and label the metric precisely. This is explicitly an external merged-PR graph, not the full GitHub contribution calendar.
@@ -133,7 +132,7 @@ Initial order (revisit after each audit):
 
 - Current GitHub default branch at branch creation: `main`, commit `6e9c41e1e5d7f409d57554c0465b8821e6ca5cbd`.
 - Rebuild branch: `redesign/interactive-product-portfolio`.
-- The current portfolio lists 18 personal projects.
+- The current portfolio initially listed 18 entries; Mintline was excluded because its own README identifies it as an internship assignment. The personal-project library now contains 17 items.
 - Current portfolio snapshot and GitHub search both identify 19 merged external pull requests as of 14 November 2026. The official GitHub Search API query used for the external contribution set is `author:faizansaiyed123 is:pr is:merged -user:faizansaiyed123`.
 - The existing page lists five release-credit candidates. They remain candidates until each official release and PR is rechecked.
 - Existing repository READMEs are only a first-pass inventory. They are not sufficient to declare an application demo-ready.
