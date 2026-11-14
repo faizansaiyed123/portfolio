@@ -45,7 +45,8 @@ The portfolio should prove engineering ability through usable products. A recrui
 - [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, Flagship, and Fieldline CRM; see `docs/project-labs/`.
 - [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, Flagship, Fieldline CRM, and Orbit Campaigns; see `docs/project-labs/`.
 - [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, Flagship, Fieldline CRM, Orbit Campaigns, and Product Analytics; see `docs/project-labs/`.
-- [ ] Repeat the same source-level audit for the remaining 9 projects before building their demo paths.
+- [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, Flagship, Fieldline CRM, Orbit Campaigns, Product Analytics, and Gemini Chat; see `docs/project-labs/`.
+- [ ] Repeat the same source-level audit for the remaining 8 projects before building their demo paths.
 - [ ] Verify current frontend and backend deployment availability; do not infer it from a repository homepage URL.
 - [ ] Independently verify release-credit claims against the official release and merged PR.
 
