@@ -126,11 +126,11 @@
   };
 
   const renderProjectCounts = () => {
-    $("#project-count").textContent = String(state.projects.length);
-    $("#all-projects-count").textContent = String(state.projects.length);
-    $("#contribution-count").textContent = String(state.activity.length);
-    $("#release-count").textContent = String(state.releases.length);
-    $("#external-pr-total").textContent = String(state.activity.length);
+    $("#project-count").textContent = state.projects.length ? String(state.projects.length) : "—";
+    $("#all-projects-count").textContent = state.projects.length ? String(state.projects.length) : "—";
+    $("#contribution-count").textContent = state.activityLoaded ? String(state.activity.length) : "—";
+    $("#release-count").textContent = state.releasesLoaded ? String(state.releases.length) : "—";
+    $("#external-pr-total").textContent = state.activityLoaded ? String(state.activity.length) : "—";
   };
 
   /* ---------- Project library ---------- */
@@ -334,7 +334,7 @@
     // to merged PRs in repositories outside the account's own repositories.
     const today = new Date();
     const weekEnd = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
-    weekEnd.setUTCDate(weekEnd.getUTCDate() + (6 - weekEnd.getUTCDay()));
+    weekEnd.setUTCDate(weekEnd.getUTCDate() + ((7 - weekEnd.getUTCDay()) % 7));
     const weekStart = new Date(weekEnd);
     weekStart.setUTCDate(weekStart.getUTCDate() - (52 * 7 - 1));
     const cells = [];
@@ -343,7 +343,10 @@
 
     for (let week = 0; week < 52; week += 1) {
       const firstDay = new Date(current);
-      if (firstDay.getUTCDate() <= 7) monthLabels[week] = monthFormatter.format(firstDay);
+      const monthStart = new Date(Date.UTC(firstDay.getUTCFullYear(), firstDay.getUTCMonth(), 1));
+      const firstWeekMonday = new Date(monthStart);
+      firstWeekMonday.setUTCDate(firstWeekMonday.getUTCDate() - ((firstWeekMonday.getUTCDay() + 6) % 7));
+      if (dateKey(firstWeekMonday) === dateKey(firstDay)) monthLabels[week] = monthFormatter.format(monthStart);
       for (let day = 0; day < 7; day += 1) {
         const key = dateKey(current);
         const count = counts.get(key) || 0;
