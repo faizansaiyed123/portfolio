@@ -45,7 +45,8 @@ The portfolio should prove engineering ability through usable products. A recrui
 - [x] Complete source-level audit for SupportAI; see `docs/project-labs/supportai.md`.
 - [x] Complete source-level audit for Service Agreement Manager; see `docs/project-labs/service-agreement-manager.md`.
 - [x] Complete source-level audit for AutoFix; see `docs/project-labs/autofix.md`.
-- [ ] Repeat the same source-level audit for the remaining 1 personal project before building its demo path.
+- [x] Complete source-level audit for LedgerPulse; see `docs/project-labs/ledgerpulse.md`.
+- [x] Complete source-level audits for all 17 personal projects.
 - [ ] Verify current frontend and backend deployment availability; do not infer it from a repository homepage URL.
 - [ ] Independently verify release-credit claims against the official release and merged PR.
 
