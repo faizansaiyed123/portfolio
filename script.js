@@ -253,7 +253,7 @@
   let previousFocus = null;
 
   const renderProjectDialog = (project) => {
-    const demoPending = project.demoStatus !== "ready";
+    const demoPending = project.demoStatus !== "ready" || !project.demoUrl;
     const stack = (project.stack || []).map((item) => "<span>" + escapeHTML(item) + "</span>").join("");
     const features = (project.features || []).map((item) => "<li>" + escapeHTML(item) + "</li>").join("");
     const architecture = (project.architecture || []).map((item, index, all) =>
@@ -267,6 +267,7 @@
     if (project.backendRepo) {
       sourceLinks.push('<a href="https://github.com/faizansaiyed123/' + encodeURIComponent(project.backendRepo) + '" target="_blank" rel="noopener noreferrer">Backend source <span aria-hidden="true">↗</span></a>');
     }
+    const projectLabLink = '<a href="./project-lab.html?id=' + encodeURIComponent(project.id) + '">Open full project lab <span aria-hidden="true">↗</span></a>';
     let publicFrontendLink = "";
     if (project.appUrl) {
       publicFrontendLink = '<a href="' + escapeHTML(project.appUrl) + '" target="_blank" rel="noopener noreferrer">Listed frontend URL (not verified) <span aria-hidden="true">↗</span></a>';
@@ -287,7 +288,7 @@
         '<p>' + escapeHTML(project.demoPlan || "The demo environment has not yet been verified.") + "</p>" +
         (demoPending ? '<div class="demo-warning">This project is in the rebuild queue. Its existing frontend URL, when listed below, is not represented as a complete working demo until the real API, required services, and key workflows have been checked.</div>' : "") +
         '<div class="dialog-status-line"><span>STATUS: ' + escapeHTML(titleCase(project.demoStatus)) + '</span><span>DATA POLICY: SYNTHETIC / ISOLATED</span></div>' +
-        '<div class="dialog-repo-links">' + (publicFrontendLink ? publicFrontendLink : "") + sourceLinks.join("") + "</div>" +
+        '<div class="dialog-repo-links">' + projectLabLink + (publicFrontendLink ? publicFrontendLink : "") + sourceLinks.join("") + "</div>" +
       "</section>";
   };
 
