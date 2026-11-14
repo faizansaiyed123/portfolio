@@ -41,7 +41,8 @@ The portfolio should prove engineering ability through usable products. A recrui
 - [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, Flagship, Fieldline CRM, Orbit Campaigns, Product Analytics, Gemini Chat, and AgencyOS; see `docs/project-labs/`.
 - [x] Exclude Mintline from the public personal-project library after confirming its own repository identifies it as an internship assignment; see `docs/project-labs/mintline.md`.
 - [x] Complete source-level audit for CleanFlow; see `docs/project-labs/cleanflow.md`.
-- [ ] Repeat the same source-level audit for the remaining 5 personal projects before building their demo paths.
+- [x] Complete source-level audit for FlowDesk; see `docs/project-labs/flowdesk.md`.
+- [ ] Repeat the same source-level audit for the remaining 4 personal projects before building their demo paths.
 - [ ] Verify current frontend and backend deployment availability; do not infer it from a repository homepage URL.
 - [ ] Independently verify release-credit claims against the official release and merged PR.
 
