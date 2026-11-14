@@ -8,7 +8,7 @@ The portfolio should prove engineering ability through usable products. A recrui
 
 ## Safety and scope
 
-- Work only on `redesign/interactive-product-portfolio`.
+- Work on `redesign/interactive-product-portfolio` and its protected-branch continuation `redesign/interactive-product-portfolio-followup`; changes to the protected base must go through a pull request.
 - Do not modify or merge into `main`.
 - Do not deploy over the existing production portfolio during this rebuild.
 - Scope the showcase to personal projects only. Exclude client builds and internship/employer work from the personal-project gallery.
@@ -38,15 +38,9 @@ The portfolio should prove engineering ability through usable products. A recrui
 - [x] First-pass README review for the original 18 portfolio entries; Mintline is excluded because it is an internship assignment, leaving 17 personal projects.
 - [x] Confirm 19 merged pull requests outside the user's own repositories through GitHub Search API.
 - [x] Inspect actual frontend routes, backend routes, auth, data isolation, tests, and deployment constraints for FrameFlux and Telemetry; see `docs/project-labs/frameflux.md` and `docs/project-labs/telemetry.md`.
-- [x] Complete source-level audits for FrameFlux, Telemetry, and Sayphora; see `docs/project-labs/`.
-- [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, and Focus Journal; see `docs/project-labs/`.
-- [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, and Nexora; see `docs/project-labs/`.
-- [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, and Flagship; see `docs/project-labs/`.
-- [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, Flagship, and Fieldline CRM; see `docs/project-labs/`.
-- [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, Flagship, Fieldline CRM, and Orbit Campaigns; see `docs/project-labs/`.
-- [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, Flagship, Fieldline CRM, Orbit Campaigns, and Product Analytics; see `docs/project-labs/`.
-- [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, Flagship, Fieldline CRM, Orbit Campaigns, Product Analytics, and Gemini Chat; see `docs/project-labs/`.
-- [ ] Repeat the same source-level audit for the remaining 7 personal projects before building their demo paths.
+- [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, Flagship, Fieldline CRM, Orbit Campaigns, Product Analytics, Gemini Chat, and AgencyOS; see `docs/project-labs/`.
+- [x] Exclude Mintline from the public personal-project library after confirming its own repository identifies it as an internship assignment; see `docs/project-labs/mintline.md`.
+- [ ] Repeat the same source-level audit for the remaining 6 personal projects before building their demo paths.
 - [ ] Verify current frontend and backend deployment availability; do not infer it from a repository homepage URL.
 - [ ] Independently verify release-credit claims against the official release and merged PR.
 
