@@ -39,7 +39,15 @@
       "backendRepo": "FrameFlux-Backend",
       "appUrl": null,
       "demoStatus": "verification-pending",
-      "demoPlan": "Provide a small set of safe synthetic media samples and a real isolated worker. Let recruiters upload within strict limits, follow a real job, inspect progress, and exercise retry/cancel paths. Clean up files and jobs automatically."
+      "demoPlan": "Provide a small set of safe synthetic media samples and a real isolated worker. Let recruiters upload within strict limits, follow a real job, inspect progress, and exercise retry/cancel paths. Clean up files and jobs automatically.",
+      "previewImage": "assets/site-previews/frameflux-architecture.svg",
+      "workflow": [
+        "Upload a media file in resumable chunks",
+        "Validate its type, size and binary signature",
+        "Create a durable processing job",
+        "Follow worker progress, retry/cancel and inspect the output"
+      ],
+      "auditPath": "docs/project-labs/frameflux.md"
     },
     {
       "id": "telemetry",
@@ -76,7 +84,15 @@
       "backendRepo": "telemetry-backend",
       "appUrl": "https://telemetry-frontend-chi.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Use an isolated demo workspace with synthetic telemetry only. Enable safe simulation controls, alert acknowledgement, incident workflows, and WebSocket streaming. Do not expose real host enrollment or unrestricted admin operations."
+      "demoPlan": "Use an isolated demo workspace with synthetic telemetry only. Enable safe simulation controls, alert acknowledgement, incident workflows, and WebSocket streaming. Do not expose real host enrollment or unrestricted admin operations.",
+      "previewImage": "assets/site-previews/telemetry.webp",
+      "workflow": [
+        "Generate synthetic telemetry or ingest host-agent events",
+        "Follow the unified ingestion pipeline and live WebSocket updates",
+        "Trigger anomaly detection and configured alert rules",
+        "Inspect incident correlation, SLOs and persisted history"
+      ],
+      "auditPath": "docs/project-labs/telemetry.md"
     },
     {
       "id": "sayphora",
@@ -113,7 +129,15 @@
       "backendRepo": null,
       "appUrl": "https://sayphora.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Seed a dedicated demo catalogue, inventory, promo codes, reviews, and demo customer. Disable real payment settlement and use a clearly labelled test checkout. Keep admin access separate from recruiter sessions."
+      "demoPlan": "Seed a dedicated demo catalogue, inventory, promo codes, reviews, and demo customer. Disable real payment settlement and use a clearly labelled test checkout. Keep admin access separate from recruiter sessions.",
+      "previewImage": "assets/site-previews/sayphora.webp",
+      "workflow": [
+        "Explore products, shades and reviews",
+        "Build a cart and validate pricing/promotions on the server",
+        "Complete a synthetic checkout and inspect the persisted order",
+        "Explore stock, loyalty and AI-assisted beauty tools"
+      ],
+      "auditPath": "docs/project-labs/sayphora.md"
     },
     {
       "id": "focus-journal",
@@ -149,7 +173,15 @@
       "backendRepo": "Focus-Journal-Backend",
       "appUrl": "https://focus-journal-frontend.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Create an isolated synthetic journal account with fictional entries and focus history. Clearly mark all records as demo data. Disable personal OAuth and ensure the recruiter cannot access another demo user's entries."
+      "demoPlan": "Create an isolated synthetic journal account with fictional entries and focus history. Clearly mark all records as demo data. Disable personal OAuth and ensure the recruiter cannot access another demo user's entries.",
+      "previewImage": "assets/site-previews/focus-journal.webp",
+      "workflow": [
+        "Start and complete a focus session",
+        "Record a structured daily check-in and journal entry",
+        "Review calendar history, streaks and summaries",
+        "Enable optional AI processing only with explicit consent"
+      ],
+      "auditPath": "docs/project-labs/focus-journal.md"
     },
     {
       "id": "nexora",
@@ -188,7 +220,15 @@
       "appUrl": "https://nexora-frontend-hazel.vercel.app/",
       "backendDocsUrl": "https://nexora-backend-5ie2.onrender.com/docs",
       "demoStatus": "verification-pending",
-      "demoPlan": "Use fictional products and deterministic sample retailer pages or controlled fixtures. Do not issue arbitrary outbound fetches from a public demo. Expose collection runs only against allowlisted fixtures, then show stored observations and alerts."
+      "demoPlan": "Use fictional products and deterministic sample retailer pages or controlled fixtures. Do not issue arbitrary outbound fetches from a public demo. Expose collection runs only against allowlisted fixtures, then show stored observations and alerts.",
+      "previewImage": "assets/site-previews/nexora.webp",
+      "workflow": [
+        "Create a tracked offering and competitor",
+        "Add a source and match it to the offering",
+        "Run a bounded, allowlisted collection job",
+        "Inspect price observations, snapshots and alerts"
+      ],
+      "auditPath": "docs/project-labs/nexora.md"
     },
     {
       "id": "flagship",
@@ -225,7 +265,15 @@
       "backendRepo": "feature-flag-platform-backend",
       "appUrl": "https://feature-flag-platform-frontend-lsf9.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Provision a seeded demo organization and project with sample environments and flags. Let recruiters change targeting and rollout, then evaluate known test contexts. Keep SDK secrets and destructive organization management unavailable."
+      "demoPlan": "Provision a seeded demo organization and project with sample environments and flags. Let recruiters change targeting and rollout, then evaluate known test contexts. Keep SDK secrets and destructive organization management unavailable.",
+      "previewImage": "assets/site-previews/feature-flag-platform.webp",
+      "workflow": [
+        "Create an organization, project and environment",
+        "Define a typed flag, segment and targeting rule",
+        "Evaluate deterministic targeting and percentage rollout",
+        "Inspect environment-scoped SDK behavior and audit history"
+      ],
+      "auditPath": "docs/project-labs/flagship.md"
     },
     {
       "id": "fieldline-crm",
@@ -262,7 +310,15 @@
       "backendRepo": "fieldline-crm-backend",
       "appUrl": "https://fieldline-crm-frontend.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Seed one fictional organization with connected companies, contacts, opportunities, activities, and saved views. Demonstrate tenant separation with two isolated demo tenants and no real contact data."
+      "demoPlan": "Seed one fictional organization with connected companies, contacts, opportunities, activities, and saved views. Demonstrate tenant separation with two isolated demo tenants and no real contact data.",
+      "previewImage": "assets/site-previews/fieldline-crm.webp",
+      "workflow": [
+        "Create companies, contacts and opportunities",
+        "Move an opportunity through validated pipeline states",
+        "Preview a synthetic CSV import and commit it",
+        "Merge a duplicate and inspect linked records and internal automation"
+      ],
+      "auditPath": "docs/project-labs/fieldline-crm.md"
     },
     {
       "id": "orbit-campaigns",
@@ -299,7 +355,15 @@
       "backendRepo": "marketing-campaign-management-backend",
       "appUrl": "https://marketing-campaign-management-front.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Use fictional contacts with all outbound mail redirected to a capture mailbox or preview-only transport. Never send unsolicited email. Show queued, delivered-to-capture, skipped, failed, and retry states distinctly."
+      "demoPlan": "Use fictional contacts with all outbound mail redirected to a capture mailbox or preview-only transport. Never send unsolicited email. Show queued, delivered-to-capture, skipped, failed, and retry states distinctly.",
+      "previewImage": "assets/site-previews/marketing-campaigns.webp",
+      "workflow": [
+        "Create an audience, synthetic contacts and a reusable template",
+        "Draft or schedule a campaign with personalization",
+        "Process deliveries into a private capture inbox",
+        "Test unsubscribe, failed-only retry and persisted delivery analytics"
+      ],
+      "auditPath": "docs/project-labs/orbit-campaigns.md"
     },
     {
       "id": "product-analytics",
@@ -336,7 +400,15 @@
       "backendRepo": "product_analytics_backend",
       "appUrl": "https://product-analytics-frontend-un93.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Provide a generated synthetic event dataset and a dedicated demo project API key with strict quotas. Let recruiters run trends/funnel/retention queries and build cohorts without ingesting any visitor or real customer data."
+      "demoPlan": "Provide a generated synthetic event dataset and a dedicated demo project API key with strict quotas. Let recruiters run trends/funnel/retention queries and build cohorts without ingesting any visitor or real customer data.",
+      "previewImage": "assets/site-previews/product-analytics-overview.png",
+      "workflow": [
+        "Create a temporary project and SDK key",
+        "Ingest synthetic events through the real SDK endpoint",
+        "Explore trends, funnels, retention, sessions and paths",
+        "Create cohorts/reports and inspect project-scoped exports"
+      ],
+      "auditPath": "docs/project-labs/product-analytics.md"
     },
     {
       "id": "gemini-chat",
@@ -374,7 +446,15 @@
       "backendRepo": "gemini-backend-clone",
       "appUrl": "https://gemini-frontend-clone.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Provide a guest demo session with pre-seeded fictional chat history and rate-limited live prompt usage only if a funded provider key is configured. Otherwise expose safe recorded provider responses and clearly label them as replay, never as live model output. Payments remain test-only."
+      "demoPlan": "Provide a guest demo session with pre-seeded fictional chat history and rate-limited live prompt usage only if a funded provider key is configured. Otherwise expose safe recorded provider responses and clearly label them as replay, never as live model output. Payments remain test-only.",
+      "previewImage": "assets/site-previews/gemini-frontend.webp",
+      "workflow": [
+        "Enter an isolated temporary chat identity",
+        "Create a chatroom and submit a bounded prompt",
+        "Follow Redis queue and worker status",
+        "Reopen the persisted conversation and inspect the provider path"
+      ],
+      "auditPath": "docs/project-labs/gemini-chat.md"
     },
     {
       "id": "agencyos",
@@ -412,7 +492,15 @@
       "backendRepo": "agencyos_backend",
       "appUrl": "https://agencyos-frontend-one.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Create a unique short-lived organisation and synthetic owner/client/team accounts per visitor. Run the real connected deal → proposal acceptance → project → time approval → invoice/PDF/manual-payment workflow against PostgreSQL with RLS enabled. Route all invite/reset/invoice email to a private no-relay capture sink; use only a fixed safe webhook receiver; keep payments as clearly fictional manual records; store uploads in per-demo persistent storage; expire and purge the entire demo tenant. A complete authenticated browser journey and two-tenant isolation test are required before the demo is marked ready."
+      "demoPlan": "Create a unique short-lived organisation and synthetic owner/client/team accounts per visitor. Run the real connected deal → proposal acceptance → project → time approval → invoice/PDF/manual-payment workflow against PostgreSQL with RLS enabled. Route all invite/reset/invoice email to a private no-relay capture sink; use only a fixed safe webhook receiver; keep payments as clearly fictional manual records; store uploads in per-demo persistent storage; expire and purge the entire demo tenant. A complete authenticated browser journey and two-tenant isolation test are required before the demo is marked ready.",
+      "previewImage": "assets/site-previews/agencyos.webp",
+      "workflow": [
+        "Create a synthetic client, deal and proposal",
+        "Accept the proposal and inspect the resulting project",
+        "Move tasks, milestones and approved time through delivery",
+        "Issue an invoice PDF and record a clearly fictional manual payment"
+      ],
+      "auditPath": "docs/project-labs/agencyos.md"
     },
     {
       "id": "cleanflow",
@@ -448,7 +536,15 @@
       "backendRepo": "cleanflow_backend",
       "appUrl": "https://cleanflow-frontend-theta.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Use synthetic customers, properties, contracts, and jobs in a disposable database. Do not run the repository's seed script until its destructive behavior is inspected; no outbound SMS, email, or webhooks in recruiter mode."
+      "demoPlan": "Use synthetic customers, properties, contracts, and jobs in a disposable database. Do not run the repository's seed script until its destructive behavior is inspected; no outbound SMS, email, or webhooks in recruiter mode.",
+      "previewImage": "assets/site-previews/cleanflow.webp",
+      "workflow": [
+        "Submit a synthetic service quote request",
+        "Calculate a quote and convert it into a contract",
+        "Accept the contract and inspect generated recurring jobs",
+        "Complete field work, create an invoice and record a manual sample payment"
+      ],
+      "auditPath": "docs/project-labs/cleanflow.md"
     },
     {
       "id": "flowdesk",
@@ -485,7 +581,15 @@
       "backendRepo": "flow-desk_backend",
       "appUrl": "https://flow-desk-frontend-three.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Create a unique short-lived user and tenant for each recruiter and seed synthetic clients, projects, tasks and time entries. Use the real PostgreSQL-backed workflows, invoice generation and role permissions. Keep outbound email in a private capture sink, disable arbitrary webhook URLs (the current sender has no SSRF defenses), use only a fixed owned receiver if needed, and keep invoice Paid as a demo status rather than a transfer. Store small synthetic attachments in a persistent per-tenant directory with streaming upload caps and content validation; revoke tokens/API keys and clean the tenant on expiry. Full deployed browser verification is still required."
+      "demoPlan": "Create a unique short-lived user and tenant for each recruiter and seed synthetic clients, projects, tasks and time entries. Use the real PostgreSQL-backed workflows, invoice generation and role permissions. Keep outbound email in a private capture sink, disable arbitrary webhook URLs (the current sender has no SSRF defenses), use only a fixed owned receiver if needed, and keep invoice Paid as a demo status rather than a transfer. Store small synthetic attachments in a persistent per-tenant directory with streaming upload caps and content validation; revoke tokens/API keys and clean the tenant on expiry. Full deployed browser verification is still required.",
+      "previewImage": "assets/site-previews/flowdesk.webp",
+      "workflow": [
+        "Create an isolated workspace, client and project",
+        "Move tasks across the Kanban board and add comments",
+        "Track time with the server-side timer",
+        "Generate an invoice from eligible work and inspect tenant-scoped activity"
+      ],
+      "auditPath": "docs/project-labs/flowdesk.md"
     },
     {
       "id": "supportai",
@@ -523,7 +627,15 @@
       "backendRepo": "supportai_backend",
       "appUrl": "https://supportai-frontend-plum.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Give each recruiter a short-lived isolated organization with synthetic customers, documents, conversations and tickets. Run the actual PostgreSQL/pgvector + Procrastinate ingestion worker + local Ollama RAG stack and show answer citations, low-confidence/human handoff, and ticket escalation. This requires a persistent server with the roughly 4.9 GB model plus embedding/reranker caches; a cold model may take minutes. Do not expose arbitrary URL ingestion until the documented DNS-rebinding gap is fixed; apply streaming upload limits, handle password-reset tokens without logging, and clean the temporary tenant and file directory on expiry. No public runtime was verified, so deployment remains pending."
+      "demoPlan": "Give each recruiter a short-lived isolated organization with synthetic customers, documents, conversations and tickets. Run the actual PostgreSQL/pgvector + Procrastinate ingestion worker + local Ollama RAG stack and show answer citations, low-confidence/human handoff, and ticket escalation. This requires a persistent server with the roughly 4.9 GB model plus embedding/reranker caches; a cold model may take minutes. Do not expose arbitrary URL ingestion until the documented DNS-rebinding gap is fixed; apply streaming upload limits, handle password-reset tokens without logging, and clean the temporary tenant and file directory on expiry. No public runtime was verified, so deployment remains pending.",
+      "previewImage": "assets/site-previews/supportai.webp",
+      "workflow": [
+        "Upload a synthetic knowledge document",
+        "Watch the real ingestion worker extract, chunk and embed it",
+        "Ask a question and inspect retrieved citations",
+        "Trigger an out-of-scope question and review low-confidence handoff"
+      ],
+      "auditPath": "docs/project-labs/supportai.md"
     },
     {
       "id": "service-agreement-manager",
@@ -562,7 +674,15 @@
       "backendRepo": "service-agreement-manager-backend",
       "appUrl": null,
       "demoStatus": "verification-pending",
-      "demoPlan": "Provision one short-lived synthetic company per visitor, including owner/manager/technician/billing and a separate customer-portal identity. Run the real agreement-version → portal acceptance → recurring maintenance → work order → invoice/PDF flow on the deployed API and workers. Route all email to a private no-relay capture inbox, keep SMS disabled, and use one fixed webhook capture receiver. Online card payment is allowed only with backend-enforced Stripe test keys; otherwise show manual sample payment records and keep card controls disabled. Use isolated persistent storage and purge every company-scoped record, token, outbox row and attachment on expiry."
+      "demoPlan": "Provision one short-lived synthetic company per visitor, including owner/manager/technician/billing and a separate customer-portal identity. Run the real agreement-version → portal acceptance → recurring maintenance → work order → invoice/PDF flow on the deployed API and workers. Route all email to a private no-relay capture inbox, keep SMS disabled, and use one fixed webhook capture receiver. Online card payment is allowed only with backend-enforced Stripe test keys; otherwise show manual sample payment records and keep card controls disabled. Use isolated persistent storage and purge every company-scoped record, token, outbox row and attachment on expiry.",
+      "previewImage": "assets/site-previews/service-agreement-manager.webp",
+      "workflow": [
+        "Create a customer, location and versioned service agreement",
+        "Open the customer portal and record an explicit acceptance",
+        "Generate maintenance work orders and complete technician work",
+        "Issue an invoice and exercise test-only or manual sample payment"
+      ],
+      "auditPath": "docs/project-labs/service-agreement-manager.md"
     },
     {
       "id": "autofix",
@@ -600,7 +720,15 @@
       "backendRepo": "autofix_backend",
       "appUrl": null,
       "demoStatus": "verification-pending",
-      "demoPlan": "Run one isolated disposable PostgreSQL database per recruiter because the current application models one workshop and has no tenant/company partitioning. Bootstrap unique owner/advisor/technician/parts/customer identities and seed the coherent synthetic fixture in that database. Exercise the real customer request → appointment/check-in → inspection/estimate decision → repair/labour/parts → independent QC/rework → invoice → manual payment/void → customer portal workflow. Use private no-relay SMTP capture. Payments are records, not online card processing. Inspection/QC photos are currently URL references; do not claim a general upload service. Upgrade browser token handling from localStorage to secure HttpOnly refresh cookies and verify the hosted API before marking the demo live."
+      "demoPlan": "Run one isolated disposable PostgreSQL database per recruiter because the current application models one workshop and has no tenant/company partitioning. Bootstrap unique owner/advisor/technician/parts/customer identities and seed the coherent synthetic fixture in that database. Exercise the real customer request → appointment/check-in → inspection/estimate decision → repair/labour/parts → independent QC/rework → invoice → manual payment/void → customer portal workflow. Use private no-relay SMTP capture. Payments are records, not online card processing. Inspection/QC photos are currently URL references; do not claim a general upload service. Upgrade browser token handling from localStorage to secure HttpOnly refresh cookies and verify the hosted API before marking the demo live.",
+      "previewImage": "assets/site-previews/autofix.webp",
+      "workflow": [
+        "Submit a customer service request and book vehicle check-in",
+        "Complete a digital inspection and customer line-item estimate decision",
+        "Record repair tasks, labour and parts movements",
+        "Run independent QC, rework if needed, then issue an invoice and sample payment"
+      ],
+      "auditPath": "docs/project-labs/autofix.md"
     },
     {
       "id": "ledgerpulse",
@@ -639,7 +767,15 @@
       "backendRepo": "ledgerpulse_backend",
       "appUrl": null,
       "demoStatus": "verification-pending",
-      "demoPlan": "Create a unique temporary Firebase Anonymous Auth identity for each recruiter, then use the standard authenticated API bootstrap to create a real PostgreSQL organisation and Owner membership. Add a DemoSession with expiry and quotas, call the existing owner-only sample-data API for synthetic customers/vendors/invoices/payments/expenses, and keep the frontend in normal API mode rather than its current localStorage isDemo branch. Exercise real invoice edits, sample payment records, expense approvals, reports and the separate recurring scheduler. Route all email/contact/invitation/invoice messages to a private non-relaying capture inbox; no live payment gateway exists. On expiry, revoke the Firebase identity and delete only that demo organisation and its related rows. Keep the existing browser-local tour visibly labelled as local-only if retained."
+      "demoPlan": "Create a unique temporary Firebase Anonymous Auth identity for each recruiter, then use the standard authenticated API bootstrap to create a real PostgreSQL organisation and Owner membership. Add a DemoSession with expiry and quotas, call the existing owner-only sample-data API for synthetic customers/vendors/invoices/payments/expenses, and keep the frontend in normal API mode rather than its current localStorage isDemo branch. Exercise real invoice edits, sample payment records, expense approvals, reports and the separate recurring scheduler. Route all email/contact/invitation/invoice messages to a private non-relaying capture inbox; no live payment gateway exists. On expiry, revoke the Firebase identity and delete only that demo organisation and its related rows. Keep the existing browser-local tour visibly labelled as local-only if retained.",
+      "previewImage": "assets/site-previews/ledgerpulse.png",
+      "workflow": [
+        "Create a temporary Firebase identity and real organisation",
+        "Load synthetic customers, vendors, invoices and expenses from the API",
+        "Edit an invoice and add a manual sample payment record",
+        "Run the actual recurring scheduler and inspect the generated invoice"
+      ],
+      "auditPath": "docs/project-labs/ledgerpulse.md"
     }
   ]
 }
