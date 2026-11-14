@@ -1,8 +1,8 @@
-name: Refresh portfolio activity data
+name: Refresh verified open-source activity
 
 on:
   schedule:
-    - cron: "17 */6 * * *"
+    - cron: "23 */3 * * *"
   workflow_dispatch:
 
 permissions:
@@ -13,21 +13,71 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch merged pull requests
+      - name: Fetch every merged external pull request
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
           mkdir -p data
-          gh api -X GET search/issues \
-            -f q='author:faizansaiyed123 is:pr is:merged -user:faizansaiyed123' \
-            -f sort=updated -f per_page=100 \
-            --jq '{fetchedAt: (now | todate), mergedPullRequests: .total_count, latest: [.items[:5][] | {title, url: .html_url, repo: (.repository_url | sub("https://api.github.com/repos/"; "")), closedAt: .closed_at}]}' \
-            > data/activity.json.tmp
-          jq -e '.mergedPullRequests >= 0' data/activity.json.tmp > /dev/null
+          query='author:faizansaiyed123 is:pr is:merged -user:faizansaiyed123'
+          gh api --paginate --slurp search/issues \
+            -f q="$query" \
+            -f per_page=100 \
+            -f sort=created \
+            -f order=desc \
+            > data/activity-search.json.tmp
+
+          jq '
+            [.[].items[]]
+            | unique_by(.html_url)
+            | sort_by(.closed_at)
+            | reverse
+            | {
+                schemaVersion: 1,
+                owner: "faizansaiyed123",
+                query: "author:faizansaiyed123 is:pr is:merged -user:faizansaiyed123",
+                scope: "Merged pull requests authored by this account in repositories not owned by the account. This is not a count of every GitHub contribution type.",
+                fetchedAt: (now | todate),
+                total: length,
+                items: map({
+                  title: .title,
+                  repository: (.repository_url | sub("https://api.github.com/repos/"; "")),
+                  number: .number,
+                  url: .html_url,
+                  mergedAt: .closed_at,
+                  kind: (
+                    if (.repository_url | contains("ci-agent-audit")) then "Security and CI tooling"
+                    elif (.repository_url | contains("community.postgresql")) then "Database automation"
+                    elif (.repository_url | contains("rk-deploy")) then "Deployment tooling"
+                    elif (.repository_url | contains("memtomem")) then "CLI and security testing"
+                    elif (.repository_url | contains("laya-guard")) then "Security and command policy"
+                    elif (.repository_url | contains("sentry-javascript")) then "JavaScript SDK"
+                    elif (.repository_url | contains("sentry-python")) then "Python SDK"
+                    elif (.repository_url | contains("home-assistant")) then "Frontend and accessibility"
+                    elif (.repository_url | contains("trustflow-sdk")) then "TypeScript SDK"
+                    else "Open-source contribution"
+                    end
+                  )
+                })
+              }
+          ' data/activity-search.json.tmp > data/activity.json.tmp
+
+          jq -e '
+            (.schemaVersion == 1)
+            and (.total == (.items | length))
+            and (.items | all(.[]; (.url | startswith("https://github.com/")) and (.mergedAt != null)))
+          ' data/activity.json.tmp > /dev/null
+
           mv data/activity.json.tmp data/activity.json
-      - name: Commit if changed
+          rm data/activity-search.json.tmp
+
+      - name: Commit snapshot only when it changed
         run: |
+          set -euo pipefail
           git config user.name "portfolio-bot"
           git config user.email "portfolio-bot@users.noreply.github.com"
           git add data/activity.json
-          git diff --cached --quiet || git commit -m "chore: refresh activity data" && git push
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: refresh verified open-source activity"
+            git push
+          fi
