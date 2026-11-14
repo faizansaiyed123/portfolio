@@ -1,0 +1,52 @@
+/* theme-pro.css: loaded AFTER style.css. Only overrides; style.css stays untouched. */
+:root{
+  --bg:#0a0e16;--bg-soft:#0f1520;--panel:#121a27;--panel-2:#182233;
+  --text:#eaf0f8;--muted:#a9b6c9;--faint:#8493a8;
+  --line:rgba(205,220,245,.12);--line-strong:rgba(205,220,245,.24);
+  --accent:#7db2ff;--accent-deep:#4c8dff;--accent-ink:#06101f;--accent-rgb:125,178,255;
+}
+html[data-theme="light"]{
+  --bg:#f5f7fb;--bg-soft:#eaeef6;--panel:#ffffff;--panel-2:#eef2f9;
+  --text:#0f1828;--muted:#46546b;--faint:#5f6d84;
+  --line:rgba(15,24,40,.12);--line-strong:rgba(15,24,40,.24);
+  --accent:#1d4ed8;--accent-deep:#2563eb;--accent-ink:#ffffff;--accent-rgb:29,78,216;
+}
+::selection{background:var(--accent);color:var(--accent-ink)}
+
+/* Text that sits on the accent colour must follow the theme, not a fixed dark ink. */
+.button-primary,.project-filter-button.is-active,.skip-link,.freelance-card-arrow,
+.personal-preview-arrow,.footer-cta-button,.contact{color:var(--accent-ink)}
+.contact .section-label,.contact .section-kicker,.contact-card small{color:inherit;opacity:.82}
+.contact-card{border-color:color-mix(in srgb,currentColor 30%,transparent)}
+.contact-links,.contact-card small{border-top-color:color-mix(in srgb,currentColor 22%,transparent)}
+
+/* Replace hard-coded mint highlights with the accent. */
+.reading-progress span{box-shadow:0 0 14px rgba(var(--accent-rgb),.5)}
+.hero-eyebrow i,.guide-state-dot,.contribution-state i,.trace-source-state i{box-shadow:0 0 0 5px rgba(var(--accent-rgb),.12)}
+.button-ghost:hover{background:rgba(var(--accent-rgb),.07)}
+.stage-orbit{border-color:rgba(var(--accent-rgb),.28)}
+.node.hot{border-color:rgba(var(--accent-rgb),.45)}
+.graph-pulse{box-shadow:0 0 14px rgba(var(--accent-rgb),.7)}
+.glow-a{background:rgb(var(--accent-rgb))}
+.glow-b{background:#7c6cff}
+.backdrop-glow{opacity:.1}
+.stage-crosshair{display:none}
+
+/* Calmer page: remove decoration that adds motion but no information. */
+.pointer-orb,.backdrop-noise,.ticker{display:none!important}
+.portfolio-image-spotlight,.portfolio-image-grid,.portfolio-image-trail,
+.opensource-cursor-spotlight,.opensource-cursor-grid,.opensource-cursor-trail{display:none!important}
+@media (max-width:700px){.welcome-mascot,.welcome-mascot-replay{display:none!important}}
+
+/* Readability: raise the smallest text and the tap targets. */
+.hero-proof span,.tag-row span,.project-tab span,.project-tab small,.signal-tags span,
+.contribution-state,.contribution-filter-button,.contribution-results,.project-results-count,
+.trace-footer,.footer-bottom,.footer-column>span,.stack-table span,.stack-table small,
+.guide-status,.guide-footer-line,.section-label,.section-kicker,.brand-copy small,
+.personal-project-overline,.personal-project-links a,.release-credit-links a,
+.diagram-foot,.node,.stage-chip,.hero-meta,.trace-overline,.trace-step>span{font-size:11px}
+.desktop-nav a{font-size:10.5px}
+.theme-button,.guide-top-button,.menu-button,.project-filter-button,
+.contribution-filter-button{min-height:40px}
+[id]{scroll-margin-top:calc(var(--header) + 16px)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
