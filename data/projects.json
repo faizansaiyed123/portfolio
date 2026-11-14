@@ -382,14 +382,15 @@
       "name": "AgencyOS",
       "category": "Business operations",
       "oneLiner": "Connect the commercial and delivery work of an agency.",
-      "overview": "A multi-tenant agency operations workspace for clients, deals, proposals, projects, tasks, time tracking, invoicing, team access, and a client portal.",
+      "overview": "A multi-tenant agency operations workspace for clients, deals, proposals, projects, tasks, time tracking, invoicing, team access, reporting and a client portal. Its in-product assistant is PostgreSQL full-text search plus report shortcuts, not an LLM.",
       "features": [
-        "Clients, contacts, deals, and deal-stage history",
-        "Proposal drafting, acceptance, rejection, and project creation",
-        "Project milestones, tasks, members, files, and discussions",
+        "Clients, contacts, deals, and validated deal-stage history",
+        "Proposal drafting, state transitions, and project creation on acceptance",
+        "Project milestones, task boards, members, files, and discussions",
         "Running timers, manual time entries, approvals, and timesheets",
-        "Invoice issuing, payment recording, PDFs, and reports",
-        "Client portal, MFA, webhooks, notifications, audit and transactional outbox"
+        "Invoice issuing, PDF generation, manual payment recording, and reports",
+        "Client portal, MFA, webhooks, notifications, audit and transactional outbox",
+        "Tenant-scoped PostgreSQL full-text search and keyword report assistant (not LLM)"
       ],
       "architecture": [
         "React/TypeScript/Vite frontend",
@@ -411,7 +412,7 @@
       "backendRepo": "agencyos_backend",
       "appUrl": "https://agencyos-frontend-one.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Seed a fictional agency with two demo roles and connected client/deal/project/invoice records. Use synthetic contact information and files. Restrict invite emails, webhook targets, erasure, and payment/issue actions to safe demo handlers."
+      "demoPlan": "Create a unique short-lived organisation and synthetic owner/client/team accounts per visitor. Run the real connected deal → proposal acceptance → project → time approval → invoice/PDF/manual-payment workflow against PostgreSQL with RLS enabled. Route all invite/reset/invoice email to a private no-relay capture sink; use only a fixed safe webhook receiver; keep payments as clearly fictional manual records; store uploads in per-demo persistent storage; expire and purge the entire demo tenant. A complete authenticated browser journey and two-tenant isolation test are required before the demo is marked ready."
     },
     {
       "id": "cleanflow",
