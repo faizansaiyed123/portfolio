@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SupportAI: a RAG system explained from the code | Faizan Saiyed</title>
+<meta name="description" content="Hybrid retrieval, reranking, grounded generation and evaluation in SupportAI, with every step linked to its source file.">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/theme-pro.css">
+<style>
+body{padding-top:0}
+.wrap{width:min(calc(100% - 40px),980px);margin:0 auto;padding:40px 0 80px}
+.back{display:inline-block;margin-bottom:28px;color:var(--muted);text-decoration:none;font-size:13px}
+.back:hover{color:var(--accent)}
+h1{font-size:clamp(32px,5vw,52px);line-height:1.08;letter-spacing:-.04em;margin:0 0 14px}
+h2{font-size:22px;letter-spacing:-.02em;margin:48px 0 14px}
+.lead{color:var(--muted);font-size:16px;line-height:1.7;max-width:68ch}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 0}
+.chips span{border:1px solid var(--line-strong);padding:6px 9px;font-size:12px;color:var(--muted)}
+.card{border:1px solid var(--line);background:var(--panel);padding:18px}
+.live{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+.live b{display:block;font-size:40px;line-height:1;color:var(--accent)}
+.live small,.note{color:var(--faint);font-size:12px;line-height:1.6}
+.live ul{margin:0;padding:0;list-style:none;font-size:13px;line-height:1.7}
+.live a{color:var(--text)}
+.steps{counter-reset:s;display:grid;gap:10px;padding:0;list-style:none;margin:0}
+.steps li{counter-increment:s;border:1px solid var(--line);background:var(--panel);padding:16px 16px 16px 58px;position:relative}
+.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:16px;top:16px;color:var(--accent);font:600 13px ui-monospace,Menlo,Consolas,monospace}
+.steps h3{margin:0 0 6px;font-size:16px}
+.steps p{margin:0 0 8px;color:var(--muted);font-size:13px;line-height:1.65}
+.steps a{font:600 12px ui-monospace,Menlo,Consolas,monospace;color:var(--accent);text-decoration:none}
+.steps a:hover{text-decoration:underline}
+.toggles{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.toggles button{min-height:40px;padding:0 14px;border:1px solid var(--line-strong);background:var(--panel);color:var(--text);cursor:pointer;font-size:13px}
+.toggles button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+#out{min-height:70px;font-size:14px;line-height:1.7}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{color:var(--faint);font-weight:600}
+.scroll{overflow-x:auto}
+ul.plain{padding-left:18px;color:var(--muted);font-size:14px;line-height:1.8}
+</style>
+</head>
+<body>
+<main class="wrap">
+<a class="back" href="./">← Back to portfolio</a>
+<h1>SupportAI: a RAG system, explained from the code</h1>
+<p class="lead">A multi-tenant support assistant that answers from an organization’s own documents. Every step below links to the file that implements it, so you can check the claims.</p>
+<div class="chips"><span>FastAPI</span><span>PostgreSQL + pgvector</span><span>Procrastinate worker</span><span>bge-small embeddings</span><span>Cross-encoder reranker</span><span>Ollama (llama3.1:8b)</span><span>Docker Compose</span></div>
+
+<h2>Live open-source activity</h2>
+<div class="card live" id="live">
+<div><b id="count">…</b><small>merged PRs in other projects</small></div>
+<div><ul id="latest"></ul><p class="note" id="stamp">Refreshed automatically by a scheduled GitHub Actions workflow.</p></div>
+</div>
+
+<h2>The pipeline, step by step</h2>
+<ol class="steps">
+<li><h3>Ingest in the background</h3><p>Uploads and URLs are processed by a worker, off the request path. PostgreSQL is both the database and the job queue, so there is no Redis to run.</p><a href="https://github.com/faizansaiyed123/supportai_backend/blob/main/app/services/knowledge.py">app/services/knowledge.py ↗</a></li>
+<li><h3>Chunk with structure</h3><p>Text is split into chunks that keep their heading path, so answers can point back to a section.</p><a href="https://github.com/faizansaiyed123/supportai_backend/blob/main/app/services/chunking.py">app/services/chunking.py ↗</a></li>
+<li><h3>Embed and store</h3><p>Chunks are embedded (384 dimensions) and stored in pgvector next to their text.</p><a href="https://github.com/faizansaiyed123/supportai_backend/blob/main/app/ai/embeddings.py">app/ai/embeddings.py ↗</a></li>
+<li><h3>Hybrid retrieval</h3><p>Vector search and Postgres full-text search run separately, then merge with reciprocal rank fusion (k=60). Every query is scoped to the caller’s organization and to documents that finished processing.</p><a href="https://github.com/faizansaiyed123/supportai_backend/blob/main/app/services/retrieval.py">app/services/retrieval.py ↗</a></li>
+<li><h3>Rerank</h3><p>A cross-encoder rescores the candidate pool. If the reranker fails, the system falls back to the fusion order instead of failing the request.</p><a href="https://github.com/faizansaiyed123/supportai_backend/blob/main/app/ai/reranking.py">app/ai/reranking.py ↗</a></li>
+<li><h3>Grounded generation with citations</h3><p>Retrieved text is labeled untrusted reference material in the prompt. The model is told to answer only from it, and the cited chunks are saved with the answer.</p><a href="https://github.com/faizansaiyed123/supportai_backend/blob/main/app/services/rag.py">app/services/rag.py ↗</a></li>
+<li><h3>Evaluate</h3><p>Recall@k, mean reciprocal rank and a lexical groundedness check, chosen over an LLM judge so the model is not grading itself.</p><a href="https://github.com/faizansaiyed123/supportai_backend/blob/main/app/services/evaluation.py">app/services/evaluation.py ↗</a></li>
+</ol>
+
+<h2>What happens when something fails?</h2>
+<p class="note">Documented behavior taken from the code. This is not a live run.</p>
+<div class="toggles" role="group" aria-label="Failure scenarios">
+<button type="button" data-k="rerank" aria-pressed="false">Reranker unavailable</button>
+<button type="button" data-k="embed" aria-pressed="false">Embedding fails</button>
+<button type="button" data-k="gen" aria-pressed="false">Generation fails</button>
+</div>
+<div class="card" id="out" aria-live="polite">Pick a scenario to see the documented fallback.</div>
+
+<h2>Evaluation results</h2>
+<div class="card scroll">
+<table><thead><tr><th>Strategy</th><th>Recall@5</th><th>MRR</th><th>Groundedness</th></tr></thead>
+<tbody>
+<tr><td>Vector only</td><td>not yet measured</td><td>not yet measured</td><td>not yet measured</td></tr>
+<tr><td>Full-text only</td><td>not yet measured</td><td>not yet measured</td><td>not yet measured</td></tr>
+<tr><td>Hybrid (RRF)</td><td>not yet measured</td><td>not yet measured</td><td>not yet measured</td></tr>
+<tr><td>Hybrid + rerank</td><td>not yet measured</td><td>not yet measured</td><td>not yet measured</td></tr>
+</tbody></table>
+<p class="note">The harness exists; these numbers will be filled in only after a real run on a labeled question set.</p>
+</div>
+
+<h2>Design decisions and limits</h2>
+<ul class="plain">
+<li>PostgreSQL as the queue keeps one system of record. The cost is a single-host design.</li>
+<li>The model runs locally in Ollama behind a provider interface, so a hosted model can replace it.</li>
+<li>The rate limiter is in-process, so it is correct only for a single API process.</li>
+<li>Ollama is not horizontally scalable, so real concurrency needs a hosted or dedicated model service.</li>
+</ul>
+</main>
+<script>
+(function(){
+try{if(window.matchMedia("(prefers-color-scheme: light)").matches)document.documentElement.setAttribute("data-theme","light")}catch(e){}
+var F={
+rerank:"The cross-encoder call raises an error, the failure is logged, and results keep the fusion order, cut to the top N. The user still gets an answer.",
+embed:"No query embedding means no retrieval. The request continues with empty context, and the answer is flagged low-confidence so the UI can suggest a human.",
+gen:"The model call fails, so the user sees a short message saying a human agent will help. The conversation is flagged low-confidence and nothing is left unanswered."
+};
+var out=document.getElementById("out"),btns=document.querySelectorAll(".toggles button");
+btns.forEach(function(b){b.addEventListener("click",function(){
+btns.forEach(function(x){x.setAttribute("aria-pressed","false")});
+b.setAttribute("aria-pressed","true");out.textContent=F[b.getAttribute("data-k")];});});
+fetch("data/activity.json",{cache:"no-cache"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
+document.getElementById("count").textContent=d.mergedPullRequests;
+var ul=document.getElementById("latest");
+(d.latest||[]).forEach(function(p){var li=document.createElement("li"),a=document.createElement("a");
+a.href=p.url;a.textContent=p.repo+": "+p.title;a.rel="noopener";li.appendChild(a);ul.appendChild(li)});
+document.getElementById("stamp").textContent="Last refreshed "+new Date(d.fetchedAt).toUTCString()+".";
+}).catch(function(){
+document.getElementById("count").textContent="19";
+document.getElementById("stamp").textContent="Live data appears after the first scheduled refresh; 19 is the count shown on the main page.";
+});
+})();
+</script>
+</body>
+</html>
