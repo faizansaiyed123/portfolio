@@ -2,616 +2,261 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Faizan Saiyed is a backend-focused product engineer building APIs, asynchronous workflows, realtime systems, and full-stack products. Explore engineering case studies, source-linked walkthroughs, and merged open-source contributions.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111016">
+  <meta name="description" content="Faizan Saiyed — a portfolio of usable software products, engineering experiments, and verified open-source contributions.">
   <meta name="author" content="Faizan Saiyed">
-  <meta name="theme-color" content="#0a0d0f">
+  <meta property="og:title" content="Faizan Saiyed — Software you can explore">
+  <meta property="og:description" content="Explore real products, inspect how they work, and follow shipped open-source contributions.">
+  <meta property="og:type" content="website">
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
-  <link rel="stylesheet" href="./style.css?v=20261114-engineering-casebook">
-  <title>Faizan Saiyed — Product Engineer / Backend & Systems</title>
+  <link rel="stylesheet" href="./style.css?v=20261114-product-lab">
+  <script type="module" src="./script.js?v=20261114-product-lab"></script>
+  <title>Faizan Saiyed — Software you can explore</title>
 </head>
 <body>
-<a class="skip-link" href="#content">Skip to content</a>
-<div class="backdrop" aria-hidden="true"><div class="backdrop-grid"></div><div class="backdrop-glow glow-a"></div><div class="backdrop-glow glow-b"></div><div class="backdrop-noise"></div></div>
-<div class="pointer-orb" aria-hidden="true"></div><div class="reading-progress" aria-hidden="true"><span></span></div>
-<header class="topbar"><div class="topbar-inner shell">
-<a class="brand" href="#top" aria-label="Faizan Saiyed home"><span class="brand-box">FS</span><span class="brand-copy"><b>FAIZAN SAIYED</b><small>ENGINEERING / 2026</small></span></a>
-<nav class="desktop-nav" aria-label="Primary navigation"><a href="#work">Work</a><a href="#trace-mode">Trace</a><a href="#opensource">Open source</a><a href="#experience">Experience</a><a href="#freelance">Client work</a><a href="#personal-projects">Projects</a><a href="#systems">Systems</a><a href="#stack">Stack</a><a href="#contact">Contact</a></nav>
-<div class="topbar-actions"><button class="guide-top-button" id="guide-top-button" type="button" aria-controls="guide-panel" aria-expanded="false"><span class="guide-state-dot" aria-hidden="true"></span><span>PORTFOLIO GUIDE</span><kbd>/</kbd></button><button class="theme-button" type="button" aria-label="Switch theme" aria-pressed="true"><span class="theme-indicator"></span><span class="theme-label">Dark</span></button><button class="menu-button" id="menu-button" type="button" aria-controls="mobile-nav" aria-expanded="false" aria-label="Open menu"><span></span><span></span></button></div>
-</div><nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation"><a href="#work">01 <span>Selected work</span></a><a href="#trace-mode">02 <span>Trace Mode</span></a><a href="#opensource">03 <span>Open source</span></a><a href="#experience">04 <span>Experience</span></a><a href="#freelance">05 <span>Client work</span></a><a href="#personal-projects">06 <span>Personal projects</span></a><a href="#systems">07 <span>Systems</span></a><a href="#stack">08 <span>Stack</span></a><a href="#contact">09 <span>Contact</span></a><button type="button" id="mobile-guide">10 <span>Ask Faizan</span></button></nav></header>
-<main id="content">
-<section id="top" class="hero"><div class="hero-meta shell"><span>PORTFOLIO / 2026</span><span>BACKEND · SYSTEMS · FULL-STACK</span><span>API DESIGN · DATA · ASYNC SYSTEMS</span></div>
-<div class="hero-main shell"><div class="hero-copy"><div class="hero-eyebrow"><i></i> ENGINEERING-LED PORTFOLIO</div><h1>I build the parts of a product that have to <em>keep working.</em></h1><p class="hero-intro">I'm Faizan Saiyed — a backend-focused product engineer building APIs, asynchronous workflows, realtime systems, and the interfaces that make those systems useful.</p><div class="hero-actions"><a class="button button-primary" href="#work"><span>View selected work</span><b>↘</b></a><a class="button button-outline" href="#trace-mode"><span>Explore Trace Mode</span><b>↗</b></a><button class="button button-ghost" type="button" id="hero-guide"><span>Portfolio guide</span><b>↗</b></button></div><div class="hero-proof"><div><strong data-count-source="projects">18</strong><span>FULL-STACK PROJECTS</span></div><div><strong data-count-source="contributions">19</strong><span>MERGED PRS</span></div><div><strong data-count-source="clientBuilds">02</strong><span>CLIENT BUILDS</span></div></div></div>
-<div class="hero-stage"><div class="stage-frame" id="stage-frame"><div class="stage-topline"><span>FS / 01</span><span>PROFILE</span></div><div class="stage-orbit orbit-one"></div><div class="stage-orbit orbit-two"></div><div class="stage-crosshair"></div><img src="https://avatars.githubusercontent.com/u/194621340?v=4" data-fallback="./assets/profile-fallback.svg" id="profile-image" alt="Faizan Saiyed" width="900" height="900"><div class="stage-chip chip-a">FASTAPI</div><div class="stage-chip chip-b">REALTIME</div><div class="stage-chip chip-c">POSTGRES</div><div class="stage-caption"><span>FAIZAN SAIYED</span><small>FULL-STACK ENGINEER</small></div></div>
-<div class="signal-window"><div class="signal-head"><span>SYSTEMS OVERVIEW</span><span><i></i> SOURCE-LINKED</span></div><div class="signal-graph"><div class="graph-scan"></div><svg viewBox="0 0 700 180" preserveAspectRatio="none" aria-hidden="true"><path class="graph-grid" d="M0 30H700M0 90H700M0 150H700M100 0V180M200 0V180M300 0V180M400 0V180M500 0V180M600 0V180"/><path class="graph-line" d="M0 122 C45 122 46 92 77 94 S126 139 165 132 S214 59 256 71 S310 138 347 108 S395 44 438 64 S492 124 526 112 S573 54 606 73 S648 38 700 36"/></svg><span class="graph-pulse"></span></div><div class="signal-tags"><span>API</span><span>STATE</span><span>JOBS</span><span>STREAMS</span><span>VERIFICATION</span></div></div>
-</div></div>
-<div class="ticker" aria-hidden="true"><div>BOUNDARIES / STATE / FEEDBACK / VERIFICATION / ASYNC WORK / REALTIME / DATA / FAILURE MODES / BOUNDARIES / STATE / FEEDBACK / VERIFICATION /</div></div></section>
-<section id="work" class="section work"><div class="shell"><div class="section-intro"><div><span class="section-label">01 / SELECTED WORK</span><span class="section-kicker">ENGINEERING CASEBOOK</span></div><h2>Projects presented as systems, not screenshots.</h2></div>
-<div class="project-tabs" role="tablist" aria-label="Selected systems"><button class="project-tab is-active" type="button" role="tab" aria-selected="true" data-project-tab="frameflux"><span>01</span><b>FrameFlux</b><small>Async media</small></button><button class="project-tab" type="button" role="tab" aria-selected="false" data-project-tab="telemetry"><span>02</span><b>Telemetry</b><small>Realtime observability</small></button></div>
-<article class="project-panel is-active" id="project-frameflux" data-project-panel="frameflux"><div class="project-panel-top"><span>01 / ASYNC MEDIA SYSTEM</span><span><i></i> SOURCE AVAILABLE</span></div><div class="project-layout"><div class="project-copy"><div class="project-number">01</div><h3>FrameFlux</h3><p class="project-lead">Keep heavy media work out of the request path.</p><p>Uploads and media transformations become explicit job lifecycles with durable state, validation, progress, retries, and cancellation.</p><div class="tag-row"><span>FastAPI</span><span>PostgreSQL</span><span>Redis / ARQ</span><span>FFmpeg</span></div><div class="project-links"><a href="https://github.com/faizansaiyed123/FrameFlux-Backend" target="_blank" rel="noopener noreferrer">Backend repo <b>↗</b></a><a href="https://github.com/faizansaiyed123/FrameFlux-Frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b>↗</b></a></div></div><div class="project-visual"><div class="diagram-card"><div class="diagram-label"><span>ARCHITECTURE / ASYNC</span><span>FLOW 01</span></div><div class="diagram-main"><div class="node">BROWSER</div><div class="connector"></div><div class="node hot">FASTAPI</div><div class="connector"></div><div class="node split"><b>STATE</b><small>POSTGRES</small></div><div class="rail"><span></span><span></span><span></span></div><div class="node muted">UPLOAD</div><div class="connector"></div><div class="node muted">VALIDATE</div><div class="connector"></div><div class="node hot">REDIS / ARQ</div><div class="connector"></div><div class="node hot">WORKER</div><div class="connector"></div><div class="node">FFMPEG</div></div><div class="diagram-foot"><span>RESUMABLE STATE</span><span>QUEUE + PROGRESS</span><span>PROCESSING</span></div></div><div class="insight-card"><span>THE INTERESTING PART</span><p>A resumable upload is a state machine. A media transform is a job lifecycle. The architecture makes both visible.</p></div></div></div><div class="project-expand"><button class="expand-button" type="button" aria-expanded="false" aria-controls="frameflux-details"><span>Inspect implementation</span><b>+</b></button><div id="frameflux-details" class="expand-grid" hidden><div><span>PROCESSING</span><p>Probe, transcode, trim, cut, split, merge, overlays, transforms and freeze-frame workflows are dispatched as background jobs.</p></div><div><span>VALIDATION</span><p>Input checks cover extension allowlists, MIME/category handling, size limits, and binary-signature inspection before expensive work.</p></div><div><span>VERIFICATION</span><p>Tests cover authentication, authorization, uploads, processing, jobs, projects and status flows.</p></div></div></div></article>
-<article class="project-panel" id="project-telemetry" data-project-panel="telemetry"><div class="project-panel-top"><span>02 / REALTIME OBSERVABILITY</span><span><i></i> SOURCE AVAILABLE</span></div><div class="project-layout"><div class="project-copy"><div class="project-number">02</div><h3>Telemetry</h3><p class="project-lead">Give live system state a model the interface can trust.</p><p>Synthetic telemetry flows through one backend-owned model for anomaly detection, persistence, alert lifecycle, authenticated streaming, and a live dashboard.</p><div class="tag-row"><span>FastAPI</span><span>WebSockets</span><span>PostgreSQL</span><span>React / TypeScript</span></div><div class="project-links"><a href="https://github.com/faizansaiyed123/telemetry-backend" target="_blank" rel="noopener noreferrer">Backend repo <b>↗</b></a><a href="https://github.com/faizansaiyed123/telemetry-frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b>↗</b></a></div></div><div class="project-visual"><div class="diagram-card"><div class="diagram-label"><span>RUNTIME / REALTIME</span><span>FLOW 02</span></div><div class="diagram-main"><div class="node">SIGNAL</div><div class="connector"></div><div class="node hot">TELEMETRY MANAGER</div><div class="connector"></div><div class="node split"><b>STATE</b><small>ANOMALY + ALERTS</small></div><div class="rail"></div><div class="node muted">DETECT</div><div class="connector"></div><div class="node muted">PERSIST</div><div class="connector"></div><div class="node">POSTGRES</div><div class="connector"></div><div class="node hot">WEBSOCKET</div><div class="connector"></div><div class="node">DASHBOARD</div></div><div class="diagram-foot"><span>SYNTHETIC INPUT</span><span>BOUNDED PERSISTENCE</span><span>LIVE STREAM</span></div></div><div class="insight-card"><span>THE INTERESTING PART</span><p>The frontend is not the authority. The backend owns alert lifecycle, roles, persistence, simulation state, and the live stream.</p></div></div></div><div class="project-expand"><button class="expand-button" type="button" aria-expanded="false" aria-controls="telemetry-details"><span>Inspect implementation</span><b>+</b></button><div id="telemetry-details" class="expand-grid" hidden><div><span>RUNTIME</span><p>Signals cover CPU, memory, temperature, network throughput, requests/sec, latency, and error rate, with controlled simulation and fault injection.</p></div><div><span>SECURITY</span><p>Authentication uses JWT and Argon2; backend authorization remains authoritative, including deactivated-user access rules.</p></div><div><span>VERIFICATION</span><p>Unit and integration coverage includes authorization, security, telemetry, WebSockets and simulation; the frontend also has browser-level end-to-end coverage.</p></div></div></div></article>
-<div class="work-footer"><span>SEE THE SOURCE, NOT A MOCKUP.</span><a href="https://github.com/faizansaiyed123?tab=repositories" target="_blank" rel="noopener noreferrer">Browse repositories ↗</a></div></div></section>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
 
-
-<section id="trace-mode" class="section trace-section">
-  <div class="shell">
-    <div class="section-intro">
-      <div><span class="section-label">02 / TRACE MODE</span><span class="section-kicker">FOLLOW THE IMPLEMENTATION</span></div>
-      <div><h2>Don't just read what I built. Follow how it works.</h2><p class="section-description">Explore two real systems step by step. Each stage links to its implementation and a relevant test file, so the walkthrough stays inspectable rather than decorative.</p></div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="wordmark" href="#top" aria-label="Faizan Saiyed home">
+        <span class="wordmark-symbol">F<span>.</span></span>
+        <span class="wordmark-copy"><strong>FAIZAN SAIYED</strong><small>INDEPENDENT SOFTWARE / 2026</small></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#products">Products</a>
+        <a href="#contributions">Open source</a>
+        <a href="#releases">Shipped work</a>
+        <a href="#about">About</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-button theme-toggle" type="button" aria-label="Switch to light theme" title="Switch theme">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path></svg>
+        </button>
+        <a class="header-cta" href="https://github.com/faizansaiyed123" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        <button class="mobile-menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
+      </div>
     </div>
-    <div class="trace-workspace">
-      <aside class="trace-sidebar" aria-label="Choose a system">
-        <span class="trace-overline">SELECT A SYSTEM</span>
-        <button class="trace-system-button is-active" type="button" data-trace-system="frameflux" aria-pressed="true">
-          <span class="trace-system-index">01</span><span class="trace-system-copy"><b>FrameFlux</b><small>Resumable uploads · async jobs</small></span><span class="trace-system-arrow" aria-hidden="true">↗</span>
-        </button>
-        <button class="trace-system-button" type="button" data-trace-system="telemetry" aria-pressed="false">
-          <span class="trace-system-index">02</span><span class="trace-system-copy"><b>Telemetry</b><small>Ingestion · anomaly · realtime</small></span><span class="trace-system-arrow" aria-hidden="true">↗</span>
-        </button>
-        <div class="trace-sidebar-note"><span class="trace-note-mark">i</span><p>This is a guided map of source code and tests—not a live production monitor or a claim of live system activity.</p></div>
-      </aside>
-      <div class="trace-main">
-        <div class="trace-main-top"><span id="trace-system-label">FRAMEFLUX / ASYNC MEDIA PIPELINE</span><span class="trace-source-state"><i></i> REPOSITORY-LINKED</span></div>
-        <div class="trace-flow-heading"><span>EXECUTION PATH</span><span id="trace-step-count">01 — 05</span></div>
-        <div class="trace-step-list" id="trace-steps" role="group" aria-label="Implementation steps">
-          <button class="trace-step is-active" type="button" data-trace-step="0" aria-pressed="true"><span>01</span><b>Upload progress</b><i></i></button>
-          <button class="trace-step" type="button" data-trace-step="1" aria-pressed="false"><span>02</span><b>Persist job state</b><i></i></button>
-          <button class="trace-step" type="button" data-trace-step="2" aria-pressed="false"><span>03</span><b>Queue background work</b><i></i></button>
-          <button class="trace-step" type="button" data-trace-step="3" aria-pressed="false"><span>04</span><b>Run media tasks</b><i></i></button>
-          <button class="trace-step" type="button" data-trace-step="4" aria-pressed="false"><span>05</span><b>Verify lifecycle</b><i></i></button>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+      <a href="#products">Products</a>
+      <a href="#contributions">Open source</a>
+      <a href="#releases">Shipped work</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="opening section-shell" id="top" aria-labelledby="opening-title">
+      <div class="opening-kicker">
+        <span><i class="status-pip" aria-hidden="true"></i> AN INTERACTIVE SOFTWARE PORTFOLIO</span>
+        <span>BUILT TO BE EXPLORED</span>
+      </div>
+      <div class="opening-layout">
+        <div class="opening-copy">
+          <p class="eyebrow">FAIZAN SAIYED / PRODUCT ENGINEERING</p>
+          <h1 id="opening-title">Make the software <em>speak for itself.</em></h1>
+          <p class="opening-description">I build products with real workflows, real engineering decisions, and real edges to inspect. This is where you can explore the work instead of taking a project description on faith.</p>
+          <div class="opening-actions">
+            <a class="button button-primary" href="#products">Explore the products <span aria-hidden="true">↘</span></a>
+            <a class="button button-secondary" href="#contributions">See what shipped <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="opening-note"><span class="note-mark">↳</span> Sample data in demos. Real product behavior. No real customer data.</div>
         </div>
-        <article class="trace-detail" id="trace-detail" aria-live="polite" aria-atomic="true">
-          <div class="trace-detail-index" id="trace-detail-index">01 / FRAMEFLUX</div>
-          <div class="trace-detail-content">
-            <span class="trace-overline" id="trace-stage-type">UPLOAD STATE</span>
-            <h3 id="trace-stage-title">Make progress explicit.</h3>
-            <p id="trace-stage-description">Upload progress is recorded in Redis with an upload identifier, user association, status, bounded percentage, optional byte totals, and an expiry.</p>
-            <div class="trace-design-note"><span>ENGINEERING DECISION</span><p id="trace-stage-decision">Progress is modeled as state that can be queried safely for the user who owns the upload, rather than inferred from a long-running request.</p></div>
-            <div class="trace-evidence-links">
-              <a id="trace-source-link" href="https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/app/features/media/upload_progress.py" target="_blank" rel="noopener noreferrer">Inspect source file <b aria-hidden="true">↗</b></a>
-              <a id="trace-test-link" href="https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/tests/test_validation_and_uploads.py" target="_blank" rel="noopener noreferrer">See related tests <b aria-hidden="true">↗</b></a>
+
+        <div class="explorer-card" aria-label="Ways to explore this portfolio">
+          <div class="explorer-card-top">
+            <span>THE EXPLORER</span>
+            <span class="explorer-id">FS / 001</span>
+          </div>
+          <div class="explorer-orbit" aria-hidden="true">
+            <div class="orbit-ring orbit-ring-a"></div>
+            <div class="orbit-ring orbit-ring-b"></div>
+            <div class="orbit-core"><span>FS</span></div>
+            <span class="orbit-node node-one">TRY</span>
+            <span class="orbit-node node-two">TRACE</span>
+            <span class="orbit-node node-three">VERIFY</span>
+            <span class="orbit-node node-four">BUILD</span>
+          </div>
+          <div class="explorer-tabs" role="tablist" aria-label="How to explore">
+            <button class="explorer-tab is-active" type="button" role="tab" aria-selected="true" data-explorer-tab="try">01 / Try</button>
+            <button class="explorer-tab" type="button" role="tab" aria-selected="false" data-explorer-tab="trace">02 / Trace</button>
+            <button class="explorer-tab" type="button" role="tab" aria-selected="false" data-explorer-tab="verify">03 / Verify</button>
+          </div>
+          <div class="explorer-panel" data-explorer-panel>
+            <strong>Use the product, not just its screenshots.</strong>
+            <p>Open a project lab, follow a prepared scenario, and test the workflow with isolated synthetic data.</p>
+          </div>
+          <div class="explorer-card-foot"><span>YOUR ROUTE, YOUR PACE</span><span>01 — 03</span></div>
+        </div>
+      </div>
+
+      <div class="proof-strip" aria-label="Portfolio evidence">
+        <div class="proof-item"><strong id="project-count">18</strong><span>PERSONAL PROJECTS</span></div>
+        <div class="proof-item"><strong id="contribution-count">19</strong><span>MERGED EXTERNAL PRS</span></div>
+        <div class="proof-item"><strong id="release-count">5</strong><span>OFFICIAL RELEASE CREDITS</span></div>
+        <div class="proof-caption">Evidence over adjectives. Explore the work, then inspect the source.</div>
+      </div>
+    </section>
+
+    <section class="products-section section-shell" id="products" aria-labelledby="products-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">01 / THE PRODUCT LIBRARY</p>
+          <h2 id="products-title">Pick something up.</h2>
+        </div>
+        <p class="section-intro-copy">Eighteen independent builds. Each has its own job to do, its own engineering constraints, and a dedicated lab to explore how it works.</p>
+      </div>
+
+      <div class="product-toolbar">
+        <label class="search-field">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"></circle><path d="m16 16 4.4 4.4"></path></svg>
+          <input id="project-search" type="search" placeholder="Search by product, problem, or technology" autocomplete="off" aria-label="Search personal projects">
+          <kbd>/</kbd>
+        </label>
+        <div class="filter-row" id="project-filters" aria-label="Filter projects by category">
+          <button class="filter-chip is-active" type="button" data-category="all" aria-pressed="true">All work <span id="all-projects-count">18</span></button>
+        </div>
+      </div>
+
+      <div class="product-results-line">
+        <span id="project-results" aria-live="polite">Loading the project library…</span>
+        <span class="results-note">SELECT A PROJECT TO OPEN ITS LAB <b aria-hidden="true">↘</b></span>
+      </div>
+      <div class="project-grid" id="project-grid" aria-live="polite">
+        <div class="loading-card"><span class="loader-dot"></span> Loading project records…</div>
+      </div>
+      <div class="empty-state" id="project-empty" hidden>
+        <span class="empty-glyph">?</span>
+        <strong>No matching projects.</strong>
+        <p>Try a different search term or clear the category filter.</p>
+        <button class="text-button" id="clear-project-filters" type="button">Clear filters ↗</button>
+      </div>
+    </section>
+
+    <section class="method-section section-shell" aria-labelledby="method-title">
+      <div class="method-lead">
+        <p class="eyebrow">02 / HOW TO USE THIS PLACE</p>
+        <h2 id="method-title">A project page should be a <em>working session.</em></h2>
+        <p>Each product lab is built around a clear path: understand the problem, operate the workflow, and verify how it was engineered.</p>
+      </div>
+      <div class="method-steps">
+        <article class="method-step">
+          <span class="step-number">01</span>
+          <div class="step-icon step-icon-orange">↗</div>
+          <h3>Operate it</h3>
+          <p>Use a safe demo environment with fictional records and realistic workflows. No personal account or setup should be required.</p>
+          <span class="step-label">PRODUCT EXPERIENCE</span>
+        </article>
+        <article class="method-step">
+          <span class="step-number">02</span>
+          <div class="step-icon step-icon-blue">⌘</div>
+          <h3>Follow the system</h3>
+          <p>Move from the user action into the API, data model, background work, and state transitions that make it happen.</p>
+          <span class="step-label">ENGINEERING TOUR</span>
+        </article>
+        <article class="method-step">
+          <span class="step-number">03</span>
+          <div class="step-icon step-icon-lime">✓</div>
+          <h3>Check the evidence</h3>
+          <p>Inspect repositories, tests, release history, and documented constraints. Claims stay connected to their source.</p>
+          <span class="step-label">SOURCE AND TESTS</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="contributions-section section-shell" id="contributions" aria-labelledby="contributions-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">03 / OPEN SOURCE</p>
+          <h2 id="contributions-title">My work, out in the world.</h2>
+        </div>
+        <p class="section-intro-copy">Merged changes in projects maintained by other people and teams. The activity graph counts external merged pull requests—not every kind of GitHub contribution.</p>
+      </div>
+
+      <div class="contribution-overview">
+        <div class="contribution-number-panel">
+          <span class="panel-kicker">VERIFIED MERGED PULL REQUESTS</span>
+          <strong id="external-pr-total">19</strong>
+          <span class="panel-foot">ACROSS PUBLIC UPSTREAM REPOSITORIES</span>
+        </div>
+        <div class="contribution-graph-panel">
+          <div class="graph-heading">
+            <div><strong>Open-source activity</strong><span>Daily merged PRs · rolling 52 weeks</span></div>
+            <span class="graph-source" id="activity-updated">Snapshot date pending</span>
+          </div>
+          <div class="heatmap-wrap">
+            <div class="heatmap-months" id="heatmap-months" aria-hidden="true"></div>
+            <div class="heatmap-layout">
+              <div class="heatmap-days" aria-hidden="true"><span>Mon</span><span>Wed</span><span>Fri</span></div>
+              <div class="heatmap" id="contribution-heatmap" role="img" aria-label="Contribution heatmap for merged external pull requests"></div>
             </div>
           </div>
-        </article>
-        <div class="trace-footer"><span>NO API CALLS · NO FAKE RUNTIME DATA</span><span>STATIC, SOURCE-VERIFIABLE WALKTHROUGH</span></div>
+          <div class="heatmap-legend"><span>Less</span><i class="heat-level-0"></i><i class="heat-level-1"></i><i class="heat-level-2"></i><i class="heat-level-3"></i><span>More</span></div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<section id="opensource" class="section portfolio-section contributions-section">
-  <div class="shell">
-    <div class="section-intro">
-      <div><span class="section-label">03 / OPEN SOURCE</span><span class="section-kicker">MERGED CONTRIBUTIONS</span></div>
-      <div class="contributions-heading"><div class="contributions-heading-mark"><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div><h2>My Code, Now Part of Established Open-Source Projects.</h2><p class="section-description">A record of merged pull requests across developer tools, SDKs, and user-facing software. Each card opens the original contribution.</p></div>
-    </div>
-    <div class="contribution-toolbar">
-      <div class="contribution-filters" role="group" aria-label="Filter merged contributions">
-        <button class="contribution-filter-button is-active" type="button" data-contribution-filter="all" aria-pressed="true">All <span data-filter-count>19</span></button>
-        <button class="contribution-filter-button" type="button" data-contribution-filter="ci-agent-audit" aria-pressed="false">CI Agent Audit <span data-filter-count>5</span></button>
-        <button class="contribution-filter-button" type="button" data-contribution-filter="sentry" aria-pressed="false">Sentry <span data-filter-count>3</span></button>
-        <button class="contribution-filter-button" type="button" data-contribution-filter="ansible" aria-pressed="false">Ansible <span data-filter-count>2</span></button>
-        <button class="contribution-filter-button" type="button" data-contribution-filter="other" aria-pressed="false">Other repositories <span data-filter-count>9</span></button>
+      <div class="contribution-list-header">
+        <div><span class="eyebrow">THE COMPLETE RECORD</span><h3>Every merged change.</h3></div>
+        <label class="select-wrap">Repository
+          <select id="contribution-repository" aria-label="Filter contributions by repository"><option value="all">All repositories</option></select>
+        </label>
       </div>
-      <p class="contribution-results" id="contribution-results" aria-live="polite">Showing all 19 merged contributions</p>
-    </div>
-    <div class="contribution-grid">
-      <a class="contribution-card" href="https://github.com/layer8labs8/ci-agent-audit/pull/64" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: detect OpenHands CLI approval-bypass flags in CI Agent Audit">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 14 NOV 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">CI Agent Audit</span>
-        <h3>Detect OpenHands CLI approval-bypass flags</h3>
-        <p>Adds command-scoped detection for OpenHands CLI <code>--always-approve</code>, <code>--yolo</code>, and <code>--headless</code>. Moves the three corresponding regression cases from known gaps into direct-risk benchmark coverage and updates the accuracy figures to 96.9% recall.</p>
-        <div class="project-tech-tags contribution-tech-tags"><span class="project-tech-chip">Python</span><span class="project-tech-chip">Security</span><span class="project-tech-chip">CLI detection</span><span class="project-tech-chip">Benchmarking</span><span class="project-tech-chip">CI/CD</span></div>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/layer8labs8/ci-agent-audit/pull/62" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: add Factory Droid signature to CI Agent Audit">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 14 NOV 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">CI Agent Audit</span>
-        <h3>Add Factory Droid signature</h3>
-        <p>Adds signature coverage for the official Factory Droid GitHub Action (<code>Factory-AI/droid-action</code>) and <code>droid exec</code> CLI, including <code>@factory/cli</code>, documented prompt inputs and flags, wildcard actor settings, high-autonomy mode, and unsafe permission bypass.</p>
-        <div class="project-tech-tags contribution-tech-tags"><span class="project-tech-chip">Developer tooling</span><span class="project-tech-chip">YAML</span><span class="project-tech-chip">CI/CD</span><span class="project-tech-chip">Security</span></div>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/ansible-collections/community.postgresql/pull/976" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: respect requested privileges when revoking default privileges in community.postgresql">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 11 NOV 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">Ansible community.postgresql</span>
-        <h3>Respect requested privileges when revoking default privileges</h3>
-        <p>Fixes <code>postgresql_privs</code> so <code>state: absent</code> with <code>type: default_privs</code> revokes only the requested privileges on the selected object classes, instead of issuing broad <code>REVOKE ALL</code> statements. Preserves unrelated default ACLs and existing <code>state: present</code> behavior, handles uppercase <code>SCHEMAS</code>, and adds regression coverage for <code>ALL_DEFAULT</code>, check mode, and idempotency.</p>
-        <div class="project-tech-tags contribution-tech-tags"><span class="project-tech-chip">Python</span><span class="project-tech-chip">PostgreSQL</span><span class="project-tech-chip">Ansible</span><span class="project-tech-chip">SQL</span><span class="project-tech-chip">Integration testing</span><span class="project-tech-chip">Pytest</span></div>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/anguoyang/rk-deploy/pull/8" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: add Simplified Chinese specification translation to rk-deploy">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 06 NOV 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">rk-deploy</span>
-        <h3>Add Simplified Chinese specification translation</h3>
-        <p>Translates the rk-deploy technical specification into Simplified Chinese while preserving the original code blocks, CLI commands, filenames, identifiers, configuration keys, Markdown tables, and exit-code meanings. Covers architecture, deployment, rollback, fleet status, and uninstall workflows.</p>
-        <div class="project-tech-tags contribution-tech-tags"><span class="project-tech-chip">Documentation</span><span class="project-tech-chip">Markdown</span><span class="project-tech-chip">Simplified Chinese</span><span class="project-tech-chip">Technical writing</span></div>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/anguoyang/rk-deploy/pull/7" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: add fleet-aware uninstall command to rk-deploy">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 06 NOV 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">rk-deploy</span>
-        <h3>Add fleet-aware uninstall command</h3>
-        <p>Adds <code>rkdeploy uninstall</code> with fleet-wide inventory and last-copy protection before destructive operations. Safely stops and removes the systemd service and deployment state, preserves <code>shared/</code> data by default, and guards managed paths against symlink and unexpected-file hazards.</p>
-        <div class="project-tech-tags contribution-tech-tags"><span class="project-tech-chip">Python</span><span class="project-tech-chip">CLI</span><span class="project-tech-chip">Linux</span><span class="project-tech-chip">Systemd</span><span class="project-tech-chip">Pytest</span></div>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/layer8labs8/ci-agent-audit/pull/58" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: propagate GitLab before_script exports in CI Agent Audit">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 04 NOV 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">CI Agent Audit</span>
-        <h3>Propagate GitLab <code>before_script</code> exports</h3>
-        <p>Propagates exported-variable taint from GitLab <code>before_script</code> into <code>script</code>, supports inherited top-level <code>default.before_script</code>, respects <code>inherit: default: false</code>, and keeps <code>after_script</code> isolated. Adds regression coverage for tainted and static exports and default inheritance.</p>
-        <div class="project-tech-tags contribution-tech-tags"><span class="project-tech-chip">Python</span><span class="project-tech-chip">GitLab CI</span><span class="project-tech-chip">Security</span><span class="project-tech-chip">Pytest</span></div>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/layer8labs8/ci-agent-audit/pull/33" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: add Qwen Code signature to CI Agent Audit">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 04 NOV 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">CI Agent Audit</span>
-        <h3>Add support for Qwen Code</h3>
-        <p>Adds CI signature coverage for the official Qwen Code GitHub Action (<code>QwenLM/qwen-code-action</code>), the <code>qwen</code> CLI, and the <code>@qwen-code/qwen-code</code> npm package. Covers the <code>prompt</code> input, <code>-p</code> / <code>--prompt</code> flags, and YOLO approval arguments, scoped to Qwen CLI invocations.</p>
-        <div class="project-tech-tags contribution-tech-tags"><span class="project-tech-chip">Developer tooling</span><span class="project-tech-chip">YAML</span><span class="project-tech-chip">CI/CD</span><span class="project-tech-chip">Security</span></div>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/scs0209/laya-guard/pull/101" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: allow safe project-relative chmod commands in laya-guard">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 03 NOV 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">laya-guard</span>
-        <h3>Allow safe project-relative <code>chmod</code> commands</h3>
-        <p>Adds a narrowly scoped allowlist for non-recursive <code>chmod +x</code>, <code>chmod u+x</code>, and <code>chmod a+x</code> on eligible relative project paths. Unsafe paths, recursive operations, numeric modes, and glob-based bypasses remain blocked. Includes regression tests and an updated rule-verdict snapshot; fixes issue #94.</p>
-        <div class="project-tech-tags contribution-tech-tags"><span class="project-tech-chip">Python</span><span class="project-tech-chip">Security policy</span><span class="project-tech-chip">YAML</span><span class="project-tech-chip">Pytest</span></div>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a><a class="contribution-card" href="https://github.com/ansible-collections/community.postgresql/pull/967" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: fix PostgreSQL prerelease version handling in postgresql_ping">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 02 NOV 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">Ansible community.postgresql</span>
-        <h3>Handle PostgreSQL prerelease versions in <code>postgresql_ping</code></h3>
-        <p>Fixes version parsing for PostgreSQL beta and release-candidate servers by falling back to <code>current_setting('server_version_num')</code>, while preserving existing release-version output and adding regression coverage.</p>
-        <div class="project-tech-tags contribution-tech-tags"><span class="project-tech-chip">Python</span><span class="project-tech-chip">PostgreSQL</span><span class="project-tech-chip">Ansible</span><span class="project-tech-chip">Testing</span></div>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/memtomem/memtomem/pull/2998" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: cli: explain how to add tags when the list is empty">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 02 NOV 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">memtomem</span>
-        <h3>Explain how to add tags when the tag list is empty</h3>
-        <p>Keeps the existing empty-state message and adds the concrete <code>mm add &quot;...&quot; --tags a,b</code> command, with regression assertions for the CLI hint.</p>
-        <div class="project-tech-tags contribution-tech-tags"><span class="project-tech-chip">Python</span><span class="project-tech-chip">CLI</span><span class="project-tech-chip">Developer experience</span><span class="project-tech-chip">Testing</span></div>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/memtomem/memtomem/pull/2997" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: test: add IPv6 coverage for CSRF host helpers">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 02 NOV 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">memtomem</span>
-        <h3>Add IPv6 coverage for CSRF host helpers</h3>
-        <p>Adds focused tests for bracketed IPv6 host and Origin parsing, port stripping, null values, and malformed bracket input. The contribution is tests-only; production CSRF code is unchanged.</p>
-        <div class="project-tech-tags contribution-tech-tags"><span class="project-tech-chip">Python</span><span class="project-tech-chip">IPv6</span><span class="project-tech-chip">CSRF</span><span class="project-tech-chip">Regression testing</span></div>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/anguoyang/rk-deploy/pull/6" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: Add a controller-side dry-run deploy preview">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 02 NOV 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">rk-deploy</span>
-        <h3>Add a controller-side dry-run deploy preview</h3>
-        <p>Adds <code>rkdeploy deploy --dry-run</code> to preview each selected board's package, resolved install root, and fully rendered systemd unit on the controller, without running SSH commands or SCP uploads.</p>
-        <div class="project-tech-tags contribution-tech-tags"><span class="project-tech-chip">Python</span><span class="project-tech-chip">CLI</span><span class="project-tech-chip">Deployment tooling</span><span class="project-tech-chip">Testing</span></div>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/layer8labs8/ci-agent-audit/pull/31" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: Add Amp CLI signature">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 01 NOV 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">CI Agent Audit</span>
-        <h3>Add Amp CLI signature</h3>
-        <p>Adds an Amp CLI signature covering its package identifiers, execute-mode flags, and Amp Code Review GitHub Actions container.</p>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/getsentry/sentry-javascript/pull/25488" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: feat(cloudflare): instrument Workers KV bindings">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 23 OCT 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">Sentry JavaScript SDK</span>
-        <h3>feat(cloudflare): instrument Workers KV bindings</h3>
-        <p>Adds instrumentation for Cloudflare Workers KV bindings in the JavaScript SDK.</p>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/trustflow-protocol/trustflow-sdk/pull/586" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: Expose isWalletRejection from the wallet entry point">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 22 OCT 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">TrustFlow SDK</span>
-        <h3>Expose isWalletRejection from the wallet entry point</h3>
-        <p>Makes the wallet-rejection helper available from the SDK entry point.</p>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/getsentry/sentry-javascript/pull/25357" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: feat(browser): add LoaderSentry type">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 16 OCT 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">Sentry JavaScript SDK</span>
-        <h3>feat(browser): add LoaderSentry type</h3>
-        <p>Introduces the LoaderSentry type in the browser SDK.</p>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/getsentry/sentry-python/pull/7825" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: refactor: move FastAPI active thread tracking into Starlette">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 07 OCT 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">Sentry Python SDK</span>
-        <h3>refactor: move FastAPI active thread tracking into Starlette</h3>
-        <p>Moves active-thread tracking from the FastAPI-specific integration to Starlette.</p>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/home-assistant/frontend/pull/54468" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: Fix light color temperature gradient in RTL">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 30 SEP 2026</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">Home Assistant Frontend</span>
-        <h3>Fix light color temperature gradient in RTL</h3>
-        <p>Corrects the light color-temperature gradient for right-to-left layouts.</p>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-      <a class="contribution-card" href="https://github.com/vijaythecoder/awesome-claude-agents/pull/12" target="_blank" rel="noopener noreferrer" aria-label="Open merged pull request: Modernize React Component Architect agent for React 19/Next.js 14">
-        <div class="contribution-card-top"><span class="contribution-state"><i aria-hidden="true"></i>MERGED · 30 JUL 2025</span><svg class="github-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.75-.24.75-.53v-2.08c-3.05.66-3.7-1.3-3.7-1.3-.5-1.28-1.23-1.62-1.23-1.62-.99-.68.08-.67.08-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.44-.28-5-1.22-5-5.44 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.5 10.5 0 0 1 5.5 0c2.1-1.43 3.01-1.13 3.01-1.13.6 1.52.22 2.64.11 2.92.7.77 1.12 1.75 1.12 2.95 0 4.23-2.56 5.16-5.01 5.43.39.34.74 1.01.74 2.04V22c0 .29.2.63.76.52A11.1 11.1 0 0 0 12 .9Z"/></svg></div>
-        <span class="contribution-repo">Awesome Claude Agents</span>
-        <h3>Modernize React Component Architect agent for React 19/Next.js 14</h3>
-        <p>Reworked the React Component Architect agent definition to emphasize React 19, the Next.js App Router, Server Components, and current UI patterns.</p>
-        <div class="project-tech-tags contribution-tech-tags"><span class="project-tech-chip">Developer tooling</span><span class="project-tech-chip">Markdown</span><span class="project-tech-chip">React / Next.js guidance</span></div>
-        <span class="contribution-open">View merged pull request <b aria-hidden="true">↗</b></span>
-      </a>
-    </div>
-    <div class="release-credits">
-      <div class="release-credits-heading">
+      <div class="contribution-list" id="activity-list" aria-live="polite">
+        <div class="loading-card"><span class="loader-dot"></span> Loading verified contribution records…</div>
+      </div>
+      <p class="source-footnote">Source: GitHub's public pull-request search, filtered to merged PRs authored by <a href="https://github.com/faizansaiyed123" target="_blank" rel="noopener noreferrer">@faizansaiyed123</a> in repositories not owned by this account. <a href="https://github.com/faizansaiyed123?tab=contributions" target="_blank" rel="noopener noreferrer">Open GitHub profile activity ↗</a></p>
+    </section>
+
+    <section class="release-section section-shell" id="releases" aria-labelledby="releases-title">
+      <div class="section-heading">
         <div>
-          <span class="section-label">SHIPPED ACHIEVEMENTS</span>
-          <h3>My Contributions, Shipped in Real Software</h3>
+          <p class="eyebrow">04 / RELEASE CREDITS</p>
+          <h2 id="releases-title">My contributions, shipped in real software.</h2>
         </div>
-        <p>Code I've contributed to established open-source projects, now included in official releases. Each achievement links to the published release.</p>
+        <p class="section-intro-copy">A merged pull request is one milestone. Seeing the change included in an official release is another. These entries link to the release notes and the original change.</p>
       </div>
-      <div class="release-credit-grid">
-        <article class="release-credit-card">
-          <div class="release-credit-card-top"><span class="release-credit-kind">CI AGENT AUDIT</span><span class="release-credit-status"><i aria-hidden="true"></i> SHIPPED</span></div>
-          <h4>v0.1.4 · Amp CLI signature</h4>
-          <p>Added Amp CLI and Amp Code Review GitHub Actions detection; the official release notes explicitly credit <code>@faizansaiyed123</code> for the Amp contribution.</p>
-          <div class="release-credit-links">
-            <a class="release-credit-stretched-link" href="https://github.com/layer8labs8/ci-agent-audit/releases/tag/v0.1.4" aria-label="Open ci-agent-audit v0.1.4 official release notes" target="_blank" rel="noopener noreferrer">Official release <b aria-hidden="true">↗</b></a>
-            <a href="https://github.com/layer8labs8/ci-agent-audit/pull/31" target="_blank" rel="noopener noreferrer">PR #31 <b aria-hidden="true">↗</b></a>
-          </div>
-        </article>
-        <article class="release-credit-card">
-          <div class="release-credit-card-top"><span class="release-credit-kind">SENTRY JAVASCRIPT SDK</span><span class="release-credit-status"><i aria-hidden="true"></i> SHIPPED</span></div>
-          <h4>v11.10.0 · Workers KV instrumentation</h4>
-          <p>Workers KV tracing instrumentation, with <code>@faizansaiyed123</code> included in the release contributor credits.</p>
-          <div class="release-credit-links">
-            <a class="release-credit-stretched-link" href="https://github.com/getsentry/sentry-javascript/releases/tag/11.10.0" aria-label="Open Sentry JavaScript SDK v11.10.0 release notes" target="_blank" rel="noopener noreferrer">Official release <b aria-hidden="true">↗</b></a>
-            <a href="https://github.com/getsentry/sentry-javascript/pull/25488" target="_blank" rel="noopener noreferrer">PR #25488 <b aria-hidden="true">↗</b></a>
-          </div>
-        </article>
-        <article class="release-credit-card">
-          <div class="release-credit-card-top"><span class="release-credit-kind">SENTRY JAVASCRIPT SDK</span><span class="release-credit-status"><i aria-hidden="true"></i> SHIPPED</span></div>
-          <h4>v11.9.0 · LoaderSentry type</h4>
-          <p>TypeScript type export for the CDN loader, included in the release changelog and contributor credits.</p>
-          <div class="release-credit-links">
-            <a class="release-credit-stretched-link" href="https://github.com/getsentry/sentry-javascript/releases/tag/11.9.0" aria-label="Open Sentry JavaScript SDK v11.9.0 release notes" target="_blank" rel="noopener noreferrer">Official release <b aria-hidden="true">↗</b></a>
-            <a href="https://github.com/getsentry/sentry-javascript/pull/25357" target="_blank" rel="noopener noreferrer">PR #25357 <b aria-hidden="true">↗</b></a>
-          </div>
-        </article>
-        <article class="release-credit-card">
-          <div class="release-credit-card-top"><span class="release-credit-kind">SENTRY PYTHON SDK</span><span class="release-credit-status"><i aria-hidden="true"></i> SHIPPED</span></div>
-          <h4>v2.72.0 · Starlette thread tracking</h4>
-          <p>Moved FastAPI active-thread tracking into Starlette; the release notes credit the PR author.</p>
-          <div class="release-credit-links">
-            <a class="release-credit-stretched-link" href="https://github.com/getsentry/sentry-python/releases/tag/2.72.0" aria-label="Open Sentry Python SDK v2.72.0 release notes" target="_blank" rel="noopener noreferrer">Official release <b aria-hidden="true">↗</b></a>
-            <a href="https://github.com/getsentry/sentry-python/pull/7825" target="_blank" rel="noopener noreferrer">PR #7825 <b aria-hidden="true">↗</b></a>
-          </div>
-        </article>
-        <article class="release-credit-card">
-          <div class="release-credit-card-top"><span class="release-credit-kind">HOME ASSISTANT FRONTEND</span><span class="release-credit-status"><i aria-hidden="true"></i> SHIPPED</span></div>
-          <h4>20260930.0 · RTL light color gradient</h4>
-          <p>Fixed the light color-temperature gradient for right-to-left layouts; the release identifies this as a first contribution.</p>
-          <div class="release-credit-links">
-            <a class="release-credit-stretched-link" href="https://github.com/home-assistant/frontend/releases/tag/20260930.0" aria-label="Open Home Assistant Frontend 20260930.0 release notes" target="_blank" rel="noopener noreferrer">Official release <b aria-hidden="true">↗</b></a>
-            <a href="https://github.com/home-assistant/frontend/pull/54468" target="_blank" rel="noopener noreferrer">PR #54468 <b aria-hidden="true">↗</b></a>
-          </div>
-        </article>
+      <div class="release-grid" id="release-grid">
+        <div class="loading-card"><span class="loader-dot"></span> Loading official release credits…</div>
       </div>
-    </div>
-  </div>
-</section>
-<section id="experience" class="section portfolio-section experience-section">
-  <div class="shell">
-    <div class="section-intro">
-      <div><span class="section-label">04 / PROFESSIONAL EXPERIENCE</span><span class="section-kicker">ENGINEERING IN A TEAM</span></div>
-      <div><h2>Contributed to an education product in a production team.</h2><p class="section-description">A focused record of professional engineering experience, kept separate from independent client builds.</p></div>
-    </div>
-    <div class="freelance-grid experience-grid">
-      <article class="freelance-card experience-client-card" aria-labelledby="gyansetu-card-title">
-        <a class="freelance-card-media" href="https://www.gyansetu.ai/LoginPage" target="_blank" rel="noopener noreferrer" aria-label="Open Gyansetu One World AI login page in a new tab">
-          <img src="./assets/site-previews/gyansetu-login-preview.svg" alt="Illustrative preview based on the Gyansetu One World AI login page, showing Institute, Teacher, Parent and Student access options; not a captured screenshot" loading="lazy" decoding="async" width="1440" height="810">
-          <span class="freelance-card-flag">EDTECH · INTERNSHIP CONTRIBUTION</span>
-          <span class="freelance-card-arrow" aria-hidden="true">↗</span>
-        </a>
-        <div class="freelance-card-copy">
-          <div class="freelance-card-overline"><span>IT IDOL TECHNOLOGIES</span><span>01 / 01</span></div>
-          <h3 id="gyansetu-card-title">Gyansetu AI</h3>
-          <p class="experience-role">Backend Developer Intern</p>
-          <p>Contributed to the existing Python/Flask backend during my internship, refactoring backend code and working with PostgreSQL.</p>
-          <div class="project-tech-tags">
-            <span class="project-tech-chip">Python</span>
-            <span class="project-tech-chip">Flask</span>
-            <span class="project-tech-chip">PostgreSQL</span>
-            <span class="project-tech-chip">AWS</span>
+      <p class="source-footnote">Only release credits that can be connected to official release notes and a merged pull request are included.</p>
+    </section>
+
+    <section class="closing-section section-shell" id="about" aria-labelledby="closing-title">
+      <div class="closing-card">
+        <div class="closing-orbit" aria-hidden="true"><span>FS</span></div>
+        <div class="closing-copy">
+          <p class="eyebrow">05 / THE PERSON BEHIND THE BUILDS</p>
+          <h2 id="closing-title">Curious about the person, or the implementation?</h2>
+          <p>I'm Faizan Saiyed, a product-minded engineer interested in backend systems, reliable workflows, data, and the details that make software usable.</p>
+          <div class="closing-links">
+            <a href="https://github.com/faizansaiyed123" target="_blank" rel="noopener noreferrer">GitHub <span>↗</span></a>
+            <a href="https://www.linkedin.com/in/faizan-saiyed-52b289228/" target="_blank" rel="noopener noreferrer">LinkedIn <span>↗</span></a>
+            <a href="mailto:fai1ggj@gmail.com">Email <span>↗</span></a>
           </div>
-          <a class="experience-company-link" href="https://itidoltechnologies.com/" target="_blank" rel="noopener noreferrer">IT Idol Technologies <b aria-hidden="true">↗</b></a>
-          <a class="freelance-card-cta" href="https://www.gyansetu.ai/LoginPage" target="_blank" rel="noopener noreferrer">Open login portal <b aria-hidden="true">↗</b></a>
         </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section id="freelance" class="section portfolio-section freelance-section">
-  <div class="shell">
-    <div class="section-intro">
-      <div><span class="section-label">05 / CLIENT WORK</span><span class="section-kicker">INDEPENDENT BUILDS</span></div>
-      <div><h2>Built for real client needs.</h2><p class="section-description">Two client-facing websites shown with genuine captures. Each card links directly to its live destination; the private client source code is not presented as public work.</p></div>
-    </div>
-    <div class="freelance-grid">
-      <a class="freelance-card" href="https://jecahomesforsalefl.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Jeca Homes client website in a new tab">
-        <div class="freelance-card-media"><img src="./assets/site-previews/jeca-homes.webp" alt="Captured Jeca Homes website preview" loading="lazy" decoding="async" width="1440" height="900"><span class="freelance-card-flag">REAL ESTATE · CLIENT BUILD</span><span class="freelance-card-arrow" aria-hidden="true">↗</span></div>
-        <div class="freelance-card-copy"><div class="freelance-card-overline"><span>CLIENT PROJECT</span><span>01 / 02</span></div><h3>Jeca Homes</h3><p>A Florida real-estate website centered on property discovery, local-area browsing, and direct contact with the agent.</p><div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">Tailwind CSS</span><span class="project-tech-chip">Vite</span></div><span class="freelance-card-cta">Visit live website <b aria-hidden="true">↗</b></span></div>
-      </a>
-      <a class="freelance-card" href="https://printoscar.com/" target="_blank" rel="noopener noreferrer" aria-label="Open PrintOscar client website in a new tab">
-        <div class="freelance-card-media"><img src="./assets/site-previews/printoscar.webp" alt="Captured PrintOscar storefront preview" loading="lazy" decoding="async" width="1440" height="900"><span class="freelance-card-flag">E-COMMERCE · CLIENT BUILD</span><span class="freelance-card-arrow" aria-hidden="true">↗</span></div>
-        <div class="freelance-card-copy"><div class="freelance-card-overline"><span>CLIENT PROJECT</span><span>02 / 02</span></div><h3>PrintOscar</h3><p>An online storefront for custom trophies, medals, plaques, and recognition products, with product-category browsing and checkout integrations.</p><div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span><span class="project-tech-chip">Stripe / PayPal</span></div><span class="freelance-card-cta">Visit live website <b aria-hidden="true">↗</b></span></div>
-      </a>
-
-      
-    </div>
-  </div>
-</section>
-<section id="personal-projects" class="section portfolio-section personal-projects-section">
-  <div class="shell">
-    <div class="section-intro">
-      <div><span class="section-label">06 / PERSONAL PROJECTS</span><span class="section-kicker">FULL-STACK PROJECT INDEX</span></div>
-      <div><h2>Product interfaces, connected to real systems.</h2><p class="section-description">Explore the full-stack work below. Available live previews link to deployed frontends; source links lead to the repositories. FrameFlux uses an architecture diagram, Product Analytics uses a genuine database-backed walkthrough screen because its current deployment cannot reach the API, and LedgerPulse uses a repository screenshot because no live deployment URL was verified.</p></div>
-    </div>
-    <div class="project-gallery-toolbar">
-      <div class="project-filter-bar" role="group" aria-label="Filter personal projects by technology">
-        <button class="project-filter-button is-active" type="button" data-project-filter="all" aria-pressed="true">All projects <span>18</span></button>
-        <button class="project-filter-button" type="button" data-project-filter="react" aria-pressed="false">React</button>
-        <button class="project-filter-button" type="button" data-project-filter="nextjs" aria-pressed="false">Next.js</button>
-        <button class="project-filter-button" type="button" data-project-filter="fastapi" aria-pressed="false">FastAPI</button>
-        <button class="project-filter-button" type="button" data-project-filter="postgresql" aria-pressed="false">PostgreSQL</button>
-        <button class="project-filter-button" type="button" data-project-filter="redis" aria-pressed="false">Redis / queues</button>
-        <button class="project-filter-button" type="button" data-project-filter="ai" aria-pressed="false">AI / RAG</button>
-        <button class="project-filter-button" type="button" data-project-filter="express" aria-pressed="false">Express</button>
-        <button class="project-filter-button" type="button" data-project-filter="flask" aria-pressed="false">Flask</button>
+        <div class="closing-index"><span>PORTFOLIO / 2026</span><span>END OF PAGE · START OF A CONVERSATION</span></div>
       </div>
-      <p class="project-results-count" id="project-results-count" aria-live="polite">Showing all 18 projects</p>
-    </div>
-    <div class="personal-project-grid"><article class="personal-project-card" data-techs="react nextjs fastapi postgresql redis async">
-    <div class="personal-project-preview is-diagram-preview"><img src="./assets/site-previews/frameflux-architecture.svg" alt="FrameFlux architecture diagram showing browser upload, FastAPI, PostgreSQL state, Redis ARQ, workers, and FFmpeg" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>ARCHITECTURE DIAGRAM</span></div>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>ASYNC MEDIA / SYSTEMS</span><span>01 / 18</span></div>
-      <h3>FrameFlux</h3><p>Media uploads, validation, durable job state, queued workers, FFmpeg transformations, progress, retries, and cancellation kept out of the request path.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">Next.js</span><span class="project-tech-chip">React</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span><span class="project-tech-chip">Redis / ARQ</span><span class="project-tech-chip">FFmpeg</span></div>
-      <div class="personal-project-links"><a href="https://github.com/faizansaiyed123/FrameFlux-Frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/FrameFlux-Backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react typescript fastapi postgresql websockets redis realtime">
-    <a class="personal-project-preview" href="https://telemetry-frontend-chi.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Telemetry live application"><img src="./assets/site-previews/telemetry.webp" alt="Telemetry live observability application screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>REALTIME OBSERVABILITY</span><span>02 / 18</span></div>
-      <h3><a href="https://telemetry-frontend-chi.vercel.app/" target="_blank" rel="noopener noreferrer">Telemetry</a></h3><p>A realtime observability workspace for metrics, anomaly detection, alert and incident workflows, persisted state, and authenticated WebSocket streams.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span><span class="project-tech-chip">WebSockets</span><span class="project-tech-chip">Redis</span></div>
-      <div class="personal-project-links"><a href="https://telemetry-frontend-chi.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/telemetry-frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/telemetry-backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react typescript express postgresql ecommerce ai">
-    <a class="personal-project-preview" href="https://sayphora.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Sayphora live application"><img src="./assets/site-previews/sayphora.webp" alt="Sayphora cosmetics and skincare storefront screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>FULL-STACK COMMERCE</span><span>03 / 18</span></div>
-      <h3><a href="https://sayphora.vercel.app/" target="_blank" rel="noopener noreferrer">Sayphora</a></h3><p>A cosmetics storefront with product discovery, cart pricing, orders, inventory, reviews, loyalty rewards, AI beauty tools, and an admin console.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">Express</span><span class="project-tech-chip">PostgreSQL</span><span class="project-tech-chip">E-commerce</span><span class="project-tech-chip">AI tools</span></div>
-      <div class="personal-project-links"><a href="https://sayphora.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/Sayphora" target="_blank" rel="noopener noreferrer">Source repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react typescript fastapi postgresql ai">
-    <a class="personal-project-preview" href="https://focus-journal-frontend.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Focus Journal live application"><img src="./assets/site-previews/focus-journal.webp" alt="Focus Journal journaling application screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>PERSONAL PRODUCTIVITY</span><span>04 / 18</span></div>
-      <h3><a href="https://focus-journal-frontend.vercel.app/" target="_blank" rel="noopener noreferrer">Focus Journal</a></h3><p>Private journaling with daily check-ins, mood and tag summaries, focus sessions, saved history, and optional AI-assisted insights.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span><span class="project-tech-chip">OAuth</span><span class="project-tech-chip">AI insights</span></div>
-      <div class="personal-project-links"><a href="https://focus-journal-frontend.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/Focus-Journal-Frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/Focus-Journal-Backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react typescript fastapi postgresql redis">
-    <a class="personal-project-preview" href="https://nexora-frontend-hazel.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Nexora live application"><img src="./assets/site-previews/nexora.webp" alt="Nexora price intelligence workspace screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>B2B PRICE INTELLIGENCE</span><span>05 / 18</span></div>
-      <h3><a href="https://nexora-frontend-hazel.vercel.app/" target="_blank" rel="noopener noreferrer">Nexora</a></h3><p>A multi-tenant competitive price-intelligence workspace for tracked offerings, competitors, collection runs, job visibility, snapshots, and alerts.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span><span class="project-tech-chip">Redis</span></div>
-      <div class="personal-project-links"><a href="https://nexora-frontend-hazel.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/Nexora-Frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/Nexora-backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react nextjs typescript fastapi postgresql">
-    <a class="personal-project-preview" href="https://feature-flag-platform-frontend-lsf9.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Flagship live application"><img src="./assets/site-previews/feature-flag-platform.webp" alt="Flagship feature flag platform screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>DEVELOPER PLATFORM</span><span>06 / 18</span></div>
-      <h3><a href="https://feature-flag-platform-frontend-lsf9.vercel.app/" target="_blank" rel="noopener noreferrer">Flagship</a></h3><p>A feature-flag workspace for projects, environments, flag targeting, rollout simulation, server-side evaluation, and audit history.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">Next.js</span><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span></div>
-      <div class="personal-project-links"><a href="https://feature-flag-platform-frontend-lsf9.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/feature-flag-platform-frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/feature-flag-platform-backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react nextjs typescript fastapi postgresql crm">
-    <a class="personal-project-preview" href="https://fieldline-crm-frontend.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Fieldline CRM live application"><img src="./assets/site-previews/fieldline-crm.webp" alt="Fieldline CRM workspace screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>CUSTOMER RELATIONSHIPS</span><span>07 / 18</span></div>
-      <h3><a href="https://fieldline-crm-frontend.vercel.app/" target="_blank" rel="noopener noreferrer">Fieldline CRM</a></h3><p>A CRM workspace for customer records, sales pipelines, tasks, follow-ups, saved views, data quality, and relationship intelligence.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">Next.js</span><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span></div>
-      <div class="personal-project-links"><a href="https://fieldline-crm-frontend.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/fieldline-crm-frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/fieldline-crm-backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react typescript fastapi postgresql redis">
-    <a class="personal-project-preview" href="https://marketing-campaign-management-front.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Orbit Campaigns live application"><img src="./assets/site-previews/marketing-campaigns.webp" alt="Orbit Campaigns marketing application screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>CAMPAIGN MANAGEMENT</span><span>08 / 18</span></div>
-      <h3><a href="https://marketing-campaign-management-front.vercel.app/" target="_blank" rel="noopener noreferrer">Orbit Campaigns</a></h3><p>A campaign workspace for audiences, contacts, templates, authoring, and reporting, with delivery handled by a companion API and worker.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">Vite</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span><span class="project-tech-chip">Background jobs</span></div>
-      <div class="personal-project-links"><a href="https://marketing-campaign-management-front.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/marketing-campaign-management-frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/marketing-campaign-management-backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react typescript fastapi postgresql analytics">
-    <div class="personal-project-preview is-repo-preview"><img src="./assets/site-previews/product-analytics-overview.png" alt="Product Analytics analytics overview with persisted event and user metrics from the project walkthrough" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>WORKFLOW SCREEN</span></div>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>PRODUCT DATA</span><span>09 / 18</span></div>
-      <h3>Product Analytics</h3><p>A self-hosted analytics workspace for event trends, funnels, retention, user journeys, sessions, people, cohorts, saved reports, and dashboards.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span><span class="project-tech-chip">Analytics</span></div>
-      <div class="personal-project-links"><a href="https://github.com/faizansaiyed123/product_analytics_frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/product_analytics_backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react typescript fastapi postgresql redis ai">
-    <a class="personal-project-preview" href="https://gemini-frontend-clone.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Gemini Chat Platform live application"><img src="./assets/site-previews/gemini-frontend.webp" alt="Gemini chat application screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>AI CHAT / ASYNC JOBS</span><span>10 / 18</span></div>
-      <h3><a href="https://gemini-frontend-clone.vercel.app/" target="_blank" rel="noopener noreferrer">Gemini Chat Platform</a></h3><p>An AI chat interface with OTP access, searchable conversation history, chatrooms, queued reply polling, account settings, and a Stripe checkout redirect.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span><span class="project-tech-chip">Redis</span><span class="project-tech-chip">Stripe</span></div>
-      <div class="personal-project-links"><a href="https://gemini-frontend-clone.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/gemini-frontend-clone" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/gemini-backend-clone" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react typescript fastapi postgresql finance">
-    <a class="personal-project-preview" href="https://frontend-intern-credits.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Mintline / Intern Credits live application"><img src="./assets/site-previews/intern-credits.webp" alt="Mintline credit management dashboard screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>CREDIT OPERATIONS</span><span>11 / 18</span></div>
-      <h3><a href="https://frontend-intern-credits.vercel.app/" target="_blank" rel="noopener noreferrer">Mintline / Intern Credits</a></h3><p>A credit-management dashboard with API-backed balances, operational actions, administration, and migration history—without fabricated account balances.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span></div>
-      <div class="personal-project-links"><a href="https://frontend-intern-credits.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/frontend-intern-credits" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/backend-intern-credits" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react typescript fastapi postgresql async">
-    <a class="personal-project-preview" href="https://agencyos-frontend-one.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open AgencyOS live application"><img src="./assets/site-previews/agencyos.webp" alt="AgencyOS business operations workspace screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>AGENCY OPERATIONS</span><span>12 / 18</span></div>
-      <h3><a href="https://agencyos-frontend-one.vercel.app/" target="_blank" rel="noopener noreferrer">AgencyOS</a></h3><p>An operations workspace spanning client and deal CRM, proposals, projects, tasks, time entries, invoices, and team access.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span><span class="project-tech-chip">Background jobs</span></div>
-      <div class="personal-project-links"><a href="https://agencyos-frontend-one.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/agencyos_frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/agencyos_backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react vite fastapi postgresql">
-    <a class="personal-project-preview" href="https://cleanflow-frontend-theta.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open CleanFlow live application"><img src="./assets/site-previews/cleanflow.webp" alt="CleanFlow commercial cleaning operations application screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>CLEANING OPERATIONS</span><span>13 / 18</span></div>
-      <h3><a href="https://cleanflow-frontend-theta.vercel.app/" target="_blank" rel="noopener noreferrer">CleanFlow</a></h3><p>A commercial cleaning workflow connecting inquiries and quotes with contracts, recurring schedules, field jobs, invoicing, payments, and customer history.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">Vite</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span></div>
-      <div class="personal-project-links"><a href="https://cleanflow-frontend-theta.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/cleanflow_frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/cleanflow_backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react typescript fastapi postgresql">
-    <a class="personal-project-preview" href="https://flow-desk-frontend-three.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open FlowDesk live application"><img src="./assets/site-previews/flowdesk.webp" alt="FlowDesk workspace application screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>WORKSPACE OPERATIONS</span><span>14 / 18</span></div>
-      <h3><a href="https://flow-desk-frontend-three.vercel.app/" target="_blank" rel="noopener noreferrer">FlowDesk</a></h3><p>A multi-tenant workspace for clients, projects, tasks, time tracking, invoices, team access, memberships, and integrations.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span></div>
-      <div class="personal-project-links"><a href="https://flow-desk-frontend-three.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/flow-desk_frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/flow-desk_backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react nextjs typescript fastapi postgresql ai">
-    <a class="personal-project-preview" href="https://supportai-frontend-plum.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open SupportAI live application"><img src="./assets/site-previews/supportai.webp" alt="SupportAI interface screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>RAG SUPPORT WORKSPACE</span><span>15 / 18</span></div>
-      <h3><a href="https://supportai-frontend-plum.vercel.app/" target="_blank" rel="noopener noreferrer">SupportAI</a></h3><p>A support interface paired with a knowledge-ingestion and retrieval backend using PostgreSQL pgvector and a local Ollama model runtime.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">Next.js</span><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">pgvector</span><span class="project-tech-chip">Ollama / RAG</span></div>
-      <div class="personal-project-links"><a href="https://supportai-frontend-plum.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/supportai_frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/supportai_backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react vite fastapi postgresql">
-    <a class="personal-project-preview" href="https://service-agreement-manager-frontend.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Service Agreement Manager live application"><img src="./assets/site-previews/service-agreement-manager.webp" alt="Service Agreement Manager application screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>FIELD SERVICE OPERATIONS</span><span>16 / 18</span></div>
-      <h3><a href="https://service-agreement-manager-frontend.vercel.app/" target="_blank" rel="noopener noreferrer">Service Agreement Manager</a></h3><p>A service-trade operations application covering customers, agreements, service workflows, billing, reporting, and integrations.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">Vite</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span></div>
-      <div class="personal-project-links"><a href="https://service-agreement-manager-frontend.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/service-agreement-manager-frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/service-agreement-manager-backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react nextjs typescript fastapi postgresql">
-    <a class="personal-project-preview" href="https://autofix-frontend-phi.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open AutoFix Garage live application"><img src="./assets/site-previews/autofix.webp" alt="AutoFix Garage workshop management screenshot" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>LIVE SCREEN</span><span class="personal-preview-arrow" aria-hidden="true">↗</span></a>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>WORKSHOP MANAGEMENT</span><span>17 / 18</span></div>
-      <h3><a href="https://autofix-frontend-phi.vercel.app/" target="_blank" rel="noopener noreferrer">AutoFix Garage</a></h3><p>A workshop management application for customer and vehicle records, appointments, check-ins, repair workflows, and a customer portal.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">Next.js</span><span class="project-tech-chip">React</span><span class="project-tech-chip">TypeScript</span><span class="project-tech-chip">FastAPI</span><span class="project-tech-chip">PostgreSQL</span></div>
-      <div class="personal-project-links"><a href="https://autofix-frontend-phi.vercel.app/" target="_blank" rel="noopener noreferrer">Live app <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/autofix_frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/autofix_backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article><article class="personal-project-card" data-techs="react vite flask postgresql finance">
-    <div class="personal-project-preview is-repo-preview"><img src="./assets/site-previews/ledgerpulse.png" alt="LedgerPulse public landing-page screenshot from the frontend repository walkthrough" loading="lazy" decoding="async" width="1440" height="900"><span class="personal-preview-label"><i aria-hidden="true"></i>REPOSITORY SCREENSHOT</span></div>
-    <div class="personal-project-copy"><div class="personal-project-overline"><span>INVOICE / FINANCE WORKFLOWS</span><span>18 / 18</span></div>
-      <h3>LedgerPulse</h3><p>An invoice and expense-management product with customers, vendors, payments, recurring invoices, and organization-aware access backed by a Flask API and PostgreSQL.</p>
-      <div class="project-tech-tags"><span class="project-tech-chip">React</span><span class="project-tech-chip">Vite</span><span class="project-tech-chip">Flask</span><span class="project-tech-chip">PostgreSQL</span><span class="project-tech-chip">Firebase Auth</span></div>
-      <div class="personal-project-links"><a href="https://github.com/faizansaiyed123/ledgerpulse_frontend" target="_blank" rel="noopener noreferrer">Frontend repo <b aria-hidden="true">↗</b></a><a href="https://github.com/faizansaiyed123/ledgerpulse_backend" target="_blank" rel="noopener noreferrer">Backend repo <b aria-hidden="true">↗</b></a></div>
-    </div></article>
-    </div>
-    <div class="personal-projects-footnote"><span>18 / 18 PROJECTS INDEXED</span><a href="https://github.com/faizansaiyed123?tab=repositories" target="_blank" rel="noopener noreferrer">More on GitHub <b aria-hidden="true">↗</b></a></div>
-  </div>
-</section>
-<section id="systems" class="section systems"><div class="shell"><div class="section-intro"><div><span class="section-label">07 / SYSTEMS THINKING</span><span class="section-kicker">THE REPEATED MOVES</span></div><h2>The way I approach engineering is visible in the projects above.</h2></div><div class="systems-grid"><article><span>01</span><h3>Separate expensive work.</h3><p>Long-running operations become explicit lifecycles with visible state, retries, cancellation, and failure boundaries.</p></article><article><span>02</span><h3>Keep authority on the backend.</h3><p>The interface can guide a user, but security, state transitions, and system rules belong where they can be enforced.</p></article><article><span>03</span><h3>Validate before you spend.</h3><p>Reject malformed or unsafe input at the edge before it reaches an expensive or sensitive execution path.</p></article><article><span>04</span><h3>Verify from the outside in.</h3><p>Unit tests prove isolated behavior; integration and browser tests ask whether the whole thing behaves as a user sees it.</p></article></div><div class="systems-callout"><span>/</span><p>I like systems that leave fewer surprises behind them.</p></div></div></section>
-<section id="stack" class="section stack"><div class="shell"><div class="section-intro"><div><span class="section-label">08 / STACK</span><span class="section-kicker">TOOLS WITH DIRECT EVIDENCE</span></div><h2>Technologies used across the work.</h2></div><div class="stack-table"><div><span>BACKEND</span><p>Python · FastAPI · Flask · Pydantic · SQLAlchemy · Alembic</p><small>APIs / validation / persistence</small></div><div><span>SYSTEMS</span><p>PostgreSQL · Redis · ARQ · WebSockets · FFmpeg · Uvicorn · Docker</p><small>state / jobs / realtime / processing</small></div><div><span>AI & RETRIEVAL</span><p>Ollama · pgvector · embeddings · reranking</p><small>local inference / knowledge retrieval</small></div><div><span>FRONTEND</span><p>React · Next.js · TypeScript · Vite · Tailwind CSS</p><small>product interfaces / dashboards</small></div><div><span>VERIFICATION</span><p>Pytest · integration tests · Playwright · GitHub Actions</p><small>behavior / browser / automation</small></div></div></div></section>
-<section id="contact" class="section contact"><div class="shell contact-layout"><div><span class="section-label">09 / CONTACT</span><span class="section-kicker">OPEN CHANNEL</span><h2>Bring a real problem.</h2><p>I’m looking for hands-on backend / full-stack product engineering opportunities and technical conversations where the work has substance.</p></div><div class="contact-card"><span>DIRECT</span><a class="contact-email" href="mailto:saiyedfaizan842@gmail.com?subject=Portfolio%20contact">saiyedfaizan842@gmail.com <b>↗</b></a><div class="contact-links"><a href="https://github.com/faizansaiyed123" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/faizan-saiyed-52b289228/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div><small>Email opens your mail client. No third-party form service.</small></div></div></section>
-</main>
-<footer class="footer">
-  <div class="footer-monogram" aria-hidden="true">FAIZAN</div>
-  <div class="footer-ambient-line" aria-hidden="true"><span>FS</span><i></i><span>ENDPOINT / 05</span><i></i><span>CONNECTION READY</span></div>
-  <div class="footer-cta shell">
-    <div class="footer-cta-copy">
-      <span class="section-label">09 / ENDPOINT</span>
-      <h2>Build something that has to <em>work.</em></h2>
-      <p>The portfolio ends here. The conversation does not.</p>
-    </div>
-    <a class="footer-cta-button" href="mailto:saiyedfaizan842@gmail.com?subject=Portfolio%20contact">Start a conversation <b>↗</b></a>
-  </div>
-  <div class="footer-rule shell"></div>
-  <div class="footer-grid shell">
-    <div class="footer-brand">
-      <span class="footer-mark">FS</span>
-      <div><b>FAIZAN SAIYED</b><small>BACKEND · SYSTEMS · FULL-STACK</small></div>
-    </div>
-    <div class="footer-column">
-      <span>EXPLORE</span>
-      <a href="#work">Selected work ↗</a>
-      <a href="#experience">Professional experience ↗</a>
-      <a href="#opensource">Open-source contributions ↗</a>
-      <a href="#freelance">Freelance work ↗</a>
-      <a href="#personal-projects">Personal projects ↗</a>
-      <a href="#systems">Systems thinking ↗</a>
-      <a href="#stack">Stack ↗</a>
-      <a href="#contact">Contact ↗</a>
-    </div>
-    <div class="footer-column">
-      <span>SOURCE</span>
-      <a href="https://github.com/faizansaiyed123/FrameFlux-Backend" target="_blank" rel="noopener noreferrer">FrameFlux Backend ↗</a>
-      <a href="https://github.com/faizansaiyed123/FrameFlux-Frontend" target="_blank" rel="noopener noreferrer">FrameFlux Frontend ↗</a>
-      <a href="https://github.com/faizansaiyed123/telemetry-backend" target="_blank" rel="noopener noreferrer">Telemetry Backend ↗</a>
-      <a href="#personal-projects">Project gallery ↗</a>
-    </div>
-    <div class="footer-column">
-      <span>CONNECT</span>
-      <a href="mailto:saiyedfaizan842@gmail.com?subject=Portfolio%20contact">Email ↗</a>
-      <a href="https://github.com/faizansaiyed123" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-      <a href="https://www.linkedin.com/in/faizan-saiyed-52b289228/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-      <button type="button" id="footer-guide">Open portfolio guide ↗</button>
-    </div>
-  </div>
-  <div class="footer-bottom shell">
-    <span>GUIDED EXPERIENCE / CURATED PATH</span>
-    <span>STATIC SITE / GITHUB PAGES</span>
-    <span>© <b id="year"></b> FAIZAN SAIYED</span>
+    </section>
+  </main>
+
+  <footer class="site-footer section-shell">
+    <span>FAIZAN SAIYED</span>
+    <span>MADE TO BE EXPLORED, NOT JUST SCROLLED.</span>
     <a href="#top">BACK TO TOP ↑</a>
-  </div>
-</footer>
+  </footer>
 
-<div class="welcome-mascot" id="welcome-mascot" hidden>
-  <div class="welcome-mascot-bubble" role="status" aria-live="polite">
-    <div class="welcome-mascot-bubble-top">
-      <span>FAIZAN / HELLO</span>
-      <button type="button" id="welcome-mascot-close" aria-label="Dismiss welcome message">×</button>
-    </div>
-    <p><strong>Hey, welcome!</strong> I'm Faizan. Glad you're here.</p>
-    <small>Take a look around — make yourself at home.</small>
-  </div>
-
-  <div class="welcome-mascot-person" aria-hidden="true">
-    <img
-      class="welcome-mascot-wave-image"
-      src="./assets/mini-faizan-wave.webp"
-      alt=""
-      width="72"
-      height="168"
-      decoding="async"
-    >
-    <img
-      class="welcome-mascot-run-image"
-      src="./assets/mini-faizan-run.webp"
-      alt=""
-      width="48"
-      height="88"
-      decoding="async"
-    >
-  </div>
-</div>
-<button class="welcome-mascot-replay" id="welcome-mascot-replay" type="button" aria-label="Show Faizan's welcome again" title="Say hi again" hidden>
-  <img src="./assets/mini-faizan-wave.webp" alt="" width="72" height="168" decoding="async">
-  <span>Say hi again</span>
-</button>
-
-<div class="guide-dock" id="guide-dock">
-  <button class="guide-launcher" id="guide-launcher" type="button" aria-controls="guide-panel" aria-expanded="false" aria-label="Open portfolio guide">
-    <svg class="guide-bot-icon" viewBox="0 0 48 48" aria-hidden="true">
-      <path class="guide-bot-antenna" d="M24 9V5"></path>
-      <circle class="guide-bot-tip" cx="24" cy="4.5" r="2"></circle>
-      <rect class="guide-bot-head" x="10" y="11" width="28" height="23" rx="8"></rect>
-      <path class="guide-bot-ear" d="M7.5 19v7M40.5 19v7"></path>
-      <circle class="guide-bot-eye" cx="18" cy="22" r="2.2"></circle>
-      <circle class="guide-bot-eye" cx="30" cy="22" r="2.2"></circle>
-      <path class="guide-bot-mouth" d="M18 28c3.2 2.2 8.8 2.2 12 0"></path>
-    </svg>
-    <span class="guide-launcher-label">Explore</span>
-  </button>
-  <aside class="guide-panel" id="guide-panel" hidden aria-label="Portfolio guide">
-    <div class="guide-head">
-      <div class="guide-identity">
-        <span class="guide-avatar" aria-hidden="true">FS</span>
-        <div>
-          <span>FAIZAN / PORTFOLIO GUIDE</span>
-          <h2>What would you like to explore?</h2>
-        </div>
+  <dialog class="project-dialog" id="project-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-shell">
+      <div class="dialog-topbar">
+        <span class="dialog-eyebrow" id="dialog-kicker">PROJECT LAB / 01</span>
+        <button class="dialog-close" type="button" aria-label="Close project details">Close <span aria-hidden="true">×</span></button>
       </div>
-      <button id="guide-close" type="button" aria-label="Close portfolio guide">×</button>
+      <div class="dialog-content" id="dialog-content"></div>
     </div>
-    <div class="guide-status">
-      <span><i aria-hidden="true"></i> GUIDED EXPERIENCE</span>
-      <span id="guide-context">WELCOME</span>
-      <span id="guide-progress">READY</span>
-    </div>
-    <div class="guide-thread" id="guide-thread" aria-live="polite"></div>
-    <div class="guide-actions" id="guide-actions" role="group" aria-label="Portfolio guide choices"></div>
-    <div class="guide-footer-line">
-      <span>Choose an option to continue</span>
-      <button class="guide-restart" id="guide-restart" type="button">Restart</button>
-    </div>
-  </aside>
-</div>
-<div class="command-bar" id="command-bar" hidden><div class="command-inner"><span class="command-key">/</span><input id="command-input" type="text" placeholder="Jump to work, systems, stack, contact..." aria-label="Jump command"><button type="button" id="command-close" aria-label="Close command palette">Esc</button></div><div class="command-results" id="command-results"></div></div>
-<script src="./script.js?v=20261114-engineering-casebook"></script>
+  </dialog>
+
+  <noscript><div class="noscript-note">This portfolio uses JavaScript to load its project and contribution records. Enable JavaScript to explore the interactive project library.</div></noscript>
 </body>
 </html>
