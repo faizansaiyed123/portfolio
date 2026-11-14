@@ -744,3 +744,18 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .contribution-breakdown strong { font-size: 10px; }
   .list-context { font-size: 9px; }
 }
+
+.external-pr-count {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 10px 0 0;
+  color: var(--faint);
+  font-size: 8px;
+}
+.external-pr-count strong {
+  color: var(--lime);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
