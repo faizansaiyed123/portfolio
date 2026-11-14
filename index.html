@@ -64,7 +64,7 @@
             <a class="button button-primary" href="#products">Explore the products <span aria-hidden="true">↘</span></a>
             <a class="button button-secondary" href="#contributions">See what shipped <span aria-hidden="true">↗</span></a>
           </div>
-          <div class="opening-note"><span class="note-mark">↳</span> Sample data in demos. Real product behavior. No real customer data.</div>
+          <div class="opening-note"><span class="note-mark">↳</span> Synthetic data only. Demo availability is verified project by project.</div>
         </div>
 
         <div class="explorer-card" aria-label="Ways to explore this portfolio">
@@ -179,19 +179,22 @@
 
       <div class="contribution-overview">
         <div class="contribution-number-panel">
-          <span class="panel-kicker">VERIFIED MERGED PULL REQUESTS</span>
-          <strong id="external-pr-total">19</strong>
-          <span class="panel-foot">ACROSS PUBLIC UPSTREAM REPOSITORIES</span>
+          <span class="panel-kicker">PUBLIC GITHUB CONTRIBUTIONS</span>
+          <strong id="public-contribution-total">—</strong>
+          <span class="panel-foot">LAST 12 MONTHS · PROFILE CALENDAR</span>
+          <div class="contribution-breakdown" id="contribution-breakdown" aria-live="polite">
+            <span>Calendar snapshot has not loaded yet.</span>
+          </div>
         </div>
         <div class="contribution-graph-panel">
           <div class="graph-heading">
-            <div><strong>Open-source activity</strong><span>Daily merged PRs · rolling 52 weeks</span></div>
+            <div><strong>GitHub contribution calendar</strong><span>Daily public commits, pull requests, issues and reviews · rolling year</span></div>
             <span class="graph-source" id="activity-updated">Snapshot date pending</span>
           </div>
           <div class="heatmap-wrap">
             <div class="heatmap-months" id="heatmap-months" aria-hidden="true"></div>
             <div class="heatmap-layout">
-              <div class="heatmap-days" aria-hidden="true"><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span><span>Sun</span></div>
+              <div class="heatmap-days" aria-hidden="true"><span>Sun</span><span></span><span>Tue</span><span></span><span>Thu</span><span></span><span>Sat</span></div>
               <div class="heatmap" id="contribution-heatmap" role="img" aria-label="Contribution heatmap for merged external pull requests"></div>
             </div>
           </div>
@@ -200,7 +203,7 @@
       </div>
 
       <div class="contribution-list-header">
-        <div><span class="eyebrow">THE COMPLETE RECORD</span><h3>Every merged change.</h3></div>
+        <div><span class="eyebrow">THE UPSTREAM RECORD</span><h3>Every external merged PR.</h3><p class="list-context">This list is separate from the public contribution calendar above and includes all verified merged PRs in repositories you do not own.</p></div>
         <label class="select-wrap">Repository
           <select id="contribution-repository" aria-label="Filter contributions by repository"><option value="all">All repositories</option></select>
         </label>
@@ -208,7 +211,7 @@
       <div class="contribution-list" id="activity-list" aria-live="polite">
         <div class="loading-card"><span class="loader-dot"></span> Loading verified contribution records…</div>
       </div>
-      <p class="source-footnote">Source: GitHub's public pull-request search, filtered to merged PRs authored by <a href="https://github.com/faizansaiyed123" target="_blank" rel="noopener noreferrer">@faizansaiyed123</a> in repositories not owned by this account. <a href="https://github.com/faizansaiyed123?tab=contributions" target="_blank" rel="noopener noreferrer">Open GitHub profile activity ↗</a></p>
+      <p class="source-footnote">Calendar source: GitHub's public <a href="https://docs.github.com/en/graphql/reference/objects#contributionscollection" target="_blank" rel="noopener noreferrer">contributions collection</a>; private-repository activity is excluded. The list below is the independently verified external merged-PR record. <a href="https://github.com/faizansaiyed123?tab=contributions" target="_blank" rel="noopener noreferrer">Open the GitHub profile calendar ↗</a></p>
     </section>
 
     <section class="achievements-section section-shell" id="achievements" aria-labelledby="achievements-title">
@@ -222,7 +225,7 @@
       <div class="achievement-grid" id="achievement-grid">
         <div class="loading-card"><span class="loader-dot"></span> Calculating verified milestones…</div>
       </div>
-      <p class="source-footnote">For GitHub-issued profile achievements and account activity, use the <a href="https://github.com/faizansaiyed123" target="_blank" rel="noopener noreferrer">public GitHub profile ↗</a>. This section only displays milestones that can be tied to the published contribution and release evidence above.</p>
+      <p class="source-footnote">These are evidence-backed work milestones, not GitHub-issued badges. GitHub's own achievement badges are account-controlled and are shown on the <a href="https://github.com/faizansaiyed123?tab=achievements" target="_blank" rel="noopener noreferrer">live profile achievements tab ↗</a>; no badge is recreated here without a verifiable profile record.</p>
     </section>
 
     <section class="release-section section-shell" id="releases" aria-labelledby="releases-title">
@@ -231,7 +234,7 @@
           <p class="eyebrow">05 / RELEASE CREDITS</p>
           <h2 id="releases-title">My contributions, shipped in real software.</h2>
         </div>
-        <p class="section-intro-copy">A merged pull request is one milestone. Seeing the change included in an official release is another. These entries link to the release notes and the original change.</p>
+        <p class="section-intro-copy">A merged pull request is one milestone. Seeing the change included in an official release or prerelease is another. Each credit links to the published notes and the original merged change.</p>
       </div>
       <div class="release-grid" id="release-grid">
         <div class="loading-card"><span class="loader-dot"></span> Loading official release credits…</div>
