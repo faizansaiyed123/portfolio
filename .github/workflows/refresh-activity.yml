@@ -1,0 +1,33 @@
+name: Refresh portfolio activity data
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch merged pull requests
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p data
+          gh api -X GET search/issues \
+            -f q='author:faizansaiyed123 is:pr is:merged -user:faizansaiyed123' \
+            -f sort=updated -f per_page=100 \
+            --jq '{fetchedAt: (now | todate), mergedPullRequests: .total_count, latest: [.items[:5][] | {title, url: .html_url, repo: (.repository_url | sub("https://api.github.com/repos/"; "")), closedAt: .closed_at}]}' \
+            > data/activity.json.tmp
+          jq -e '.mergedPullRequests >= 0' data/activity.json.tmp > /dev/null
+          mv data/activity.json.tmp data/activity.json
+      - name: Commit if changed
+        run: |
+          git config user.name "portfolio-bot"
+          git config user.email "portfolio-bot@users.noreply.github.com"
+          git add data/activity.json
+          git diff --cached --quiet || git commit -m "chore: refresh activity data" && git push
