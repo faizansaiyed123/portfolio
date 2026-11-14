@@ -1,6 +1,11 @@
-name: Refresh verified open-source activity
+name: Refresh verified GitHub activity data
 
 on:
+  push:
+    branches:
+      - activity-data
+    paths:
+      - "data/refresh-trigger.txt"
   schedule:
     - cron: "23 */3 * * *"
   workflow_dispatch:
@@ -8,11 +13,20 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: refresh-github-activity-data
+  cancel-in-progress: false
+
 jobs:
   snapshot:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out the public activity data branch
+        uses: actions/checkout@v4
+        with:
+          ref: activity-data
+          fetch-depth: 0
+
       - name: Fetch every merged external pull request
         env:
           GH_TOKEN: ${{ github.token }}
@@ -36,7 +50,7 @@ jobs:
                 schemaVersion: 1,
                 owner: "faizansaiyed123",
                 query: "author:faizansaiyed123 is:pr is:merged -user:faizansaiyed123",
-                scope: "Merged pull requests authored by this account in repositories not owned by the account. This is not a count of every GitHub contribution type.",
+                scope: "Merged pull requests authored by this account in repositories not owned by the account. This is a complete external merged-PR list, not a count of every GitHub contribution type.",
                 fetchedAt: (now | todate),
                 total: length,
                 items: map({
@@ -71,13 +85,90 @@ jobs:
           mv data/activity.json.tmp data/activity.json
           rm data/activity-search.json.tmp
 
-      - name: Commit snapshot only when it changed
+      - name: Fetch the public GitHub contribution calendar
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p data
+          from="$(date -u -d '364 days ago' '+%Y-%m-%dT00:00:00Z')"
+          to="$(date -u '+%Y-%m-%dT23:59:59Z')"
+          query='
+            query($login: String!, $from: DateTime!, $to: DateTime!) {
+              user(login: $login) {
+                contributionsCollection(
+                  from: $from,
+                  to: $to,
+                  includePrivateContributions: false
+                ) {
+                  contributionCalendar {
+                    totalContributions
+                    weeks {
+                      contributionDays {
+                        date
+                        contributionCount
+                        weekday
+                      }
+                    }
+                  }
+                  totalCommitContributions
+                  totalIssueContributions
+                  totalPullRequestContributions
+                  totalPullRequestReviewContributions
+                }
+              }
+            }
+          '
+
+          gh api graphql \
+            -f query="$query" \
+            -F login="faizansaiyed123" \
+            -F from="$from" \
+            -F to="$to" \
+            > data/contributions-calendar-raw.json.tmp
+
+          jq -e '.data.user.contributionsCollection.contributionCalendar.weeks | length > 0' \
+            data/contributions-calendar-raw.json.tmp > /dev/null
+
+          jq --arg owner "faizansaiyed123" --arg from "$from" --arg to "$to" '
+            .data.user.contributionsCollection as $collection
+            | {
+                schemaVersion: 1,
+                owner: $owner,
+                source: "GitHub GraphQL contributionsCollection",
+                scope: "Public profile contributions only. Includes GitHub-eligible public commits, pull requests, issues and reviews; private contribution counts are excluded.",
+                fetchedAt: (now | todate),
+                range: { from: $from, to: $to },
+                totalContributions: $collection.contributionCalendar.totalContributions,
+                totals: {
+                  commits: $collection.totalCommitContributions,
+                  issues: $collection.totalIssueContributions,
+                  pullRequests: $collection.totalPullRequestContributions,
+                  pullRequestReviews: $collection.totalPullRequestReviewContributions
+                },
+                weeks: $collection.contributionCalendar.weeks
+              }
+          ' data/contributions-calendar-raw.json.tmp > data/contributions-calendar.json.tmp
+
+          jq -e '
+            (.schemaVersion == 1)
+            and (.owner == "faizansaiyed123")
+            and (.fetchedAt != null)
+            and (.totalContributions >= 0)
+            and (.weeks | length > 0)
+            and (.weeks | all(.[]; (.contributionDays | length > 0)))
+          ' data/contributions-calendar.json.tmp > /dev/null
+
+          mv data/contributions-calendar.json.tmp data/contributions-calendar.json
+          rm data/contributions-calendar-raw.json.tmp
+
+      - name: Commit snapshots only when they changed
         run: |
           set -euo pipefail
           git config user.name "portfolio-bot"
           git config user.email "portfolio-bot@users.noreply.github.com"
-          git add data/activity.json
+          git add data/activity.json data/contributions-calendar.json
           if ! git diff --cached --quiet; then
-            git commit -m "chore: refresh verified open-source activity"
-            git push
+            git commit -m "chore: refresh public GitHub contribution data"
+            git push origin activity-data
           fi
