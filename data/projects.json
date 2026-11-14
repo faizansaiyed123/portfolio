@@ -456,14 +456,14 @@
       "name": "FlowDesk",
       "category": "Project operations",
       "oneLiner": "Manage client work from task board to billable time.",
-      "overview": "A multi-tenant workspace for clients, projects, Kanban tasks, time tracking, invoices, team access, notifications, integrations, and file attachments.",
+      "overview": "A multi-tenant workspace for client/project management, Kanban tasks, time tracking, invoicing, team roles, notifications, API keys and file attachments. It has real PostgreSQL-backed workflows and tenant-aware authorization; invoice payment is a manual status transition, not payment processing.",
       "features": [
-        "Workspace registration, membership, roles, and invitation workflows",
-        "Client and project management",
-        "Kanban board, task assignment, and comments",
-        "Manual time entries and running timers",
-        "Invoices and time-based billing",
-        "API keys, webhooks, notifications, and tenant-scoped attachments"
+        "Workspace registration, membership roles, invitations and tenant switching",
+        "Tenant-scoped clients, projects, tasks, Kanban movement and comments",
+        "Server-side running timers and manual time entries",
+        "Invoices generated from billable time and explicit state transitions",
+        "Activity feed, dashboard metrics, global search and notifications",
+        "Tenant-specific attachments, hashed API keys and webhook delivery history"
       ],
       "architecture": [
         "React/TypeScript frontend",
@@ -485,7 +485,7 @@
       "backendRepo": "flow-desk_backend",
       "appUrl": "https://flow-desk-frontend-three.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Seed a fictional workspace and sample team. Let visitors move tasks and create time entries/invoices within disposable tenant data. Outbound invitations, webhook URLs, and file upload types must be restricted."
+      "demoPlan": "Create a unique short-lived user and tenant for each recruiter and seed synthetic clients, projects, tasks and time entries. Use the real PostgreSQL-backed workflows, invoice generation and role permissions. Keep outbound email in a private capture sink, disable arbitrary webhook URLs (the current sender has no SSRF defenses), use only a fixed owned receiver if needed, and keep invoice Paid as a demo status rather than a transfer. Store small synthetic attachments in a persistent per-tenant directory with streaming upload caps and content validation; revoke tokens/API keys and clean the tenant on expiry. Full deployed browser verification is still required."
     },
     {
       "id": "supportai",
