@@ -35,7 +35,7 @@ The portfolio should prove engineering ability through usable products. A recrui
 ### Phase 0 — Inventory and evidence
 - [x] Find the personal-project inventory in the current portfolio.
 - [x] Create the isolated rebuild branch.
-- [x] First-pass README review for the 18 personal projects.
+- [x] First-pass README review for the original 18 portfolio entries; Mintline is excluded because it is an internship assignment, leaving 17 personal projects.
 - [x] Confirm 19 merged pull requests outside the user's own repositories through GitHub Search API.
 - [x] Inspect actual frontend routes, backend routes, auth, data isolation, tests, and deployment constraints for FrameFlux and Telemetry; see `docs/project-labs/frameflux.md` and `docs/project-labs/telemetry.md`.
 - [x] Complete source-level audits for FrameFlux, Telemetry, and Sayphora; see `docs/project-labs/`.
@@ -46,7 +46,7 @@ The portfolio should prove engineering ability through usable products. A recrui
 - [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, Flagship, Fieldline CRM, and Orbit Campaigns; see `docs/project-labs/`.
 - [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, Flagship, Fieldline CRM, Orbit Campaigns, and Product Analytics; see `docs/project-labs/`.
 - [x] Complete source-level audits for FrameFlux, Telemetry, Sayphora, Focus Journal, Nexora, Flagship, Fieldline CRM, Orbit Campaigns, Product Analytics, and Gemini Chat; see `docs/project-labs/`.
-- [ ] Repeat the same source-level audit for the remaining 8 projects before building their demo paths.
+- [ ] Repeat the same source-level audit for the remaining 7 personal projects before building their demo paths.
 - [ ] Verify current frontend and backend deployment availability; do not infer it from a repository homepage URL.
 - [ ] Independently verify release-credit claims against the official release and merged PR.
 
@@ -107,6 +107,8 @@ Initial order (revisit after each audit; Mintline removed as internship assignme
 
 ## Personal project inventory and first-pass understanding
 
+Mintline is intentionally excluded from this gallery. Its own backend README identifies it as an internship assignment; see `docs/project-labs/mintline.md`.
+
 | # | Project | Frontend repository | Backend repository | First-pass domain understanding |
 |---:|---|---|---|---|
 | 1 | FrameFlux | `FrameFlux-Frontend` | `FrameFlux-Backend` | Resumable media uploads, validation, durable jobs, Redis/ARQ workers, FFmpeg transforms, progress, retries, cancellation. |
@@ -119,14 +121,13 @@ Initial order (revisit after each audit; Mintline removed as internship assignme
 | 8 | Orbit Campaigns | `marketing-campaign-management-frontend` | `marketing-campaign-management-backend` | Audience/contact management, campaign authoring/scheduling, templates, durable email delivery, tracking, reporting, worker. |
 | 9 | Product Analytics | `product_analytics_frontend` | `product_analytics_backend` | Event ingestion, identity resolution, trends, funnels, retention, sessions, cohorts, reports, dashboards, exports, worker. |
 | 10 | Gemini Chat Platform | `gemini-frontend-clone` | `gemini-backend-clone` | OTP auth, chatrooms/history, queued AI replies, Redis worker/rate limiting, Stripe test checkout. Backend README says replies use OpenAI, not Gemini; this distinction must be accurate. |
-| 11 | Mintline | `frontend-intern-credits` | `backend-intern-credits` | Credit-management dashboard with API-backed balances, operational actions, administration, and migration history. No fabricated balances. |
-| 12 | AgencyOS | `agencyos_frontend` | `agencyos_backend` | Multi-tenant agency operations: CRM/deals, proposals, projects, tasks, time tracking, invoices, client portal, worker/outbox, MFA, webhooks. |
-| 13 | CleanFlow | `cleanflow_frontend` | `cleanflow_backend` | Cleaning-operations workflow: inquiry, quotes/contracts, recurring schedules, field jobs, invoicing/payments, reporting, integrations. Frontend README is a starter template and requires source inspection. |
-| 14 | FlowDesk | `flow-desk_frontend` | `flow-desk_backend` | Multi-tenant workspace: clients/projects, Kanban tasks, time tracking, invoices, team/membership, notifications, API keys, webhooks, attachments. Frontend README is a starter template and requires source inspection. |
-| 15 | SupportAI | `supportai_frontend` | `supportai_backend` | Support tickets and knowledge-base RAG using PostgreSQL/pgvector, embeddings, reranking, local Ollama model runtime, ingestion worker. |
-| 16 | Service Agreement Manager | `service-agreement-manager-frontend` | `service-agreement-manager-backend` | HVAC/plumbing service-business workflow: customers, agreements, maintenance schedules, work orders, invoices/payments, portals, email/SMS/webhook workers. |
-| 17 | AutoFix | `autofix_frontend` | `autofix_backend` | Garage operations: vehicles, appointments, inspections, repair orders, parts/inventory, estimates, invoices, customer portal. Frontend README is a starter template and requires source inspection. |
-| 18 | LedgerPulse | `ledgerpulse_frontend` | `ledgerpulse_backend` | Invoice/expense management using Firebase Auth, Flask API and PostgreSQL; customers, vendors, invoices, payments, recurring billing, organization access. Has a browser-local demo mode that must be inspected and clearly separated from API mode. |
+| 11 | AgencyOS | `agencyos_frontend` | `agencyos_backend` | Multi-tenant agency operations: CRM/deals, proposals, projects, tasks, time tracking, invoices, client portal, worker/outbox, MFA, webhooks. |
+| 12 | CleanFlow | `cleanflow_frontend` | `cleanflow_backend` | Cleaning-operations workflow: inquiry, quotes/contracts, recurring schedules, field jobs, invoicing/payments, reporting, integrations. Frontend README is a starter template and requires source inspection. |
+| 13 | FlowDesk | `flow-desk_frontend` | `flow-desk_backend` | Multi-tenant workspace: clients/projects, Kanban tasks, time tracking, invoices, team/membership, notifications, API keys, webhooks, attachments. Frontend README is a starter template and requires source inspection. |
+| 14 | SupportAI | `supportai_frontend` | `supportai_backend` | Support tickets and knowledge-base RAG using PostgreSQL/pgvector, embeddings, reranking, local Ollama model runtime, ingestion worker. |
+| 15 | Service Agreement Manager | `service-agreement-manager-frontend` | `service-agreement-manager-backend` | HVAC/plumbing service-business workflow: customers, agreements, maintenance schedules, work orders, invoices/payments, portals, email/SMS/webhook workers. |
+| 16 | AutoFix | `autofix_frontend` | `autofix_backend` | Garage operations: vehicles, appointments, inspections, repair orders, parts/inventory, estimates, invoices, customer portal. Frontend README is a starter template and requires source inspection. |
+| 17 | LedgerPulse | `ledgerpulse_frontend` | `ledgerpulse_backend` | Invoice/expense management using Firebase Auth, Flask API and PostgreSQL; customers, vendors, invoices, payments, recurring billing, organization access. Has a browser-local demo mode that must be inspected and clearly separated from API mode. |
 
 ## Evidence notes
 
