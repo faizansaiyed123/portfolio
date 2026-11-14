@@ -47,7 +47,9 @@
         "Create a durable processing job",
         "Follow worker progress, retry/cancel and inspect the output"
       ],
-      "auditPath": "docs/project-labs/frameflux.md"
+      "auditPath": "docs/project-labs/frameflux.md",
+      "runtimeType": "Per-visitor temporary workspace",
+      "runtimeDetail": "Each recruiter gets isolated project/job records, synthetic input media and bounded worker capacity. Uploads and processed files are removed when the session expires."
     },
     {
       "id": "telemetry",
@@ -92,7 +94,9 @@
         "Trigger anomaly detection and configured alert rules",
         "Inspect incident correlation, SLOs and persisted history"
       ],
-      "auditPath": "docs/project-labs/telemetry.md"
+      "auditPath": "docs/project-labs/telemetry.md",
+      "runtimeType": "Per-visitor telemetry namespace",
+      "runtimeDetail": "Each session receives its own synthetic event stream, alert rules and incident history. Live host-agent access is not exposed to a recruiter's browser."
     },
     {
       "id": "sayphora",
@@ -137,7 +141,9 @@
         "Complete a synthetic checkout and inspect the persisted order",
         "Explore stock, loyalty and AI-assisted beauty tools"
       ],
-      "auditPath": "docs/project-labs/sayphora.md"
+      "auditPath": "docs/project-labs/sayphora.md",
+      "runtimeType": "Temporary guest/customer session",
+      "runtimeDetail": "The product catalogue can be shared as read-only seed data, while cart, checkout, order and loyalty state belongs to one temporary visitor identity. No real payment or fulfilment."
     },
     {
       "id": "focus-journal",
@@ -181,7 +187,9 @@
         "Review calendar history, streaks and summaries",
         "Enable optional AI processing only with explicit consent"
       ],
-      "auditPath": "docs/project-labs/focus-journal.md"
+      "auditPath": "docs/project-labs/focus-journal.md",
+      "runtimeType": "Per-visitor private journal space",
+      "runtimeDetail": "Synthetic check-ins and focus history are scoped to a temporary identity. No real journal content is used; optional AI processing stays consent-gated."
     },
     {
       "id": "nexora",
@@ -228,7 +236,9 @@
         "Run a bounded, allowlisted collection job",
         "Inspect price observations, snapshots and alerts"
       ],
-      "auditPath": "docs/project-labs/nexora.md"
+      "auditPath": "docs/project-labs/nexora.md",
+      "runtimeType": "Per-visitor tenant and collection namespace",
+      "runtimeDetail": "Offerings, competitor matches, observations and alerts are isolated per session. Collection is restricted to approved public fixture sources and bounded jobs."
     },
     {
       "id": "flagship",
@@ -273,7 +283,9 @@
         "Evaluate deterministic targeting and percentage rollout",
         "Inspect environment-scoped SDK behavior and audit history"
       ],
-      "auditPath": "docs/project-labs/flagship.md"
+      "auditPath": "docs/project-labs/flagship.md",
+      "runtimeType": "Per-visitor organization and project",
+      "runtimeDetail": "A temporary org owns its flags, environments, segments, evaluation keys and audit history. Protected or production-like environments are never shared."
     },
     {
       "id": "fieldline-crm",
@@ -318,7 +330,9 @@
         "Preview a synthetic CSV import and commit it",
         "Merge a duplicate and inspect linked records and internal automation"
       ],
-      "auditPath": "docs/project-labs/fieldline-crm.md"
+      "auditPath": "docs/project-labs/fieldline-crm.md",
+      "runtimeType": "Per-visitor CRM organization",
+      "runtimeDetail": "Each session gets its own organization, membership, synthetic contacts, opportunities, imports, saved views, merge history and automation runs."
     },
     {
       "id": "orbit-campaigns",
@@ -363,7 +377,9 @@
         "Process deliveries into a private capture inbox",
         "Test unsubscribe, failed-only retry and persisted delivery analytics"
       ],
-      "auditPath": "docs/project-labs/orbit-campaigns.md"
+      "auditPath": "docs/project-labs/orbit-campaigns.md",
+      "runtimeType": "Per-visitor campaign workspace",
+      "runtimeDetail": "Each session has its own audiences, contacts, templates, campaigns and delivery history. Outbound email is captured in a private no-relay inbox, never sent to real recipients."
     },
     {
       "id": "product-analytics",
@@ -408,7 +424,9 @@
         "Explore trends, funnels, retention, sessions and paths",
         "Create cohorts/reports and inspect project-scoped exports"
       ],
-      "auditPath": "docs/project-labs/product-analytics.md"
+      "auditPath": "docs/project-labs/product-analytics.md",
+      "runtimeType": "Per-visitor analytics project",
+      "runtimeDetail": "Each session receives a temporary organization, project and SDK key. Events are synthetic, quotas are bounded, retention is finite, and expiry revokes the key and purges data."
     },
     {
       "id": "gemini-chat",
@@ -454,7 +472,9 @@
         "Follow Redis queue and worker status",
         "Reopen the persisted conversation and inspect the provider path"
       ],
-      "auditPath": "docs/project-labs/gemini-chat.md"
+      "auditPath": "docs/project-labs/gemini-chat.md",
+      "runtimeType": "Per-visitor chat identity",
+      "runtimeDetail": "Rooms, queued prompts and conversation history are scoped to one temporary user. A model response is called live only when the deployed OpenAI worker and provider have passed verification."
     },
     {
       "id": "agencyos",
@@ -500,7 +520,9 @@
         "Move tasks, milestones and approved time through delivery",
         "Issue an invoice PDF and record a clearly fictional manual payment"
       ],
-      "auditPath": "docs/project-labs/agencyos.md"
+      "auditPath": "docs/project-labs/agencyos.md",
+      "runtimeType": "Per-visitor RLS-protected organization",
+      "runtimeDetail": "A dedicated synthetic organization exercises the actual PostgreSQL row-level security, roles, proposal/project lifecycle and billing records. Email and webhook effects are captured safely."
     },
     {
       "id": "cleanflow",
@@ -544,7 +566,9 @@
         "Accept the contract and inspect generated recurring jobs",
         "Complete field work, create an invoice and record a manual sample payment"
       ],
-      "auditPath": "docs/project-labs/cleanflow.md"
+      "auditPath": "docs/project-labs/cleanflow.md",
+      "runtimeType": "Per-visitor disposable database",
+      "runtimeDetail": "The current schema models one cleaning company, not multiple tenants. Recruiters therefore need separate disposable databases and storage roots; shared writable business records are not safe."
     },
     {
       "id": "flowdesk",
@@ -589,7 +613,9 @@
         "Track time with the server-side timer",
         "Generate an invoice from eligible work and inspect tenant-scoped activity"
       ],
-      "auditPath": "docs/project-labs/flowdesk.md"
+      "auditPath": "docs/project-labs/flowdesk.md",
+      "runtimeType": "Per-visitor tenant",
+      "runtimeDetail": "The existing tenant and membership model scopes clients, projects, tasks, time, invoices and attachments. Each temporary tenant is deleted on expiry; arbitrary webhook targets stay disabled."
     },
     {
       "id": "supportai",
@@ -635,7 +661,9 @@
         "Ask a question and inspect retrieved citations",
         "Trigger an out-of-scope question and review low-confidence handoff"
       ],
-      "auditPath": "docs/project-labs/supportai.md"
+      "auditPath": "docs/project-labs/supportai.md",
+      "runtimeType": "Per-visitor RAG organization",
+      "runtimeDetail": "Each session has an isolated synthetic knowledge base, conversations and tickets. The persistent AI host and model cache are shared infrastructure, but retrieved documents and vectors are tenant-filtered."
     },
     {
       "id": "service-agreement-manager",
@@ -682,7 +710,9 @@
         "Generate maintenance work orders and complete technician work",
         "Issue an invoice and exercise test-only or manual sample payment"
       ],
-      "auditPath": "docs/project-labs/service-agreement-manager.md"
+      "auditPath": "docs/project-labs/service-agreement-manager.md",
+      "runtimeType": "Per-visitor service company",
+      "runtimeDetail": "A temporary company owns branches, staff/customer identities, agreements, work orders, invoices and portal tokens. Email uses a capture sink, SMS is off and Stripe is test-only."
     },
     {
       "id": "autofix",
@@ -728,7 +758,9 @@
         "Record repair tasks, labour and parts movements",
         "Run independent QC, rework if needed, then issue an invoice and sample payment"
       ],
-      "auditPath": "docs/project-labs/autofix.md"
+      "auditPath": "docs/project-labs/autofix.md",
+      "runtimeType": "Per-visitor disposable database",
+      "runtimeDetail": "The current schema represents one workshop with global business data, so each recruiter needs a separate disposable database and seed fixture. A shared workshop DB would expose other visitors' records."
     },
     {
       "id": "ledgerpulse",
@@ -775,7 +807,9 @@
         "Edit an invoice and add a manual sample payment record",
         "Run the actual recurring scheduler and inspect the generated invoice"
       ],
-      "auditPath": "docs/project-labs/ledgerpulse.md"
+      "auditPath": "docs/project-labs/ledgerpulse.md",
+      "runtimeType": "Per-visitor Firebase identity and organization",
+      "runtimeDetail": "A unique temporary Firebase identity maps to an Owner membership and PostgreSQL organization. The browser-local Explore mode is separate; the recruiter lab must use the real Flask API and scheduler."
     }
   ]
 }
