@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "owner": "faizansaiyed123",
+  "source": "GitHub GraphQL contributionsCollection",
+  "scope": "Public profile contributions only. Includes GitHub-eligible public commits, pull requests, issues and reviews; private contribution counts are excluded.",
+  "fetchedAt": null,
+  "range": { "from": null, "to": null },
+  "totalContributions": null,
+  "totals": {
+    "commits": null,
+    "issues": null,
+    "pullRequests": null,
+    "pullRequestReviews": null
+  },
+  "weeks": []
+}
