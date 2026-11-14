@@ -34,7 +34,7 @@ jobs:
           set -euo pipefail
           mkdir -p data
           query='author:faizansaiyed123 is:pr is:merged -user:faizansaiyed123'
-          gh api --paginate --slurp search/issues \
+          gh api --method GET --paginate --slurp search/issues \
             -f q="$query" \
             -f per_page=100 \
             -f sort=created \
