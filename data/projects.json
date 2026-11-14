@@ -493,14 +493,14 @@
       "name": "SupportAI",
       "category": "AI and retrieval",
       "oneLiner": "Trace a support answer back to retrieved knowledge.",
-      "overview": "A support-ticket and knowledge-base RAG application using PostgreSQL/pgvector, document ingestion, embeddings, hybrid retrieval, cross-encoder reranking, and a local Ollama model runtime.",
+      "overview": "A multi-tenant support-agent workspace with a document knowledge base, background ingestion, hybrid pgvector/full-text retrieval, local model generation, cited conversations, low-confidence handoff and ticket management. The default AI runtime is local Ollama llama3.1:8b, not a hosted API.",
       "features": [
-        "Support-ticket workflow",
-        "Knowledge-base document upload and ingestion",
-        "PostgreSQL/pgvector hybrid retrieval",
-        "Embedding and reranking pipeline",
-        "Answer generation with citations",
-        "Separate API and background ingestion worker"
+        "Organization-scoped customers, users, memberships and role permissions",
+        "Versioned PDF, text, Markdown and HTML knowledge documents",
+        "Asynchronous extraction, structure-aware chunking and local embeddings",
+        "Hybrid pgvector/full-text retrieval, reciprocal-rank fusion and optional local cross-encoder reranking",
+        "Ollama-powered answers with persisted source citations and low-confidence warnings",
+        "Conversation history, escalation, ticket assignment, status lifecycle and internal notes"
       ],
       "architecture": [
         "Next.js frontend",
@@ -523,7 +523,7 @@
       "backendRepo": "supportai_backend",
       "appUrl": "https://supportai-frontend-plum.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Prepare a small public knowledge collection of synthetic product documentation. Verify whether the local Ollama model can be hosted within affordable resource limits. If not, use a live hosted inference provider only with explicit configuration; any cached/replayed result must be labeled."
+      "demoPlan": "Give each recruiter a short-lived isolated organization with synthetic customers, documents, conversations and tickets. Run the actual PostgreSQL/pgvector + Procrastinate ingestion worker + local Ollama RAG stack and show answer citations, low-confidence/human handoff, and ticket escalation. This requires a persistent server with the roughly 4.9 GB model plus embedding/reranker caches; a cold model may take minutes. Do not expose arbitrary URL ingestion until the documented DNS-rebinding gap is fixed; apply streaming upload limits, handle password-reset tokens without logging, and clean the temporary tenant and file directory on expiry. No public runtime was verified, so deployment remains pending."
     },
     {
       "id": "service-agreement-manager",
