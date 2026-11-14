@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "owner": "faizansaiyed123",
+  "query": "author:faizansaiyed123 is:pr is:merged -user:faizansaiyed123",
+  "scope": "Merged pull requests in repositories not owned by faizansaiyed123. This is an open-source PR activity view, not GitHub's full contribution graph.",
+  "fetchedAt": "2026-11-14T16:58:00+05:30",
+  "total": 19,
+  "items": [
+    {"title":"fix: detect OpenHands approval bypass flags","repository":"layer8labs8/ci-agent-audit","number":64,"url":"https://github.com/layer8labs8/ci-agent-audit/pull/64","mergedAt":"2026-11-14T00:27:45Z","kind":"Security and CI tooling"},
+    {"title":"fix(postgresql_privs): respect requested privileges when revoking defaults","repository":"ansible-collections/community.postgresql","number":976,"url":"https://github.com/ansible-collections/community.postgresql/pull/976","mergedAt":"2026-11-11T14:14:44Z","kind":"Database automation"},
+    {"title":"feat: add Factory Droid signature","repository":"layer8labs8/ci-agent-audit","number":62,"url":"https://github.com/layer8labs8/ci-agent-audit/pull/62","mergedAt":"2026-11-14T00:28:10Z","kind":"Security and CI tooling"},
+    {"title":"fix: propagate GitLab before_script exports","repository":"layer8labs8/ci-agent-audit","number":58,"url":"https://github.com/layer8labs8/ci-agent-audit/pull/58","mergedAt":"2026-11-04T17:59:59Z","kind":"Security and CI tooling"},
+    {"title":"docs: add Simplified Chinese translation of specification","repository":"anguoyang/rk-deploy","number":8,"url":"https://github.com/anguoyang/rk-deploy/pull/8","mergedAt":"2026-11-05T21:13:28Z","kind":"Documentation and localization"},
+    {"title":"[Signature]: Add support for Qwen Code","repository":"layer8labs8/ci-agent-audit","number":33,"url":"https://github.com/layer8labs8/ci-agent-audit/pull/33","mergedAt":"2026-11-04T16:42:51Z","kind":"Security and CI tooling"},
+    {"title":"feat: add fleet-aware uninstall command","repository":"anguoyang/rk-deploy","number":7,"url":"https://github.com/anguoyang/rk-deploy/pull/7","mergedAt":"2026-11-05T21:10:43Z","kind":"Deployment tooling"},
+    {"title":"cli: explain how to add tags when the list is empty","repository":"memtomem/memtomem","number":2998,"url":"https://github.com/memtomem/memtomem/pull/2998","mergedAt":"2026-11-02T10:31:51Z","kind":"CLI usability"},
+    {"title":"test: add IPv6 coverage for CSRF host helpers","repository":"memtomem/memtomem","number":2997,"url":"https://github.com/memtomem/memtomem/pull/2997","mergedAt":"2026-11-02T09:18:02Z","kind":"Security testing"},
+    {"title":"fix(policy): allow safe project-relative chmod","repository":"scs0209/laya-guard","number":101,"url":"https://github.com/scs0209/laya-guard/pull/101","mergedAt":"2026-11-03T06:34:14Z","kind":"Security and command policy"},
+    {"title":"Add a controller-side dry-run deploy preview","repository":"anguoyang/rk-deploy","number":6,"url":"https://github.com/anguoyang/rk-deploy/pull/6","mergedAt":"2026-11-02T03:58:27Z","kind":"Deployment tooling"},
+    {"title":"Add Amp CLI signature","repository":"layer8labs8/ci-agent-audit","number":31,"url":"https://github.com/layer8labs8/ci-agent-audit/pull/31","mergedAt":"2026-11-01T19:55:50Z","kind":"Security and CI tooling"},
+    {"title":"fix(postgresql_ping): handle PostgreSQL prerelease versions","repository":"ansible-collections/community.postgresql","number":967,"url":"https://github.com/ansible-collections/community.postgresql/pull/967","mergedAt":"2026-11-02T18:11:42Z","kind":"Database automation"},
+    {"title":"Expose isWalletRejection from the wallet entry point","repository":"trustflow-protocol/trustflow-sdk","number":586,"url":"https://github.com/trustflow-protocol/trustflow-sdk/pull/586","mergedAt":"2026-10-22T22:06:18Z","kind":"TypeScript SDK"},
+    {"title":"feat(cloudflare): instrument Workers KV bindings","repository":"getsentry/sentry-javascript","number":25488,"url":"https://github.com/getsentry/sentry-javascript/pull/25488","mergedAt":"2026-10-23T06:30:54Z","kind":"JavaScript SDK"},
+    {"title":"feat(browser): add LoaderSentry type","repository":"getsentry/sentry-javascript","number":25357,"url":"https://github.com/getsentry/sentry-javascript/pull/25357","mergedAt":"2026-10-16T12:48:52Z","kind":"JavaScript SDK"},
+    {"title":"refactor: move FastAPI active thread tracking into Starlette","repository":"getsentry/sentry-python","number":7825,"url":"https://github.com/getsentry/sentry-python/pull/7825","mergedAt":"2026-10-07T08:10:29Z","kind":"Python SDK"},
+    {"title":"Fix light color temperature gradient in RTL","repository":"home-assistant/frontend","number":54468,"url":"https://github.com/home-assistant/frontend/pull/54468","mergedAt":"2026-09-30T10:30:58Z","kind":"Frontend and accessibility"},
+    {"title":"Modernize React Component Architect agent for React 19/Next.js 14","repository":"vijaythecoder/awesome-claude-agents","number":12,"url":"https://github.com/vijaythecoder/awesome-claude-agents/pull/12","mergedAt":"2025-07-30T10:44:59Z","kind":"Developer tooling"}
+  ]
+}
