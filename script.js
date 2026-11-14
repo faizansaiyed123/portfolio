@@ -31,7 +31,9 @@
     selectedCategory: "all",
     search: "",
     selectedRepository: "all",
-    activeProject: null
+    activeProject: null,
+    activityLoaded: false,
+    releasesLoaded: false
   };
 
   /* ---------- Theme ---------- */
@@ -384,6 +386,51 @@
     renderContributionList();
   });
 
+  /* ---------- Evidence-backed milestones ---------- */
+  const achievementGrid = $("#achievement-grid");
+  const renderAchievements = () => {
+    if (!achievementGrid) return;
+    const milestones = [];
+
+    if (state.activityLoaded) {
+      const repositories = new Set(state.activity.map((item) => item.repository).filter(Boolean));
+      milestones.push({
+        value: String(state.activity.length),
+        label: "MERGED EXTERNAL PRS",
+        title: "Changes accepted upstream.",
+        description: "Merged pull requests in " + repositories.size + " public repositories not owned by this account.",
+        href: "#contributions"
+      });
+      milestones.push({
+        value: String(repositories.size),
+        label: "UPSTREAM REPOSITORIES",
+        title: "Work beyond personal projects.",
+        description: "Distinct public repositories with at least one verified merged external pull request.",
+        href: "#contributions"
+      });
+    }
+
+    if (state.releasesLoaded) {
+      milestones.push({
+        value: String(state.releases.length),
+        label: "OFFICIAL RELEASE CREDITS",
+        title: "Merged work in published software.",
+        description: "Release-note entries checked against official release pages and the corresponding merged pull requests.",
+        href: "#releases"
+      });
+    }
+
+    achievementGrid.innerHTML = milestones.length
+      ? milestones.map((item) =>
+        '<a class="achievement-card" href="' + item.href + '">' +
+          '<span class="achievement-card-top"><span class="achievement-label">' + escapeHTML(item.label) + '</span><span class="achievement-arrow" aria-hidden="true">↗</span></span>' +
+          '<span class="achievement-number">' + escapeHTML(item.value) + '</span>' +
+          '<span><h3>' + escapeHTML(item.title) + '</h3><p>' + escapeHTML(item.description) + '</p></span>' +
+        '</a>'
+      ).join("")
+      : '<div class="loading-card">Verified milestone data is unavailable right now.</div>';
+  };
+
   /* ---------- Verified release credits ---------- */
   const releaseGrid = $("#release-grid");
   const renderReleases = () => {
@@ -420,6 +467,7 @@
 
     if (activityResult.status === "fulfilled" && Array.isArray(activityResult.value.items)) {
       state.activity = activityResult.value.items;
+      state.activityLoaded = true;
       $("#external-pr-total").textContent = String(state.activity.length);
       renderContributionGraph();
       renderContributionFilters();
@@ -432,11 +480,13 @@
 
     if (releasesResult.status === "fulfilled" && Array.isArray(releasesResult.value.items)) {
       state.releases = releasesResult.value.items;
+      state.releasesLoaded = true;
       renderReleases();
     } else {
       setLoadingError("#release-grid", "Verified release-credit records are temporarily unavailable.");
     }
 
+    renderAchievements();
     renderProjectCounts();
   };
 
