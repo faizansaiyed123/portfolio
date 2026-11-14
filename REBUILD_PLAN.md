@@ -44,7 +44,8 @@ The portfolio should prove engineering ability through usable products. A recrui
 - [x] Complete source-level audit for FlowDesk; see `docs/project-labs/flowdesk.md`.
 - [x] Complete source-level audit for SupportAI; see `docs/project-labs/supportai.md`.
 - [x] Complete source-level audit for Service Agreement Manager; see `docs/project-labs/service-agreement-manager.md`.
-- [ ] Repeat the same source-level audit for the remaining 2 personal projects before building their demo paths.
+- [x] Complete source-level audit for AutoFix; see `docs/project-labs/autofix.md`.
+- [ ] Repeat the same source-level audit for the remaining 1 personal project before building its demo path.
 - [ ] Verify current frontend and backend deployment availability; do not infer it from a repository homepage URL.
 - [ ] Independently verify release-credit claims against the official release and merged PR.
 
