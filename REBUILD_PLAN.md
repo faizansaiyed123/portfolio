@@ -37,7 +37,8 @@ The portfolio should prove engineering ability through usable products. A recrui
 - [x] Create the isolated rebuild branch.
 - [x] First-pass README review for the 18 personal projects.
 - [x] Confirm 19 merged pull requests outside the user's own repositories through GitHub Search API.
-- [ ] Inspect actual frontend routes, backend routes, seed-data behavior, tests, deployment configuration, and environment requirements for each project pair.
+- [x] Inspect actual frontend routes, backend routes, auth, data isolation, tests, and deployment constraints for FrameFlux and Telemetry; see `docs/project-labs/frameflux.md` and `docs/project-labs/telemetry.md`.
+- [ ] Repeat the same source-level audit for the remaining 16 projects before building their demo paths.
 - [ ] Verify current frontend and backend deployment availability; do not infer it from a repository homepage URL.
 - [ ] Independently verify release-credit claims against the official release and merged PR.
 
@@ -80,11 +81,13 @@ Initial order (revisit after each audit):
 18. LedgerPulse
 
 ### Phase 3 — Contributions and proof
-- [ ] Build the contribution graph from dated, verified merged external PR data. Label the metric precisely.
+- [x] Build the contribution graph from dated, verified merged external PR data and label the metric precisely. This is explicitly an external merged-PR graph, not the full GitHub contribution calendar.
+- [ ] Add a separate full GitHub profile contribution calendar (commits, PRs, issues, reviews where available) only after obtaining a supported, verifiable source; never conflate it with the external PR graph.
 - [ ] Include all qualifying external merged PRs, not only featured cards.
 - [ ] Provide repository/date/category filters and original PR links.
 - [ ] Verify each claimed software release credit against the official release notes and corresponding merged PR.
-- [ ] Include achievements only when there is a verifiable source.
+- [x] Add evidence-backed work milestones derived from the verified external merged PR and official release datasets; do not call them GitHub-issued badges.
+- [ ] Retrieve and add actual GitHub profile achievement badges only when the badge records can be verified from a supported source.
 - [ ] Refresh public activity data automatically with GitHub Actions and retain a visible last-updated timestamp.
 
 ### Phase 4 — Hardening and release
