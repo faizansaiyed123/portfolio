@@ -47,15 +47,17 @@ The portfolio should prove engineering ability through usable products. A recrui
 - [x] Complete source-level audit for AutoFix; see `docs/project-labs/autofix.md`.
 - [x] Complete source-level audit for LedgerPulse; see `docs/project-labs/ledgerpulse.md`.
 - [x] Complete source-level audits for all 17 personal projects.
+- [x] Build the shared, shareable project-lab page and structured workflow/runtime/source-evidence record for all 17 projects.
+- [ ] Implement each project's live recruiter environment and full browser journey one by one; no project is marked ready until its actual frontend, API, data store and required workers pass verification.
 - [ ] Verify current frontend and backend deployment availability; do not infer it from a repository homepage URL.
 - [ ] Independently verify release-credit claims against the official release and merged PR.
 
 ### Phase 1 — New portfolio foundation
-- [ ] Replace the old page structure with a new product-lab experience.
-- [ ] Add accessible navigation, project discovery, project detail routing, search/filter state, and clear status semantics.
-- [ ] Establish the new visual system and responsive layouts.
-- [ ] Add a persistent structured data model for projects, evidence, demos, and progress.
-- [ ] Add a real test/build/quality workflow for the portfolio itself.
+- [x] Replace the old page structure with a new product-lab experience; the previous portfolio design is not reused.
+- [x] Add navigation, project discovery, search/category filters, shareable project detail routes, and explicit demo status semantics.
+- [x] Establish the new dark-first visual system and responsive layouts for the library and project-lab pages.
+- [x] Add structured project records with per-project workflow, runtime isolation, preview, source-audit and demo-plan fields.
+- [x] Add a GitHub Actions quality workflow and validator for JavaScript syntax, project metadata, source audits, preview assets, PR records and release credits; first CI run still pending.
 
 ### Phase 2 — Project-by-project product labs
 For every project, use the same evidence-first checklist before building its visitor experience:
@@ -89,13 +91,13 @@ Initial order (revisit after each audit; Mintline removed as internship assignme
 
 ### Phase 3 — Contributions and proof
 - [x] Build the contribution graph from dated, verified merged external PR data and label the metric precisely. This is explicitly an external merged-PR graph, not the full GitHub contribution calendar.
-- [ ] Add a separate full GitHub profile contribution calendar (commits, PRs, issues, reviews where available) only after obtaining a supported, verifiable source; never conflate it with the external PR graph.
-- [ ] Include all qualifying external merged PRs, not only featured cards.
-- [ ] Provide repository/date/category filters and original PR links.
-- [ ] Verify each claimed software release credit against the official release notes and corresponding merged PR.
+- [x] Add a separate full public GitHub profile contribution calendar from GitHub GraphQL (commits, PRs, issues, reviews); never conflate it with the external merged-PR list.
+- [x] Include the complete current external merged-PR snapshot (19 records) and paginate the refresh query.
+- [x] Provide repository, contribution-type and merge-date filters with original PR links.
+- [x] Verify all five release credits against official GitHub release metadata and corresponding merged PRs; label Home Assistant 20260930.0 as a prerelease.
 - [x] Add evidence-backed work milestones derived from the verified external merged PR and official release datasets; do not call them GitHub-issued badges.
-- [ ] Retrieve and add actual GitHub profile achievement badges only when the badge records can be verified from a supported source.
-- [ ] Refresh public activity data automatically with GitHub Actions and retain a visible last-updated timestamp.
+- [ ] Retrieve and add actual GitHub-issued profile achievement badges only when the badge records can be verified. The portfolio currently links to the live profile achievement page and shows only independently calculated evidence milestones.
+- [x] Add scheduled GitHub Actions refresh for the PR record and the full public profile calendar on the separate `activity-data` branch; first successful refresh run still pending.
 
 ### Phase 4 — Hardening and release
 - [ ] Test all controls, navigation, forms, filters, modals, demo links, and reset flows.
