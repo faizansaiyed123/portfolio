@@ -1,1 +1,2 @@
 One-time trigger for the initial public GitHub contribution snapshot. Subsequent refreshes run on schedule; the workflow ignores its JSON output commits.
+Retry trigger after correcting the GitHub search HTTP method.
