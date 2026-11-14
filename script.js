@@ -32,6 +32,8 @@
     selectedCategory: "all",
     search: "",
     selectedRepository: "all",
+    selectedContributionKind: "all",
+    selectedContributionDateRange: "all",
     activeProject: null,
     activityLoaded: false,
     calendarLoaded: false,
@@ -324,6 +326,8 @@
   const heatmap = $("#contribution-heatmap");
   const heatmapMonths = $("#heatmap-months");
   const repoSelect = $("#contribution-repository");
+  const kindSelect = $("#contribution-kind");
+  const dateSelect = $("#contribution-date-range");
 
   const renderContributionGraph = () => {
     if (!heatmap || !heatmapMonths) return;
@@ -400,8 +404,22 @@
 
   const renderContributionList = () => {
     if (!activityList) return;
+    const now = new Date();
     const items = [...state.activity]
       .filter((item) => state.selectedRepository === "all" || item.repository === state.selectedRepository)
+      .filter((item) => state.selectedContributionKind === "all" || item.kind === state.selectedContributionKind)
+      .filter((item) => {
+        const date = new Date(item.mergedAt);
+        if (Number.isNaN(date.getTime())) return false;
+        if (state.selectedContributionDateRange.startsWith("year:")) {
+          return date.getUTCFullYear() === Number(state.selectedContributionDateRange.slice(5));
+        }
+        const days = { "last-30": 30, "last-90": 90, "last-365": 365 }[state.selectedContributionDateRange];
+        if (!days) return true;
+        const cutoff = new Date(now);
+        cutoff.setUTCDate(cutoff.getUTCDate() - days);
+        return date >= cutoff && date <= now;
+      })
       .sort((a, b) => new Date(b.mergedAt) - new Date(a.mergedAt));
     activityList.innerHTML = items.length ? items.map((item) => {
       const repoLabel = item.repository || "Unknown repository";
@@ -411,7 +429,7 @@
         '<span class="contribution-detail"><strong>' + escapeHTML(item.title) + '</strong><span>' + escapeHTML(item.kind || "Merged contribution") + " · PR #" + Number(item.number) + '</span></span>' +
         '<time class="contribution-date" datetime="' + escapeHTML(item.mergedAt) + '">' + escapeHTML(date) + '</time>' +
         '<span class="contribution-arrow" aria-hidden="true">↗</span></a>';
-    }).join("") : '<div class="loading-card">No matching contribution records.</div>';
+    }).join("") : '<div class="loading-card">No matching external merged PRs. Change or clear the filters.</div>';
   };
 
   const renderContributionFilters = () => {
@@ -421,9 +439,35 @@
         const count = state.activity.filter((item) => item.repository === repo).length;
         return '<option value="' + escapeHTML(repo) + '">' + escapeHTML(repo) + " (" + count + ")</option>";
       }).join("");
+
+    const kinds = [...new Set(state.activity.map((item) => item.kind).filter(Boolean))].sort();
+    kindSelect.innerHTML = '<option value="all">All types (' + state.activity.length + ')</option>' +
+      kinds.map((kind) => {
+        const count = state.activity.filter((item) => item.kind === kind).length;
+        return '<option value="' + escapeHTML(kind) + '">' + escapeHTML(kind) + " (" + count + ")</option>";
+      }).join("");
+
+    const years = [...new Set(state.activity.map((item) => new Date(item.mergedAt).getUTCFullYear()).filter(Number.isFinite))].sort((a, b) => b - a);
+    const fixedRanges = [
+      ["all", "All dates"],
+      ["last-30", "Last 30 days"],
+      ["last-90", "Last 90 days"],
+      ["last-365", "Last 12 months"]
+    ];
+    dateSelect.innerHTML = fixedRanges.map(([value, label]) => '<option value="' + value + '">' + label + '</option>').join("") +
+      years.map((year) => '<option value="year:' + year + '">' + year + '</option>').join("");
   };
+
   repoSelect?.addEventListener("change", () => {
     state.selectedRepository = repoSelect.value;
+    renderContributionList();
+  });
+  kindSelect?.addEventListener("change", () => {
+    state.selectedContributionKind = kindSelect.value;
+    renderContributionList();
+  });
+  dateSelect?.addEventListener("change", () => {
+    state.selectedContributionDateRange = dateSelect.value;
     renderContributionList();
   });
 
