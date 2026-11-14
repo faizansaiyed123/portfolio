@@ -57,7 +57,8 @@
       "summary": "Corrected the light color-temperature gradient for right-to-left layouts.",
       "pullRequest": "https://github.com/home-assistant/frontend/pull/54468",
       "release": "https://github.com/home-assistant/frontend/releases/tag/20260930.0",
-      "verification": "Official 20260930.0 release notes credit @faizansaiyed123 and link PR #54468; the PR is in the verified merged external contribution set."
+      "verification": "The official 20260930.0 prerelease notes include this exact change and credit @faizansaiyed123 with a link to PR #54468; the PR is merged. The release is explicitly a prerelease, not a stable release.",
+      "channel": "prerelease"
     }
   ]
 }
