@@ -607,22 +607,24 @@
       "number": "17",
       "name": "LedgerPulse",
       "category": "Finance operations",
-      "oneLiner": "Manage invoices and expenses with organization-aware access.",
-      "overview": "An invoice and expense-management product using Firebase Authentication for identity, a Flask API for business workflows, and PostgreSQL as the authoritative data store.",
+      "oneLiner": "Run multi-organisation invoices, expenses and recurring billing.",
+      "overview": "A finance-operations application using Firebase Authentication for identity, a Flask API for authenticated organisation-scoped business workflows, and PostgreSQL as the authoritative data store. The current front-page Explore demo is browser-local localStorage state, not the live API; a separate owner-only backend seed route can populate a real empty organisation with sample customers, vendors, invoices, payments and expenses.",
       "features": [
-        "Firebase identity and organization discovery",
-        "Organization membership and role-aware access",
-        "Customers, vendors, and invoice management",
-        "Payment and expense records",
-        "Recurring invoices and scheduled jobs",
-        "Public contact form and admin operational overview"
+        "Firebase ID-token authentication and PostgreSQL organisation membership",
+        "Owner, Admin, Accountant and Staff role-aware permissions",
+        "Organisation-scoped customers, vendors and business settings",
+        "Invoice creation, line-item totals, tax, discounts and invoice numbering",
+        "Manual payment ledger and vendor expense review/approval",
+        "Recurring invoice templates and a separate PostgreSQL-advisory-lock scheduler",
+        "Financial summaries, activity history, team invitations and PDF invoice email"
       ],
       "architecture": [
-        "React/Vite frontend",
-        "Firebase Authentication",
-        "Flask REST API",
-        "PostgreSQL business data",
-        "Dedicated recurring scheduler"
+        "React + TypeScript + Vite frontend",
+        "Firebase Authentication for user identity; Firebase Admin token verification in Flask",
+        "Flask REST API with SQLAlchemy and PostgreSQL 17",
+        "Organisation membership and server-side role checks",
+        "Dedicated recurring scheduler guarded by a PostgreSQL advisory lock",
+        "Nginx frontend/API same-origin proxy and Docker Compose deployment"
       ],
       "stack": [
         "React",
@@ -635,9 +637,9 @@
       ],
       "frontendRepo": "ledgerpulse_frontend",
       "backendRepo": "ledgerpulse_backend",
-      "appUrl": "https://ledgerpulse-frontend.vercel.app/",
+      "appUrl": null,
       "demoStatus": "verification-pending",
-      "demoPlan": "Inspect the existing browser-local demo mode and make it visibly separate from API mode. Prefer a demo Firebase identity and isolated seeded organization. No real invoices, balances, payments, or SMTP deliveries."
+      "demoPlan": "Create a unique temporary Firebase Anonymous Auth identity for each recruiter, then use the standard authenticated API bootstrap to create a real PostgreSQL organisation and Owner membership. Add a DemoSession with expiry and quotas, call the existing owner-only sample-data API for synthetic customers/vendors/invoices/payments/expenses, and keep the frontend in normal API mode rather than its current localStorage isDemo branch. Exercise real invoice edits, sample payment records, expense approvals, reports and the separate recurring scheduler. Route all email/contact/invitation/invoice messages to a private non-relaying capture inbox; no live payment gateway exists. On expiry, revoke the Firebase identity and delete only that demo organisation and its related rows. Keep the existing browser-local tour visibly labelled as local-only if retained."
     }
   ]
 }
