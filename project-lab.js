@@ -82,7 +82,7 @@
     const previewWrap = $("#lab-preview-wrap");
     const preview = $("#lab-preview");
     const imageUrl = String(project.previewImage || "");
-    if (/^assets\\/[a-zA-Z0-9/_-]+\\.(?:webp|png|jpe?g|svg)$/i.test(imageUrl)) {
+    if (/^assets\/[a-zA-Z0-9/_-]+\.(?:webp|png|jpe?g|svg)$/i.test(imageUrl)) {
       preview.src = imageUrl;
       preview.alt = project.name + " project interface preview";
       previewWrap.hidden = false;
@@ -155,7 +155,7 @@
 
     const audit = safeHttps(
       "https://github.com/faizansaiyed123/portfolio/blob/redesign/interactive-product-portfolio-followup/" +
-      String(project.auditPath || "").replace(/^\\//, "")
+      String(project.auditPath || "").replace(/^\/+/, "")
     );
     const auditLink = $("#lab-audit-link");
     if (audit && project.auditPath) {
