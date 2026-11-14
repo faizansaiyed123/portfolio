@@ -377,42 +377,8 @@
       "demoPlan": "Provide a guest demo session with pre-seeded fictional chat history and rate-limited live prompt usage only if a funded provider key is configured. Otherwise expose safe recorded provider responses and clearly label them as replay, never as live model output. Payments remain test-only."
     },
     {
-      "id": "mintline",
-      "number": "11",
-      "name": "Mintline",
-      "category": "Financial operations",
-      "oneLiner": "Inspect credit balances, guarded adjustments, and migration history.",
-      "overview": "A credit-management dashboard backed by a FastAPI service and PostgreSQL. The frontend reads actual balances and exposes account and guarded administrative operations.",
-      "features": [
-        "Account registration and sign-in",
-        "API-backed balance and last-updated information",
-        "Account-scoped credit history",
-        "Guarded add, deduct, and reset operations",
-        "Administrator migration-history view",
-        "Explicit API reachability, loading, and error states"
-      ],
-      "architecture": [
-        "React/TypeScript/Vite frontend",
-        "FastAPI API",
-        "PostgreSQL schema and credit endpoints",
-        "Runtime-only admin key for privileged operations"
-      ],
-      "stack": [
-        "React",
-        "TypeScript",
-        "Vite",
-        "FastAPI",
-        "PostgreSQL"
-      ],
-      "frontendRepo": "frontend-intern-credits",
-      "backendRepo": "backend-intern-credits",
-      "appUrl": "https://frontend-intern-credits.vercel.app/",
-      "demoStatus": "verification-pending",
-      "demoPlan": "Use one isolated demo ledger and synthetic account. Disable reset and schema-apply endpoints in the public recruiter role. Never display or imply any real account balance."
-    },
-    {
       "id": "agencyos",
-      "number": "12",
+      "number": "11",
       "name": "AgencyOS",
       "category": "Business operations",
       "oneLiner": "Connect the commercial and delivery work of an agency.",
@@ -449,7 +415,7 @@
     },
     {
       "id": "cleanflow",
-      "number": "13",
+      "number": "12",
       "name": "CleanFlow",
       "category": "Field service operations",
       "oneLiner": "Move a cleaning job from inquiry through service and invoice.",
@@ -485,7 +451,7 @@
     },
     {
       "id": "flowdesk",
-      "number": "14",
+      "number": "13",
       "name": "FlowDesk",
       "category": "Project operations",
       "oneLiner": "Manage client work from task board to billable time.",
@@ -522,7 +488,7 @@
     },
     {
       "id": "supportai",
-      "number": "15",
+      "number": "14",
       "name": "SupportAI",
       "category": "AI and retrieval",
       "oneLiner": "Trace a support answer back to retrieved knowledge.",
@@ -560,7 +526,7 @@
     },
     {
       "id": "service-agreement-manager",
-      "number": "16",
+      "number": "15",
       "name": "Service Agreement Manager",
       "category": "Field service operations",
       "oneLiner": "Follow service agreements into maintenance, work orders, and billing.",
@@ -597,7 +563,7 @@
     },
     {
       "id": "autofix",
-      "number": "17",
+      "number": "16",
       "name": "AutoFix",
       "category": "Workshop operations",
       "oneLiner": "Run a repair journey from vehicle check-in to invoice.",
@@ -634,7 +600,7 @@
     },
     {
       "id": "ledgerpulse",
-      "number": "18",
+      "number": "17",
       "name": "LedgerPulse",
       "category": "Finance operations",
       "oneLiner": "Manage invoices and expenses with organization-aware access.",
