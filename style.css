@@ -598,3 +598,73 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     transition-duration: .01ms !important;
   }
 }
+
+/* Verified engineering milestones */
+.achievements-section { padding-top: 125px; }
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.achievement-card {
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 21px;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background:
+    radial-gradient(circle at 90% 5%, color-mix(in srgb, var(--blue) 12%, transparent), transparent 42%),
+    var(--panel);
+  text-decoration: none;
+  transition: transform .22s var(--ease), border-color .22s ease, background .22s ease;
+}
+.achievement-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--lime) 44%, var(--line));
+  background-color: var(--panel-strong);
+}
+.achievement-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.achievement-label {
+  color: var(--faint);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+.achievement-arrow { color: var(--lime); font-size: 15px; }
+.achievement-number {
+  margin: 18px 0 8px;
+  color: var(--lime);
+  font-size: clamp(49px, 5vw, 70px);
+  line-height: .92;
+  font-weight: 880;
+  letter-spacing: -.085em;
+}
+.achievement-card:nth-child(2) .achievement-number { color: var(--blue); }
+.achievement-card:nth-child(3) .achievement-number { color: var(--orange); }
+.achievement-card h3 {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.2;
+  letter-spacing: -.04em;
+}
+.achievement-card p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+.achievements-section + .release-section { padding-top: 120px; }
+
+@media (max-width: 760px) {
+  .achievements-section { padding-top: 92px; }
+  .achievement-grid { grid-template-columns: 1fr; gap: 9px; }
+  .achievement-card { min-height: 150px; }
+  .achievement-number { font-size: 55px; }
+}
