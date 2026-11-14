@@ -569,22 +569,23 @@
       "number": "16",
       "name": "AutoFix",
       "category": "Workshop operations",
-      "oneLiner": "Run a repair journey from vehicle check-in to invoice.",
-      "overview": "An automotive workshop management platform for customers, vehicles, appointments, inspections, repair orders, inventory, estimates, invoices, and customer self-service.",
+      "oneLiner": "Take a vehicle from customer request through repair, QC and workshop settlement.",
+      "overview": "A single-workshop automotive operations system connecting customer portal requests, appointments, vehicle inspections, estimate decisions, repair orders, technician labour, parts purchasing, independent quality control, invoicing and payment records. The current schema is single-shop rather than multi-tenant, and payment recording is not a payment gateway.",
       "features": [
-        "Customer and vehicle records with mileage",
-        "Appointment scheduling and conflict checks",
-        "Digital inspections and photo records",
-        "Repair orders, technician tasks, labor, and quality control",
-        "Parts inventory, suppliers, and purchase orders",
-        "Estimates, customer line-item approval, invoices, payments, and portal"
+        "Customer portal, vehicles, mileage, appointment requests and service history",
+        "Staff diary, booking conflict checks, vehicle check-ins and digital inspections",
+        "Estimates with customer approval/rejection of individual work lines",
+        "Repair orders, technician tasks/labour, parts requests and inventory ledger",
+        "Independent QC, overrides, rework and release gates before invoice issue",
+        "Suppliers, purchase orders, stock receiving and low-stock alerts",
+        "Invoices, append-only manual payment records, voids, reports, notifications and audit"
       ],
       "architecture": [
-        "Next.js frontend",
-        "FastAPI API",
-        "PostgreSQL, async SQLAlchemy, and Alembic",
-        "Role-based access and database-backed auth limits",
-        "Email outbox and retrying worker"
+        "Next.js App Router frontend with Playwright",
+        "FastAPI + async SQLAlchemy backend",
+        "PostgreSQL + Alembic migrations",
+        "JWT access/refresh tokens, persisted role permissions and staff/customer route separation",
+        "PostgreSQL-backed email outbox with row-locked worker, retry/backoff and SMTP delivery"
       ],
       "stack": [
         "Next.js",
@@ -597,9 +598,9 @@
       ],
       "frontendRepo": "autofix_frontend",
       "backendRepo": "autofix_backend",
-      "appUrl": "https://autofix-frontend-phi.vercel.app/",
+      "appUrl": null,
       "demoStatus": "verification-pending",
-      "demoPlan": "Seed fictional vehicles, appointments, inspection results, repair orders, parts, and estimates. Keep payment provider calls disabled and run appointment/repair state changes only against demo tenant data."
+      "demoPlan": "Run one isolated disposable PostgreSQL database per recruiter because the current application models one workshop and has no tenant/company partitioning. Bootstrap unique owner/advisor/technician/parts/customer identities and seed the coherent synthetic fixture in that database. Exercise the real customer request → appointment/check-in → inspection/estimate decision → repair/labour/parts → independent QC/rework → invoice → manual payment/void → customer portal workflow. Use private no-relay SMTP capture. Payments are records, not online card processing. Inspection/QC photos are currently URL references; do not claim a general upload service. Upgrade browser token handling from localStorage to secure HttpOnly refresh cookies and verify the hosted API before marking the demo live."
     },
     {
       "id": "ledgerpulse",
