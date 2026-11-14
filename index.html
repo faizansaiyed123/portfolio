@@ -204,9 +204,19 @@
 
       <div class="contribution-list-header">
         <div><span class="eyebrow">THE UPSTREAM RECORD</span><h3>Every external merged PR.</h3><p class="list-context">This list is separate from the public contribution calendar above and includes all verified merged PRs in repositories you do not own.</p><p class="external-pr-count"><strong id="external-pr-total">19</strong> verified external merged PRs</p></div>
-        <label class="select-wrap">Repository
-          <select id="contribution-repository" aria-label="Filter contributions by repository"><option value="all">All repositories</option></select>
-        </label>
+        <div class="contribution-filters">
+          <label class="select-wrap">Repository
+            <select id="contribution-repository" aria-label="Filter external merged pull requests by repository"><option value="all">All repositories</option></select>
+          </label>
+          <label class="select-wrap">Contribution type
+            <select id="contribution-kind" aria-label="Filter external merged pull requests by contribution type"><option value="all">All types</option></select>
+          </label>
+          <label class="select-wrap">Merge date
+            <select id="contribution-date-range" aria-label="Filter external merged pull requests by merge date">
+              <option value="all">All dates</option><option value="last-30">Last 30 days</option><option value="last-90">Last 90 days</option><option value="last-365">Last 12 months</option>
+            </select>
+          </label>
+        </div>
       </div>
       <div class="contribution-list" id="activity-list" aria-live="polite">
         <div class="loading-card"><span class="loader-dot"></span> Loading verified contribution records…</div>
