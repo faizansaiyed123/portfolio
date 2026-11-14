@@ -759,3 +759,19 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   font-size: 13px;
   font-variant-numeric: tabular-nums;
 }
+
+.contribution-filters {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.2fr) minmax(150px, 1fr) minmax(130px, .85fr);
+  gap: 8px;
+  align-items: end;
+}
+.contribution-filters .select-wrap { min-width: 0; }
+.contribution-filters .select-wrap select { width: 100%; min-width: 0; }
+@media (max-width: 760px) {
+  .contribution-filters {
+    grid-template-columns: 1fr;
+    gap: 9px;
+    margin-top: 15px;
+  }
+}
