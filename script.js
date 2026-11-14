@@ -27,12 +27,14 @@
   const state = {
     projects: [],
     activity: [],
+    calendar: null,
     releases: [],
     selectedCategory: "all",
     search: "",
     selectedRepository: "all",
     activeProject: null,
     activityLoaded: false,
+    calendarLoaded: false,
     releasesLoaded: false
   };
 
@@ -267,7 +269,7 @@
     }
     let publicFrontendLink = "";
     if (project.appUrl) {
-      publicFrontendLink = '<a href="' + escapeHTML(project.appUrl) + '" target="_blank" rel="noopener noreferrer">Open listed frontend URL <span aria-hidden="true">↗</span></a>';
+      publicFrontendLink = '<a href="' + escapeHTML(project.appUrl) + '" target="_blank" rel="noopener noreferrer">Listed frontend URL (not verified) <span aria-hidden="true">↗</span></a>';
     }
 
     $("#dialog-kicker").textContent = "PROJECT LAB / " + project.number + " — " + project.category.toUpperCase();
@@ -324,40 +326,75 @@
 
   const renderContributionGraph = () => {
     if (!heatmap || !heatmapMonths) return;
-    const counts = new Map();
-    state.activity.forEach((item) => {
-      const key = String(item.mergedAt || "").slice(0, 10);
-      if (/^\d{4}-\d{2}-\d{2}$/.test(key)) counts.set(key, (counts.get(key) || 0) + 1);
+    const calendar = state.calendar;
+    const total = $("#public-contribution-total");
+    const breakdown = $("#contribution-breakdown");
+    const updated = $("#activity-updated");
+    if (!calendar || !Array.isArray(calendar.weeks) || !calendar.weeks.length || !calendar.fetchedAt) {
+      if (total) total.textContent = "—";
+      if (breakdown) breakdown.textContent = "Waiting for the first verified public-calendar snapshot.";
+      if (updated) updated.textContent = "Calendar snapshot pending";
+      heatmap.innerHTML = "";
+      heatmapMonths.innerHTML = "";
+      heatmap.setAttribute("aria-label", "Public GitHub contribution calendar is not available yet");
+      return;
+    }
+
+    const totals = calendar.totals || {};
+    if (total) total.textContent = Number(calendar.totalContributions || 0).toLocaleString("en");
+    if (breakdown) {
+      const types = [
+        ["commits", "commits"],
+        ["pullRequests", "pull requests"],
+        ["issues", "issues"],
+        ["pullRequestReviews", "reviews"]
+      ];
+      breakdown.innerHTML = types.map(([key, label]) =>
+        '<span><strong>' + Number(totals[key] || 0).toLocaleString("en") + '</strong>' + label + '</span>'
+      ).join("");
+    }
+    if (updated) updated.textContent = "Updated · " + formatDate(calendar.fetchedAt);
+
+    const weeks = calendar.weeks;
+    const dailyCounts = weeks.flatMap((week) => week.contributionDays || []).map((day) => Number(day.contributionCount || 0));
+    const maxCount = Math.max(1, ...dailyCounts);
+    const monthNames = [];
+    const cells = [];
+    weeks.forEach((week, index) => {
+      const days = Array.isArray(week.contributionDays) ? week.contributionDays : [];
+      const firstOfMonth = days.find((day) => String(day.date || "").slice(8, 10) === "01");
+      monthNames.push(firstOfMonth
+        ? monthFormatter.format(new Date(firstOfMonth.date + "T00:00:00Z"))
+        : "");
+
+      for (let weekday = 0; weekday < 7; weekday += 1) {
+        const day = days.find((item) => Number(item.weekday) === weekday);
+        if (!day) {
+          cells.push('<span class="heat-cell heat-cell-empty" aria-hidden="true" style="grid-column:' + (index + 1) + ';grid-row:' + (weekday + 1) + '"></span>');
+          continue;
+        }
+        const count = Number(day.contributionCount || 0);
+        const level = count === 0 ? 0 : Math.min(3, Math.max(1, Math.ceil((count / maxCount) * 3)));
+        const date = String(day.date || "");
+        const label = count + " public " + (count === 1 ? "contribution" : "contributions") + " on " + formatDate(date);
+        cells.push(
+          '<span class="heat-cell" data-level="' + level + '" title="' + escapeHTML(label) +
+          '" aria-label="' + escapeHTML(label) + '" style="grid-column:' + (index + 1) +
+          ';grid-row:' + (weekday + 1) + '"></span>'
+        );
+      }
     });
 
-    // A rolling year ending in the current week. The label and counts are limited
-    // to merged PRs in repositories outside the account's own repositories.
-    const today = new Date();
-    const weekEnd = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
-    weekEnd.setUTCDate(weekEnd.getUTCDate() + ((7 - weekEnd.getUTCDay()) % 7));
-    const weekStart = new Date(weekEnd);
-    weekStart.setUTCDate(weekStart.getUTCDate() - (52 * 7 - 1));
-    const cells = [];
-    const monthLabels = Array.from({ length: 52 }, () => "");
-    let current = new Date(weekStart);
-
-    for (let week = 0; week < 52; week += 1) {
-      const firstDay = new Date(current);
-      const monthStart = new Date(Date.UTC(firstDay.getUTCFullYear(), firstDay.getUTCMonth(), 1));
-      const firstWeekMonday = new Date(monthStart);
-      firstWeekMonday.setUTCDate(firstWeekMonday.getUTCDate() - ((firstWeekMonday.getUTCDay() + 6) % 7));
-      if (dateKey(firstWeekMonday) === dateKey(firstDay)) monthLabels[week] = monthFormatter.format(monthStart);
-      for (let day = 0; day < 7; day += 1) {
-        const key = dateKey(current);
-        const count = counts.get(key) || 0;
-        const level = count === 0 ? 0 : count === 1 ? 1 : count === 2 ? 2 : 3;
-        const label = count + " merged external " + (count === 1 ? "PR" : "PRs") + " on " + formatDate(key);
-        cells.push('<span class="heat-cell" data-level="' + level + '" title="' + escapeHTML(label) + '" aria-label="' + escapeHTML(label) + '"></span>');
-        current.setUTCDate(current.getUTCDate() + 1);
-      }
-    }
-    heatmapMonths.innerHTML = monthLabels.map((label) => "<span>" + escapeHTML(label) + "</span>").join("");
+    const columns = "repeat(" + weeks.length + ", 10px)";
+    heatmapMonths.style.gridTemplateColumns = columns;
+    heatmap.style.gridTemplateColumns = columns;
+    heatmapMonths.innerHTML = monthNames.map((label) => "<span>" + escapeHTML(label) + "</span>").join("");
     heatmap.innerHTML = cells.join("");
+    heatmap.setAttribute(
+      "aria-label",
+      Number(calendar.totalContributions || 0).toLocaleString("en") +
+      " public GitHub contributions over the 12-month profile calendar"
+    );
   };
 
   const renderContributionList = () => {
@@ -440,7 +477,7 @@
     if (!releaseGrid) return;
     releaseGrid.innerHTML = state.releases.map((item) =>
       '<article class="release-card">' +
-        '<div class="release-card-top"><span class="release-project">' + escapeHTML(item.project) + '</span><span class="release-version">' + escapeHTML(item.version) + " · " + escapeHTML(item.releaseDate) + '</span></div>' +
+        '<div class="release-card-top"><span class="release-project">' + escapeHTML(item.project) + '</span><span class="release-version">' + (item.channel === "prerelease" ? "PRE-RELEASE · " : "") + escapeHTML(item.version) + " · " + escapeHTML(item.releaseDate) + '</span></div>' +
         '<h3>' + escapeHTML(item.title) + '</h3><p>' + escapeHTML(item.summary) + '</p>' +
         '<div class="release-links"><a href="' + escapeHTML(item.release) + '" target="_blank" rel="noopener noreferrer">Official release notes ↗</a><a href="' + escapeHTML(item.pullRequest) + '" target="_blank" rel="noopener noreferrer">Merged pull request ↗</a></div>' +
       "</article>"
@@ -453,10 +490,12 @@
     element.textContent = "Snapshot · " + formatDate(activity.fetchedAt);
   };
 
+  const ACTIVITY_DATA_BASE = "https://raw.githubusercontent.com/faizansaiyed123/portfolio/activity-data/data/";
   const loadAll = async () => {
-    const [projectsResult, activityResult, releasesResult] = await Promise.allSettled([
+    const [projectsResult, activityResult, calendarResult, releasesResult] = await Promise.allSettled([
       loadJSON("data/projects.json"),
-      loadJSON("data/activity.json"),
+      loadJSON(ACTIVITY_DATA_BASE + "activity.json"),
+      loadJSON(ACTIVITY_DATA_BASE + "contributions-calendar.json"),
       loadJSON("data/release-credits.json")
     ]);
 
@@ -479,6 +518,16 @@
     } else {
       setLoadingError("#activity-list", "Contribution records are temporarily unavailable.");
       heatmap && (heatmap.innerHTML = "");
+    }
+
+    if (calendarResult.status === "fulfilled" && Array.isArray(calendarResult.value.weeks)) {
+      state.calendar = calendarResult.value;
+      state.calendarLoaded = Boolean(calendarResult.value.fetchedAt);
+      renderContributionGraph();
+    } else {
+      state.calendar = null;
+      state.calendarLoaded = false;
+      renderContributionGraph();
     }
 
     if (releasesResult.status === "fulfilled" && Array.isArray(releasesResult.value.items)) {
