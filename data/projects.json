@@ -11,9 +11,30 @@
       "category": "Media infrastructure",
       "oneLiner": "Turn large media work into durable, observable jobs.",
       "overview": "An asynchronous media-processing platform with resumable uploads, strict file validation, durable job state, queued workers, and FFmpeg transformations.",
-      "features": ["Resumable chunked uploads with pause, resume, retry, and cancellation", "Extension, MIME/category, size, and binary-signature validation", "Background probe and transform jobs using Redis and ARQ", "Progress and job lifecycle visibility", "Media transforms including probe, transcode, trim, split, merge, watermark, overlays, and freeze frames"],
-      "architecture": ["Next.js browser client", "FastAPI API", "PostgreSQL metadata and relationships", "Redis upload manifests and progress", "ARQ worker and FFmpeg processing"],
-      "stack": ["Next.js", "React", "TypeScript", "FastAPI", "PostgreSQL", "Redis", "ARQ", "FFmpeg"],
+      "features": [
+        "Resumable chunked uploads with pause, resume, retry, and cancellation",
+        "Extension, MIME/category, size, and binary-signature validation",
+        "Background probe and transform jobs using Redis and ARQ",
+        "Progress and job lifecycle visibility",
+        "Media transforms including probe, transcode, trim, split, merge, watermark, overlays, and freeze frames"
+      ],
+      "architecture": [
+        "Next.js browser client",
+        "FastAPI API",
+        "PostgreSQL metadata and relationships",
+        "Redis upload manifests and progress",
+        "ARQ worker and FFmpeg processing"
+      ],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis",
+        "ARQ",
+        "FFmpeg"
+      ],
       "frontendRepo": "FrameFlux-Frontend",
       "backendRepo": "FrameFlux-Backend",
       "appUrl": null,
@@ -27,9 +48,30 @@
       "category": "Realtime observability",
       "oneLiner": "Follow signals from ingestion to alert and incident.",
       "overview": "A realtime observability workspace that unifies synthetic telemetry and real host-agent events through one processing pipeline, then detects anomalies, evaluates alert rules, correlates incidents, persists state, and streams updates.",
-      "features": ["Synthetic generator and real host-agent ingestion", "Realtime metric charts and historical analytics", "Anomaly detection and configurable sustained-duration alert rules", "Alert lifecycle, cooldowns, deduplication, and incident correlation", "SLO/SLI and error-budget views", "Authenticated WebSocket updates, host administration, webhooks, and runtime metrics"],
-      "architecture": ["React and TypeScript console", "FastAPI REST and WebSocket API", "TelemetryManager unified processing pipeline", "Bounded asynchronous PostgreSQL persistence", "Synthetic generator and host agent"],
-      "stack": ["React", "TypeScript", "FastAPI", "PostgreSQL", "WebSockets", "Redis", "Prometheus"],
+      "features": [
+        "Synthetic generator and real host-agent ingestion",
+        "Realtime metric charts and historical analytics",
+        "Anomaly detection and configurable sustained-duration alert rules",
+        "Alert lifecycle, cooldowns, deduplication, and incident correlation",
+        "SLO/SLI and error-budget views",
+        "Authenticated WebSocket updates, host administration, webhooks, and runtime metrics"
+      ],
+      "architecture": [
+        "React and TypeScript console",
+        "FastAPI REST and WebSocket API",
+        "TelemetryManager unified processing pipeline",
+        "Bounded asynchronous PostgreSQL persistence",
+        "Synthetic generator and host agent"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "PostgreSQL",
+        "WebSockets",
+        "Redis",
+        "Prometheus"
+      ],
       "frontendRepo": "telemetry-frontend",
       "backendRepo": "telemetry-backend",
       "appUrl": "https://telemetry-frontend-chi.vercel.app/",
@@ -43,9 +85,30 @@
       "category": "Commerce",
       "oneLiner": "A beauty storefront backed by real commerce workflows.",
       "overview": "A full-stack beauty and skincare commerce platform. Catalogue, cart pricing, orders, inventory, reviews, wishlists, loyalty, AI beauty tools, and staff operations are backed by an Express API and PostgreSQL.",
-      "features": ["Product discovery, filters, sorting, details, and comparison", "Accounts, addresses, wishlists, cart, promotions, and checkout", "Order tracking and cancellation", "Shade matching, skincare routines, ingredient diagnostics, and virtual try-on", "Loyalty rewards, inventory, fulfilment, reviews, and admin analytics", "PWA installation and offline catalogue behavior"],
-      "architecture": ["React 19 and Vite storefront", "Express API", "PostgreSQL and SQL migrations", "Shared commerce/pricing rules", "Playwright and API integration tests"],
-      "stack": ["React", "TypeScript", "Vite", "Tailwind CSS", "Express", "PostgreSQL", "Stripe"],
+      "features": [
+        "Product discovery, filters, sorting, details, and comparison",
+        "Accounts, addresses, wishlists, cart, promotions, and checkout",
+        "Order tracking and cancellation",
+        "Shade matching, skincare routines, ingredient diagnostics, and virtual try-on",
+        "Loyalty rewards, inventory, fulfilment, reviews, and admin analytics",
+        "PWA installation and offline catalogue behavior"
+      ],
+      "architecture": [
+        "React 19 and Vite storefront",
+        "Express API",
+        "PostgreSQL and SQL migrations",
+        "Shared commerce/pricing rules",
+        "Playwright and API integration tests"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS",
+        "Express",
+        "PostgreSQL",
+        "Stripe"
+      ],
       "frontendRepo": "Sayphora",
       "backendRepo": null,
       "appUrl": "https://sayphora.vercel.app/",
@@ -59,9 +122,29 @@
       "category": "Personal productivity",
       "oneLiner": "Turn daily reflection and focus sessions into visible patterns.",
       "overview": "A private journaling and focus application for structured daily check-ins, journal entries, focus sessions, saved history, and optional AI-assisted insights.",
-      "features": ["Account registration, sign-in, and OAuth code exchange", "Daily check-ins with mood and tags", "Private journal CRUD and history search", "Focus sessions with pause, resume, completion, and abandonment", "Weekly, monthly, streak, and tag summaries", "Privacy settings and optional AI insights with explicit consent"],
-      "architecture": ["React/Vite frontend", "FastAPI API", "PostgreSQL and SQLAlchemy", "JWT and single-use OAuth exchange codes", "Optional AI insights"],
-      "stack": ["React", "Vite", "JavaScript", "FastAPI", "PostgreSQL", "OAuth"],
+      "features": [
+        "Account registration, sign-in, and OAuth code exchange",
+        "Daily check-ins with mood and tags",
+        "Private journal CRUD and history search",
+        "Focus sessions with pause, resume, completion, and abandonment",
+        "Weekly, monthly, streak, and tag summaries",
+        "Privacy settings and optional AI insights with explicit consent"
+      ],
+      "architecture": [
+        "React/Vite frontend",
+        "FastAPI API",
+        "PostgreSQL and SQLAlchemy",
+        "JWT and single-use OAuth exchange codes",
+        "Optional AI insights"
+      ],
+      "stack": [
+        "React",
+        "Vite",
+        "JavaScript",
+        "FastAPI",
+        "PostgreSQL",
+        "OAuth"
+      ],
       "frontendRepo": "Focus-Journal-Frontend",
       "backendRepo": "Focus-Journal-Backend",
       "appUrl": "https://focus-journal-frontend.vercel.app/",
@@ -75,9 +158,31 @@
       "category": "Price intelligence",
       "oneLiner": "Track competitor offerings, collect prices, and detect changes.",
       "overview": "A multi-tenant competitive price-intelligence workspace for tracked offerings, competitor catalogs, source discovery, product matching, collection jobs, price observations, snapshots, and alerts.",
-      "features": ["Organizations with owner, analyst, and viewer roles", "Tracked offerings, competitors, source URLs, and matches", "Website discovery and optional assisted discovery", "HTTP and browser-rendered price collection", "Collection job visibility and historical price observations", "Competitive alerts and monitoring workflows"],
-      "architecture": ["Next.js frontend", "FastAPI versioned API", "PostgreSQL and Alembic", "Redis and Celery background collection", "HTTPX, parsing, and optional Playwright"],
-      "stack": ["Next.js", "React", "TypeScript", "FastAPI", "PostgreSQL", "Redis", "Celery", "Playwright"],
+      "features": [
+        "Organizations with owner, analyst, and viewer roles",
+        "Tracked offerings, competitors, source URLs, and matches",
+        "Website discovery and optional assisted discovery",
+        "HTTP and browser-rendered price collection",
+        "Collection job visibility and historical price observations",
+        "Competitive alerts and monitoring workflows"
+      ],
+      "architecture": [
+        "Next.js frontend",
+        "FastAPI versioned API",
+        "PostgreSQL and Alembic",
+        "Redis and Celery background collection",
+        "HTTPX, parsing, and optional Playwright"
+      ],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis",
+        "Celery",
+        "Playwright"
+      ],
       "frontendRepo": "Nexora-Frontend",
       "backendRepo": "Nexora-backend",
       "appUrl": "https://nexora-frontend-hazel.vercel.app/",
@@ -92,9 +197,30 @@
       "category": "Developer infrastructure",
       "oneLiner": "Change application behavior with typed flags and deterministic rollouts.",
       "overview": "A feature-flag management platform with organizations, projects, environments, typed flags, targeting rules, reusable segments, server-side evaluation, SDK credentials, and audit history.",
-      "features": ["Account and organization membership", "Project and environment management", "Typed flags with environment-specific configuration", "Conditional targeting and reusable audience segments", "Deterministic percentage rollout and single/batch evaluation", "SDK key creation and rotation plus audit history"],
-      "architecture": ["Next.js App Router frontend", "FastAPI versioned API", "PostgreSQL and Alembic", "HTTP-only cookie sessions", "Server-side flag evaluation"],
-      "stack": ["Next.js", "React", "TypeScript", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic"],
+      "features": [
+        "Account and organization membership",
+        "Project and environment management",
+        "Typed flags with environment-specific configuration",
+        "Conditional targeting and reusable audience segments",
+        "Deterministic percentage rollout and single/batch evaluation",
+        "SDK key creation and rotation plus audit history"
+      ],
+      "architecture": [
+        "Next.js App Router frontend",
+        "FastAPI versioned API",
+        "PostgreSQL and Alembic",
+        "HTTP-only cookie sessions",
+        "Server-side flag evaluation"
+      ],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "PostgreSQL",
+        "SQLAlchemy",
+        "Alembic"
+      ],
       "frontendRepo": "feature-flag-platform-frontend",
       "backendRepo": "feature-flag-platform-backend",
       "appUrl": "https://feature-flag-platform-frontend-lsf9.vercel.app/",
@@ -108,9 +234,30 @@
       "category": "Business operations",
       "oneLiner": "Make customer relationships and follow-through operational.",
       "overview": "A small-business CRM with tenant-scoped customers, companies, opportunities, activities, data imports, saved views, relationship intelligence, and workflow automation.",
-      "features": ["Company and contact records with organization scoping", "Sales pipeline and opportunity stage history", "Tasks, activities, and follow-up workflows", "CSV preview, validation, dry run, and import", "Saved views, duplicate detection, and controlled merges", "Relationship health, graph, attention queue, automation, and audit logs"],
-      "architecture": ["Next.js frontend and same-origin API rewrite", "FastAPI backend", "PostgreSQL and SQLAlchemy", "Organization roles and refresh sessions", "PostgreSQL row-level security and audit events"],
-      "stack": ["Next.js", "React", "TypeScript", "TanStack Query", "FastAPI", "PostgreSQL", "Alembic"],
+      "features": [
+        "Company and contact records with organization scoping",
+        "Sales pipeline and opportunity stage history",
+        "Tasks, activities, and follow-up workflows",
+        "CSV preview, validation, dry run, and import",
+        "Saved views, duplicate detection, and controlled merges",
+        "Relationship health, graph, attention queue, automation, and audit logs"
+      ],
+      "architecture": [
+        "Next.js frontend and same-origin API rewrite",
+        "FastAPI backend",
+        "PostgreSQL and SQLAlchemy",
+        "Organization roles and refresh sessions",
+        "PostgreSQL row-level security and audit events"
+      ],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "TanStack Query",
+        "FastAPI",
+        "PostgreSQL",
+        "Alembic"
+      ],
       "frontendRepo": "fieldline-crm-frontend",
       "backendRepo": "fieldline-crm-backend",
       "appUrl": "https://fieldline-crm-frontend.vercel.app/",
@@ -124,9 +271,30 @@
       "category": "Marketing operations",
       "oneLiner": "Author campaigns and follow delivery through durable background work.",
       "overview": "A campaign-management system covering audiences, contacts, campaign authoring, scheduling, reusable templates, delivery tracking, open/click events, and reporting.",
-      "features": ["Owner-scoped audiences and contacts", "Campaign authoring, editing, scheduling, and execution", "Reusable campaign templates", "Durable delivery records and retry-aware failed delivery handling", "Background delivery worker and subscription rechecks", "Open/click tracking and campaign reports"],
-      "architecture": ["React/Vite frontend", "FastAPI backend", "PostgreSQL and Alembic", "Redis-backed shared rate limits", "Database-backed scheduler/SMTP worker"],
-      "stack": ["React", "TypeScript", "Vite", "FastAPI", "PostgreSQL", "Redis", "Background workers"],
+      "features": [
+        "Owner-scoped audiences and contacts",
+        "Campaign authoring, editing, scheduling, and execution",
+        "Reusable campaign templates",
+        "Durable delivery records and retry-aware failed delivery handling",
+        "Background delivery worker and subscription rechecks",
+        "Open/click tracking and campaign reports"
+      ],
+      "architecture": [
+        "React/Vite frontend",
+        "FastAPI backend",
+        "PostgreSQL and Alembic",
+        "Redis-backed shared rate limits",
+        "Database-backed scheduler/SMTP worker"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis",
+        "Background workers"
+      ],
       "frontendRepo": "marketing-campaign-management-frontend",
       "backendRepo": "marketing-campaign-management-backend",
       "appUrl": "https://marketing-campaign-management-front.vercel.app/",
@@ -140,9 +308,30 @@
       "category": "Data and analytics",
       "oneLiner": "Follow product events into trends, funnels, retention, and cohorts.",
       "overview": "A self-hosted product analytics platform with event ingestion, identity resolution, PostgreSQL analytics, reports, dashboards, cohorts, alerts, exports, and a JavaScript SDK.",
-      "features": ["Single and batch event ingestion with project API keys", "Trends, funnels, retention, sessions, and user journeys", "People profiles, event properties, and identity resolution", "Behavioral cohort definitions and membership preview", "Saved reports, dashboards, and alerts", "Data exports, background jobs, and SDK distribution"],
-      "architecture": ["React/TypeScript frontend", "FastAPI backend", "PostgreSQL analytics store", "Redis rate limiting and query cache", "Background export, alert, cohort, retention, and cleanup workers"],
-      "stack": ["React", "TypeScript", "Vite", "FastAPI", "PostgreSQL", "Redis", "Recharts"],
+      "features": [
+        "Single and batch event ingestion with project API keys",
+        "Trends, funnels, retention, sessions, and user journeys",
+        "People profiles, event properties, and identity resolution",
+        "Behavioral cohort definitions and membership preview",
+        "Saved reports, dashboards, and alerts",
+        "Data exports, background jobs, and SDK distribution"
+      ],
+      "architecture": [
+        "React/TypeScript frontend",
+        "FastAPI backend",
+        "PostgreSQL analytics store",
+        "Redis rate limiting and query cache",
+        "Background export, alert, cohort, retention, and cleanup workers"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis",
+        "Recharts"
+      ],
       "frontendRepo": "product_analytics_frontend",
       "backendRepo": "product_analytics_backend",
       "appUrl": "https://product-analytics-frontend-un93.vercel.app/",
@@ -154,11 +343,33 @@
       "number": "10",
       "name": "Gemini Chat Platform",
       "category": "AI applications",
-      "oneLiner": "Explore chatrooms, queued replies, and subscription flows.",
-      "overview": "A chat product with OTP-assisted access, conversation history, chatroom management, asynchronous reply processing, rate limits, and Stripe test checkout. Despite the project name, its backend README documents OpenAI GPT-3.5 rather than Google's Gemini API.",
-      "features": ["OTP sign-in and password recovery flows", "Searchable chatroom history and reloadable conversations", "Redis-backed asynchronous message queue and worker", "Backend-enforced message limits", "Account settings and plan status", "Stripe sandbox checkout redirect"],
-      "architecture": ["React/TypeScript/Vite frontend", "FastAPI backend", "PostgreSQL chat history", "Redis queue, polling, and rate limits", "OpenAI chat completion provider in the documented implementation"],
-      "stack": ["React", "TypeScript", "Vite", "FastAPI", "PostgreSQL", "Redis", "OpenAI API", "Stripe"],
+      "oneLiner": "Explore queued OpenAI-powered chat and persisted conversations.",
+      "overview": "A saved-conversation chat product with OTP-assisted access, PostgreSQL chat history, an asynchronous Redis worker and Stripe subscription flow. Important provider note: despite the Gemini branding, the inspected backend currently calls OpenAI GPT-3.5-turbo; the production Render API is documented as suspended and the local walkthrough did not generate an assistant answer without a provider key.",
+      "features": [
+        "OTP sign-in and password recovery flows",
+        "Searchable chatroom history and reloadable conversations",
+        "Redis-backed asynchronous message queue and worker",
+        "Backend-enforced message limits",
+        "Account settings and plan status",
+        "Stripe sandbox checkout redirect"
+      ],
+      "architecture": [
+        "React/TypeScript/Vite frontend",
+        "FastAPI backend",
+        "PostgreSQL chat history",
+        "Redis queue, polling, and rate limits",
+        "OpenAI chat completion provider in the documented implementation"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis",
+        "OpenAI API",
+        "Stripe"
+      ],
       "frontendRepo": "gemini-frontend-clone",
       "backendRepo": "gemini-backend-clone",
       "appUrl": "https://gemini-frontend-clone.vercel.app/",
@@ -172,9 +383,27 @@
       "category": "Financial operations",
       "oneLiner": "Inspect credit balances, guarded adjustments, and migration history.",
       "overview": "A credit-management dashboard backed by a FastAPI service and PostgreSQL. The frontend reads actual balances and exposes account and guarded administrative operations.",
-      "features": ["Account registration and sign-in", "API-backed balance and last-updated information", "Account-scoped credit history", "Guarded add, deduct, and reset operations", "Administrator migration-history view", "Explicit API reachability, loading, and error states"],
-      "architecture": ["React/TypeScript/Vite frontend", "FastAPI API", "PostgreSQL schema and credit endpoints", "Runtime-only admin key for privileged operations"],
-      "stack": ["React", "TypeScript", "Vite", "FastAPI", "PostgreSQL"],
+      "features": [
+        "Account registration and sign-in",
+        "API-backed balance and last-updated information",
+        "Account-scoped credit history",
+        "Guarded add, deduct, and reset operations",
+        "Administrator migration-history view",
+        "Explicit API reachability, loading, and error states"
+      ],
+      "architecture": [
+        "React/TypeScript/Vite frontend",
+        "FastAPI API",
+        "PostgreSQL schema and credit endpoints",
+        "Runtime-only admin key for privileged operations"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "FastAPI",
+        "PostgreSQL"
+      ],
       "frontendRepo": "frontend-intern-credits",
       "backendRepo": "backend-intern-credits",
       "appUrl": "https://frontend-intern-credits.vercel.app/",
@@ -188,9 +417,30 @@
       "category": "Business operations",
       "oneLiner": "Connect the commercial and delivery work of an agency.",
       "overview": "A multi-tenant agency operations workspace for clients, deals, proposals, projects, tasks, time tracking, invoicing, team access, and a client portal.",
-      "features": ["Clients, contacts, deals, and deal-stage history", "Proposal drafting, acceptance, rejection, and project creation", "Project milestones, tasks, members, files, and discussions", "Running timers, manual time entries, approvals, and timesheets", "Invoice issuing, payment recording, PDFs, and reports", "Client portal, MFA, webhooks, notifications, audit and transactional outbox"],
-      "architecture": ["React/TypeScript/Vite frontend", "FastAPI API and separate worker", "PostgreSQL with row-level security", "Tenant-scoped authorization", "PostgreSQL-backed background jobs and transactional outbox"],
-      "stack": ["React", "TypeScript", "Vite", "FastAPI", "PostgreSQL", "Alembic", "Background workers"],
+      "features": [
+        "Clients, contacts, deals, and deal-stage history",
+        "Proposal drafting, acceptance, rejection, and project creation",
+        "Project milestones, tasks, members, files, and discussions",
+        "Running timers, manual time entries, approvals, and timesheets",
+        "Invoice issuing, payment recording, PDFs, and reports",
+        "Client portal, MFA, webhooks, notifications, audit and transactional outbox"
+      ],
+      "architecture": [
+        "React/TypeScript/Vite frontend",
+        "FastAPI API and separate worker",
+        "PostgreSQL with row-level security",
+        "Tenant-scoped authorization",
+        "PostgreSQL-backed background jobs and transactional outbox"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "FastAPI",
+        "PostgreSQL",
+        "Alembic",
+        "Background workers"
+      ],
       "frontendRepo": "agencyos_frontend",
       "backendRepo": "agencyos_backend",
       "appUrl": "https://agencyos-frontend-one.vercel.app/",
@@ -204,9 +454,29 @@
       "category": "Field service operations",
       "oneLiner": "Move a cleaning job from inquiry through service and invoice.",
       "overview": "A commercial cleaning operations platform connecting customer intake and quote management with contracts, recurring schedules, field jobs, invoicing, payments, and customer history.",
-      "features": ["Public quote requests and customer/property records", "Quote pricing and quote lifecycle", "Contracts and recurring schedules", "Employee assignment, job check-in/out, checklists, notes, and photo uploads", "Invoices, PDFs, exports, and idempotent payment recording", "Reporting, audit, notifications, and signed webhook delivery"],
-      "architecture": ["React/Vite frontend", "FastAPI domain API", "SQLAlchemy persistence and Alembic", "Application outbox and scheduled jobs", "Prometheus metrics"],
-      "stack": ["React", "Vite", "FastAPI", "SQLAlchemy", "PostgreSQL/SQLite configuration", "APScheduler"],
+      "features": [
+        "Public quote requests and customer/property records",
+        "Quote pricing and quote lifecycle",
+        "Contracts and recurring schedules",
+        "Employee assignment, job check-in/out, checklists, notes, and photo uploads",
+        "Invoices, PDFs, exports, and idempotent payment recording",
+        "Reporting, audit, notifications, and signed webhook delivery"
+      ],
+      "architecture": [
+        "React/Vite frontend",
+        "FastAPI domain API",
+        "SQLAlchemy persistence and Alembic",
+        "Application outbox and scheduled jobs",
+        "Prometheus metrics"
+      ],
+      "stack": [
+        "React",
+        "Vite",
+        "FastAPI",
+        "SQLAlchemy",
+        "PostgreSQL/SQLite configuration",
+        "APScheduler"
+      ],
       "frontendRepo": "cleanflow_frontend",
       "backendRepo": "cleanflow_backend",
       "appUrl": "https://cleanflow-frontend-theta.vercel.app/",
@@ -220,9 +490,30 @@
       "category": "Project operations",
       "oneLiner": "Manage client work from task board to billable time.",
       "overview": "A multi-tenant workspace for clients, projects, Kanban tasks, time tracking, invoices, team access, notifications, integrations, and file attachments.",
-      "features": ["Workspace registration, membership, roles, and invitation workflows", "Client and project management", "Kanban board, task assignment, and comments", "Manual time entries and running timers", "Invoices and time-based billing", "API keys, webhooks, notifications, and tenant-scoped attachments"],
-      "architecture": ["React/TypeScript frontend", "FastAPI backend", "PostgreSQL and asynchronous SQLAlchemy", "Alembic migrations", "Tenant-scoped authorization and webhook integrations"],
-      "stack": ["React", "TypeScript", "Vite", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic"],
+      "features": [
+        "Workspace registration, membership, roles, and invitation workflows",
+        "Client and project management",
+        "Kanban board, task assignment, and comments",
+        "Manual time entries and running timers",
+        "Invoices and time-based billing",
+        "API keys, webhooks, notifications, and tenant-scoped attachments"
+      ],
+      "architecture": [
+        "React/TypeScript frontend",
+        "FastAPI backend",
+        "PostgreSQL and asynchronous SQLAlchemy",
+        "Alembic migrations",
+        "Tenant-scoped authorization and webhook integrations"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "FastAPI",
+        "PostgreSQL",
+        "SQLAlchemy",
+        "Alembic"
+      ],
       "frontendRepo": "flow-desk_frontend",
       "backendRepo": "flow-desk_backend",
       "appUrl": "https://flow-desk-frontend-three.vercel.app/",
@@ -236,9 +527,31 @@
       "category": "AI and retrieval",
       "oneLiner": "Trace a support answer back to retrieved knowledge.",
       "overview": "A support-ticket and knowledge-base RAG application using PostgreSQL/pgvector, document ingestion, embeddings, hybrid retrieval, cross-encoder reranking, and a local Ollama model runtime.",
-      "features": ["Support-ticket workflow", "Knowledge-base document upload and ingestion", "PostgreSQL/pgvector hybrid retrieval", "Embedding and reranking pipeline", "Answer generation with citations", "Separate API and background ingestion worker"],
-      "architecture": ["Next.js frontend", "FastAPI backend", "PostgreSQL and pgvector", "Ingestion worker", "Local Ollama model runtime and embedding/reranking models"],
-      "stack": ["Next.js", "React", "TypeScript", "FastAPI", "PostgreSQL", "pgvector", "Ollama", "RAG"],
+      "features": [
+        "Support-ticket workflow",
+        "Knowledge-base document upload and ingestion",
+        "PostgreSQL/pgvector hybrid retrieval",
+        "Embedding and reranking pipeline",
+        "Answer generation with citations",
+        "Separate API and background ingestion worker"
+      ],
+      "architecture": [
+        "Next.js frontend",
+        "FastAPI backend",
+        "PostgreSQL and pgvector",
+        "Ingestion worker",
+        "Local Ollama model runtime and embedding/reranking models"
+      ],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "PostgreSQL",
+        "pgvector",
+        "Ollama",
+        "RAG"
+      ],
       "frontendRepo": "supportai_frontend",
       "backendRepo": "supportai_backend",
       "appUrl": "https://supportai-frontend-plum.vercel.app/",
@@ -252,9 +565,30 @@
       "category": "Field service operations",
       "oneLiner": "Follow service agreements into maintenance, work orders, and billing.",
       "overview": "An operations platform for HVAC, plumbing, and related service businesses, covering customers, equipment, service agreements, maintenance schedules, work orders, invoices, payments, and customer/technician portals.",
-      "features": ["Company, branch, customer, contact, and equipment management", "Agreement and renewal offer lifecycles", "Maintenance schedules and work orders", "Invoices, payments, refunds, credits, and PDFs", "Customer and technician onboarding/portals", "Durable email/SMS/webhook queues, reports, exports, and attachments"],
-      "architecture": ["React/Vite frontend", "FastAPI API", "PostgreSQL and Alembic", "Maintenance, billing, webhook workers", "Cookie sessions, CSRF, and role/tenant boundaries"],
-      "stack": ["React", "TypeScript", "Vite", "FastAPI", "PostgreSQL", "SQLAlchemy", "Docker"],
+      "features": [
+        "Company, branch, customer, contact, and equipment management",
+        "Agreement and renewal offer lifecycles",
+        "Maintenance schedules and work orders",
+        "Invoices, payments, refunds, credits, and PDFs",
+        "Customer and technician onboarding/portals",
+        "Durable email/SMS/webhook queues, reports, exports, and attachments"
+      ],
+      "architecture": [
+        "React/Vite frontend",
+        "FastAPI API",
+        "PostgreSQL and Alembic",
+        "Maintenance, billing, webhook workers",
+        "Cookie sessions, CSRF, and role/tenant boundaries"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "FastAPI",
+        "PostgreSQL",
+        "SQLAlchemy",
+        "Docker"
+      ],
       "frontendRepo": "service-agreement-manager-frontend",
       "backendRepo": "service-agreement-manager-backend",
       "appUrl": "https://service-agreement-manager-frontend.vercel.app/",
@@ -268,9 +602,30 @@
       "category": "Workshop operations",
       "oneLiner": "Run a repair journey from vehicle check-in to invoice.",
       "overview": "An automotive workshop management platform for customers, vehicles, appointments, inspections, repair orders, inventory, estimates, invoices, and customer self-service.",
-      "features": ["Customer and vehicle records with mileage", "Appointment scheduling and conflict checks", "Digital inspections and photo records", "Repair orders, technician tasks, labor, and quality control", "Parts inventory, suppliers, and purchase orders", "Estimates, customer line-item approval, invoices, payments, and portal"],
-      "architecture": ["Next.js frontend", "FastAPI API", "PostgreSQL, async SQLAlchemy, and Alembic", "Role-based access and database-backed auth limits", "Email outbox and retrying worker"],
-      "stack": ["Next.js", "React", "TypeScript", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic"],
+      "features": [
+        "Customer and vehicle records with mileage",
+        "Appointment scheduling and conflict checks",
+        "Digital inspections and photo records",
+        "Repair orders, technician tasks, labor, and quality control",
+        "Parts inventory, suppliers, and purchase orders",
+        "Estimates, customer line-item approval, invoices, payments, and portal"
+      ],
+      "architecture": [
+        "Next.js frontend",
+        "FastAPI API",
+        "PostgreSQL, async SQLAlchemy, and Alembic",
+        "Role-based access and database-backed auth limits",
+        "Email outbox and retrying worker"
+      ],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "PostgreSQL",
+        "SQLAlchemy",
+        "Alembic"
+      ],
       "frontendRepo": "autofix_frontend",
       "backendRepo": "autofix_backend",
       "appUrl": "https://autofix-frontend-phi.vercel.app/",
@@ -284,9 +639,30 @@
       "category": "Finance operations",
       "oneLiner": "Manage invoices and expenses with organization-aware access.",
       "overview": "An invoice and expense-management product using Firebase Authentication for identity, a Flask API for business workflows, and PostgreSQL as the authoritative data store.",
-      "features": ["Firebase identity and organization discovery", "Organization membership and role-aware access", "Customers, vendors, and invoice management", "Payment and expense records", "Recurring invoices and scheduled jobs", "Public contact form and admin operational overview"],
-      "architecture": ["React/Vite frontend", "Firebase Authentication", "Flask REST API", "PostgreSQL business data", "Dedicated recurring scheduler"],
-      "stack": ["React", "TypeScript", "Vite", "Firebase Auth", "Flask", "PostgreSQL", "SQLAlchemy"],
+      "features": [
+        "Firebase identity and organization discovery",
+        "Organization membership and role-aware access",
+        "Customers, vendors, and invoice management",
+        "Payment and expense records",
+        "Recurring invoices and scheduled jobs",
+        "Public contact form and admin operational overview"
+      ],
+      "architecture": [
+        "React/Vite frontend",
+        "Firebase Authentication",
+        "Flask REST API",
+        "PostgreSQL business data",
+        "Dedicated recurring scheduler"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "Firebase Auth",
+        "Flask",
+        "PostgreSQL",
+        "SQLAlchemy"
+      ],
       "frontendRepo": "ledgerpulse_frontend",
       "backendRepo": "ledgerpulse_backend",
       "appUrl": "https://ledgerpulse-frontend.vercel.app/",
