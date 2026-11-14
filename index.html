@@ -35,45 +35,95 @@
 
 <section id="trace-mode" class="section trace-section">
   <div class="shell">
-    <div class="section-intro">
-      <div><span class="section-label">02 / TRACE MODE</span><span class="section-kicker">FOLLOW THE IMPLEMENTATION</span></div>
-      <div><h2>Don't just read what I built. Follow how it works.</h2><p class="section-description">Explore two real systems step by step. Each stage links to its implementation and a relevant test file, so the walkthrough stays inspectable rather than decorative.</p></div>
+    <div class="section-intro trace-intro">
+      <div>
+        <span class="section-label">02 / TRACE MODE</span>
+        <span class="section-kicker">FOLLOW THE IMPLEMENTATION</span>
+      </div>
+      <div>
+        <h2>Don't just read what I built. Follow how it works.</h2>
+        <p class="section-description">Pick a real system, move through its execution path, and inspect the exact source and tests behind each decision.</p>
+      </div>
     </div>
-    <div class="trace-workspace">
-      <aside class="trace-sidebar" aria-label="Choose a system">
-        <span class="trace-overline">SELECT A SYSTEM</span>
-        <button class="trace-system-button is-active" type="button" data-trace-system="frameflux" aria-pressed="true">
-          <span class="trace-system-index">01</span><span class="trace-system-copy"><b>FrameFlux</b><small>Resumable uploads · async jobs</small></span><span class="trace-system-arrow" aria-hidden="true">↗</span>
-        </button>
-        <button class="trace-system-button" type="button" data-trace-system="telemetry" aria-pressed="false">
-          <span class="trace-system-index">02</span><span class="trace-system-copy"><b>Telemetry</b><small>Ingestion · anomaly · realtime</small></span><span class="trace-system-arrow" aria-hidden="true">↗</span>
-        </button>
-        <div class="trace-sidebar-note"><span class="trace-note-mark">i</span><p>This is a guided map of source code and tests—not a live production monitor or a claim of live system activity.</p></div>
-      </aside>
-      <div class="trace-main">
-        <div class="trace-main-top"><span id="trace-system-label">FRAMEFLUX / ASYNC MEDIA PIPELINE</span><span class="trace-source-state"><i></i> REPOSITORY-LINKED</span></div>
-        <div class="trace-flow-heading"><span>EXECUTION PATH</span><span id="trace-step-count">01 — 05</span></div>
-        <div class="trace-step-list" id="trace-steps" role="group" aria-label="Implementation steps">
-          <button class="trace-step is-active" type="button" data-trace-step="0" aria-pressed="true"><span>01</span><b>Upload progress</b><i></i></button>
-          <button class="trace-step" type="button" data-trace-step="1" aria-pressed="false"><span>02</span><b>Persist job state</b><i></i></button>
-          <button class="trace-step" type="button" data-trace-step="2" aria-pressed="false"><span>03</span><b>Queue background work</b><i></i></button>
-          <button class="trace-step" type="button" data-trace-step="3" aria-pressed="false"><span>04</span><b>Run media tasks</b><i></i></button>
-          <button class="trace-step" type="button" data-trace-step="4" aria-pressed="false"><span>05</span><b>Verify lifecycle</b><i></i></button>
+
+    <div class="trace-console" data-trace-root>
+      <div class="trace-console-head">
+        <div class="trace-console-title">
+          <span class="trace-live-dot" aria-hidden="true"></span>
+          <span>ENGINEERING TRACE / SOURCE MAP</span>
         </div>
-        <article class="trace-detail" id="trace-detail" aria-live="polite" aria-atomic="true">
-          <div class="trace-detail-index" id="trace-detail-index">01 / FRAMEFLUX</div>
-          <div class="trace-detail-content">
-            <span class="trace-overline" id="trace-stage-type">UPLOAD STATE</span>
-            <h3 id="trace-stage-title">Make progress explicit.</h3>
-            <p id="trace-stage-description">Upload progress is recorded in Redis with an upload identifier, user association, status, bounded percentage, optional byte totals, and an expiry.</p>
-            <div class="trace-design-note"><span>ENGINEERING DECISION</span><p id="trace-stage-decision">Progress is modeled as state that can be queried safely for the user who owns the upload, rather than inferred from a long-running request.</p></div>
-            <div class="trace-evidence-links">
-              <a id="trace-source-link" href="https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/app/features/media/upload_progress.py" target="_blank" rel="noopener noreferrer">Inspect source file <b aria-hidden="true">↗</b></a>
-              <a id="trace-test-link" href="https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/tests/test_validation_and_uploads.py" target="_blank" rel="noopener noreferrer">See related tests <b aria-hidden="true">↗</b></a>
-            </div>
+        <div class="trace-console-meta">
+          <span id="trace-system-label">FRAMEFLUX / ASYNC MEDIA PIPELINE</span>
+          <span id="trace-step-count">01 / 05</span>
+        </div>
+      </div>
+
+      <div class="trace-console-body">
+        <aside class="trace-rail" aria-label="Choose a system">
+          <div class="trace-rail-label">SYSTEMS</div>
+          <button class="trace-system-button is-active" type="button" data-trace-system="frameflux" aria-pressed="true">
+            <span class="trace-system-index">01</span>
+            <span class="trace-system-copy"><b>FrameFlux</b><small>upload → queue → worker</small></span>
+            <span class="trace-system-arrow" aria-hidden="true">↗</span>
+          </button>
+          <button class="trace-system-button" type="button" data-trace-system="telemetry" aria-pressed="false">
+            <span class="trace-system-index">02</span>
+            <span class="trace-system-copy"><b>Telemetry</b><small>ingest → detect → stream</small></span>
+            <span class="trace-system-arrow" aria-hidden="true">↗</span>
+          </button>
+
+          <div class="trace-rail-proof">
+            <span>WHAT YOU ARE SEEING</span>
+            <p>Not a fake runtime dashboard. This is a navigable map of real repository code and the tests that verify it.</p>
           </div>
-        </article>
-        <div class="trace-footer"><span>NO API CALLS · NO FAKE RUNTIME DATA</span><span>STATIC, SOURCE-VERIFIABLE WALKTHROUGH</span></div>
+        </aside>
+
+        <div class="trace-canvas">
+          <div class="trace-path-header">
+            <div>
+              <span>EXECUTION PATH</span>
+              <strong id="trace-path-summary">UPLOAD → JOB STATE → WORKER → MEDIA → VERIFY</strong>
+            </div>
+            <span class="trace-key"><i></i> SOURCE + TEST AT EVERY STEP</span>
+          </div>
+
+          <div class="trace-steps" id="trace-steps" role="list" aria-label="Implementation steps"></div>
+
+          <article class="trace-inspector" aria-live="polite" aria-atomic="true">
+            <div class="trace-inspector-top">
+              <span id="trace-detail-index">01 / FRAMEFLUX</span>
+              <span id="trace-stage-type">UPLOAD STATE</span>
+            </div>
+
+            <div class="trace-inspector-grid">
+              <div class="trace-inspector-main">
+                <h3 id="trace-stage-title">Make upload progress explicit.</h3>
+                <p id="trace-stage-description">Upload progress is recorded as queryable state instead of being hidden inside a long-running request.</p>
+
+                <div class="trace-decision">
+                  <span>WHY THIS EXISTS</span>
+                  <p id="trace-stage-decision">The implementation gives the client a bounded state model it can query safely for the user who owns the upload.</p>
+                </div>
+              </div>
+
+              <div class="trace-evidence">
+                <div class="trace-evidence-label">INSPECT THE EVIDENCE</div>
+                <a id="trace-source-link" href="#" target="_blank" rel="noopener noreferrer">
+                  <span><small>SOURCE</small><b id="trace-source-label">app/features/media/upload_progress.py</b></span><strong>↗</strong>
+                </a>
+                <a id="trace-test-link" href="#" target="_blank" rel="noopener noreferrer">
+                  <span><small>TEST</small><b id="trace-test-label">tests/test_validation_and_uploads.py</b></span><strong>↗</strong>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <div class="trace-console-foot">
+            <span>STATIC / SOURCE-VERIFIABLE</span>
+            <span>REPOSITORY-LINKED</span>
+            <span>NO FAKE LIVE DATA</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -613,5 +663,6 @@
 </div>
 <div class="command-bar" id="command-bar" hidden><div class="command-inner"><span class="command-key">/</span><input id="command-input" type="text" placeholder="Jump to work, systems, stack, contact..." aria-label="Jump command"><button type="button" id="command-close" aria-label="Close command palette">Esc</button></div><div class="command-results" id="command-results"></div></div>
 <script src="./script.js?v=20261114-engineering-casebook"></script>
+  <script src="./trace-mode.js?v=20261114-trace"></script>
 </body>
 </html>

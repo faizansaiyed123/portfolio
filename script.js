@@ -7,7 +7,7 @@
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
   /* ---------- Theme ---------- */
-  const themeStorageKey = "faizan-portfolio-theme";
+  const themeStorageKey = "faizan-portfolio-theme-v2";
   const readTheme = () => {
     try {
       const stored = window.localStorage.getItem(themeStorageKey);
@@ -15,9 +15,7 @@
     } catch {
       // Storage can be unavailable in private or restricted browser contexts.
     }
-    return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
-      ? "light"
-      : "dark";
+    return "dark";
   };
 
   const applyTheme = (theme, persist = false) => {
@@ -1349,196 +1347,6 @@
     });
   });
 
-  /* ---------- Trace Mode: source-linked engineering walkthrough ---------- */
-  const traceSystems = {
-    frameflux: {
-      label: "FRAMEFLUX / ASYNC MEDIA PIPELINE",
-      steps: [
-        {
-          title: "Make upload progress explicit.",
-          type: "UPLOAD STATE",
-          description: "Upload progress is recorded in Redis with an upload identifier, user association, status, bounded percentage, optional byte totals, and an expiry.",
-          decision: "Progress is modeled as queryable state. The read path checks the user association before returning the upload record.",
-          source: "https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/app/features/media/upload_progress.py",
-          sourceLabel: "app/features/media/upload_progress.py",
-          test: "https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/tests/test_validation_and_uploads.py",
-          testLabel: "tests/test_validation_and_uploads.py"
-        },
-        {
-          title: "Persist the job lifecycle.",
-          type: "DURABLE JOB STATE",
-          description: "Processing jobs are created with a queued state and persisted through the database session. Updates can carry status, progress, stage, error details, output names, and lifecycle timestamps.",
-          decision: "The job record gives the interface a durable state model instead of relying only on a worker's transient response.",
-          source: "https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/app/features/jobs/service.py",
-          sourceLabel: "app/features/jobs/service.py",
-          test: "https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/tests/test_status_and_jobs.py",
-          testLabel: "tests/test_status_and_jobs.py"
-        },
-        {
-          title: "Move expensive work to workers.",
-          type: "BACKGROUND EXECUTION",
-          description: "The ARQ worker registers media task functions and receives its Redis connection through worker startup and shutdown hooks.",
-          decision: "Long-running media operations are dispatched as background tasks so the request path does not have to perform the full transformation.",
-          source: "https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/app/infrastructure/worker.py",
-          sourceLabel: "app/infrastructure/worker.py",
-          test: "https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/tests/test_media_processing_and_editing.py",
-          testLabel: "tests/test_media_processing_and_editing.py"
-        },
-        {
-          title: "Keep processing stages inspectable.",
-          type: "MEDIA TASKS",
-          description: "The worker is wired to concrete task handlers for compression, conversion, editing, merging, transforms, overlays, splitting, clips, and workflow execution.",
-          decision: "Task registration makes the supported work explicit and keeps execution concerns in the worker layer.",
-          source: "https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/app/infrastructure/tasks.py",
-          sourceLabel: "app/infrastructure/tasks.py",
-          test: "https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/tests/test_media_processing_and_editing.py",
-          testLabel: "tests/test_media_processing_and_editing.py"
-        },
-        {
-          title: "Verify the lifecycle from the API.",
-          type: "REGRESSION COVERAGE",
-          description: "The job-status tests exercise queued, processing, completed, and failed responses, including returned progress and output details.",
-          decision: "The user-facing contract is checked at the API boundary, not only by testing isolated helper functions.",
-          source: "https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/app/features/jobs/routes.py",
-          sourceLabel: "app/features/jobs/routes.py",
-          test: "https://github.com/faizansaiyed123/FrameFlux-Backend/blob/main/tests/test_status_and_jobs.py",
-          testLabel: "tests/test_status_and_jobs.py"
-        }
-      ]
-    },
-    telemetry: {
-      label: "TELEMETRY / INGESTION TO REALTIME",
-      steps: [
-        {
-          title: "Accept scoped telemetry batches.",
-          type: "INGESTION",
-          description: "The ingestion endpoint checks the host associated with the API key, persists the accepted batch, and sends accepted events through the telemetry manager.",
-          decision: "The ingest path is host-scoped and reports received, accepted, and deduplicated event counts.",
-          source: "https://github.com/faizansaiyed123/telemetry-backend/blob/main/app/api/ingestion.py",
-          sourceLabel: "app/api/ingestion.py",
-          test: "https://github.com/faizansaiyed123/telemetry-backend/blob/main/tests/integration/test_ingestion_quality.py",
-          testLabel: "tests/integration/test_ingestion_quality.py"
-        },
-        {
-          title: "Evaluate signals against history.",
-          type: "ANOMALY DETECTION",
-          description: "The detector maintains rolling per-host, per-metric history and evaluates z-scores after the configured minimum history is available.",
-          decision: "A signal is not labelled anomalous before enough history exists; zero-variance windows are handled without dividing by zero.",
-          source: "https://github.com/faizansaiyed123/telemetry-backend/blob/main/app/services/anomaly_detector.py",
-          sourceLabel: "app/services/anomaly_detector.py",
-          test: "https://github.com/faizansaiyed123/telemetry-backend/blob/main/tests/unit/test_anomaly_detector.py",
-          testLabel: "tests/unit/test_anomaly_detector.py"
-        },
-        {
-          title: "Persist alert changes off the hot path.",
-          type: "ALERT LIFECYCLE",
-          description: "Alert persistence uses a bounded asyncio queue and a background worker. Failed persistence retains the event for a retry; queue overflow is counted and logged.",
-          decision: "The queue has an explicit capacity and failure behavior instead of silently allowing unbounded in-memory growth.",
-          source: "https://github.com/faizansaiyed123/telemetry-backend/blob/main/app/services/alert_persistence.py",
-          sourceLabel: "app/services/alert_persistence.py",
-          test: "https://github.com/faizansaiyed123/telemetry-backend/blob/main/tests/unit/test_alert_persistence.py",
-          testLabel: "tests/unit/test_alert_persistence.py"
-        },
-        {
-          title: "Fan out updates to connected clients.",
-          type: "WEBSOCKET DELIVERY",
-          description: "The WebSocket manager protects its client set with an asyncio lock, broadcasts concurrently, and removes clients whose send operation fails.",
-          decision: "One broken connection is removed without making every other connected client share the same failure.",
-          source: "https://github.com/faizansaiyed123/telemetry-backend/blob/main/app/services/websocket_manager.py",
-          sourceLabel: "app/services/websocket_manager.py",
-          test: "https://github.com/faizansaiyed123/telemetry-backend/blob/main/tests/integration/test_websocket.py",
-          testLabel: "tests/integration/test_websocket.py"
-        },
-        {
-          title: "Verify the authenticated stream.",
-          type: "INTEGRATION TESTING",
-          description: "The WebSocket integration tests obtain a short-lived token, validate telemetry message shape and sequence progression, and exercise multiple clients and disconnect behavior.",
-          decision: "The stream is tested through an authenticated client boundary, not just by calling the manager in isolation.",
-          source: "https://github.com/faizansaiyed123/telemetry-backend/blob/main/app/api/websocket.py",
-          sourceLabel: "app/api/websocket.py",
-          test: "https://github.com/faizansaiyed123/telemetry-backend/blob/main/tests/integration/test_websocket.py",
-          testLabel: "tests/integration/test_websocket.py"
-        }
-      ]
-    }
-  };
 
-  const traceSystemButtons = $(".trace-system-button");
-  const traceStepsRoot = $("#trace-steps");
-  const traceSystemLabel = $("#trace-system-label");
-  const traceStepCount = $("#trace-step-count");
-  const traceDetailIndex = $("#trace-detail-index");
-  const traceStageType = $("#trace-stage-type");
-  const traceStageTitle = $("#trace-stage-title");
-  const traceStageDescription = $("#trace-stage-description");
-  const traceStageDecision = $("#trace-stage-decision");
-  const traceSourceLink = $("#trace-source-link");
-  const traceTestLink = $("#trace-test-link");
-  let activeTraceSystem = "frameflux";
-  let activeTraceStep = 0;
-
-  const renderTrace = () => {
-    const system = traceSystems[activeTraceSystem];
-    if (!system || !traceStepsRoot) return;
-    const step = system.steps[activeTraceStep];
-    traceSystemLabel.textContent = system.label;
-    traceStepCount.textContent = String(activeTraceStep + 1).padStart(2, "0") + " — " + String(system.steps.length).padStart(2, "0");
-    traceDetailIndex.textContent = String(activeTraceStep + 1).padStart(2, "0") + " / " + activeTraceSystem.toUpperCase();
-    traceStageType.textContent = step.type;
-    traceStageTitle.textContent = step.title;
-    traceStageDescription.textContent = step.description;
-    traceStageDecision.textContent = step.decision;
-    traceSourceLink.href = step.source;
-    traceSourceLink.setAttribute("aria-label", "Inspect source file " + step.sourceLabel);
-    traceSourceLink.replaceChildren(document.createTextNode("Inspect source file: " + step.sourceLabel + " "), (() => {
-      const marker = document.createElement("b");
-      marker.setAttribute("aria-hidden", "true");
-      marker.textContent = "↗";
-      return marker;
-    })());
-    traceTestLink.href = step.test;
-    traceTestLink.setAttribute("aria-label", "View related tests " + step.testLabel);
-    traceTestLink.replaceChildren(document.createTextNode("View related tests: " + step.testLabel + " "), (() => {
-      const marker = document.createElement("b");
-      marker.setAttribute("aria-hidden", "true");
-      marker.textContent = "↗";
-      return marker;
-    })());
-
-    const stepButtons = system.steps.map((item, index) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "trace-step" + (index === activeTraceStep ? " is-active" : "");
-      button.setAttribute("aria-pressed", String(index === activeTraceStep));
-      button.dataset.traceStep = String(index);
-      const number = document.createElement("span");
-      number.textContent = String(index + 1).padStart(2, "0");
-      const title = document.createElement("b");
-      title.textContent = item.type.replace(/_/g, " ").toLowerCase().replace(/\b\w/g, (letter) => letter.toUpperCase());
-      const marker = document.createElement("i");
-      marker.setAttribute("aria-hidden", "true");
-      button.append(number, title, marker);
-      button.addEventListener("click", () => {
-        activeTraceStep = index;
-        renderTrace();
-      });
-      return button;
-    });
-    traceStepsRoot.replaceChildren(...stepButtons);
-  };
-
-  traceSystemButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      activeTraceSystem = button.dataset.traceSystem || "frameflux";
-      activeTraceStep = 0;
-      traceSystemButtons.forEach((candidate) => {
-        const active = candidate === button;
-        candidate.classList.toggle("is-active", active);
-        candidate.setAttribute("aria-pressed", String(active));
-      });
-      renderTrace();
-    });
-  });
-  if (traceStepsRoot && traceStageTitle) renderTrace();
 
 })();
