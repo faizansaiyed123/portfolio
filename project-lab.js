@@ -69,7 +69,9 @@
     setText("#lab-category", project.category);
     setText("#lab-title", project.name);
     setText("#lab-overview", project.overview);
-    setText("#lab-category-card", project.category);\n    setText("#lab-runtime", project.runtimeType || "Per-visitor isolated workspace");\n    setText("#lab-runtime-detail", project.runtimeDetail || "A temporary synthetic environment with bounded use and automatic expiry.");
+    setText("#lab-category-card", project.category);
+    setText("#lab-runtime", project.runtimeType || "Per-visitor isolated workspace");
+    setText("#lab-runtime-detail", project.runtimeDetail || "A temporary synthetic environment with bounded use and automatic expiry.");
     setText("#lab-stack-summary", (project.stack || []).slice(0, 4).join(" · "));
     setText("#lab-status", pending ? "Verification pending" : "Demo available");
     setText(
