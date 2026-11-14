@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-11-14T16:58:00+05:30",
+  "verifiedCount": 5,
+  "policy": "A release credit is shown only when the official release notes identify the contribution or explicitly credit the GitHub account, and the related pull request is merged.",
+  "items": [
+    {
+      "project": "CI Agent Audit",
+      "repository": "layer8labs8/ci-agent-audit",
+      "version": "v0.1.4",
+      "releaseDate": "2026-11-03",
+      "title": "Amp CLI signature",
+      "summary": "Added Amp CLI and Amp Code Review GitHub Actions detection. The official v0.1.4 release notes explicitly thank @faizansaiyed123 for the Amp contribution.",
+      "pullRequest": "https://github.com/layer8labs8/ci-agent-audit/pull/31",
+      "release": "https://github.com/layer8labs8/ci-agent-audit/releases/tag/v0.1.4",
+      "verification": "Official release notes name @faizansaiyed123 in the Amp contributor credit; corresponding PR #31 is in the verified merged external contribution set."
+    },
+    {
+      "project": "Sentry JavaScript SDK",
+      "repository": "getsentry/sentry-javascript",
+      "version": "11.10.0",
+      "releaseDate": "2026-10-28",
+      "title": "Cloudflare Workers KV instrumentation",
+      "summary": "Added tracing instrumentation for Cloudflare Workers KV bindings to the JavaScript SDK.",
+      "pullRequest": "https://github.com/getsentry/sentry-javascript/pull/25488",
+      "release": "https://github.com/getsentry/sentry-javascript/releases/tag/11.10.0",
+      "verification": "Official v11.10.0 release notes link the Workers KV change to PR #25488; the PR is in the verified merged external contribution set."
+    },
+    {
+      "project": "Sentry JavaScript SDK",
+      "repository": "getsentry/sentry-javascript",
+      "version": "11.9.0",
+      "releaseDate": "2026-10-23",
+      "title": "LoaderSentry type export",
+      "summary": "Exported the LoaderSentry type from the browser SDK.",
+      "pullRequest": "https://github.com/getsentry/sentry-javascript/pull/25357",
+      "release": "https://github.com/getsentry/sentry-javascript/releases/tag/11.9.0",
+      "verification": "Official v11.9.0 release notes link the LoaderSentry type export to PR #25357; the PR is in the verified merged external contribution set."
+    },
+    {
+      "project": "Sentry Python SDK",
+      "repository": "getsentry/sentry-python",
+      "version": "2.72.0",
+      "releaseDate": "2026-10-12",
+      "title": "Move FastAPI active thread tracking into Starlette",
+      "summary": "Moved active-thread tracking from the FastAPI-specific integration to Starlette.",
+      "pullRequest": "https://github.com/getsentry/sentry-python/pull/7825",
+      "release": "https://github.com/getsentry/sentry-python/releases/tag/2.72.0",
+      "verification": "Official v2.72.0 release notes identify @faizansaiyed123 and link PR #7825; the PR is in the verified merged external contribution set."
+    },
+    {
+      "project": "Home Assistant Frontend",
+      "repository": "home-assistant/frontend",
+      "version": "20260930.0",
+      "releaseDate": "2026-09-30",
+      "title": "Fix light color-temperature gradient in RTL",
+      "summary": "Corrected the light color-temperature gradient for right-to-left layouts.",
+      "pullRequest": "https://github.com/home-assistant/frontend/pull/54468",
+      "release": "https://github.com/home-assistant/frontend/releases/tag/20260930.0",
+      "verification": "The official 20260930.0 prerelease notes include this exact change and credit @faizansaiyed123 with a link to PR #54468; the PR is merged. The release is explicitly a prerelease, not a stable release.",
+      "channel": "prerelease"
+    }
+  ]
+}

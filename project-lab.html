@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111016">
+  <meta name="description" content="Explore a project lab: real workflows, system architecture, implementation evidence and demo availability.">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="stylesheet" href="./style.css?v=20261114-labs">
+  <link rel="stylesheet" href="./project-lab.css?v=20261114-labs">
+  <script type="module" src="./project-lab.js?v=20261114-labs"></script>
+  <title>Project Lab — Faizan Saiyed</title>
+</head>
+<body class="project-lab-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="wordmark" href="./index.html#top" aria-label="Faizan Saiyed home">
+        <span class="wordmark-symbol">F<span>.</span></span>
+        <span class="wordmark-copy"><strong>FAIZAN SAIYED</strong><small>INDEPENDENT SOFTWARE / 2026</small></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="./index.html#products">Products</a>
+        <a href="./index.html#contributions">Open source</a>
+        <a href="./index.html#releases">Shipped work</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-button theme-toggle" type="button" aria-label="Switch to light theme" title="Switch theme">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path></svg>
+        </button>
+        <a class="header-cta" href="https://github.com/faizansaiyed123" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="lab-main section-shell">
+    <nav class="lab-breadcrumbs" aria-label="Breadcrumb">
+      <a href="./index.html#products">Project library</a><span aria-hidden="true">/</span><span id="lab-breadcrumb-current">Project lab</span>
+    </nav>
+
+    <div id="lab-loading" class="lab-loading" role="status">Loading project evidence…</div>
+    <div id="lab-error" class="lab-error" hidden>
+      <p class="eyebrow">PROJECT NOT FOUND</p>
+      <h1>This lab could not be opened.</h1>
+      <p>Choose a project from the library to open its detail page.</p>
+      <a class="button button-primary" href="./index.html#products">Back to project library <span aria-hidden="true">↗</span></a>
+    </div>
+
+    <article id="project-lab" hidden>
+      <section class="lab-hero">
+        <div class="lab-hero-copy">
+          <div class="lab-kicker"><span class="eyebrow" id="lab-number">PROJECT LAB / 01</span><span class="lab-category" id="lab-category"></span></div>
+          <h1 id="lab-title"></h1>
+          <p id="lab-overview" class="lab-overview"></p>
+          <div class="lab-hero-actions" id="lab-hero-actions"></div>
+          <div class="lab-hero-note">All demo records are synthetic. A project is labelled live only after its frontend, backend and required services pass a clean-browser check.</div>
+        </div>
+        <figure class="lab-preview" id="lab-preview-wrap">
+          <img id="lab-preview" alt="" loading="eager">
+          <figcaption><span>PROJECT INTERFACE</span><span id="lab-preview-caption"></span></figcaption>
+        </figure>
+      </section>
+
+      <section class="lab-status-row" aria-label="Demo status and architecture">
+        <div class="lab-status-card">
+          <span class="lab-meta-label">DEMO AVAILABILITY</span>
+          <strong id="lab-status">Verification pending</strong>
+          <p id="lab-status-detail"></p>
+        </div>
+        <div class="lab-status-card">
+          <span class="lab-meta-label">RUNTIME APPROACH</span>
+          <strong id="lab-runtime">Isolated synthetic workspace</strong>
+          <p id="lab-runtime-detail">The final demo will use the project's actual application logic and data boundary.</p>
+        </div>
+        <div class="lab-status-card">
+          <span class="lab-meta-label">PROJECT CATEGORY</span>
+          <strong id="lab-category-card"></strong>
+          <p id="lab-stack-summary"></p>
+        </div>
+      </section>
+
+      <section class="lab-section lab-workflow-section" aria-labelledby="lab-workflow-title">
+        <div class="lab-section-heading">
+          <div><p class="eyebrow">01 / PRODUCT WORKFLOW</p><h2 id="lab-workflow-title">Follow the product path.</h2></div>
+          <p>These steps come from the repository's actual routes, services and tests—not a decorative user journey.</p>
+        </div>
+        <ol class="lab-workflow" id="lab-workflow"></ol>
+      </section>
+
+      <section class="lab-section lab-system-section" aria-labelledby="lab-system-title">
+        <div class="lab-section-heading">
+          <div><p class="eyebrow">02 / SYSTEM DESIGN</p><h2 id="lab-system-title">What makes it run.</h2></div>
+          <p>The technical map highlights the main runtime components. Open the source audit for implementation details and security constraints.</p>
+        </div>
+        <div class="lab-system-map" id="lab-architecture"></div>
+        <div class="lab-stack" id="lab-stack" aria-label="Technologies used"></div>
+      </section>
+
+      <section class="lab-section lab-capabilities-section" aria-labelledby="lab-capabilities-title">
+        <div class="lab-section-heading">
+          <div><p class="eyebrow">03 / CAPABILITIES</p><h2 id="lab-capabilities-title">What is implemented.</h2></div>
+          <p>Capabilities are listed from the inspected application. Anything still planned is kept separate from shipped behavior.</p>
+        </div>
+        <ul class="lab-capabilities" id="lab-features"></ul>
+      </section>
+
+      <section class="lab-section lab-demo-section" aria-labelledby="lab-demo-title">
+        <div class="lab-demo-panel">
+          <div>
+            <p class="eyebrow">04 / RECRUITER SANDBOX</p>
+            <h2 id="lab-demo-title">Use the real application.</h2>
+            <p id="lab-demo-plan"></p>
+            <div class="lab-demo-status" id="lab-demo-status"></div>
+          </div>
+          <div class="lab-demo-action" id="lab-demo-action"></div>
+        </div>
+      </section>
+
+      <section class="lab-section lab-evidence-section" aria-labelledby="lab-evidence-title">
+        <div class="lab-section-heading">
+          <div><p class="eyebrow">05 / SOURCE AND VERIFICATION</p><h2 id="lab-evidence-title">Inspect the evidence.</h2></div>
+          <p>Open the repositories, review the project-specific audit and follow the source code rather than relying on a screenshot.</p>
+        </div>
+        <div class="lab-evidence-grid">
+          <div class="lab-evidence-card">
+            <span class="lab-meta-label">SOURCE REPOSITORIES</span>
+            <div id="lab-repository-links" class="lab-link-list"></div>
+          </div>
+          <div class="lab-evidence-card">
+            <span class="lab-meta-label">IMPLEMENTATION AUDIT</span>
+            <p id="lab-audit-summary">The audit records the verified workflows, service boundaries, tests and blockers for this project.</p>
+            <a id="lab-audit-link" href="#" target="_blank" rel="noopener noreferrer">Open source audit <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="lab-evidence-card">
+            <span class="lab-meta-label">LISTED FRONTEND URL</span>
+            <p id="lab-listed-url-note">A URL in a repository or project record does not prove that its backend is reachable.</p>
+            <a id="lab-listed-url" href="#" target="_blank" rel="noopener noreferrer" hidden>Open listed URL <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </section>
+
+      <nav class="lab-neighbours" aria-label="Other project labs">
+        <a href="./index.html#products" class="lab-back-link">← All projects</a>
+        <span id="lab-neighbour-links"></span>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="site-footer section-shell">
+    <span>FAIZAN SAIYED</span>
+    <span>PRODUCTS, SYSTEMS AND VERIFIED WORK.</span>
+    <a href="./index.html#top">BACK TO PORTFOLIO ↑</a>
+  </footer>
+</body>
+</html>

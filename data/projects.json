@@ -1,0 +1,815 @@
+{
+  "schemaVersion": 1,
+  "owner": "faizansaiyed123",
+  "updatedAt": "2026-11-14T00:00:00Z",
+  "demoPolicy": "Each demo must use the real application and its real backend where required, isolated from production/customer data. Synthetic fixtures are allowed. A project remains verification-pending until the complete flow is tested from the public entry point.",
+  "projects": [
+    {
+      "id": "frameflux",
+      "number": "01",
+      "name": "FrameFlux",
+      "category": "Media infrastructure",
+      "oneLiner": "Turn large media work into durable, observable jobs.",
+      "overview": "An asynchronous media-processing platform with resumable uploads, strict file validation, durable job state, queued workers, and FFmpeg transformations.",
+      "features": [
+        "Resumable chunked uploads with pause, resume, retry, and cancellation",
+        "Extension, MIME/category, size, and binary-signature validation",
+        "Background probe and transform jobs using Redis and ARQ",
+        "Progress and job lifecycle visibility",
+        "Media transforms including probe, transcode, trim, split, merge, watermark, overlays, and freeze frames"
+      ],
+      "architecture": [
+        "Next.js browser client",
+        "FastAPI API",
+        "PostgreSQL metadata and relationships",
+        "Redis upload manifests and progress",
+        "ARQ worker and FFmpeg processing"
+      ],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis",
+        "ARQ",
+        "FFmpeg"
+      ],
+      "frontendRepo": "FrameFlux-Frontend",
+      "backendRepo": "FrameFlux-Backend",
+      "appUrl": null,
+      "demoStatus": "verification-pending",
+      "demoPlan": "Provide a small set of safe synthetic media samples and a real isolated worker. Let recruiters upload within strict limits, follow a real job, inspect progress, and exercise retry/cancel paths. Clean up files and jobs automatically.",
+      "previewImage": "assets/site-previews/frameflux-architecture.svg",
+      "workflow": [
+        "Upload a media file in resumable chunks",
+        "Validate its type, size and binary signature",
+        "Create a durable processing job",
+        "Follow worker progress, retry/cancel and inspect the output"
+      ],
+      "auditPath": "docs/project-labs/frameflux.md",
+      "runtimeType": "Per-visitor temporary workspace",
+      "runtimeDetail": "Each recruiter gets isolated project/job records, synthetic input media and bounded worker capacity. Uploads and processed files are removed when the session expires."
+    },
+    {
+      "id": "telemetry",
+      "number": "02",
+      "name": "Telemetry",
+      "category": "Realtime observability",
+      "oneLiner": "Follow signals from ingestion to alert and incident.",
+      "overview": "A realtime observability workspace that unifies synthetic telemetry and real host-agent events through one processing pipeline, then detects anomalies, evaluates alert rules, correlates incidents, persists state, and streams updates.",
+      "features": [
+        "Synthetic generator and real host-agent ingestion",
+        "Realtime metric charts and historical analytics",
+        "Anomaly detection and configurable sustained-duration alert rules",
+        "Alert lifecycle, cooldowns, deduplication, and incident correlation",
+        "SLO/SLI and error-budget views",
+        "Authenticated WebSocket updates, host administration, webhooks, and runtime metrics"
+      ],
+      "architecture": [
+        "React and TypeScript console",
+        "FastAPI REST and WebSocket API",
+        "TelemetryManager unified processing pipeline",
+        "Bounded asynchronous PostgreSQL persistence",
+        "Synthetic generator and host agent"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "PostgreSQL",
+        "WebSockets",
+        "Redis",
+        "Prometheus"
+      ],
+      "frontendRepo": "telemetry-frontend",
+      "backendRepo": "telemetry-backend",
+      "appUrl": "https://telemetry-frontend-chi.vercel.app/",
+      "demoStatus": "verification-pending",
+      "demoPlan": "Use an isolated demo workspace with synthetic telemetry only. Enable safe simulation controls, alert acknowledgement, incident workflows, and WebSocket streaming. Do not expose real host enrollment or unrestricted admin operations.",
+      "previewImage": "assets/site-previews/telemetry.webp",
+      "workflow": [
+        "Generate synthetic telemetry or ingest host-agent events",
+        "Follow the unified ingestion pipeline and live WebSocket updates",
+        "Trigger anomaly detection and configured alert rules",
+        "Inspect incident correlation, SLOs and persisted history"
+      ],
+      "auditPath": "docs/project-labs/telemetry.md",
+      "runtimeType": "Per-visitor telemetry namespace",
+      "runtimeDetail": "Each session receives its own synthetic event stream, alert rules and incident history. Live host-agent access is not exposed to a recruiter's browser."
+    },
+    {
+      "id": "sayphora",
+      "number": "03",
+      "name": "Sayphora",
+      "category": "Commerce",
+      "oneLiner": "A beauty storefront backed by real commerce workflows.",
+      "overview": "A full-stack beauty and skincare commerce platform. Catalogue, cart pricing, orders, inventory, reviews, wishlists, loyalty, AI beauty tools, and staff operations are backed by an Express API and PostgreSQL.",
+      "features": [
+        "Product discovery, filters, sorting, details, and comparison",
+        "Accounts, addresses, wishlists, cart, promotions, and checkout",
+        "Order tracking and cancellation",
+        "Shade matching, skincare routines, ingredient diagnostics, and virtual try-on",
+        "Loyalty rewards, inventory, fulfilment, reviews, and admin analytics",
+        "PWA installation and offline catalogue behavior"
+      ],
+      "architecture": [
+        "React 19 and Vite storefront",
+        "Express API",
+        "PostgreSQL and SQL migrations",
+        "Shared commerce/pricing rules",
+        "Playwright and API integration tests"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS",
+        "Express",
+        "PostgreSQL",
+        "Stripe"
+      ],
+      "frontendRepo": "Sayphora",
+      "backendRepo": null,
+      "appUrl": "https://sayphora.vercel.app/",
+      "demoStatus": "verification-pending",
+      "demoPlan": "Seed a dedicated demo catalogue, inventory, promo codes, reviews, and demo customer. Disable real payment settlement and use a clearly labelled test checkout. Keep admin access separate from recruiter sessions.",
+      "previewImage": "assets/site-previews/sayphora.webp",
+      "workflow": [
+        "Explore products, shades and reviews",
+        "Build a cart and validate pricing/promotions on the server",
+        "Complete a synthetic checkout and inspect the persisted order",
+        "Explore stock, loyalty and AI-assisted beauty tools"
+      ],
+      "auditPath": "docs/project-labs/sayphora.md",
+      "runtimeType": "Temporary guest/customer session",
+      "runtimeDetail": "The product catalogue can be shared as read-only seed data, while cart, checkout, order and loyalty state belongs to one temporary visitor identity. No real payment or fulfilment."
+    },
+    {
+      "id": "focus-journal",
+      "number": "04",
+      "name": "Focus Journal",
+      "category": "Personal productivity",
+      "oneLiner": "Turn daily reflection and focus sessions into visible patterns.",
+      "overview": "A private journaling and focus application for structured daily check-ins, journal entries, focus sessions, saved history, and optional AI-assisted insights.",
+      "features": [
+        "Account registration, sign-in, and OAuth code exchange",
+        "Daily check-ins with mood and tags",
+        "Private journal CRUD and history search",
+        "Focus sessions with pause, resume, completion, and abandonment",
+        "Weekly, monthly, streak, and tag summaries",
+        "Privacy settings and optional AI insights with explicit consent"
+      ],
+      "architecture": [
+        "React/Vite frontend",
+        "FastAPI API",
+        "PostgreSQL and SQLAlchemy",
+        "JWT and single-use OAuth exchange codes",
+        "Optional AI insights"
+      ],
+      "stack": [
+        "React",
+        "Vite",
+        "JavaScript",
+        "FastAPI",
+        "PostgreSQL",
+        "OAuth"
+      ],
+      "frontendRepo": "Focus-Journal-Frontend",
+      "backendRepo": "Focus-Journal-Backend",
+      "appUrl": "https://focus-journal-frontend.vercel.app/",
+      "demoStatus": "verification-pending",
+      "demoPlan": "Create an isolated synthetic journal account with fictional entries and focus history. Clearly mark all records as demo data. Disable personal OAuth and ensure the recruiter cannot access another demo user's entries.",
+      "previewImage": "assets/site-previews/focus-journal.webp",
+      "workflow": [
+        "Start and complete a focus session",
+        "Record a structured daily check-in and journal entry",
+        "Review calendar history, streaks and summaries",
+        "Enable optional AI processing only with explicit consent"
+      ],
+      "auditPath": "docs/project-labs/focus-journal.md",
+      "runtimeType": "Per-visitor private journal space",
+      "runtimeDetail": "Synthetic check-ins and focus history are scoped to a temporary identity. No real journal content is used; optional AI processing stays consent-gated."
+    },
+    {
+      "id": "nexora",
+      "number": "05",
+      "name": "Nexora",
+      "category": "Price intelligence",
+      "oneLiner": "Track competitor offerings, collect prices, and detect changes.",
+      "overview": "A multi-tenant competitive price-intelligence workspace for tracked offerings, competitor catalogs, source discovery, product matching, collection jobs, price observations, snapshots, and alerts.",
+      "features": [
+        "Organizations with owner, analyst, and viewer roles",
+        "Tracked offerings, competitors, source URLs, and matches",
+        "Website discovery and optional assisted discovery",
+        "HTTP and browser-rendered price collection",
+        "Collection job visibility and historical price observations",
+        "Competitive alerts and monitoring workflows"
+      ],
+      "architecture": [
+        "Next.js frontend",
+        "FastAPI versioned API",
+        "PostgreSQL and Alembic",
+        "Redis and Celery background collection",
+        "HTTPX, parsing, and optional Playwright"
+      ],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis",
+        "Celery",
+        "Playwright"
+      ],
+      "frontendRepo": "Nexora-Frontend",
+      "backendRepo": "Nexora-backend",
+      "appUrl": "https://nexora-frontend-hazel.vercel.app/",
+      "backendDocsUrl": "https://nexora-backend-5ie2.onrender.com/docs",
+      "demoStatus": "verification-pending",
+      "demoPlan": "Use fictional products and deterministic sample retailer pages or controlled fixtures. Do not issue arbitrary outbound fetches from a public demo. Expose collection runs only against allowlisted fixtures, then show stored observations and alerts.",
+      "previewImage": "assets/site-previews/nexora.webp",
+      "workflow": [
+        "Create a tracked offering and competitor",
+        "Add a source and match it to the offering",
+        "Run a bounded, allowlisted collection job",
+        "Inspect price observations, snapshots and alerts"
+      ],
+      "auditPath": "docs/project-labs/nexora.md",
+      "runtimeType": "Per-visitor tenant and collection namespace",
+      "runtimeDetail": "Offerings, competitor matches, observations and alerts are isolated per session. Collection is restricted to approved public fixture sources and bounded jobs."
+    },
+    {
+      "id": "flagship",
+      "number": "06",
+      "name": "Flagship",
+      "category": "Developer infrastructure",
+      "oneLiner": "Change application behavior with typed flags and deterministic rollouts.",
+      "overview": "A feature-flag management platform with organizations, projects, environments, typed flags, targeting rules, reusable segments, server-side evaluation, SDK credentials, and audit history.",
+      "features": [
+        "Account and organization membership",
+        "Project and environment management",
+        "Typed flags with environment-specific configuration",
+        "Conditional targeting and reusable audience segments",
+        "Deterministic percentage rollout and single/batch evaluation",
+        "SDK key creation and rotation plus audit history"
+      ],
+      "architecture": [
+        "Next.js App Router frontend",
+        "FastAPI versioned API",
+        "PostgreSQL and Alembic",
+        "HTTP-only cookie sessions",
+        "Server-side flag evaluation"
+      ],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "PostgreSQL",
+        "SQLAlchemy",
+        "Alembic"
+      ],
+      "frontendRepo": "feature-flag-platform-frontend",
+      "backendRepo": "feature-flag-platform-backend",
+      "appUrl": "https://feature-flag-platform-frontend-lsf9.vercel.app/",
+      "demoStatus": "verification-pending",
+      "demoPlan": "Provision a seeded demo organization and project with sample environments and flags. Let recruiters change targeting and rollout, then evaluate known test contexts. Keep SDK secrets and destructive organization management unavailable.",
+      "previewImage": "assets/site-previews/feature-flag-platform.webp",
+      "workflow": [
+        "Create an organization, project and environment",
+        "Define a typed flag, segment and targeting rule",
+        "Evaluate deterministic targeting and percentage rollout",
+        "Inspect environment-scoped SDK behavior and audit history"
+      ],
+      "auditPath": "docs/project-labs/flagship.md",
+      "runtimeType": "Per-visitor organization and project",
+      "runtimeDetail": "A temporary org owns its flags, environments, segments, evaluation keys and audit history. Protected or production-like environments are never shared."
+    },
+    {
+      "id": "fieldline-crm",
+      "number": "07",
+      "name": "Fieldline CRM",
+      "category": "Business operations",
+      "oneLiner": "Make customer relationships and follow-through operational.",
+      "overview": "A small-business CRM with tenant-scoped customers, companies, opportunities, activities, data imports, saved views, relationship intelligence, and workflow automation.",
+      "features": [
+        "Company and contact records with organization scoping",
+        "Sales pipeline and opportunity stage history",
+        "Tasks, activities, and follow-up workflows",
+        "CSV preview, validation, dry run, and import",
+        "Saved views, duplicate detection, and controlled merges",
+        "Relationship health, graph, attention queue, automation, and audit logs"
+      ],
+      "architecture": [
+        "Next.js frontend and same-origin API rewrite",
+        "FastAPI backend",
+        "PostgreSQL and SQLAlchemy",
+        "Organization roles and refresh sessions",
+        "PostgreSQL row-level security and audit events"
+      ],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "TanStack Query",
+        "FastAPI",
+        "PostgreSQL",
+        "Alembic"
+      ],
+      "frontendRepo": "fieldline-crm-frontend",
+      "backendRepo": "fieldline-crm-backend",
+      "appUrl": "https://fieldline-crm-frontend.vercel.app/",
+      "demoStatus": "verification-pending",
+      "demoPlan": "Seed one fictional organization with connected companies, contacts, opportunities, activities, and saved views. Demonstrate tenant separation with two isolated demo tenants and no real contact data.",
+      "previewImage": "assets/site-previews/fieldline-crm.webp",
+      "workflow": [
+        "Create companies, contacts and opportunities",
+        "Move an opportunity through validated pipeline states",
+        "Preview a synthetic CSV import and commit it",
+        "Merge a duplicate and inspect linked records and internal automation"
+      ],
+      "auditPath": "docs/project-labs/fieldline-crm.md",
+      "runtimeType": "Per-visitor CRM organization",
+      "runtimeDetail": "Each session gets its own organization, membership, synthetic contacts, opportunities, imports, saved views, merge history and automation runs."
+    },
+    {
+      "id": "orbit-campaigns",
+      "number": "08",
+      "name": "Orbit Campaigns",
+      "category": "Marketing operations",
+      "oneLiner": "Author campaigns and follow delivery through durable background work.",
+      "overview": "A campaign-management system covering audiences, contacts, campaign authoring, scheduling, reusable templates, delivery tracking, open/click events, and reporting.",
+      "features": [
+        "Owner-scoped audiences and contacts",
+        "Campaign authoring, editing, scheduling, and execution",
+        "Reusable campaign templates",
+        "Durable delivery records and retry-aware failed delivery handling",
+        "Background delivery worker and subscription rechecks",
+        "Open/click tracking and campaign reports"
+      ],
+      "architecture": [
+        "React/Vite frontend",
+        "FastAPI backend",
+        "PostgreSQL and Alembic",
+        "Redis-backed shared rate limits",
+        "Database-backed scheduler/SMTP worker"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis",
+        "Background workers"
+      ],
+      "frontendRepo": "marketing-campaign-management-frontend",
+      "backendRepo": "marketing-campaign-management-backend",
+      "appUrl": "https://marketing-campaign-management-front.vercel.app/",
+      "demoStatus": "verification-pending",
+      "demoPlan": "Use fictional contacts with all outbound mail redirected to a capture mailbox or preview-only transport. Never send unsolicited email. Show queued, delivered-to-capture, skipped, failed, and retry states distinctly.",
+      "previewImage": "assets/site-previews/marketing-campaigns.webp",
+      "workflow": [
+        "Create an audience, synthetic contacts and a reusable template",
+        "Draft or schedule a campaign with personalization",
+        "Process deliveries into a private capture inbox",
+        "Test unsubscribe, failed-only retry and persisted delivery analytics"
+      ],
+      "auditPath": "docs/project-labs/orbit-campaigns.md",
+      "runtimeType": "Per-visitor campaign workspace",
+      "runtimeDetail": "Each session has its own audiences, contacts, templates, campaigns and delivery history. Outbound email is captured in a private no-relay inbox, never sent to real recipients."
+    },
+    {
+      "id": "product-analytics",
+      "number": "09",
+      "name": "Product Analytics",
+      "category": "Data and analytics",
+      "oneLiner": "Follow product events into trends, funnels, retention, and cohorts.",
+      "overview": "A self-hosted product analytics platform with event ingestion, identity resolution, PostgreSQL analytics, reports, dashboards, cohorts, alerts, exports, and a JavaScript SDK.",
+      "features": [
+        "Single and batch event ingestion with project API keys",
+        "Trends, funnels, retention, sessions, and user journeys",
+        "People profiles, event properties, and identity resolution",
+        "Behavioral cohort definitions and membership preview",
+        "Saved reports, dashboards, and alerts",
+        "Data exports, background jobs, and SDK distribution"
+      ],
+      "architecture": [
+        "React/TypeScript frontend",
+        "FastAPI backend",
+        "PostgreSQL analytics store",
+        "Redis rate limiting and query cache",
+        "Background export, alert, cohort, retention, and cleanup workers"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis",
+        "Recharts"
+      ],
+      "frontendRepo": "product_analytics_frontend",
+      "backendRepo": "product_analytics_backend",
+      "appUrl": "https://product-analytics-frontend-un93.vercel.app/",
+      "demoStatus": "verification-pending",
+      "demoPlan": "Provide a generated synthetic event dataset and a dedicated demo project API key with strict quotas. Let recruiters run trends/funnel/retention queries and build cohorts without ingesting any visitor or real customer data.",
+      "previewImage": "assets/site-previews/product-analytics-overview.png",
+      "workflow": [
+        "Create a temporary project and SDK key",
+        "Ingest synthetic events through the real SDK endpoint",
+        "Explore trends, funnels, retention, sessions and paths",
+        "Create cohorts/reports and inspect project-scoped exports"
+      ],
+      "auditPath": "docs/project-labs/product-analytics.md",
+      "runtimeType": "Per-visitor analytics project",
+      "runtimeDetail": "Each session receives a temporary organization, project and SDK key. Events are synthetic, quotas are bounded, retention is finite, and expiry revokes the key and purges data."
+    },
+    {
+      "id": "gemini-chat",
+      "number": "10",
+      "name": "Gemini Chat Platform",
+      "category": "AI applications",
+      "oneLiner": "Explore queued OpenAI-powered chat and persisted conversations.",
+      "overview": "A saved-conversation chat product with OTP-assisted access, PostgreSQL chat history, an asynchronous Redis worker and Stripe subscription flow. Important provider note: despite the Gemini branding, the inspected backend currently calls OpenAI GPT-3.5-turbo; the production Render API is documented as suspended and the local walkthrough did not generate an assistant answer without a provider key.",
+      "features": [
+        "OTP sign-in and password recovery flows",
+        "Searchable chatroom history and reloadable conversations",
+        "Redis-backed asynchronous message queue and worker",
+        "Backend-enforced message limits",
+        "Account settings and plan status",
+        "Stripe sandbox checkout redirect"
+      ],
+      "architecture": [
+        "React/TypeScript/Vite frontend",
+        "FastAPI backend",
+        "PostgreSQL chat history",
+        "Redis queue, polling, and rate limits",
+        "OpenAI chat completion provider in the documented implementation"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis",
+        "OpenAI API",
+        "Stripe"
+      ],
+      "frontendRepo": "gemini-frontend-clone",
+      "backendRepo": "gemini-backend-clone",
+      "appUrl": "https://gemini-frontend-clone.vercel.app/",
+      "demoStatus": "verification-pending",
+      "demoPlan": "Provide a guest demo session with pre-seeded fictional chat history and rate-limited live prompt usage only if a funded provider key is configured. Otherwise expose safe recorded provider responses and clearly label them as replay, never as live model output. Payments remain test-only.",
+      "previewImage": "assets/site-previews/gemini-frontend.webp",
+      "workflow": [
+        "Enter an isolated temporary chat identity",
+        "Create a chatroom and submit a bounded prompt",
+        "Follow Redis queue and worker status",
+        "Reopen the persisted conversation and inspect the provider path"
+      ],
+      "auditPath": "docs/project-labs/gemini-chat.md",
+      "runtimeType": "Per-visitor chat identity",
+      "runtimeDetail": "Rooms, queued prompts and conversation history are scoped to one temporary user. A model response is called live only when the deployed OpenAI worker and provider have passed verification."
+    },
+    {
+      "id": "agencyos",
+      "number": "11",
+      "name": "AgencyOS",
+      "category": "Business operations",
+      "oneLiner": "Connect the commercial and delivery work of an agency.",
+      "overview": "A multi-tenant agency operations workspace for clients, deals, proposals, projects, tasks, time tracking, invoicing, team access, reporting and a client portal. Its in-product assistant is PostgreSQL full-text search plus report shortcuts, not an LLM.",
+      "features": [
+        "Clients, contacts, deals, and validated deal-stage history",
+        "Proposal drafting, state transitions, and project creation on acceptance",
+        "Project milestones, task boards, members, files, and discussions",
+        "Running timers, manual time entries, approvals, and timesheets",
+        "Invoice issuing, PDF generation, manual payment recording, and reports",
+        "Client portal, MFA, webhooks, notifications, audit and transactional outbox",
+        "Tenant-scoped PostgreSQL full-text search and keyword report assistant (not LLM)"
+      ],
+      "architecture": [
+        "React/TypeScript/Vite frontend",
+        "FastAPI API and separate worker",
+        "PostgreSQL with row-level security",
+        "Tenant-scoped authorization",
+        "PostgreSQL-backed background jobs and transactional outbox"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "FastAPI",
+        "PostgreSQL",
+        "Alembic",
+        "Background workers"
+      ],
+      "frontendRepo": "agencyos_frontend",
+      "backendRepo": "agencyos_backend",
+      "appUrl": "https://agencyos-frontend-one.vercel.app/",
+      "demoStatus": "verification-pending",
+      "demoPlan": "Create a unique short-lived organisation and synthetic owner/client/team accounts per visitor. Run the real connected deal → proposal acceptance → project → time approval → invoice/PDF/manual-payment workflow against PostgreSQL with RLS enabled. Route all invite/reset/invoice email to a private no-relay capture sink; use only a fixed safe webhook receiver; keep payments as clearly fictional manual records; store uploads in per-demo persistent storage; expire and purge the entire demo tenant. A complete authenticated browser journey and two-tenant isolation test are required before the demo is marked ready.",
+      "previewImage": "assets/site-previews/agencyos.webp",
+      "workflow": [
+        "Create a synthetic client, deal and proposal",
+        "Accept the proposal and inspect the resulting project",
+        "Move tasks, milestones and approved time through delivery",
+        "Issue an invoice PDF and record a clearly fictional manual payment"
+      ],
+      "auditPath": "docs/project-labs/agencyos.md",
+      "runtimeType": "Per-visitor RLS-protected organization",
+      "runtimeDetail": "A dedicated synthetic organization exercises the actual PostgreSQL row-level security, roles, proposal/project lifecycle and billing records. Email and webhook effects are captured safely."
+    },
+    {
+      "id": "cleanflow",
+      "number": "12",
+      "name": "CleanFlow",
+      "category": "Field service operations",
+      "oneLiner": "Move a cleaning job from inquiry through service and invoice.",
+      "overview": "A commercial cleaning operations platform connecting customer intake and quote management with contracts, recurring schedules, field jobs, invoicing, payments, and customer history.",
+      "features": [
+        "Public quote requests and customer/property records",
+        "Quote pricing and quote lifecycle",
+        "Contracts and recurring schedules",
+        "Employee assignment, job check-in/out, checklists, notes, and photo uploads",
+        "Invoices, PDFs, exports, and idempotent payment recording",
+        "Reporting, audit, notifications, and signed webhook delivery"
+      ],
+      "architecture": [
+        "React/Vite frontend",
+        "FastAPI domain API",
+        "SQLAlchemy persistence and Alembic",
+        "Application outbox and scheduled jobs",
+        "Prometheus metrics"
+      ],
+      "stack": [
+        "React",
+        "Vite",
+        "FastAPI",
+        "SQLAlchemy",
+        "PostgreSQL/SQLite configuration",
+        "APScheduler"
+      ],
+      "frontendRepo": "cleanflow_frontend",
+      "backendRepo": "cleanflow_backend",
+      "appUrl": "https://cleanflow-frontend-theta.vercel.app/",
+      "demoStatus": "verification-pending",
+      "demoPlan": "Use synthetic customers, properties, contracts, and jobs in a disposable database. Do not run the repository's seed script until its destructive behavior is inspected; no outbound SMS, email, or webhooks in recruiter mode.",
+      "previewImage": "assets/site-previews/cleanflow.webp",
+      "workflow": [
+        "Submit a synthetic service quote request",
+        "Calculate a quote and convert it into a contract",
+        "Accept the contract and inspect generated recurring jobs",
+        "Complete field work, create an invoice and record a manual sample payment"
+      ],
+      "auditPath": "docs/project-labs/cleanflow.md",
+      "runtimeType": "Per-visitor disposable database",
+      "runtimeDetail": "The current schema models one cleaning company, not multiple tenants. Recruiters therefore need separate disposable databases and storage roots; shared writable business records are not safe."
+    },
+    {
+      "id": "flowdesk",
+      "number": "13",
+      "name": "FlowDesk",
+      "category": "Project operations",
+      "oneLiner": "Manage client work from task board to billable time.",
+      "overview": "A multi-tenant workspace for client/project management, Kanban tasks, time tracking, invoicing, team roles, notifications, API keys and file attachments. It has real PostgreSQL-backed workflows and tenant-aware authorization; invoice payment is a manual status transition, not payment processing.",
+      "features": [
+        "Workspace registration, membership roles, invitations and tenant switching",
+        "Tenant-scoped clients, projects, tasks, Kanban movement and comments",
+        "Server-side running timers and manual time entries",
+        "Invoices generated from billable time and explicit state transitions",
+        "Activity feed, dashboard metrics, global search and notifications",
+        "Tenant-specific attachments, hashed API keys and webhook delivery history"
+      ],
+      "architecture": [
+        "React/TypeScript frontend",
+        "FastAPI backend",
+        "PostgreSQL and asynchronous SQLAlchemy",
+        "Alembic migrations",
+        "Tenant-scoped authorization and webhook integrations"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "FastAPI",
+        "PostgreSQL",
+        "SQLAlchemy",
+        "Alembic"
+      ],
+      "frontendRepo": "flow-desk_frontend",
+      "backendRepo": "flow-desk_backend",
+      "appUrl": "https://flow-desk-frontend-three.vercel.app/",
+      "demoStatus": "verification-pending",
+      "demoPlan": "Create a unique short-lived user and tenant for each recruiter and seed synthetic clients, projects, tasks and time entries. Use the real PostgreSQL-backed workflows, invoice generation and role permissions. Keep outbound email in a private capture sink, disable arbitrary webhook URLs (the current sender has no SSRF defenses), use only a fixed owned receiver if needed, and keep invoice Paid as a demo status rather than a transfer. Store small synthetic attachments in a persistent per-tenant directory with streaming upload caps and content validation; revoke tokens/API keys and clean the tenant on expiry. Full deployed browser verification is still required.",
+      "previewImage": "assets/site-previews/flowdesk.webp",
+      "workflow": [
+        "Create an isolated workspace, client and project",
+        "Move tasks across the Kanban board and add comments",
+        "Track time with the server-side timer",
+        "Generate an invoice from eligible work and inspect tenant-scoped activity"
+      ],
+      "auditPath": "docs/project-labs/flowdesk.md",
+      "runtimeType": "Per-visitor tenant",
+      "runtimeDetail": "The existing tenant and membership model scopes clients, projects, tasks, time, invoices and attachments. Each temporary tenant is deleted on expiry; arbitrary webhook targets stay disabled."
+    },
+    {
+      "id": "supportai",
+      "number": "14",
+      "name": "SupportAI",
+      "category": "AI and retrieval",
+      "oneLiner": "Trace a support answer back to retrieved knowledge.",
+      "overview": "A multi-tenant support-agent workspace with a document knowledge base, background ingestion, hybrid pgvector/full-text retrieval, local model generation, cited conversations, low-confidence handoff and ticket management. The default AI runtime is local Ollama llama3.1:8b, not a hosted API.",
+      "features": [
+        "Organization-scoped customers, users, memberships and role permissions",
+        "Versioned PDF, text, Markdown and HTML knowledge documents",
+        "Asynchronous extraction, structure-aware chunking and local embeddings",
+        "Hybrid pgvector/full-text retrieval, reciprocal-rank fusion and optional local cross-encoder reranking",
+        "Ollama-powered answers with persisted source citations and low-confidence warnings",
+        "Conversation history, escalation, ticket assignment, status lifecycle and internal notes"
+      ],
+      "architecture": [
+        "Next.js frontend",
+        "FastAPI backend",
+        "PostgreSQL and pgvector",
+        "Ingestion worker",
+        "Local Ollama model runtime and embedding/reranking models"
+      ],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "PostgreSQL",
+        "pgvector",
+        "Ollama",
+        "RAG"
+      ],
+      "frontendRepo": "supportai_frontend",
+      "backendRepo": "supportai_backend",
+      "appUrl": "https://supportai-frontend-plum.vercel.app/",
+      "demoStatus": "verification-pending",
+      "demoPlan": "Give each recruiter a short-lived isolated organization with synthetic customers, documents, conversations and tickets. Run the actual PostgreSQL/pgvector + Procrastinate ingestion worker + local Ollama RAG stack and show answer citations, low-confidence/human handoff, and ticket escalation. This requires a persistent server with the roughly 4.9 GB model plus embedding/reranker caches; a cold model may take minutes. Do not expose arbitrary URL ingestion until the documented DNS-rebinding gap is fixed; apply streaming upload limits, handle password-reset tokens without logging, and clean the temporary tenant and file directory on expiry. No public runtime was verified, so deployment remains pending.",
+      "previewImage": "assets/site-previews/supportai.webp",
+      "workflow": [
+        "Upload a synthetic knowledge document",
+        "Watch the real ingestion worker extract, chunk and embed it",
+        "Ask a question and inspect retrieved citations",
+        "Trigger an out-of-scope question and review low-confidence handoff"
+      ],
+      "auditPath": "docs/project-labs/supportai.md",
+      "runtimeType": "Per-visitor RAG organization",
+      "runtimeDetail": "Each session has an isolated synthetic knowledge base, conversations and tickets. The persistent AI host and model cache are shared infrastructure, but retrieved documents and vectors are tenant-filtered."
+    },
+    {
+      "id": "service-agreement-manager",
+      "number": "15",
+      "name": "Service Agreement Manager",
+      "category": "Field service operations",
+      "oneLiner": "Connect customer agreements to recurring field work and invoice payment.",
+      "overview": "A company-scoped HVAC/plumbing service-business system for customers, service locations, equipment, versioned agreements, maintenance schedules, technician work orders, invoices and customer portals. Customer acceptance is recorded through a versioned, single-use portal token; it is not a certified e-signature service. Stripe PaymentIntents are implemented but disabled by default.",
+      "features": [
+        "Company/branch roles, customers, service locations, equipment and service catalogue",
+        "Versioned agreement drafts, proposal lifecycle, customer portal acceptance and renewal actions",
+        "Maintenance schedules, duplicate-safe work-order generation and technician operations",
+        "Invoices, recurring billing, payments, refunds, credits, PDFs and exports",
+        "Separate customer, agreement and invoice portals with scoped access",
+        "Durable email/SMS/webhook outboxes, retries, attachments and reporting",
+        "Optional Stripe PaymentIntent integration with server-calculated amounts, verification and idempotent recording"
+      ],
+      "architecture": [
+        "React 19 + TypeScript + Vite frontend with Stripe Elements",
+        "FastAPI, Pydantic 2 and SQLAlchemy 2 API",
+        "PostgreSQL 16 + Alembic and Redis-backed production rate limits",
+        "Separate maintenance, billing, webhook and notification workers; optional SMS worker",
+        "HttpOnly cookie sessions, refresh rotation, CSRF/origin checks and company/branch role scope",
+        "Persistent local or S3-compatible attachment storage"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "FastAPI",
+        "PostgreSQL",
+        "SQLAlchemy",
+        "Docker"
+      ],
+      "frontendRepo": "service-agreement-manager-frontend",
+      "backendRepo": "service-agreement-manager-backend",
+      "appUrl": null,
+      "demoStatus": "verification-pending",
+      "demoPlan": "Provision one short-lived synthetic company per visitor, including owner/manager/technician/billing and a separate customer-portal identity. Run the real agreement-version → portal acceptance → recurring maintenance → work order → invoice/PDF flow on the deployed API and workers. Route all email to a private no-relay capture inbox, keep SMS disabled, and use one fixed webhook capture receiver. Online card payment is allowed only with backend-enforced Stripe test keys; otherwise show manual sample payment records and keep card controls disabled. Use isolated persistent storage and purge every company-scoped record, token, outbox row and attachment on expiry.",
+      "previewImage": "assets/site-previews/service-agreement-manager.webp",
+      "workflow": [
+        "Create a customer, location and versioned service agreement",
+        "Open the customer portal and record an explicit acceptance",
+        "Generate maintenance work orders and complete technician work",
+        "Issue an invoice and exercise test-only or manual sample payment"
+      ],
+      "auditPath": "docs/project-labs/service-agreement-manager.md",
+      "runtimeType": "Per-visitor service company",
+      "runtimeDetail": "A temporary company owns branches, staff/customer identities, agreements, work orders, invoices and portal tokens. Email uses a capture sink, SMS is off and Stripe is test-only."
+    },
+    {
+      "id": "autofix",
+      "number": "16",
+      "name": "AutoFix",
+      "category": "Workshop operations",
+      "oneLiner": "Take a vehicle from customer request through repair, QC and workshop settlement.",
+      "overview": "A single-workshop automotive operations system connecting customer portal requests, appointments, vehicle inspections, estimate decisions, repair orders, technician labour, parts purchasing, independent quality control, invoicing and payment records. The current schema is single-shop rather than multi-tenant, and payment recording is not a payment gateway.",
+      "features": [
+        "Customer portal, vehicles, mileage, appointment requests and service history",
+        "Staff diary, booking conflict checks, vehicle check-ins and digital inspections",
+        "Estimates with customer approval/rejection of individual work lines",
+        "Repair orders, technician tasks/labour, parts requests and inventory ledger",
+        "Independent QC, overrides, rework and release gates before invoice issue",
+        "Suppliers, purchase orders, stock receiving and low-stock alerts",
+        "Invoices, append-only manual payment records, voids, reports, notifications and audit"
+      ],
+      "architecture": [
+        "Next.js App Router frontend with Playwright",
+        "FastAPI + async SQLAlchemy backend",
+        "PostgreSQL + Alembic migrations",
+        "JWT access/refresh tokens, persisted role permissions and staff/customer route separation",
+        "PostgreSQL-backed email outbox with row-locked worker, retry/backoff and SMTP delivery"
+      ],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "FastAPI",
+        "PostgreSQL",
+        "SQLAlchemy",
+        "Alembic"
+      ],
+      "frontendRepo": "autofix_frontend",
+      "backendRepo": "autofix_backend",
+      "appUrl": null,
+      "demoStatus": "verification-pending",
+      "demoPlan": "Run one isolated disposable PostgreSQL database per recruiter because the current application models one workshop and has no tenant/company partitioning. Bootstrap unique owner/advisor/technician/parts/customer identities and seed the coherent synthetic fixture in that database. Exercise the real customer request → appointment/check-in → inspection/estimate decision → repair/labour/parts → independent QC/rework → invoice → manual payment/void → customer portal workflow. Use private no-relay SMTP capture. Payments are records, not online card processing. Inspection/QC photos are currently URL references; do not claim a general upload service. Upgrade browser token handling from localStorage to secure HttpOnly refresh cookies and verify the hosted API before marking the demo live.",
+      "previewImage": "assets/site-previews/autofix.webp",
+      "workflow": [
+        "Submit a customer service request and book vehicle check-in",
+        "Complete a digital inspection and customer line-item estimate decision",
+        "Record repair tasks, labour and parts movements",
+        "Run independent QC, rework if needed, then issue an invoice and sample payment"
+      ],
+      "auditPath": "docs/project-labs/autofix.md",
+      "runtimeType": "Per-visitor disposable database",
+      "runtimeDetail": "The current schema represents one workshop with global business data, so each recruiter needs a separate disposable database and seed fixture. A shared workshop DB would expose other visitors' records."
+    },
+    {
+      "id": "ledgerpulse",
+      "number": "17",
+      "name": "LedgerPulse",
+      "category": "Finance operations",
+      "oneLiner": "Run multi-organisation invoices, expenses and recurring billing.",
+      "overview": "A finance-operations application using Firebase Authentication for identity, a Flask API for authenticated organisation-scoped business workflows, and PostgreSQL as the authoritative data store. The current front-page Explore demo is browser-local localStorage state, not the live API; a separate owner-only backend seed route can populate a real empty organisation with sample customers, vendors, invoices, payments and expenses.",
+      "features": [
+        "Firebase ID-token authentication and PostgreSQL organisation membership",
+        "Owner, Admin, Accountant and Staff role-aware permissions",
+        "Organisation-scoped customers, vendors and business settings",
+        "Invoice creation, line-item totals, tax, discounts and invoice numbering",
+        "Manual payment ledger and vendor expense review/approval",
+        "Recurring invoice templates and a separate PostgreSQL-advisory-lock scheduler",
+        "Financial summaries, activity history, team invitations and PDF invoice email"
+      ],
+      "architecture": [
+        "React + TypeScript + Vite frontend",
+        "Firebase Authentication for user identity; Firebase Admin token verification in Flask",
+        "Flask REST API with SQLAlchemy and PostgreSQL 17",
+        "Organisation membership and server-side role checks",
+        "Dedicated recurring scheduler guarded by a PostgreSQL advisory lock",
+        "Nginx frontend/API same-origin proxy and Docker Compose deployment"
+      ],
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "Firebase Auth",
+        "Flask",
+        "PostgreSQL",
+        "SQLAlchemy"
+      ],
+      "frontendRepo": "ledgerpulse_frontend",
+      "backendRepo": "ledgerpulse_backend",
+      "appUrl": null,
+      "demoStatus": "verification-pending",
+      "demoPlan": "Create a unique temporary Firebase Anonymous Auth identity for each recruiter, then use the standard authenticated API bootstrap to create a real PostgreSQL organisation and Owner membership. Add a DemoSession with expiry and quotas, call the existing owner-only sample-data API for synthetic customers/vendors/invoices/payments/expenses, and keep the frontend in normal API mode rather than its current localStorage isDemo branch. Exercise real invoice edits, sample payment records, expense approvals, reports and the separate recurring scheduler. Route all email/contact/invitation/invoice messages to a private non-relaying capture inbox; no live payment gateway exists. On expiry, revoke the Firebase identity and delete only that demo organisation and its related rows. Keep the existing browser-local tour visibly labelled as local-only if retained.",
+      "previewImage": "assets/site-previews/ledgerpulse.png",
+      "workflow": [
+        "Create a temporary Firebase identity and real organisation",
+        "Load synthetic customers, vendors, invoices and expenses from the API",
+        "Edit an invoice and add a manual sample payment record",
+        "Run the actual recurring scheduler and inspect the generated invoice"
+      ],
+      "auditPath": "docs/project-labs/ledgerpulse.md",
+      "runtimeType": "Per-visitor Firebase identity and organization",
+      "runtimeDetail": "A unique temporary Firebase identity maps to an Owner membership and PostgreSQL organization. The browser-local Explore mode is separate; the recruiter lab must use the real Flask API and scheduler."
+    }
+  ]
+}

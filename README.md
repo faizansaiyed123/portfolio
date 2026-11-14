@@ -1,102 +1,61 @@
-# Faizan Saiyed — Portfolio
+# Faizan Saiyed — interactive software portfolio
 
-A static GitHub Pages portfolio designed as an interactive engineering casebook.
+This repository contains a dark-first, static portfolio designed around **product labs**. The goal is to let a recruiter understand a product, follow its real workflow, inspect its architecture and source, and use an isolated demo when that demo has actually passed verification.
 
-## Experience
+## Portfolio experience
 
-The site is intentionally built without a frontend framework, AI service, backend, or runtime third-party service.
+- **17 personal projects** with searchable/category-filtered discovery.
+- A shareable project lab for each project: product workflow, implemented capabilities, architecture, technologies, runtime/data-isolation model, source repositories and audit evidence.
+- A demo action is enabled only when a complete public application path has been verified. A listed frontend URL is not treated as proof that the backend or workers are online.
+- All recruiter demo records are synthetic. Projects remain `verification-pending` until the real frontend, backend, database and required workers pass a clean-browser journey.
+- An all-types public GitHub profile calendar (commits, pull requests, issues and reviews) is shown separately from the complete external merged-PR list.
+- The external PR list is filterable by repository, contribution type and merge date, and links to the original pull requests.
+- Published software release credits link to official release notes and merged PRs. Prereleases are labelled as prereleases.
+- Evidence-backed milestones are not represented as GitHub-issued profile badges.
 
-It combines:
+## Project scope
 
-- An editorial systems / instrument-panel visual identity
-- Engineering case studies for FrameFlux and Telemetry
-- **Trace Mode:** a deterministic, source-linked walkthrough of each flagship system, with implementation and test links
-- Merged open-source contributions linked to their original pull requests, with repository filters
-- Two independent client builds: Jeca Homes and PrintOscar
-- A separate professional-experience section for the Gyansetu AI backend internship
-- An 18-project personal full-stack gallery with local previews, repository links, technology chips, and interactive filters
-- Responsive navigation, keyboard support, and reduced-motion handling
-- A dark/light theme toggle that remembers an explicit choice in local storage and otherwise follows the browser's system color preference
-- A deterministic, frontend-only Portfolio Guide and command palette
-- A GitHub-hosted profile avatar with a local SVG fallback
-- Locally stored project preview assets
+The personal-project library contains 17 independent projects. Mintline was excluded because its own repository identifies it as an internship assignment. Client work and employer/internship work are not included as personal products.
 
-## Trace Mode
+Every project has a source audit in `docs/project-labs/`. These audits record actual user workflows, backend boundaries, worker behavior, tests, integration side effects, deployment constraints and demo safety gates. They are implementation references, not claims that a demo is already hosted.
 
-Trace Mode is a static, deterministic walkthrough. It does not connect to a running service, issue API calls, or display simulated live metrics.
+## Data and refresh
 
-Each step links to a source file and a relevant test file in the corresponding public repository. The walkthrough covers:
-
-- FrameFlux: upload progress, durable processing-job state, background worker registration, media task execution, and API-level job lifecycle tests
-- Telemetry: scoped event ingestion, rolling anomaly detection, background alert persistence, WebSocket delivery, and authenticated WebSocket integration tests
-
-The linked repositories remain the source of truth. If their default branches or file paths change, update the links and summaries in `script.js`.
-
-## Portfolio Guide
-
-The Portfolio Guide is a static interaction system for visitors exploring the site. Responses and actions come from predefined data in `script.js`; the flow has no API calls, model calls, prompts, streaming, repository discovery, or external chat service.
-
-## Content and evidence
-
-The portfolio currently displays 18 personal projects and 19 merged contribution cards. Counts in the hero are derived from the rendered cards, so they stay aligned when cards are added or removed.
-
-Project summaries and source links are based on their corresponding repositories. Live previews are labelled as live screens only where a public deployment is linked. FrameFlux uses an architecture diagram; Product Analytics uses a database-backed walkthrough capture because its current deployment cannot reach the API; LedgerPulse uses a repository walkthrough screenshot because a public deployment URL was not verified.
-
-The two client cards link to their live websites and do not expose private source repositories. Gyansetu AI is presented separately as professional internship experience.
-
-The portfolio does not invent project outcomes, users, revenue, uptime, benchmark claims, or live runtime statistics.
-
-## Files
-
-```text
-/
-├── index.html
-├── style.css
-├── script.js
-└── assets/
-    ├── favicon.svg
-    ├── mini-faizan-run.webp
-    ├── mini-faizan-wave.webp
-    ├── profile-fallback.svg
-    └── site-previews/
-        ├── project website captures
-        ├── architecture diagrams
-        └── walkthrough screenshots
-```
+- `data/projects.json` stores personal-project metadata and per-project lab details.
+- `data/release-credits.json` stores the currently verified published release credits.
+- `data/activity.json` on the `activity-data` branch stores the complete external merged-PR snapshot.
+- `data/contributions-calendar.json` on the `activity-data` branch stores the public profile contribution calendar.
+- `.github/workflows/refresh-activity.yml` refreshes both GitHub snapshots on a schedule and writes only to `activity-data`, not directly to the protected portfolio branch.
+- The first scheduled/manual snapshot refresh still needs to complete before the contribution calendar can display its live totals.
 
 ## Local preview
 
-No package installation or build step is required.
+No framework or package install is required for the static pages. Serve the repository root with any static HTTP server and open `index.html`. Project detail URLs use:
 
-```bash
-python -m http.server 8080
+```text
+project-lab.html?id=frameflux
 ```
 
-Open <http://localhost:8080/>.
+The scripts use `fetch()` for JSON, so a static HTTP server is required; opening the HTML files directly with `file://` may block data loading.
 
-## GitHub Pages
+## Quality checks
 
-The site is published at:
+The GitHub Actions workflow `.github/workflows/portfolio-quality.yml` runs:
 
-<https://faizansaiyed123.github.io/portfolio/>
+```bash
+node --check script.js
+node --check project-lab.js
+node --check scripts/validate-portfolio.mjs
+node scripts/validate-portfolio.mjs
+```
 
-Keep asset paths relative so the site remains compatible with the project-site `/portfolio/` path.
+The validator checks the 17-project inventory, unique project IDs, four workflow steps per lab, runtime isolation descriptions, audit/preview files, all external PR records and release-credit metadata.
 
-## Maintenance
+## Working rules
 
-- Update portfolio copy and links in `index.html`.
-- Update design tokens, layout, responsive behavior, and motion in `style.css`.
-- Keep the guided portfolio data, Trace Mode evidence, theme preference, filters, and interaction logic in `script.js`.
-- Keep every project and contribution claim aligned with its public source repository.
-- Recheck repository file paths when changing Trace Mode links.
-
-## Review checklist
-
-Before publishing a change, verify:
-
-- Desktop and mobile navigation targets resolve to one section each.
-- Trace Mode source and test links still exist.
-- All project and contribution cards remain present and their filters work.
-- Theme preference works with local storage available and unavailable.
-- Keyboard focus is visible and reduced-motion preferences are respected.
-- No section describes a static illustration as live telemetry.
+- Preserve the existing production site and `main` branch until the rebuild is approved.
+- Never commit credentials or real customer data.
+- Never label a frontend mock, localStorage simulator, replay or queued-but-unsent message as a live full-stack product.
+- Keep each demo isolated and bounded. Use per-visitor tenants for tenant-aware products and disposable databases for single-company products.
+- Use private capture sinks for email and webhook side effects; use test-only payment integrations where permitted.
+- Mark uncertainty as verification-pending rather than guessing.

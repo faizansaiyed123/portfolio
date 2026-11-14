@@ -1,0 +1,36 @@
+name: Portfolio quality
+
+on:
+  push:
+    branches:
+      - main
+      - "redesign/**"
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out portfolio
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check browser JavaScript syntax
+        run: |
+          node --check script.js
+          node --check project-lab.js
+
+      - name: Check validator syntax
+        run: node --check scripts/validate-portfolio.mjs
+
+      - name: Validate structured project and evidence data
+        run: node scripts/validate-portfolio.mjs
