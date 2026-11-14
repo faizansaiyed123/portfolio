@@ -530,22 +530,24 @@
       "number": "15",
       "name": "Service Agreement Manager",
       "category": "Field service operations",
-      "oneLiner": "Follow service agreements into maintenance, work orders, and billing.",
-      "overview": "An operations platform for HVAC, plumbing, and related service businesses, covering customers, equipment, service agreements, maintenance schedules, work orders, invoices, payments, and customer/technician portals.",
+      "oneLiner": "Connect customer agreements to recurring field work and invoice payment.",
+      "overview": "A company-scoped HVAC/plumbing service-business system for customers, service locations, equipment, versioned agreements, maintenance schedules, technician work orders, invoices and customer portals. Customer acceptance is recorded through a versioned, single-use portal token; it is not a certified e-signature service. Stripe PaymentIntents are implemented but disabled by default.",
       "features": [
-        "Company, branch, customer, contact, and equipment management",
-        "Agreement and renewal offer lifecycles",
-        "Maintenance schedules and work orders",
-        "Invoices, payments, refunds, credits, and PDFs",
-        "Customer and technician onboarding/portals",
-        "Durable email/SMS/webhook queues, reports, exports, and attachments"
+        "Company/branch roles, customers, service locations, equipment and service catalogue",
+        "Versioned agreement drafts, proposal lifecycle, customer portal acceptance and renewal actions",
+        "Maintenance schedules, duplicate-safe work-order generation and technician operations",
+        "Invoices, recurring billing, payments, refunds, credits, PDFs and exports",
+        "Separate customer, agreement and invoice portals with scoped access",
+        "Durable email/SMS/webhook outboxes, retries, attachments and reporting",
+        "Optional Stripe PaymentIntent integration with server-calculated amounts, verification and idempotent recording"
       ],
       "architecture": [
-        "React/Vite frontend",
-        "FastAPI API",
-        "PostgreSQL and Alembic",
-        "Maintenance, billing, webhook workers",
-        "Cookie sessions, CSRF, and role/tenant boundaries"
+        "React 19 + TypeScript + Vite frontend with Stripe Elements",
+        "FastAPI, Pydantic 2 and SQLAlchemy 2 API",
+        "PostgreSQL 16 + Alembic and Redis-backed production rate limits",
+        "Separate maintenance, billing, webhook and notification workers; optional SMS worker",
+        "HttpOnly cookie sessions, refresh rotation, CSRF/origin checks and company/branch role scope",
+        "Persistent local or S3-compatible attachment storage"
       ],
       "stack": [
         "React",
@@ -558,9 +560,9 @@
       ],
       "frontendRepo": "service-agreement-manager-frontend",
       "backendRepo": "service-agreement-manager-backend",
-      "appUrl": "https://service-agreement-manager-frontend.vercel.app/",
+      "appUrl": null,
       "demoStatus": "verification-pending",
-      "demoPlan": "Create a fictional service company, branches, customers, equipment, agreement schedules, work orders, and invoices. Test workflows in an isolated DB. Keep SMTP, SMS, S3 credentials, and outbound webhooks disabled or routed to safe capture services."
+      "demoPlan": "Provision one short-lived synthetic company per visitor, including owner/manager/technician/billing and a separate customer-portal identity. Run the real agreement-version → portal acceptance → recurring maintenance → work order → invoice/PDF flow on the deployed API and workers. Route all email to a private no-relay capture inbox, keep SMS disabled, and use one fixed webhook capture receiver. Online card payment is allowed only with backend-enforced Stripe test keys; otherwise show manual sample payment records and keep card controls disabled. Use isolated persistent storage and purge every company-scoped record, token, outbox row and attachment on expiry."
     },
     {
       "id": "autofix",
