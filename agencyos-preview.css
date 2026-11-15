@@ -98,3 +98,108 @@
   .agencyos-preview-panel { grid-template-columns: 1fr; gap: 15px; }
   .agencyos-preview-link { width: 100%; white-space: normal; }
 }
+
+/* The AgencyOS library card exposes its preview without opening the details dialog. */
+.project-card.agencyos-public-card {
+  --card-accent: var(--lime);
+  min-height: 370px;
+  border-color: color-mix(in srgb, var(--lime) 42%, var(--line));
+  background:
+    radial-gradient(ellipse at 90% 100%, color-mix(in srgb, var(--lime) 9%, transparent), transparent 58%),
+    linear-gradient(155deg, var(--panel), color-mix(in srgb, var(--panel) 68%, var(--bg)));
+  cursor: pointer;
+}
+.project-card.agencyos-public-card:hover {
+  border-color: color-mix(in srgb, var(--lime) 72%, var(--line));
+  box-shadow: 0 18px 42px rgba(0,0,0,.2), 0 0 0 1px color-mix(in srgb, var(--lime) 13%, transparent);
+}
+.agencyos-card-ready {
+  display: grid;
+  gap: 7px;
+  margin: 3px 0 0;
+  padding: 12px 13px;
+  border: 1px solid color-mix(in srgb, var(--lime) 27%, var(--line));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--lime) 7%, var(--panel));
+}
+.agencyos-card-ready-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--lime);
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+.agencyos-card-ready-label::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--lime) 13%, transparent);
+}
+.agencyos-card-ready p {
+  max-width: 54ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+.agencyos-card-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 11px;
+  margin-top: auto;
+  padding-top: 17px;
+}
+.agencyos-card-launch {
+  display: inline-flex;
+  min-height: 45px;
+  flex: 1 1 205px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
+  border: 1px solid var(--lime);
+  border-radius: 999px;
+  background: var(--lime);
+  color: #111016 !important;
+  font-size: 10px;
+  font-weight: 950;
+  text-align: center;
+  text-decoration: none !important;
+  transition: transform .18s ease, filter .18s ease;
+}
+.agencyos-card-launch:hover { transform: translateY(-2px); filter: brightness(1.06); }
+.agencyos-card-launch:focus-visible,
+.agencyos-card-details:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 4px;
+}
+.agencyos-card-details {
+  min-height: 42px;
+  padding: 0 5px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.agencyos-card-details:hover { color: var(--text); }
+.agencyos-card-boundary {
+  margin: 10px 0 0 !important;
+  color: var(--faint) !important;
+  font-size: 8px !important;
+  line-height: 1.5 !important;
+}
+@media (max-width: 640px) {
+  .project-card.agencyos-public-card { min-height: 0; }
+  .agencyos-card-actions { align-items: stretch; gap: 5px; }
+  .agencyos-card-launch { flex-basis: 100%; width: 100%; }
+  .agencyos-card-details { width: 100%; }
+}
