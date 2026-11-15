@@ -1,0 +1,100 @@
+/* AgencyOS-only public preview entry point. */
+.agencyos-preview-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: center;
+  margin: 0 0 16px;
+  padding: clamp(18px, 3vw, 25px);
+  border: 1px solid color-mix(in srgb, var(--lime) 36%, var(--line));
+  border-radius: 16px;
+  background: radial-gradient(ellipse at 0 0, color-mix(in srgb, var(--lime) 13%, transparent), transparent 58%), var(--panel);
+}
+.agencyos-preview-copy { min-width: 0; }
+.agencyos-preview-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--lime);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.agencyos-preview-kicker::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--lime) 14%, transparent);
+}
+.agencyos-preview-panel h3 {
+  margin: 10px 0 7px;
+  font-size: clamp(17px, 2vw, 22px);
+  line-height: 1.1;
+  letter-spacing: -.045em;
+}
+.agencyos-preview-panel p {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.65;
+}
+.agencyos-preview-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+.agencyos-preview-facts span {
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.2;
+}
+.agencyos-preview-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 17px;
+  border: 1px solid var(--lime);
+  border-radius: 99px;
+  background: var(--lime);
+  color: #111016 !important;
+  font-size: 10px;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: transform .18s ease, filter .18s ease;
+}
+.agencyos-preview-link:hover { transform: translateY(-2px); filter: brightness(1.06); }
+.agencyos-preview-link:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
+.agencyos-preview-disclosure {
+  margin: 11px 0 0 !important;
+  color: var(--faint) !important;
+  font-size: 9px !important;
+  line-height: 1.6 !important;
+}
+.dialog-state.agencyos-preview-state {
+  color: var(--lime);
+  border-color: color-mix(in srgb, var(--lime) 34%, var(--line));
+}
+.agencyos-preview-lab-note {
+  max-width: 72ch;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.65;
+}
+.lab-demo-action .agencyos-preview-link { margin-bottom: 10px; }
+@media (max-width: 760px) {
+  .agencyos-preview-panel { grid-template-columns: 1fr; gap: 15px; }
+  .agencyos-preview-link { width: 100%; white-space: normal; }
+}
