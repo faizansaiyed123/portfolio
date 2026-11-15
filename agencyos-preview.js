@@ -23,6 +23,70 @@
     container.append(facts);
   };
 
+
+  const enhanceProjectCard = () => {
+    const card = document.querySelector('#project-grid .project-card[data-project-id="agencyos"]');
+    if (!card || card.dataset.agencyosPreviewEnhanced === "true") return;
+
+    // Replace the original single-action button so the card can expose two valid,
+    // separate controls: an immediate demo launch and a project-details action.
+    const article = document.createElement("article");
+    article.className = card.className + " agencyos-public-card";
+    article.dataset.agencyosPreviewEnhanced = "true";
+    article.setAttribute("role", "group");
+    article.setAttribute(
+      "aria-label",
+      "AgencyOS interactive preview. Open the workspace or view project details."
+    );
+    while (card.firstChild) article.append(card.firstChild);
+
+    const ready = document.createElement("div");
+    ready.className = "agencyos-card-ready";
+    const readyLabel = document.createElement("span");
+    readyLabel.className = "agencyos-card-ready-label";
+    readyLabel.textContent = "Interactive preview ready";
+    const readyCopy = document.createElement("p");
+    readyCopy.textContent =
+      "No sign-up. Enter a preloaded Owner workspace, switch roles, and explore agency workflows with fictional sample records.";
+    ready.append(readyLabel, readyCopy);
+
+    const actions = document.createElement("div");
+    actions.className = "agencyos-card-actions";
+    const launch = makeLink("agencyos-card-launch", "Try the interactive workspace ↗");
+    launch.setAttribute(
+      "aria-label",
+      "Open the AgencyOS interactive browser preview in a new tab"
+    );
+    const details = document.createElement("button");
+    details.type = "button";
+    details.className = "agencyos-card-details";
+    details.dataset.projectId = "agencyos";
+    details.textContent = "Project details";
+    actions.append(launch, details);
+
+    const boundary = document.createElement("p");
+    boundary.className = "agencyos-card-boundary";
+    boundary.textContent =
+      "Browser-local demo · Fictional data · Full-stack API verification pending";
+
+    const top = article.querySelector(".project-card-top");
+    if (top) top.insertAdjacentElement("afterend", ready);
+    article.append(actions, boundary);
+
+    // The card surface itself also opens the preview. The secondary details
+    // button remains available for people who want the architecture and evidence.
+    article.addEventListener("click", (event) => {
+      if (event.target.closest("a, button")) return;
+      window.open(
+        new URL(PREVIEW_URL, window.location.href).href,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    });
+
+    card.replaceWith(article);
+  };
+
   const enhanceCardDialog = () => {
     const dialog = document.querySelector("#project-dialog");
     const content = document.querySelector("#dialog-content");
@@ -136,6 +200,13 @@
     const listedNote = document.querySelector("#lab-listed-url-note");
     if (listedNote) listedNote.textContent = "The old unverified frontend URL is no longer promoted. Use the interactive preview above; the full-stack API remains pending.";
   };
+
+  const projectGrid = document.querySelector("#project-grid");
+  if (projectGrid) {
+    const observer = new MutationObserver(() => requestAnimationFrame(enhanceProjectCard));
+    observer.observe(projectGrid, { childList: true, subtree: true });
+    enhanceProjectCard();
+  }
 
   const dialogContent = document.querySelector("#dialog-content");
   if (dialogContent) {
