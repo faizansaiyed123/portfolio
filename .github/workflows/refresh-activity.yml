@@ -126,7 +126,6 @@ jobs:
                 contributionsCollection(
                   from: $from,
                   to: $to,
-                  includePrivateContributions: false
                 ) {
                   contributionCalendar {
                     totalContributions
@@ -163,7 +162,7 @@ jobs:
                 schemaVersion: 1,
                 owner: $owner,
                 source: "GitHub GraphQL contributionsCollection",
-                scope: "Public profile contributions only. Includes GitHub-eligible public commits, pull requests, issues and reviews; private contribution counts are excluded.",
+                scope: "Public profile contributions only. The workflow token does not request the optional read:user scope, so private and internal repository contributions are excluded. Includes GitHub-eligible public commits, pull requests, issues and reviews.",
                 fetchedAt: (now | todate),
                 range: { from: $from, to: $to },
                 totalContributions: $collection.contributionCalendar.totalContributions,
