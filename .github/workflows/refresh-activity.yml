@@ -23,19 +23,46 @@ jobs:
           fetch-depth: 0
 
       - name: Fetch every merged external pull request
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           mkdir -p data
           query='author:faizansaiyed123 is:pr is:merged -user:faizansaiyed123'
-          gh api --method GET --paginate --slurp search/issues \
-            -f q="$query" \
-            -f per_page=100 \
-            -f sort=created \
-            -f order=desc \
-            > data/activity-search.json.tmp
+          page=1
+          while true; do
+            page_file="$(printf 'data/activity-search-page-%02d.json' "$page")"
+            curl --fail --silent --show-error --location \
+              --retry 3 --retry-all-errors --retry-delay 2 \
+              --get "https://api.github.com/search/issues" \
+              --data-urlencode "q=$query" \
+              --data-urlencode "per_page=100" \
+              --data-urlencode "sort=created" \
+              --data-urlencode "order=desc" \
+              --data-urlencode "page=$page" \
+              --header "Accept: application/vnd.github+json" \
+              --header "X-GitHub-Api-Version: 2022-11-28" \
+              --header "User-Agent: portfolio-public-activity-snapshot" \
+              > "$page_file"
 
+            jq -e '(.total_count | type == "number") and (.items | type == "array")' "$page_file" > /dev/null
+            item_count="$(jq '.items | length' "$page_file")"
+            total_count="$(jq '.total_count' "$page_file")"
+
+            if [ "$item_count" -lt 100 ]; then
+              break
+            fi
+
+            if [ "$page" -ge 10 ]; then
+              if [ "$total_count" -gt 1000 ]; then
+                echo "GitHub Search API exposes at most 1,000 results; refusing to publish a partial external-PR snapshot." >&2
+                exit 1
+              fi
+              break
+            fi
+
+            page=$((page + 1))
+          done
+
+          jq -s '.' data/activity-search-page-*.json > data/activity-search.json.tmp
           jq '
             [.[].items[]]
             | unique_by(.html_url)
@@ -78,7 +105,7 @@ jobs:
           ' data/activity.json.tmp > /dev/null
 
           mv data/activity.json.tmp data/activity.json
-          rm data/activity-search.json.tmp
+          rm data/activity-search.json.tmp data/activity-search-page-*.json
 
       - name: Fetch the public GitHub contribution calendar
         env:
