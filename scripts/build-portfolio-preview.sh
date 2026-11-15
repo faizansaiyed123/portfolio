@@ -32,6 +32,29 @@ PYTHON
 npm --prefix "$TMP/agencyos" ci
 npm --prefix "$TMP/agencyos" run build -- --base=/agencyos-demo/
 
+# Keep wide data tables scrollable inside their own panels on small screens.
+cat > "$TMP/agencyos/dist/preview-overrides.css" <<'CSS'
+@media (max-width: 640px) {
+  .main > .panel {
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+}
+CSS
+python3 - "$TMP/agencyos/dist/index.html" <<'PYTHON'
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+html = path.read_text()
+link = '<link rel="stylesheet" href="/agencyos-demo/preview-overrides.css">'
+if link not in html:
+    html = html.replace("</head>", link + "</head>")
+path.write_text(html)
+PYTHON
+
 # Package the existing portfolio and the isolated AgencyOS browser preview.
 rm -rf "$ROOT/out"
 mkdir -p "$ROOT/out/agencyos-demo"
