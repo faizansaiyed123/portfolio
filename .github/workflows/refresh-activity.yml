@@ -1,21 +1,7 @@
 name: Refresh verified GitHub activity data
 
 on:
-  push:
-    branches:
-      - activity-data
-    paths:
-      - "data/refresh-trigger.txt"
-  schedule:
-    - cron: "23 */3 * * *"
   workflow_dispatch:
-
-permissions:
-  contents: write
-
-concurrency:
-  group: refresh-github-activity-data
-  cancel-in-progress: false
 
 jobs:
   snapshot:
