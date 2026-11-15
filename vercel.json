@@ -1,0 +1,9 @@
+{
+  "buildCommand": "bash scripts/build-portfolio-preview.sh",
+  "outputDirectory": "out",
+  "routes": [
+    { "src": "^/agencyos-demo/?$", "dest": "/agencyos-demo/index.html" },
+    { "handle": "filesystem" },
+    { "src": "^/agencyos-demo/.*$", "dest": "/agencyos-demo/index.html" }
+  ]
+}
