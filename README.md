@@ -26,7 +26,8 @@ Every project has a source audit in `docs/project-labs/`. These audits record ac
 - `data/activity.json` on the `activity-data` branch stores the complete external merged-PR snapshot.
 - `data/contributions-calendar.json` on the `activity-data` branch stores the public profile contribution calendar.
 - `.github/workflows/refresh-activity.yml` refreshes both GitHub snapshots on a schedule and writes only to `activity-data`, not directly to the protected portfolio branch.
-- The first scheduled/manual snapshot refresh still needs to complete before the contribution calendar can display its live totals.
+- The initial public snapshot is populated and validated. The portfolio reads both JSON files directly from the public `activity-data` branch at runtime; each file's `fetchedAt` value is the authoritative freshness timestamp.
+- The refresh runs every three hours and supports `workflow_dispatch`. Its external merged-PR search uses GitHub's public REST Search API; the GraphQL request uses the repository Actions token without the optional `read:user` scope, so private/internal contributions are excluded.
 
 ## Local preview
 
