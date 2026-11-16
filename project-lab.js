@@ -157,6 +157,13 @@
     repositories.innerHTML = "";
     addLink(repositories, "Frontend repository", repoUrl(project.frontendRepo));
     if (project.backendRepo) addLink(repositories, "Backend repository", repoUrl(project.backendRepo));
+    if (project.id === "frameflux" && project.demoBuild) {
+      addLink(repositories, "Frontend demo branch", project.demoBuild.frontendBranchUrl);
+      addLink(repositories, "Backend demo branch", project.demoBuild.backendBranchUrl);
+      addLink(repositories, "Browser integration tests", project.demoBuild.browserIntegrationWorkflowUrl);
+      addLink(repositories, "Backend API tests", project.demoBuild.backendApiWorkflowUrl);
+      addLink(repositories, "Frontend checks", project.demoBuild.frontendChecksWorkflowUrl);
+    }
     if (!repositories.children.length) repositories.textContent = "Repository links unavailable.";
 
     const audit = safeHttps(
