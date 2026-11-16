@@ -23,11 +23,12 @@ Every project has a source audit in `docs/project-labs/`. These audits record ac
 
 - `data/projects.json` stores personal-project metadata and per-project lab details.
 - `data/release-credits.json` stores the currently verified published release credits.
-- `data/activity.json` on the `activity-data` branch stores the complete external merged-PR snapshot.
-- `data/contributions-calendar.json` on the `activity-data` branch stores the public profile contribution calendar.
-- `.github/workflows/refresh-activity.yml` refreshes both GitHub snapshots on a schedule and writes only to `activity-data`, not directly to the protected portfolio branch.
-- The initial public snapshot is populated and validated. The portfolio reads both JSON files directly from the public `activity-data` branch at runtime; each file's `fetchedAt` value is the authoritative freshness timestamp.
-- The refresh runs every three hours and supports `workflow_dispatch`. Its external merged-PR search uses GitHub's public REST Search API; the GraphQL request uses the repository Actions token without the optional `read:user` scope, so private/internal contributions are excluded.
+- `data/activity.json` stores the verified external merged-PR snapshot in the same `main` branch as the portfolio.
+- `data/contributions-calendar.json` stores the public profile contribution calendar in `main`.
+- The frontend reads both snapshots from local `data/` paths. It does not depend on a separate data branch or a cross-branch raw GitHub URL.
+- `.github/workflows/refresh-activity.yml` refreshes both snapshots every three hours and supports `workflow_dispatch`. It validates the generated data, then creates or updates a pull request from the dedicated `automation/public-github-snapshots` branch. It never writes directly to protected `main`.
+- Merge the snapshot-update pull request to publish the new data to the portfolio. Each file's `fetchedAt` field is the authoritative freshness timestamp.
+- The external merged-PR snapshot uses GitHub's public REST Search API. The calendar query uses the repository Actions token without the optional `read:user` scope, so private/internal contributions are excluded.
 
 ## Local preview
 

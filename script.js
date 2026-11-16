@@ -529,7 +529,7 @@
     ).join("");
   };
 
-  const ACTIVITY_DATA_BASE = "https://raw.githubusercontent.com/faizansaiyed123/portfolio/activity-data/data/";
+  const ACTIVITY_DATA_BASE = "data/";
   const loadAll = async () => {
     const [projectsResult, activityResult, calendarResult, releasesResult] = await Promise.allSettled([
       loadJSON("data/projects.json"),
