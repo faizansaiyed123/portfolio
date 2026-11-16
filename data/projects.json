@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "owner": "faizansaiyed123",
-  "updatedAt": "2026-11-14T00:00:00Z",
+  "updatedAt": "2026-11-16T06:47:00Z",
   "demoPolicy": "Each demo must use the real application and its real backend where required, isolated from production/customer data. Synthetic fixtures are allowed. A project remains verification-pending until the complete flow is tested from the public entry point.",
   "projects": [
     {
@@ -9,8 +9,8 @@
       "number": "01",
       "name": "FrameFlux",
       "category": "Media infrastructure",
-      "oneLiner": "Turn large media work into durable, observable jobs.",
-      "overview": "An asynchronous media-processing platform with resumable uploads, strict file validation, durable job state, queued workers, and FFmpeg transformations.",
+      "oneLiner": "Explore a browser-tested media workspace and inspect its upload and job API flows.",
+      "overview": "FrameFlux is an asynchronous media platform designed around resumable uploads, strict media validation, queued jobs, and FFmpeg transformations. Its recruiter demo exercises the frontend and API contracts with seeded data; hosted worker processing is not yet verified.",
       "features": [
         "Resumable chunked uploads with pause, resume, retry, and cancellation",
         "Extension, MIME/category, size, and binary-signature validation",
@@ -39,7 +39,7 @@
       "backendRepo": "FrameFlux-Backend",
       "appUrl": null,
       "demoStatus": "verification-pending",
-      "demoPlan": "Provide a small set of safe synthetic media samples and a real isolated worker. Let recruiters upload within strict limits, follow a real job, inspect progress, and exercise retry/cancel paths. Clean up files and jobs automatically.",
+      "demoPlan": "A browser-tested recruiter build exists on the frontend and backend demo branches. The frontend runs with a seeded browser workspace and can connect to a standalone FastAPI demo API. The connected API supports tested project, upload, job, batch, and workflow interactions, but stores state in memory and returns representative media placeholders. It does not use PostgreSQL, Redis, ARQ, or FFmpeg, so it does not perform real media transcoding. No public app or backend is deployed; a hosted, isolated environment with real worker processing and clean-browser verification is still required.",
       "previewImage": "assets/site-previews/frameflux-architecture.svg",
       "workflow": [
         "Upload a media file in resumable chunks",
@@ -48,8 +48,23 @@
         "Follow worker progress, retry/cancel and inspect the output"
       ],
       "auditPath": "docs/project-labs/frameflux.md",
-      "runtimeType": "Per-visitor temporary workspace",
-      "runtimeDetail": "Each recruiter gets isolated project/job records, synthetic input media and bounded worker capacity. Uploads and processed files are removed when the session expires."
+      "runtimeType": "Browser-local workspace / in-memory API demo",
+      "runtimeDetail": "The frontend can persist its standalone demo workspace in browser storage. The optional FastAPI demo backend keeps state in memory and resets when its process restarts; generated media are representative placeholders. This is not a hosted per-visitor tenant or a real FFmpeg worker.",
+      "demoBuild": {
+        "status": "source-tested-not-hosted",
+        "verificationDate": "2026-11-16",
+        "frontendBranchUrl": "https://github.com/faizansaiyed123/FrameFlux-Frontend/tree/demo",
+        "backendBranchUrl": "https://github.com/faizansaiyed123/FrameFlux-Backend/tree/demo",
+        "frontendCommit": "bf4dc871401dd1cc36972c767d347287352249f1",
+        "backendCommit": "97a87fbb957a10eb2ba538d626f1c281e2cea45f",
+        "browserIntegrationWorkflowUrl": "https://github.com/faizansaiyed123/FrameFlux-Frontend/actions/runs/43811517867",
+        "backendApiWorkflowUrl": "https://github.com/faizansaiyed123/FrameFlux-Backend/actions/runs/43811440156",
+        "frontendChecksWorkflowUrl": "https://github.com/faizansaiyed123/FrameFlux-Frontend/actions/runs/43811517963",
+        "browserTestsPassed": 5,
+        "backendApiTestsPassed": 10,
+        "backendRuntime": "In-memory FastAPI simulation",
+        "mediaProcessing": "Representative placeholder outputs; FFmpeg is not executed"
+      }
     },
     {
       "id": "telemetry",

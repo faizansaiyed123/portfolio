@@ -83,6 +83,31 @@ Before calling FrameFlux demo-ready:
 - Add tests for session creation, rate limits, isolation, quotas, expiration, cleanup, upload, worker processing, and output retrieval.
 - Verify the public frontend URL, API CORS, storage URL, worker health, Redis, PostgreSQL, and end-to-end browser flow before changing demo status from `verification-pending`.
 
+## Demo branch implementation and verification — 16 November 2026
+
+The recruiter demo implementation is now available on the `demo` branch of each FrameFlux repository. The FrameFlux `main` branches were not modified.
+
+- Frontend demo branch: https://github.com/faizansaiyed123/FrameFlux-Frontend/tree/demo
+- Backend demo branch: https://github.com/faizansaiyed123/FrameFlux-Backend/tree/demo
+- Verified frontend demo commit: `bf4dc871401dd1cc36972c767d347287352249f1`
+- Verified backend demo commit: `97a87fbb957a10eb2ba538d626f1c281e2cea45f`
+
+### Automated verification
+
+- [Frontend + backend browser integration workflow](https://github.com/faizansaiyed123/FrameFlux-Frontend/actions/runs/43811517867) — passed. The workflow built and started the frontend against the demo API, then passed 5 Playwright browser tests covering seeded dashboard loading, project creation and reload persistence, resumable media upload, processing-job progress, and batch/workflow API response flows.
+- [Backend demo API workflow](https://github.com/faizansaiyed123/FrameFlux-Backend/actions/runs/43811440156) — passed, with 10 API tests.
+- [Frontend production checks](https://github.com/faizansaiyed123/FrameFlux-Frontend/actions/runs/43811517963) — passed, including dependency installation, lint, and production build.
+
+### What this demo does — and does not — prove
+
+The browser-tested build is useful for exploring the UI and checking the frontend/API contract. Its frontend can run with seeded browser persistence or connect to the standalone FastAPI demo API. The connected backend is an **in-memory simulation**: it does not run PostgreSQL, Redis, ARQ, FFmpeg, or genuine media transcoding. Processing outputs are representative placeholders, and backend state resets when the demo API process restarts.
+
+No public frontend/backend deployment is configured. The demo must therefore remain **verification-pending** in the public portfolio. Do not present the source branches or passing CI checks as proof of a hosted, production-grade media-processing service.
+
+### Remaining deployment gate
+
+Before enabling a public "Try the live product" action, deploy the frontend and a bounded, isolated backend with the real database, Redis queue, ARQ worker, FFmpeg processing, safe sample media, upload/job limits, TTL cleanup, and per-visitor data isolation. Then repeat the full browser journey against the public URLs from a clean browser session and verify actual media outputs.
+
 ## Current status
 
-**Audit complete; implementation and deployment pending.** No FrameFlux demo URL is currently listed in the portfolio project inventory, and no public backend or worker has been verified for recruiter access. Do not label it live until the full flow passes from a clean browser session.
+**Source demo implemented and CI-verified; public deployment and real worker processing remain pending.** The portfolio exposes both demo branches and their verification runs for inspection, while the live-demo action stays disabled until the deployment gate above passes.

@@ -1,0 +1,128 @@
+/* FrameFlux source-tested demo card and project-lab disclosures. */
+.project-card.frameflux-demo-card {
+  --card-accent: var(--blue);
+  min-height: 390px;
+  border-color: color-mix(in srgb, var(--blue) 42%, var(--line));
+  background:
+    radial-gradient(ellipse at 92% 100%, color-mix(in srgb, var(--blue) 9%, transparent), transparent 58%),
+    linear-gradient(155deg, var(--panel), color-mix(in srgb, var(--panel) 68%, var(--bg)));
+  cursor: pointer;
+}
+.project-card.frameflux-demo-card:hover {
+  border-color: color-mix(in srgb, var(--blue) 72%, var(--line));
+  box-shadow: 0 18px 42px rgba(0,0,0,.2), 0 0 0 1px color-mix(in srgb, var(--blue) 13%, transparent);
+}
+.frameflux-card-status {
+  display: grid;
+  gap: 7px;
+  margin: 3px 0 0;
+  padding: 12px 13px;
+  border: 1px solid color-mix(in srgb, var(--blue) 27%, var(--line));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--blue) 7%, var(--panel));
+}
+.frameflux-card-status-label {
+  color: var(--blue);
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+.frameflux-card-status p {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+.frameflux-card-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.frameflux-card-facts span {
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.2;
+}
+.frameflux-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 15px;
+}
+.frameflux-card-link,
+.frameflux-card-details,
+.frameflux-demo-link {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 11px;
+  border: 1px solid color-mix(in srgb, var(--blue) 32%, var(--line));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--blue) 7%, var(--panel));
+  color: var(--text) !important;
+  font: inherit;
+  font-size: 9px;
+  font-weight: 800;
+  text-decoration: none !important;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+.frameflux-card-link:hover,
+.frameflux-card-details:hover,
+.frameflux-demo-link:hover {
+  transform: translateY(-1px);
+  border-color: var(--blue);
+  background: color-mix(in srgb, var(--blue) 13%, var(--panel));
+}
+.frameflux-card-link:focus-visible,
+.frameflux-card-details:focus-visible,
+.frameflux-demo-link:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+}
+.frameflux-card-link.is-secondary {
+  border-color: var(--line);
+  color: var(--muted) !important;
+  background: var(--panel);
+}
+.frameflux-card-details {
+  border-color: transparent;
+  background: transparent;
+  cursor: pointer;
+}
+.frameflux-card-boundary {
+  margin: 10px 0 0 !important;
+  color: var(--faint) !important;
+  font-size: 8px !important;
+  line-height: 1.55 !important;
+}
+.frameflux-demo-source-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 13px;
+}
+.dialog-state.frameflux-preview-state {
+  color: var(--blue);
+  border-color: color-mix(in srgb, var(--blue) 38%, var(--line));
+}
+.frameflux-demo-link {
+  min-height: 34px;
+  font-size: 9px;
+}
+.lab-demo-action .frameflux-demo-source-links {
+  max-width: 640px;
+  margin-top: 12px;
+}
+@media (max-width: 760px) {
+  .project-card.frameflux-demo-card { min-height: 0; }
+  .frameflux-card-actions { align-items: stretch; }
+  .frameflux-card-link,
+  .frameflux-card-details { flex: 1 1 100%; width: 100%; }
+  .frameflux-demo-source-links .frameflux-demo-link { flex: 1 1 100%; width: 100%; }
+}
