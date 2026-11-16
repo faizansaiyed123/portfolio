@@ -141,13 +141,17 @@
       : "STATUS: VERIFIED LIVE · DATA: SYNTHETIC / ISOLATED");
     const demoAction = $("#lab-demo-action");
     demoAction.innerHTML = "";
+    const recruiterPreviewUrl = safeHttps(project.recruiterDemoUrl);
     const demoNote = document.createElement("p");
     demoNote.className = "lab-demo-action-note";
     demoNote.textContent = pending
-      ? "The demo link will appear here after a complete clean-browser verification. A frontend URL alone is not enough."
+      ? recruiterPreviewUrl
+        ? "A recruiter preview URL was supplied. Its current availability and complete API, database and worker behavior have not been independently verified; use it as an exploratory entry point, not as proof of a verified full-stack deployment."
+        : "The demo link will appear here after a complete clean-browser verification. A frontend URL alone is not enough."
       : "This opens the actual deployed application, not a browser-only simulation.";
     demoAction.append(demoNote);
     if (!pending) addLink(demoAction, "Open verified product", project.demoUrl);
+    else if (recruiterPreviewUrl) addLink(demoAction, "Open supplied recruiter preview (availability unverified)", recruiterPreviewUrl);
 
     const repositories = $("#lab-repository-links");
     repositories.innerHTML = "";
