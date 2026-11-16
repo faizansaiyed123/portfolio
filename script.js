@@ -196,10 +196,9 @@
     return icons[project.category] || project.name.slice(0, 1).toUpperCase();
   };
 
-  const renderProjectCard = (project, index) => {
+  const renderProjectCard = (project) => {
     const stack = (project.stack || []).slice(0, 3);
-    const wide = index === 0 || index === 1;
-    return '<button class="project-card' + (wide ? " is-wide" : "") + '" type="button" data-project-id="' + escapeHTML(project.id) + '" aria-label="Open project lab: ' + escapeHTML(project.name) + '">' +
+    return '<button class="project-card" type="button" data-project-id="' + escapeHTML(project.id) + '" aria-label="Open project lab: ' + escapeHTML(project.name) + '">' +
       '<span class="project-card-top"><span class="project-number">LAB / ' + escapeHTML(project.number) + '</span><span class="project-domain">' + escapeHTML(project.category) + '</span></span>' +
       '<span class="project-emblem" aria-hidden="true">' + escapeHTML(iconForProject(project)) + '</span>' +
       '<span><h3>' + escapeHTML(project.name) + '</h3><p>' + escapeHTML(project.oneLiner) + '</p></span>' +
@@ -274,6 +273,15 @@
     if (project.appUrl) {
       publicFrontendLink = '<a href="' + escapeHTML(project.appUrl) + '" target="_blank" rel="noopener noreferrer">Listed frontend URL (not verified) <span aria-hidden="true">↗</span></a>';
     }
+    const recruiterPreviewUrl = /^https:\/\/[a-z0-9.-]+\.vercel\.app(?:\/|$)/i.test(project.recruiterDemoUrl || "")
+      ? project.recruiterDemoUrl
+      : "";
+    const recruiterPreviewLink = recruiterPreviewUrl
+      ? '<a href="' + escapeHTML(recruiterPreviewUrl) + '" target="_blank" rel="noopener noreferrer">Supplied recruiter preview (availability unverified) <span aria-hidden="true">↗</span></a>'
+      : "";
+    const demoWarning = recruiterPreviewUrl
+      ? "A recruiter preview URL was supplied and is linked below. Its current availability and complete API, database and worker behavior have not been independently verified. Keep the full-stack demo status pending until those checks pass."
+      : "This project is in the rebuild queue. Its existing frontend URL, when listed below, is not represented as a complete working demo until the real API, required services, and key workflows have been checked.";
 
     $("#dialog-kicker").textContent = "PROJECT LAB / " + project.number + " — " + project.category.toUpperCase();
     dialogContent.innerHTML =
@@ -288,9 +296,9 @@
       '<section class="dialog-block demo-readiness" style="margin-top:14px">' +
         "<h3>Recruiter demo environment</h3>" +
         '<p>' + escapeHTML(project.demoPlan || "The demo environment has not yet been verified.") + "</p>" +
-        (demoPending ? '<div class="demo-warning">This project is in the rebuild queue. Its existing frontend URL, when listed below, is not represented as a complete working demo until the real API, required services, and key workflows have been checked.</div>' : "") +
+        (demoPending ? '<div class="demo-warning">' + escapeHTML(demoWarning) + '</div>' : "") +
         '<div class="dialog-status-line"><span>STATUS: ' + escapeHTML(titleCase(project.demoStatus)) + '</span><span>DATA POLICY: SYNTHETIC / ISOLATED</span></div>' +
-        '<div class="dialog-repo-links">' + projectLabLink + (publicFrontendLink ? publicFrontendLink : "") + sourceLinks.join("") + "</div>" +
+        '<div class="dialog-repo-links">' + projectLabLink + (recruiterPreviewLink ? recruiterPreviewLink : "") + (publicFrontendLink ? publicFrontendLink : "") + sourceLinks.join("") + "</div>" +
       "</section>";
   };
 
