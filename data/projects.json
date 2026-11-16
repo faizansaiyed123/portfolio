@@ -39,7 +39,7 @@
       "backendRepo": "FrameFlux-Backend",
       "appUrl": null,
       "demoStatus": "verification-pending",
-      "demoPlan": "A browser-tested recruiter build exists on the frontend and backend demo branches. The frontend runs with a seeded browser workspace and can connect to a standalone FastAPI demo API. The connected API supports tested project, upload, job, batch, and workflow interactions, but stores state in memory and returns representative media placeholders. It does not use PostgreSQL, Redis, ARQ, or FFmpeg, so it does not perform real media transcoding. No public app or backend is deployed; a hosted, isolated environment with real worker processing and clean-browser verification is still required.",
+      "demoPlan": "A public Vercel recruiter-preview URL has been supplied and is displayed separately from a verified product launch. Its current availability and complete backend path have not been independently verified. The checked demo build uses a seeded browser workspace and an in-memory FastAPI API with representative media placeholders; it does not run PostgreSQL, Redis, ARQ or FFmpeg, so it does not perform real media transcoding. Keep the full-stack demo status pending until the deployed API, data store, workers and clean-browser workflow have been verified.",
       "previewImage": "assets/site-previews/frameflux-architecture.svg",
       "workflow": [
         "Upload a media file in resumable chunks",
@@ -64,7 +64,8 @@
         "backendApiTestsPassed": 10,
         "backendRuntime": "In-memory FastAPI simulation",
         "mediaProcessing": "Representative placeholder outputs; FFmpeg is not executed"
-      }
+      },
+      "recruiterDemoUrl": "https://frame-flux-demo-git-demo-focus-journals-projects.vercel.app/"
     },
     {
       "id": "telemetry",
@@ -717,7 +718,7 @@
       "backendRepo": "service-agreement-manager-backend",
       "appUrl": null,
       "demoStatus": "verification-pending",
-      "demoPlan": "Provision one short-lived synthetic company per visitor, including owner/manager/technician/billing and a separate customer-portal identity. Run the real agreement-version → portal acceptance → recurring maintenance → work order → invoice/PDF flow on the deployed API and workers. Route all email to a private no-relay capture inbox, keep SMS disabled, and use one fixed webhook capture receiver. Online card payment is allowed only with backend-enforced Stripe test keys; otherwise show manual sample payment records and keep card controls disabled. Use isolated persistent storage and purge every company-scoped record, token, outbox row and attachment on expiry.",
+      "demoPlan": "A public Vercel recruiter-preview URL has been supplied and is displayed separately from a verified product launch. Its current availability, API/database connectivity, worker execution and end-to-end company isolation have not been independently verified. The target recruiter experience is a short-lived synthetic company with owner/manager/technician/billing roles and a separate customer-portal identity. The full agreement-version → portal acceptance → recurring maintenance → work order → invoice/PDF flow must run on the deployed API and workers. Route email to a private no-relay capture inbox, keep SMS disabled, constrain webhooks to a fixed capture receiver and allow card payments only with backend-enforced Stripe test keys. Use isolated persistent storage and purge every company-scoped record, token, outbox row and attachment on expiry.",
       "previewImage": "assets/site-previews/service-agreement-manager.webp",
       "workflow": [
         "Create a customer, location and versioned service agreement",
@@ -727,7 +728,8 @@
       ],
       "auditPath": "docs/project-labs/service-agreement-manager.md",
       "runtimeType": "Per-visitor service company",
-      "runtimeDetail": "A temporary company owns branches, staff/customer identities, agreements, work orders, invoices and portal tokens. Email uses a capture sink, SMS is off and Stripe is test-only."
+      "runtimeDetail": "A temporary company owns branches, staff/customer identities, agreements, work orders, invoices and portal tokens. Email uses a capture sink, SMS is off and Stripe is test-only.",
+      "recruiterDemoUrl": "https://service-agreement-manager-demo-git-demo-focus-journals-projects.vercel.app/"
     },
     {
       "id": "autofix",
