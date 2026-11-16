@@ -1,0 +1,77 @@
+/* Compact recruiter-preview cards; detailed verification remains in each project lab. */
+.project-card.public-demo-card {
+  min-height: 274px;
+  cursor: pointer;
+}
+.project-card.public-demo-card .project-emblem {
+  width: 42px;
+  height: 42px;
+  margin: 12px 0 10px;
+  font-size: 19px;
+}
+.project-card.public-demo-card .project-card-bottom {
+  padding-top: 12px;
+}
+.public-demo-card--frameflux { --card-accent: var(--blue); }
+.public-demo-card--service-agreement { --card-accent: var(--lime); }
+.public-demo-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  max-width: 100%;
+  margin-top: 8px;
+  padding: 4px 7px;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 30%, var(--line));
+  border-radius: 99px;
+  color: var(--card-accent);
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  line-height: 1.3;
+}
+.public-demo-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.public-demo-launch,
+.public-demo-details {
+  display: inline-flex;
+  min-height: 33px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 11px;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 38%, var(--line));
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--card-accent) 9%, var(--panel));
+  color: var(--text) !important;
+  font: inherit;
+  font-size: 9px;
+  font-weight: 850;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+.public-demo-launch { flex: 1 1 155px; }
+.public-demo-details {
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted) !important;
+}
+.public-demo-launch:hover,
+.public-demo-details:hover {
+  border-color: var(--card-accent);
+  background: color-mix(in srgb, var(--card-accent) 15%, var(--panel));
+}
+.public-demo-launch:focus-visible,
+.public-demo-details:focus-visible,
+.public-demo-card:focus-visible {
+  outline: 2px solid var(--card-accent);
+  outline-offset: 3px;
+}
+@media (max-width: 640px) {
+  .project-card.public-demo-card { min-height: 0; }
+  .public-demo-actions { align-items: stretch; }
+  .public-demo-launch,
+  .public-demo-details { width: 100%; }
+}

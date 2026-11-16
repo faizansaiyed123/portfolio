@@ -169,3 +169,12 @@ Before marking Service Agreement Manager demo-ready:
 ## Current status
 
 **Source audit complete; per-visitor company bootstrap/expiry, private email capture, disabled SMS, fixed webhook capture, Stripe test-only gate, file-content hardening and deployed API/worker verification pending.** This is a strong candidate for a real full-stack recruiter playground because the agreement, maintenance, billing, customer portal and Stripe-test flows are genuine. It must not be called a live hosted demo until the deployed PostgreSQL/Redis/API/workers/frontend and allowed provider test paths pass the clean-browser journey.
+
+
+## Recruiter preview URL supplied (16 November 2026)
+
+The portfolio owner supplied this Vercel URL as the Service Agreement Manager recruiter preview:
+
+- https://service-agreement-manager-demo-git-demo-focus-journals-projects.vercel.app/
+
+The portfolio surfaces it as a **supplied preview link — availability unverified**. The URL could not be independently opened by the portfolio review environment. The existing source audit and deployment gates remain in force: a reachable frontend alone does not verify company isolation, PostgreSQL/Redis connectivity, maintenance/billing/notification workers, safe email/SMS/webhook behavior or Stripe test-mode enforcement. Keep the full-stack demo status pending until those checks pass.

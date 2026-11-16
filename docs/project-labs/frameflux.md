@@ -111,3 +111,12 @@ Before enabling a public "Try the live product" action, deploy the frontend and 
 ## Current status
 
 **Source demo implemented and CI-verified; public deployment and real worker processing remain pending.** The portfolio exposes both demo branches and their verification runs for inspection, while the live-demo action stays disabled until the deployment gate above passes.
+
+
+## Recruiter preview URL supplied (16 November 2026)
+
+The portfolio owner supplied this Vercel URL as the FrameFlux recruiter preview:
+
+- https://frame-flux-demo-git-demo-focus-journals-projects.vercel.app/
+
+The portfolio surfaces it as a **supplied preview link — availability unverified**. The URL could not be independently opened by the portfolio review environment. This link does not change the source-audit findings: the checked recruiter build uses seeded browser state and an in-memory FastAPI simulation with representative placeholder media; PostgreSQL, Redis, ARQ and FFmpeg are not part of that simulated path. Keep the full-stack demo status pending until the actual deployed frontend/API journey and media-processing boundary are tested.

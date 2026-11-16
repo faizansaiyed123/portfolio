@@ -6,7 +6,7 @@ This repository contains a dark-first, static portfolio designed around **produc
 
 - **17 personal projects** with searchable/category-filtered discovery.
 - A shareable project lab for each project: product workflow, implemented capabilities, architecture, technologies, runtime/data-isolation model, source repositories and audit evidence.
-- A demo action is enabled only when a complete public application path has been verified. A listed frontend URL is not treated as proof that the backend or workers are online.
+- A verified demo action is enabled only when a complete public application path has been checked. A separately supplied recruiter-preview URL may be shown as an exploratory link, but is explicitly labelled availability-unverified and does not change the project's verification status.
 - All recruiter demo records are synthetic. Projects remain `verification-pending` until the real frontend, backend, database and required workers pass a clean-browser journey.
 - An all-types public GitHub profile calendar (commits, pull requests, issues and reviews) is shown separately from the complete external merged-PR list.
 - The external PR list is filterable by repository, contribution type and merge date, and links to the original pull requests.
