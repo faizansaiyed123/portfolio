@@ -268,6 +268,20 @@
     if (project.backendRepo) {
       sourceLinks.push('<a href="https://github.com/faizansaiyed123/' + encodeURIComponent(project.backendRepo) + '" target="_blank" rel="noopener noreferrer">Backend source <span aria-hidden="true">↗</span></a>');
     }
+    if (project.demoBuild) {
+      const buildLinks = [
+        ["Frontend demo branch", project.demoBuild.frontendBranchUrl],
+        ["Backend demo branch", project.demoBuild.backendBranchUrl],
+        ["Browser integration tests", project.demoBuild.browserIntegrationWorkflowUrl],
+        ["Backend API tests", project.demoBuild.backendApiWorkflowUrl],
+        ["Frontend checks", project.demoBuild.frontendChecksWorkflowUrl]
+      ];
+      buildLinks.forEach(([label, url]) => {
+        if (/^https:\/\/github\.com\/faizansaiyed123\//.test(url || "")) {
+          sourceLinks.push('<a href="' + escapeHTML(url) + '" target="_blank" rel="noopener noreferrer">' + escapeHTML(label) + ' <span aria-hidden="true">↗</span></a>');
+        }
+      });
+    }
     const projectLabLink = '<a href="./project-lab.html?id=' + encodeURIComponent(project.id) + '">Open full project lab <span aria-hidden="true">↗</span></a>';
     let publicFrontendLink = "";
     if (project.appUrl) {
