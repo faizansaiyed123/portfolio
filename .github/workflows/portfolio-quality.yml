@@ -28,6 +28,7 @@ jobs:
         run: |
           node --check script.js
           node --check project-lab.js
+          node --check frameflux-demo-preview.js
 
       - name: Check validator syntax
         run: node --check scripts/validate-portfolio.mjs

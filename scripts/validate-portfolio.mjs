@@ -32,6 +32,17 @@ for (const project of projects) {
   assert(project.previewImage && existsSync(resolve(root, project.previewImage)), "missing preview asset: " + project.id);
 }
 
+const frameflux = projects.find((project) => project.id === "frameflux");
+const framefluxDemo = frameflux?.demoBuild;
+assert(framefluxDemo?.status === "source-tested-not-hosted", "FrameFlux source demo status must be explicit");
+assert(frameflux?.demoStatus === "verification-pending" && frameflux.appUrl === null, "FrameFlux must not appear as a hosted live demo");
+assert(/^https:\/\/github\.com\/faizansaiyed123\/FrameFlux-Frontend\/tree\/demo$/.test(framefluxDemo?.frontendBranchUrl || ""), "FrameFlux frontend demo branch link is missing");
+assert(/^https:\/\/github\.com\/faizansaiyed123\/FrameFlux-Backend\/tree\/demo$/.test(framefluxDemo?.backendBranchUrl || ""), "FrameFlux backend demo branch link is missing");
+assert(Number.isInteger(framefluxDemo?.browserTestsPassed) && framefluxDemo.browserTestsPassed === 5, "FrameFlux browser test evidence is missing");
+assert(Number.isInteger(framefluxDemo?.backendApiTestsPassed) && framefluxDemo.backendApiTestsPassed === 10, "FrameFlux backend API test evidence is missing");
+assert(/^https:\/\/github\.com\/faizansaiyed123\/FrameFlux-Frontend\/actions\/runs\//.test(framefluxDemo?.browserIntegrationWorkflowUrl || ""), "FrameFlux browser integration workflow link is missing");
+assert(/^https:\/\/github\.com\/faizansaiyed123\/FrameFlux-Backend\/actions\/runs\//.test(framefluxDemo?.backendApiWorkflowUrl || ""), "FrameFlux backend API workflow link is missing");
+
 assert(activity.schemaVersion === 1, "activity schemaVersion must be 1");
 assert(Array.isArray(activity.items) && activity.total === activity.items.length, "activity total must match items");
 assert(new Set(activity.items.map((item) => item.url)).size === activity.items.length, "duplicate PR URLs");
@@ -50,7 +61,7 @@ for (const item of releases.items) {
   assert(["stable", "prerelease"].includes(item.channel || "stable"), "unknown release channel");
 }
 
-for (const path of ["index.html", "script.js", "style.css", "project-lab.html", "project-lab.js", "project-lab.css"]) {
+for (const path of ["index.html", "script.js", "style.css", "project-lab.html", "project-lab.js", "project-lab.css", "frameflux-demo-preview.js", "frameflux-demo-preview.css"]) {
   assert(existsSync(resolve(root, path)), "missing portfolio entrypoint asset: " + path);
 }
 
