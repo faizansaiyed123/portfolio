@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "capturedAt": "2026-11-17T16:26:20.961Z",
+  "capturedAt": "2026-11-17T16:29:12.068Z",
   "total": 20,
   "captured": 19,
   "reusedExisting": 1,
@@ -16,7 +16,7 @@
       "source": "source-built-from-pinned-demo-commit",
       "httpStatus": 200,
       "pageTitle": "FrameFlux — Video Processing API for Developers",
-      "capturedAt": "2026-11-17T16:26:00.010Z"
+      "capturedAt": "2026-11-17T16:28:51.773Z"
     },
     {
       "id": "telemetry",
@@ -27,7 +27,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Telemetry — Infrastructure Observability",
-      "capturedAt": "2026-11-17T16:26:00.506Z"
+      "capturedAt": "2026-11-17T16:28:52.089Z"
     },
     {
       "id": "sayphora",
@@ -38,7 +38,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Sayphora — Luxury Beauty, Skincare & Cosmetics",
-      "capturedAt": "2026-11-17T16:26:00.504Z"
+      "capturedAt": "2026-11-17T16:28:52.246Z"
     },
     {
       "id": "focus-journal",
@@ -49,7 +49,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Focus Journal — make room for what matters",
-      "capturedAt": "2026-11-17T16:26:00.195Z"
+      "capturedAt": "2026-11-17T16:28:52.090Z"
     },
     {
       "id": "nexora",
@@ -60,7 +60,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Nexora — Price Intelligence",
-      "capturedAt": "2026-11-17T16:26:04.677Z"
+      "capturedAt": "2026-11-17T16:28:56.199Z"
     },
     {
       "id": "flagship",
@@ -71,7 +71,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Flagship — Feature Flag Platform",
-      "capturedAt": "2026-11-17T16:26:05.134Z"
+      "capturedAt": "2026-11-17T16:28:56.515Z"
     },
     {
       "id": "fieldline-crm",
@@ -82,7 +82,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Fieldline — CRM workspace",
-      "capturedAt": "2026-11-17T16:26:04.848Z"
+      "capturedAt": "2026-11-17T16:28:56.518Z"
     },
     {
       "id": "orbit-campaigns",
@@ -93,7 +93,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Orbit Campaigns — Email Marketing, Made Clearer",
-      "capturedAt": "2026-11-17T16:26:05.135Z"
+      "capturedAt": "2026-11-17T16:28:56.707Z"
     },
     {
       "id": "product-analytics",
@@ -104,7 +104,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Product Analytics",
-      "capturedAt": "2026-11-17T16:26:09.268Z"
+      "capturedAt": "2026-11-17T16:29:00.630Z"
     },
     {
       "id": "gemini-chat",
@@ -115,7 +115,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Gemini — Think it through",
-      "capturedAt": "2026-11-17T16:26:09.435Z"
+      "capturedAt": "2026-11-17T16:29:00.921Z"
     },
     {
       "id": "agencyos",
@@ -126,7 +126,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "AgencyOS",
-      "capturedAt": "2026-11-17T16:26:09.834Z"
+      "capturedAt": "2026-11-17T16:29:01.069Z"
     },
     {
       "id": "cleanflow",
@@ -137,7 +137,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "CleanFlow — Commercial Cleaning Operations Platform",
-      "capturedAt": "2026-11-17T16:26:09.643Z"
+      "capturedAt": "2026-11-17T16:29:01.187Z"
     },
     {
       "id": "flowdesk",
@@ -148,7 +148,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "FlowDesk",
-      "capturedAt": "2026-11-17T16:26:13.793Z"
+      "capturedAt": "2026-11-17T16:29:05.031Z"
     },
     {
       "id": "supportai",
@@ -159,7 +159,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "SupportAI",
-      "capturedAt": "2026-11-17T16:26:14.097Z"
+      "capturedAt": "2026-11-17T16:29:05.442Z"
     },
     {
       "id": "service-agreement-manager",
@@ -181,7 +181,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "AutoFix Garage — workshop management",
-      "capturedAt": "2026-11-17T16:26:14.363Z"
+      "capturedAt": "2026-11-17T16:29:05.546Z"
     },
     {
       "id": "ledgerpulse",
@@ -192,7 +192,7 @@
       "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "LedgerPulse - Invoice & Expense Management SaaS",
-      "capturedAt": "2026-11-17T16:26:18.517Z"
+      "capturedAt": "2026-11-17T16:29:09.495Z"
     },
     {
       "id": "printoscar",
@@ -202,7 +202,7 @@
       "status": "captured",
       "httpStatus": 200,
       "pageTitle": "PrintOscar - Premium Organic Snacks & Handmade Goods | DC Metro",
-      "capturedAt": "2026-11-17T16:26:19.460Z"
+      "capturedAt": "2026-11-17T16:29:10.709Z"
     },
     {
       "id": "jeca-homes",
@@ -212,7 +212,7 @@
       "status": "captured",
       "httpStatus": 200,
       "pageTitle": "JECA Homes",
-      "capturedAt": "2026-11-17T16:26:20.797Z"
+      "capturedAt": "2026-11-17T16:29:12.042Z"
     },
     {
       "id": "gyansetu-ai",
@@ -222,7 +222,7 @@
       "status": "captured",
       "httpStatus": 200,
       "pageTitle": "Gyansetu One World AI",
-      "capturedAt": "2026-11-17T16:26:20.929Z"
+      "capturedAt": "2026-11-17T16:29:11.484Z"
     }
   ]
 }
