@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "owner": "faizansaiyed123",
-  "updatedAt": "2026-11-16T06:47:00Z",
+  "updatedAt": "2026-11-17T13:05:00Z",
   "demoPolicy": "Each demo must use the real application and its real backend where required, isolated from production/customer data. Synthetic fixtures are allowed. A project remains verification-pending until the complete flow is tested from the public entry point.",
   "projects": [
     {
@@ -113,7 +113,8 @@
       "auditPath": "docs/project-labs/telemetry.md",
       "runtimeType": "Per-visitor telemetry namespace",
       "runtimeDetail": "Each session receives its own synthetic event stream, alert rules and incident history. Live host-agent access is not exposed to a recruiter's browser.",
-      "recruiterDemoUrl": "https://telemetry-frontend-chi.vercel.app/"
+      "recruiterDemoUrl": "https://telemetry-demo-git-demo-focus-journals-projects.vercel.app/",
+      "recruiterDemoCheckedAt": "2026-11-17"
     },
     {
       "id": "sayphora",
@@ -349,7 +350,9 @@
       ],
       "auditPath": "docs/project-labs/fieldline-crm.md",
       "runtimeType": "Per-visitor CRM organization",
-      "runtimeDetail": "Each session gets its own organization, membership, synthetic contacts, opportunities, imports, saved views, merge history and automation runs."
+      "runtimeDetail": "Each session gets its own organization, membership, synthetic contacts, opportunities, imports, saved views, merge history and automation runs.",
+      "recruiterDemoUrl": "https://fieldline-crm-demo-git-demo-focus-journals-projects.vercel.app/",
+      "recruiterDemoCheckedAt": "2026-11-17"
     },
     {
       "id": "orbit-campaigns",
@@ -491,7 +494,9 @@
       ],
       "auditPath": "docs/project-labs/gemini-chat.md",
       "runtimeType": "Per-visitor chat identity",
-      "runtimeDetail": "Rooms, queued prompts and conversation history are scoped to one temporary user. A model response is called live only when the deployed OpenAI worker and provider have passed verification."
+      "runtimeDetail": "Rooms, queued prompts and conversation history are scoped to one temporary user. A model response is called live only when the deployed OpenAI worker and provider have passed verification.",
+      "recruiterDemoUrl": "https://gemini-clone-demo-git-demo-focus-journals-projects.vercel.app/",
+      "recruiterDemoCheckedAt": "2026-11-17"
     },
     {
       "id": "agencyos",
@@ -585,7 +590,9 @@
       ],
       "auditPath": "docs/project-labs/cleanflow.md",
       "runtimeType": "Per-visitor disposable database",
-      "runtimeDetail": "The current schema models one cleaning company, not multiple tenants. Recruiters therefore need separate disposable databases and storage roots; shared writable business records are not safe."
+      "runtimeDetail": "The current schema models one cleaning company, not multiple tenants. Recruiters therefore need separate disposable databases and storage roots; shared writable business records are not safe.",
+      "recruiterDemoUrl": "https://cleanflow-demo-git-demo-focus-journals-projects.vercel.app/",
+      "recruiterDemoCheckedAt": "2026-11-17"
     },
     {
       "id": "flowdesk",
@@ -632,7 +639,9 @@
       ],
       "auditPath": "docs/project-labs/flowdesk.md",
       "runtimeType": "Per-visitor tenant",
-      "runtimeDetail": "The existing tenant and membership model scopes clients, projects, tasks, time, invoices and attachments. Each temporary tenant is deleted on expiry; arbitrary webhook targets stay disabled."
+      "runtimeDetail": "The existing tenant and membership model scopes clients, projects, tasks, time, invoices and attachments. Each temporary tenant is deleted on expiry; arbitrary webhook targets stay disabled.",
+      "recruiterDemoUrl": "https://flow-desk-demo-git-demo-focus-journals-projects.vercel.app/",
+      "recruiterDemoCheckedAt": "2026-11-17"
     },
     {
       "id": "supportai",
@@ -680,7 +689,9 @@
       ],
       "auditPath": "docs/project-labs/supportai.md",
       "runtimeType": "Per-visitor RAG organization",
-      "runtimeDetail": "Each session has an isolated synthetic knowledge base, conversations and tickets. The persistent AI host and model cache are shared infrastructure, but retrieved documents and vectors are tenant-filtered."
+      "runtimeDetail": "Each session has an isolated synthetic knowledge base, conversations and tickets. The persistent AI host and model cache are shared infrastructure, but retrieved documents and vectors are tenant-filtered.",
+      "recruiterDemoUrl": "https://supportai-demo-git-demo-focus-journals-projects.vercel.app/",
+      "recruiterDemoCheckedAt": "2026-11-17"
     },
     {
       "id": "service-agreement-manager",
@@ -778,7 +789,9 @@
       ],
       "auditPath": "docs/project-labs/autofix.md",
       "runtimeType": "Per-visitor disposable database",
-      "runtimeDetail": "The current schema represents one workshop with global business data, so each recruiter needs a separate disposable database and seed fixture. A shared workshop DB would expose other visitors' records."
+      "runtimeDetail": "The current schema represents one workshop with global business data, so each recruiter needs a separate disposable database and seed fixture. A shared workshop DB would expose other visitors' records.",
+      "recruiterDemoUrl": "https://autofix-demo-git-demo-focus-journals-projects.vercel.app/",
+      "recruiterDemoCheckedAt": "2026-11-17"
     },
     {
       "id": "ledgerpulse",
@@ -827,7 +840,9 @@
       ],
       "auditPath": "docs/project-labs/ledgerpulse.md",
       "runtimeType": "Per-visitor Firebase identity and organization",
-      "runtimeDetail": "A unique temporary Firebase identity maps to an Owner membership and PostgreSQL organization. The browser-local Explore mode is separate; the recruiter lab must use the real Flask API and scheduler."
+      "runtimeDetail": "A unique temporary Firebase identity maps to an Owner membership and PostgreSQL organization. The browser-local Explore mode is separate; the recruiter lab must use the real Flask API and scheduler.",
+      "recruiterDemoUrl": "https://ledgerpulse-demo-git-demo-focus-journals-projects.vercel.app/",
+      "recruiterDemoCheckedAt": "2026-11-17"
     }
   ]
 }
