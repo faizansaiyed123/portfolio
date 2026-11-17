@@ -16,9 +16,51 @@
     },
     telemetry: {
       className: "public-demo-card--telemetry",
-      ariaLabel: "Telemetry listed frontend preview. Open the frontend URL or view project details.",
-      badge: "LISTED FRONTEND · FULL-STACK DEMO UNVERIFIED",
-      launchLabel: "Open listed frontend ↗"
+      ariaLabel: "Telemetry public demo. Open the demo or view project details.",
+      badge: "PUBLIC DEMO · BACKEND SCOPE IN PROJECT LAB",
+      launchLabel: "Open demo ↗"
+    },
+    "gemini-chat": {
+      className: "public-demo-card--gemini-chat",
+      ariaLabel: "Gemini Chat public demo. Open the demo or view project details.",
+      badge: "PUBLIC DEMO · BACKEND SCOPE IN PROJECT LAB",
+      launchLabel: "Open demo ↗"
+    },
+    supportai: {
+      className: "public-demo-card--supportai",
+      ariaLabel: "SupportAI frontend preview. Open the preview or view project details.",
+      badge: "FRONTEND PREVIEW · BACKEND NOT CONNECTED",
+      launchLabel: "Open preview ↗"
+    },
+    autofix: {
+      className: "public-demo-card--autofix",
+      ariaLabel: "AutoFix public demo. Open the demo or view project details.",
+      badge: "PUBLIC DEMO · BACKEND SCOPE IN PROJECT LAB",
+      launchLabel: "Open demo ↗"
+    },
+    "fieldline-crm": {
+      className: "public-demo-card--fieldline-crm",
+      ariaLabel: "Fieldline CRM browser-local demo. Open the demo or view project details.",
+      badge: "BROWSER-LOCAL DEMO · SYNTHETIC DATA",
+      launchLabel: "Open demo ↗"
+    },
+    flowdesk: {
+      className: "public-demo-card--flowdesk",
+      ariaLabel: "FlowDesk public demo. Open the demo or view project details.",
+      badge: "PUBLIC DEMO · BACKEND SCOPE IN PROJECT LAB",
+      launchLabel: "Open demo ↗"
+    },
+    cleanflow: {
+      className: "public-demo-card--cleanflow",
+      ariaLabel: "CleanFlow public demo. Open the demo or view project details.",
+      badge: "PUBLIC DEMO · BACKEND SCOPE IN PROJECT LAB",
+      launchLabel: "Open demo ↗"
+    },
+    ledgerpulse: {
+      className: "public-demo-card--ledgerpulse",
+      ariaLabel: "LedgerPulse browser-local demo. Open the demo or view project details.",
+      badge: "BROWSER-LOCAL DEMO · SYNTHETIC DATA",
+      launchLabel: "Open demo ↗"
     }
   };
 
