@@ -76,3 +76,11 @@
   .public-demo-launch,
   .public-demo-details { width: 100%; }
 }
+
+.public-demo-card--gemini-chat { --card-accent: var(--blue); }
+.public-demo-card--supportai { --card-accent: var(--lime); }
+.public-demo-card--autofix { --card-accent: var(--orange); }
+.public-demo-card--fieldline-crm { --card-accent: var(--blue); }
+.public-demo-card--flowdesk { --card-accent: var(--lime); }
+.public-demo-card--cleanflow { --card-accent: var(--blue); }
+.public-demo-card--ledgerpulse { --card-accent: var(--orange); }

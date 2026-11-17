@@ -290,11 +290,18 @@
     const recruiterPreviewUrl = /^https:\/\/[a-z0-9.-]+\.vercel\.app(?:\/|$)/i.test(project.recruiterDemoUrl || "")
       ? project.recruiterDemoUrl
       : "";
+    const recruiterPreviewCheckedAt = /^\d{4}-\d{2}-\d{2}$/.test(project.recruiterDemoCheckedAt || "")
+      ? project.recruiterDemoCheckedAt
+      : "";
     const recruiterPreviewLink = recruiterPreviewUrl
-      ? '<a href="' + escapeHTML(recruiterPreviewUrl) + '" target="_blank" rel="noopener noreferrer">Supplied recruiter preview (availability unverified) <span aria-hidden="true">↗</span></a>'
+      ? '<a href="' + escapeHTML(recruiterPreviewUrl) + '" target="_blank" rel="noopener noreferrer">' +
+        (recruiterPreviewCheckedAt ? "Open reachable recruiter demo preview" : "Supplied recruiter preview (availability unverified)") +
+        ' <span aria-hidden="true">↗</span></a>'
       : "";
     const demoWarning = recruiterPreviewUrl
-      ? "A recruiter preview URL was supplied and is linked below. Its current availability and complete API, database and worker behavior have not been independently verified. Keep the full-stack demo status pending until those checks pass."
+      ? recruiterPreviewCheckedAt
+        ? "The public preview returned HTTP 200 on " + recruiterPreviewCheckedAt + ". This confirms that the page is reachable; it does not verify the complete API, database, worker, or end-to-end workflow. Full-stack demo status remains pending until those checks pass."
+        : "A recruiter preview URL was supplied and is linked below. Its current availability and complete API, database and worker behavior have not been independently verified. Keep the full-stack demo status pending until those checks pass."
       : "This project is in the rebuild queue. Its existing frontend URL, when listed below, is not represented as a complete working demo until the real API, required services, and key workflows have been checked.";
 
     $("#dialog-kicker").textContent = "PROJECT LAB / " + project.number + " — " + project.category.toUpperCase();
