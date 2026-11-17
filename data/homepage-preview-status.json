@@ -1,20 +1,22 @@
 {
   "schemaVersion": 1,
-  "capturedAt": "2026-11-17T16:16:31.571Z",
+  "capturedAt": "2026-11-17T16:22:37.390Z",
   "total": 20,
-  "captured": 18,
+  "captured": 19,
   "reusedExisting": 1,
-  "blocked": 1,
+  "blocked": 0,
   "failed": 0,
   "items": [
     {
       "id": "frameflux",
       "name": "FrameFlux",
-      "url": "https://frameflux.io/",
-      "path": null,
-      "status": "blocked",
-      "httpStatus": null,
-      "error": "The canonical domain did not accept connections and the Vercel preview is protected; the workflow will attempt a source-built homepage from the pinned demo commit."
+      "url": "https://github.com/faizansaiyed123/FrameFlux-Frontend/commit/bf4dc871401dd1cc36972c767d347287352249f1",
+      "path": "assets/site-previews/frameflux-homepage.webp",
+      "status": "captured",
+      "source": "source-built-from-pinned-demo-commit",
+      "httpStatus": 200,
+      "pageTitle": "FrameFlux — Video Processing API for Developers",
+      "capturedAt": "2026-11-17T16:22:16.254Z"
     },
     {
       "id": "telemetry",
@@ -22,9 +24,10 @@
       "url": "https://telemetry-frontend-chi.vercel.app/",
       "path": "assets/site-previews/telemetry.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Telemetry — Infrastructure Observability",
-      "capturedAt": "2026-11-17T16:16:10.348Z"
+      "capturedAt": "2026-11-17T16:22:16.539Z"
     },
     {
       "id": "sayphora",
@@ -32,9 +35,10 @@
       "url": "https://sayphora.vercel.app/",
       "path": "assets/site-previews/sayphora.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Sayphora — Luxury Beauty, Skincare & Cosmetics",
-      "capturedAt": "2026-11-17T16:16:10.495Z"
+      "capturedAt": "2026-11-17T16:22:16.538Z"
     },
     {
       "id": "focus-journal",
@@ -42,9 +46,10 @@
       "url": "https://focus-journal-frontend.vercel.app/",
       "path": "assets/site-previews/focus-journal.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Focus Journal — make room for what matters",
-      "capturedAt": "2026-11-17T16:16:10.228Z"
+      "capturedAt": "2026-11-17T16:22:16.256Z"
     },
     {
       "id": "nexora",
@@ -52,9 +57,10 @@
       "url": "https://nexora-frontend-hazel.vercel.app/",
       "path": "assets/site-previews/nexora.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Nexora — Price Intelligence",
-      "capturedAt": "2026-11-17T16:16:10.706Z"
+      "capturedAt": "2026-11-17T16:22:20.841Z"
     },
     {
       "id": "flagship",
@@ -62,9 +68,10 @@
       "url": "https://feature-flag-platform-frontend-lsf9.vercel.app/",
       "path": "assets/site-previews/feature-flag-platform.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Flagship — Feature Flag Platform",
-      "capturedAt": "2026-11-17T16:16:15.016Z"
+      "capturedAt": "2026-11-17T16:22:21.182Z"
     },
     {
       "id": "fieldline-crm",
@@ -72,9 +79,10 @@
       "url": "https://fieldline-crm-frontend.vercel.app/",
       "path": "assets/site-previews/fieldline-crm.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Fieldline — CRM workspace",
-      "capturedAt": "2026-11-17T16:16:15.357Z"
+      "capturedAt": "2026-11-17T16:22:21.180Z"
     },
     {
       "id": "orbit-campaigns",
@@ -82,9 +90,10 @@
       "url": "https://marketing-campaign-management-front.vercel.app/",
       "path": "assets/site-previews/marketing-campaigns.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Orbit Campaigns — Email Marketing, Made Clearer",
-      "capturedAt": "2026-11-17T16:16:15.360Z"
+      "capturedAt": "2026-11-17T16:22:21.181Z"
     },
     {
       "id": "product-analytics",
@@ -92,9 +101,10 @@
       "url": "https://product-analytics-frontend-un93.vercel.app/",
       "path": "assets/site-previews/product-analytics-overview.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Product Analytics",
-      "capturedAt": "2026-11-17T16:16:15.504Z"
+      "capturedAt": "2026-11-17T16:22:25.618Z"
     },
     {
       "id": "gemini-chat",
@@ -102,9 +112,10 @@
       "url": "https://gemini-frontend-clone.vercel.app/",
       "path": "assets/site-previews/gemini-frontend.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "Gemini — Think it through",
-      "capturedAt": "2026-11-17T16:16:19.607Z"
+      "capturedAt": "2026-11-17T16:22:25.613Z"
     },
     {
       "id": "agencyos",
@@ -112,9 +123,10 @@
       "url": "https://agencyos-frontend-one.vercel.app/",
       "path": "assets/site-previews/agencyos.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "AgencyOS",
-      "capturedAt": "2026-11-17T16:16:20.020Z"
+      "capturedAt": "2026-11-17T16:22:25.871Z"
     },
     {
       "id": "cleanflow",
@@ -122,9 +134,10 @@
       "url": "https://cleanflow-frontend-theta.vercel.app/",
       "path": "assets/site-previews/cleanflow.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "CleanFlow — Commercial Cleaning Operations Platform",
-      "capturedAt": "2026-11-17T16:16:20.149Z"
+      "capturedAt": "2026-11-17T16:22:25.874Z"
     },
     {
       "id": "flowdesk",
@@ -132,9 +145,10 @@
       "url": "https://flow-desk-frontend-three.vercel.app/",
       "path": "assets/site-previews/flowdesk.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "FlowDesk",
-      "capturedAt": "2026-11-17T16:16:20.275Z"
+      "capturedAt": "2026-11-17T16:22:30.259Z"
     },
     {
       "id": "supportai",
@@ -142,9 +156,10 @@
       "url": "https://supportai-frontend-plum.vercel.app/",
       "path": "assets/site-previews/supportai.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "SupportAI",
-      "capturedAt": "2026-11-17T16:16:24.280Z"
+      "capturedAt": "2026-11-17T16:22:30.543Z"
     },
     {
       "id": "service-agreement-manager",
@@ -152,6 +167,7 @@
       "url": "https://service-agreement-manager-demo-git-demo-focus-journals-projects.vercel.app/",
       "path": "assets/site-previews/service-agreement-manager.webp",
       "status": "reused-existing",
+      "source": "existing-authentic-homepage-screenshot",
       "httpStatus": 200,
       "pageTitle": "Service Agreement Manager",
       "note": "The live preview is protected by Vercel; retained the previously committed authentic homepage screenshot."
@@ -162,9 +178,10 @@
       "url": "https://autofix-demo-git-demo-focus-journals-projects.vercel.app/",
       "path": "assets/site-previews/autofix.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "AutoFix Garage — workshop management",
-      "capturedAt": "2026-11-17T16:16:24.716Z"
+      "capturedAt": "2026-11-17T16:22:30.401Z"
     },
     {
       "id": "ledgerpulse",
@@ -172,9 +189,10 @@
       "url": "https://ledgerpulse-demo-git-demo-focus-journals-projects.vercel.app/",
       "path": "assets/site-previews/ledgerpulse.webp",
       "status": "captured",
+      "source": "live-homepage",
       "httpStatus": 200,
       "pageTitle": "LedgerPulse - Invoice & Expense Management SaaS",
-      "capturedAt": "2026-11-17T16:16:25.181Z"
+      "capturedAt": "2026-11-17T16:22:34.962Z"
     },
     {
       "id": "printoscar",
@@ -184,7 +202,7 @@
       "status": "captured",
       "httpStatus": 200,
       "pageTitle": "PrintOscar - Premium Organic Snacks & Handmade Goods | DC Metro",
-      "capturedAt": "2026-11-17T16:16:28.777Z"
+      "capturedAt": "2026-11-17T16:22:35.208Z"
     },
     {
       "id": "jeca-homes",
@@ -194,7 +212,7 @@
       "status": "captured",
       "httpStatus": 200,
       "pageTitle": "JECA Homes",
-      "capturedAt": "2026-11-17T16:16:31.539Z"
+      "capturedAt": "2026-11-17T16:22:37.358Z"
     },
     {
       "id": "gyansetu-ai",
@@ -204,7 +222,7 @@
       "status": "captured",
       "httpStatus": 200,
       "pageTitle": "Gyansetu One World AI",
-      "capturedAt": "2026-11-17T16:16:30.744Z"
+      "capturedAt": "2026-11-17T16:22:36.538Z"
     }
   ]
 }
