@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "owner": "faizansaiyed123",
-  "updatedAt": "2026-11-17T13:05:00Z",
+  "updatedAt": "2026-11-17T15:45:00Z",
   "demoPolicy": "Each demo must use the real application and its real backend where required, isolated from production/customer data. Synthetic fixtures are allowed. A project remains verification-pending until the complete flow is tested from the public entry point.",
   "projects": [
     {
@@ -40,7 +40,7 @@
       "appUrl": null,
       "demoStatus": "verification-pending",
       "demoPlan": "A public Vercel recruiter-preview URL has been supplied and is displayed separately from a verified product launch. Its current availability and complete backend path have not been independently verified. The checked demo build uses a seeded browser workspace and an in-memory FastAPI API with representative media placeholders; it does not run PostgreSQL, Redis, ARQ or FFmpeg, so it does not perform real media transcoding. Keep the full-stack demo status pending until the deployed API, data store, workers and clean-browser workflow have been verified.",
-      "previewImage": "assets/site-previews/frameflux-architecture.svg",
+      "previewImage": "assets/site-previews/frameflux-homepage.webp",
       "workflow": [
         "Upload a media file in resumable chunks",
         "Validate its type, size and binary signature",
@@ -437,7 +437,7 @@
       "appUrl": "https://product-analytics-frontend-un93.vercel.app/",
       "demoStatus": "verification-pending",
       "demoPlan": "Provide a generated synthetic event dataset and a dedicated demo project API key with strict quotas. Let recruiters run trends/funnel/retention queries and build cohorts without ingesting any visitor or real customer data.",
-      "previewImage": "assets/site-previews/product-analytics-overview.png",
+      "previewImage": "assets/site-previews/product-analytics-overview.webp",
       "workflow": [
         "Create a temporary project and SDK key",
         "Ingest synthetic events through the real SDK endpoint",
@@ -831,7 +831,7 @@
       "appUrl": null,
       "demoStatus": "verification-pending",
       "demoPlan": "Create a unique temporary Firebase Anonymous Auth identity for each recruiter, then use the standard authenticated API bootstrap to create a real PostgreSQL organisation and Owner membership. Add a DemoSession with expiry and quotas, call the existing owner-only sample-data API for synthetic customers/vendors/invoices/payments/expenses, and keep the frontend in normal API mode rather than its current localStorage isDemo branch. Exercise real invoice edits, sample payment records, expense approvals, reports and the separate recurring scheduler. Route all email/contact/invitation/invoice messages to a private non-relaying capture inbox; no live payment gateway exists. On expiry, revoke the Firebase identity and delete only that demo organisation and its related rows. Keep the existing browser-local tour visibly labelled as local-only if retained.",
-      "previewImage": "assets/site-previews/ledgerpulse.png",
+      "previewImage": "assets/site-previews/ledgerpulse.webp",
       "workflow": [
         "Create a temporary Firebase identity and real organisation",
         "Load synthetic customers, vendors, invoices and expenses from the API",

@@ -13,7 +13,8 @@
   <link rel="stylesheet" href="./style.css?v=20261117-premium-product-gallery">
   <link rel="stylesheet" href="./agencyos-preview.css?v=20261115-agencyos-preview">
   <link rel="stylesheet" href="./portfolio-polish.css?v=20261117-discovery-filters">
-  <script type="module" src="./script.js?v=20261117-verified-demo-links"></script>
+  <link rel="stylesheet" href="./work-showcase.css?v=20261117-work-sections">
+  <script type="module" src="./script.js?v=20261117-homepage-screenshots"></script>
   <script type="module" src="./agencyos-preview.js?v=20261115-agencyos-preview"></script>
   <title>Faizan Saiyed — Software you can explore</title>
 </head>
@@ -26,13 +27,13 @@
     <div class="header-inner">
       <a class="wordmark" href="#top" aria-label="Faizan Saiyed home">
         <span class="wordmark-symbol">F<span>.</span></span>
-        <span class="wordmark-copy"><strong>FAIZAN SAIYED</strong><small>INDEPENDENT SOFTWARE / 2026</small></span>
+        <span class="wordmark-copy"><strong>FAIZAN SAIYED</strong><small>SOFTWARE ENGINEER</small></span>
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">
-        <a href="#products">Products</a>
+        <a href="#client-work">Client work</a>
+        <a href="#internship">Internship</a>
+        <a href="#products">Personal projects</a>
         <a href="#contributions">Open source</a>
-        <a href="#achievements">Achievements</a>
-        <a href="#releases">Shipped work</a>
         <a href="#about">About</a>
       </nav>
       <div class="header-actions">
@@ -44,10 +45,10 @@
       </div>
     </div>
     <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
-      <a href="#products">Products</a>
+      <a href="#client-work">Client work</a>
+      <a href="#internship">Internship</a>
+      <a href="#products">Personal projects</a>
       <a href="#contributions">Open source</a>
-      <a href="#achievements">Achievements</a>
-      <a href="#releases">Shipped work</a>
       <a href="#about">About</a>
     </nav>
   </header>
@@ -55,19 +56,19 @@
   <main id="main">
     <section class="opening section-shell" id="top" aria-labelledby="opening-title">
       <div class="opening-kicker">
-        <span><i class="status-pip" aria-hidden="true"></i> AN INTERACTIVE SOFTWARE PORTFOLIO</span>
-        <span>BUILT TO BE EXPLORED</span>
+        <span><i class="status-pip" aria-hidden="true"></i> SOFTWARE ENGINEERING / SELECTED WORK</span>
+        <span>CLIENT · INTERNSHIP · PERSONAL</span>
       </div>
       <div class="opening-layout">
         <div class="opening-copy">
           <p class="eyebrow">FAIZAN SAIYED / PRODUCT ENGINEERING</p>
-          <h1 id="opening-title">Make the software <em>speak for itself.</em></h1>
-          <p class="opening-description">I build products with real workflows, real engineering decisions, and real edges to inspect. This is where you can explore the work instead of taking a project description on faith.</p>
+          <h1 id="opening-title">I build software <em>for real work.</em></h1>
+          <p class="opening-description">I’m a software engineer working across web products, backend systems and AI applications. This portfolio brings together client projects, internship work, personal builds and open-source contributions.</p>
           <div class="opening-actions">
-            <a class="button button-primary" href="#products">Explore the products <span aria-hidden="true">↘</span></a>
-            <a class="button button-secondary" href="#contributions">See what shipped <span aria-hidden="true">↗</span></a>
+            <a class="button button-primary" href="#client-work">View my work <span aria-hidden="true">↘</span></a>
+            <a class="button button-secondary" href="#contributions">Open-source work <span aria-hidden="true">↗</span></a>
           </div>
-          <div class="opening-note"><span class="note-mark">↳</span> Synthetic data only. Demo availability is verified project by project.</div>
+          <div class="opening-note"><span class="note-mark">↳</span> Project links and implementation details are included where available.</div>
         </div>
 
         <div class="explorer-card" aria-label="Ways to explore this portfolio">
@@ -101,17 +102,43 @@
         <div class="proof-item"><strong id="project-count">17</strong><span>PERSONAL PROJECTS</span></div>
         <div class="proof-item"><strong id="contribution-count">19</strong><span>MERGED EXTERNAL PRS</span></div>
         <div class="proof-item"><strong id="release-count">5</strong><span>OFFICIAL RELEASE CREDITS</span></div>
-        <div class="proof-caption">Evidence over adjectives. Explore the work, then inspect the source.</div>
+        <div class="proof-caption">Client projects, personal builds and contributions to open source.</div>
+      </div>
+    </section>
+
+    <section class="work-section section-shell" id="client-work" aria-labelledby="client-work-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">01 / FREELANCE PROJECTS</p>
+          <h2 id="client-work-title">Client work</h2>
+        </div>
+        <p class="section-intro-copy">Web projects I worked on for clients as a freelancer. Open each site to see the finished work.</p>
+      </div>
+      <div class="work-grid" id="client-work-grid" aria-live="polite">
+        <div class="loading-card"><span class="loader-dot"></span> Loading client projects…</div>
+      </div>
+    </section>
+
+    <section class="work-section internship-section section-shell" id="internship" aria-labelledby="internship-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">02 / INTERNSHIP</p>
+          <h2 id="internship-title">Internship work</h2>
+        </div>
+        <p class="section-intro-copy">A project I worked on during my internship with GyanSetu AI.</p>
+      </div>
+      <div class="work-grid work-grid-single" id="internship-work-grid" aria-live="polite">
+        <div class="loading-card"><span class="loader-dot"></span> Loading internship work…</div>
       </div>
     </section>
 
     <section class="products-section section-shell" id="products" aria-labelledby="products-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">01 / THE PRODUCT LIBRARY</p>
+          <p class="eyebrow">03 / PERSONAL PROJECTS</p>
           <h2 id="products-title">Pick something up.</h2>
         </div>
-        <p class="section-intro-copy">Seventeen independent builds. Each has its own job to do, its own engineering constraints, and a dedicated lab to explore how it works.</p>
+        <p class="section-intro-copy">These are my own projects. Each card shows the product homepage; open a project to see what it does, how it is built and where the code lives.</p>
       </div>
 
       <div class="product-toolbar">
@@ -137,7 +164,7 @@
 
       <div class="product-results-line">
         <span id="project-results" aria-live="polite">Loading the project library…</span>
-        <span class="results-note">LIVE FRONTEND PREVIEWS · DEMO / ACTUAL / STACK <b aria-hidden="true">↘</b></span>
+        <span class="results-note">PRODUCT HOMEPAGE SCREENSHOTS · WEBSITE / DEMO / SOURCE <b aria-hidden="true">↘</b></span>
       </div>
       <div class="project-grid" id="project-grid" aria-live="polite">
         <div class="loading-card"><span class="loader-dot"></span> Loading project records…</div>
@@ -152,9 +179,9 @@
 
     <section class="method-section section-shell" aria-labelledby="method-title">
       <div class="method-lead">
-        <p class="eyebrow">02 / HOW TO USE THIS PLACE</p>
-        <h2 id="method-title">A project page should be a <em>working session.</em></h2>
-        <p>Each product lab is built around a clear path: understand the problem, operate the workflow, and verify how it was engineered.</p>
+        <p class="eyebrow">04 / PROJECT DETAILS</p>
+        <h2 id="method-title">Look beyond the homepage.</h2>
+        <p>Open a project to read about the problem, follow its main workflows and inspect the implementation and source code.</p>
       </div>
       <div class="method-steps">
         <article class="method-step">
@@ -184,10 +211,10 @@
     <section class="contributions-section section-shell" id="contributions" aria-labelledby="contributions-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">03 / OPEN SOURCE</p>
-          <h2 id="contributions-title">My work, out in the world.</h2>
+          <p class="eyebrow">05 / OPEN SOURCE</p>
+          <h2 id="contributions-title">Open-source contributions</h2>
         </div>
-        <p class="section-intro-copy">Merged changes in projects maintained by other people and teams. The activity graph counts external merged pull requests—not every kind of GitHub contribution.</p>
+        <p class="section-intro-copy">A record of merged pull requests in repositories maintained by other people and teams. The calendar shows public GitHub activity separately.</p>
       </div>
 
       <div class="contribution-overview">
@@ -252,8 +279,8 @@
     <section class="achievements-section section-shell" id="achievements" aria-labelledby="achievements-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">04 / VERIFIED MILESTONES</p>
-          <h2 id="achievements-title">Proof that travelled beyond my own repos.</h2>
+          <p class="eyebrow">06 / MILESTONES</p>
+          <h2 id="achievements-title">Milestones from open-source work</h2>
         </div>
         <p class="section-intro-copy">Evidence-backed milestones calculated from merged upstream work and published release notes. These are not self-awarded badges or unverified profile claims.</p>
       </div>
@@ -266,8 +293,8 @@
     <section class="release-section section-shell" id="releases" aria-labelledby="releases-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">05 / RELEASE CREDITS</p>
-          <h2 id="releases-title">My contributions, shipped in real software.</h2>
+          <p class="eyebrow">07 / RELEASE CREDITS</p>
+          <h2 id="releases-title">Changes included in published releases</h2>
         </div>
         <p class="section-intro-copy">A merged pull request is one milestone. Seeing the change included in an official release or prerelease is another. Each credit links to the published notes and the original merged change.</p>
       </div>
@@ -281,7 +308,7 @@
       <div class="closing-card">
         <div class="closing-orbit profile-closing-orbit"><img src="https://avatars.githubusercontent.com/u/194621340?v=4" alt="Faizan Saiyed" loading="lazy"></div>
         <div class="closing-copy">
-          <p class="eyebrow">06 / THE PERSON BEHIND THE BUILDS</p>
+          <p class="eyebrow">08 / ABOUT</p>
           <h2 id="closing-title">Curious about the person, or the implementation?</h2>
           <p>I'm Faizan Saiyed, a product-minded engineer interested in backend systems, reliable workflows, data, and the details that make software usable.</p>
           <div class="closing-links">
@@ -297,7 +324,7 @@
 
   <footer class="site-footer section-shell">
     <span>FAIZAN SAIYED</span>
-    <span>MADE TO BE EXPLORED, NOT JUST SCROLLED.</span>
+    <span>SELECTED WORK · EXPERIENCE · OPEN SOURCE</span>
     <a href="#top">BACK TO TOP ↑</a>
   </footer>
 

@@ -1,0 +1,75 @@
+name: Capture product homepage screenshots
+on:
+  push:
+    branches:
+      - "feature/portfolio-client-internship-and-homepage-gallery"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  capture:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out the working branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check out FrameFlux demo frontend source
+        uses: actions/checkout@v4
+        with:
+          repository: faizansaiyed123/FrameFlux-Frontend
+          ref: bf4dc871401dd1cc36972c767d347287352249f1
+          path: .frameflux-source
+          persist-credentials: false
+
+      - name: Install and build FrameFlux homepage
+        working-directory: .frameflux-source
+        env:
+          NEXT_PUBLIC_SITE_URL: https://frameflux.io
+        run: |
+          npm ci
+          npm run build
+
+      - name: Start FrameFlux homepage
+        working-directory: .frameflux-source
+        run: |
+          npm run start -- --hostname 127.0.0.1 > "$RUNNER_TEMP/frameflux.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/frameflux.pid"
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:3000/ >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat "$RUNNER_TEMP/frameflux.log"
+          exit 1
+
+      - name: Install Playwright
+        run: |
+          npm install --prefix "$RUNNER_TEMP/playwright" playwright
+          "$RUNNER_TEMP/playwright/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Capture all 20 product and work homepages
+        id: capture
+        env:
+          PLAYWRIGHT_MODULE: ${{ runner.temp }}/playwright/node_modules/playwright/index.mjs
+          FRAMEFLUX_LOCAL_URL: http://127.0.0.1:3000/
+        run: node scripts/capture-homepage-previews.mjs
+      - name: Commit homepage screenshots and capture report
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/site-previews data/projects.json data/homepage-preview-status.json
+          if git diff --cached --quiet; then
+            echo "No homepage screenshot files changed."
+          else
+            git commit -m "Capture authentic project homepage screenshots"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
