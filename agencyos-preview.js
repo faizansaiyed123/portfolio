@@ -201,14 +201,7 @@
     if (listedNote) listedNote.textContent = "The old unverified frontend URL is no longer promoted. Use the interactive preview above; the full-stack API remains pending.";
   };
 
-  const projectGrid = document.querySelector("#project-grid");
-  if (projectGrid) {
-    const observer = new MutationObserver(() => requestAnimationFrame(enhanceProjectCard));
-    observer.observe(projectGrid, { childList: true, subtree: true });
-    enhanceProjectCard();
-  }
-
-  const dialogContent = document.querySelector("#dialog-content");
+  // The main portfolio renderer owns project cards now; keep AgencyOS enhancements for its dialog and project lab only.\n\n  const dialogContent = document.querySelector("#dialog-content");
   if (dialogContent) {
     const observer = new MutationObserver(() => requestAnimationFrame(enhanceCardDialog));
     observer.observe(dialogContent, { childList: true, subtree: true });
