@@ -21,6 +21,36 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Check out FrameFlux demo frontend source
+        uses: actions/checkout@v4
+        with:
+          repository: faizansaiyed123/FrameFlux-Frontend
+          ref: bf4dc871401dd1cc36972c767d347287352249f1
+          path: .frameflux-source
+          persist-credentials: false
+
+      - name: Install and build FrameFlux homepage
+        working-directory: .frameflux-source
+        env:
+          NEXT_PUBLIC_SITE_URL: https://frameflux.io
+        run: |
+          npm ci
+          npm run build
+
+      - name: Start FrameFlux homepage
+        working-directory: .frameflux-source
+        run: |
+          npm run start -- --hostname 127.0.0.1 > "$RUNNER_TEMP/frameflux.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/frameflux.pid"
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:3000/ >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat "$RUNNER_TEMP/frameflux.log"
+          exit 1
+
       - name: Install Playwright
         run: |
           npm install --prefix "$RUNNER_TEMP/playwright" playwright
@@ -29,6 +59,7 @@ jobs:
         id: capture
         env:
           PLAYWRIGHT_MODULE: ${{ runner.temp }}/playwright/node_modules/playwright/index.mjs
+          FRAMEFLUX_LOCAL_URL: http://127.0.0.1:3000/
         run: node scripts/capture-homepage-previews.mjs
       - name: Commit homepage screenshots and capture report
         if: always()

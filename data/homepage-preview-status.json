@@ -4,17 +4,17 @@
   "total": 20,
   "captured": 18,
   "reusedExisting": 1,
-  "blocked": 0,
-  "failed": 1,
+  "blocked": 1,
+  "failed": 0,
   "items": [
     {
       "id": "frameflux",
       "name": "FrameFlux",
       "url": "https://frameflux.io/",
-      "path": "assets/site-previews/frameflux-homepage.webp",
-      "status": "failed",
+      "path": null,
+      "status": "blocked",
       "httpStatus": null,
-      "error": "page.goto: net::ERR_CONNECTION_CLOSED at https://frameflux.io/\nCall log:\n  - navigating to \"https://frameflux.io/\", waiting until \"domcontentloaded\"\n"
+      "error": "The canonical domain did not accept connections and the Vercel preview is protected; the workflow will attempt a source-built homepage from the pinned demo commit."
     },
     {
       "id": "telemetry",

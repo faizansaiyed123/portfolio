@@ -8,7 +8,7 @@ const { chromium } = await import(pathToFileURL(modulePath).href);
 const readJson = async (path) => JSON.parse(await readFile(resolve(root, path), "utf8"));
 const [projectData, workData] = await Promise.all([readJson("data/projects.json"), readJson("data/work-showcase.json")]);
 const targets = [
-  ...projectData.projects.map((p) => ({ id: p.id, name: p.name, url: p.homepageScreenshotUrl || p.appUrl || p.recruiterDemoUrl, path: p.previewImage || p.homepageScreenshotPath })),
+  ...projectData.projects.map((p) => ({ id: p.id, name: p.name, url: p.id === "frameflux" && process.env.FRAMEFLUX_LOCAL_URL ? process.env.FRAMEFLUX_LOCAL_URL : p.homepageScreenshotUrl || p.appUrl || p.recruiterDemoUrl, reportUrl: p.id === "frameflux" && process.env.FRAMEFLUX_LOCAL_URL ? "https://github.com/faizansaiyed123/FrameFlux-Frontend/commit/bf4dc871401dd1cc36972c767d347287352249f1" : undefined, source: p.id === "frameflux" && process.env.FRAMEFLUX_LOCAL_URL ? "source-built-from-pinned-demo-commit" : "live-homepage", path: p.previewImage || p.homepageScreenshotPath })),
   ...workData.clientWork.map((p) => ({ id: p.id, name: p.name, url: p.url, path: p.previewImage })),
   ...workData.internshipWork.map((p) => ({ id: p.id, name: p.name, url: p.url, path: p.previewImage }))
 ];
@@ -40,7 +40,7 @@ const worker = async () => {
         if (destination) {
           try {
             await access(destination);
-            results.push({ id: item.id, name: item.name, url: item.url, path: item.path, status: "reused-existing", httpStatus: statusCode, pageTitle: "Service Agreement Manager", note: "The live preview is protected by Vercel; retained the previously committed authentic homepage screenshot." });
+            results.push({ id: item.id, name: item.name, url: item.reportUrl || item.url, path: item.path, status: "reused-existing", source: "existing-authentic-homepage-screenshot", httpStatus: statusCode, pageTitle: "Service Agreement Manager", note: "The live preview is protected by Vercel; retained the previously committed authentic homepage screenshot." });
             console.log("REUSED " + item.id + " (Vercel deployment protection)");
             continue;
           } catch { /* No prior homepage screenshot exists for this project. */ }
@@ -50,12 +50,12 @@ const worker = async () => {
       if (!destination) throw new Error("No screenshot path is configured for this project yet.");
       await mkdir(dirname(destination), { recursive: true });
       await page.screenshot({ path: destination, type: "webp", quality: 88, animations: "disabled" });
-      results.push({ id: item.id, name: item.name, url: item.url, path: item.path, status: "captured", httpStatus: statusCode, pageTitle: info.title, capturedAt: new Date().toISOString() });
+      results.push({ id: item.id, name: item.name, url: item.reportUrl || item.url, path: item.path, status: "captured", source: item.source, httpStatus: statusCode, pageTitle: info.title, capturedAt: new Date().toISOString() });
       console.log("CAPTURED " + item.id + " (" + (statusCode ?? "no status") + ")");
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       const blocked = /Vercel deployment protection|No screenshot path is configured|Candidate homepage did not identify|Homepage returned HTTP (403|404)/i.test(message);
-      results.push({ id: item.id, name: item.name, url: item.url, path: blocked ? null : item.path, status: blocked ? "blocked" : "failed", httpStatus: statusCode, error: message });
+      results.push({ id: item.id, name: item.name, url: item.reportUrl || item.url, path: blocked ? null : item.path, status: blocked ? "blocked" : "failed", source: item.source, httpStatus: statusCode, error: message });
       console.error("FAILED " + item.id + ": " + message);
     } finally { await page.close(); }
   }
@@ -67,7 +67,6 @@ const manifest = { schemaVersion: 1, capturedAt: new Date().toISOString(), total
 for (const result of results.filter((item) => item.id === "frameflux" && item.status === "captured")) {
   const project = projectData.projects.find((item) => item.id === "frameflux");
   if (project) {
-    project.appUrl = result.url;
     project.previewImage = result.path;
     delete project.homepageScreenshotUrl;
     delete project.homepageScreenshotPath;
