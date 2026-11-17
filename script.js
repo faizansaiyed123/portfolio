@@ -196,21 +196,56 @@
     return icons[project.category] || project.name.slice(0, 1).toUpperCase();
   };
 
-  const renderProjectCard = (project) => {
-    const stack = (project.stack || []).slice(0, 3);
-    return '<button class="project-card" type="button" data-project-id="' + escapeHTML(project.id) + '" aria-label="Open project lab: ' + escapeHTML(project.name) + '">' +
-      '<span class="project-card-top"><span class="project-number">LAB / ' + escapeHTML(project.number) + '</span><span class="project-domain">' + escapeHTML(project.category) + '</span></span>' +
-      '<span class="project-emblem" aria-hidden="true">' + escapeHTML(iconForProject(project)) + '</span>' +
-      '<span><h3>' + escapeHTML(project.name) + '</h3><p>' + escapeHTML(project.oneLiner) + '</p></span>' +
-      '<span class="project-card-bottom"><span class="project-stack">' + stack.map((tag) => "<span>" + escapeHTML(tag) + "</span>").join("") + '</span><span class="project-open" aria-hidden="true">↗</span></span>' +
-      "</button>";
+  const safeProjectUrl = (value) => {
+    try {
+      const url = new URL(String(value || ""), window.location.href);
+      return /^https?:$/.test(url.protocol) ? url.href : "";
+    } catch {
+      return "";
+    }
+  };
+
+  const renderProjectCard = (project, index) => {
+    const stack = project.stack || [];
+    const actualUrl = safeProjectUrl(project.appUrl);
+    const demoUrl = safeProjectUrl(project.recruiterDemoUrl);
+    const previewUrl = project.previewImage ? new URL(project.previewImage, window.location.href).href : "";
+    const featured = index < 2;
+    const visual = actualUrl
+      ? '<iframe class="project-live-frame" src="' + escapeHTML(actualUrl) + '" title="' + escapeHTML(project.name + ' actual frontend preview') + '" loading="' + (featured ? "eager" : "lazy") + '" referrerpolicy="strict-origin-when-cross-origin"></iframe>'
+      : (previewUrl
+        ? '<img class="project-preview-image" src="' + escapeHTML(previewUrl) + '" alt="' + escapeHTML(project.name + ' frontend preview') + '" loading="' + (featured ? "eager" : "lazy") + '">'
+        : '<div class="project-preview-empty"><span>FRONTEND PREVIEW</span><strong>Preview unavailable</strong><p>Open the project lab for architecture, source and deployment evidence.</p></div>');
+    const actual = actualUrl
+      ? '<a class="project-link project-link-primary" href="' + escapeHTML(actualUrl) + '" target="_blank" rel="noopener noreferrer">Actual frontend ↗</a>'
+      : '<span class="project-link project-link-muted">Actual frontend not listed</span>';
+    const demo = demoUrl
+      ? '<a class="project-link" href="' + escapeHTML(demoUrl) + '" target="_blank" rel="noopener noreferrer">Recruiter demo ↗</a>'
+      : '<span class="project-link project-link-muted">Recruiter demo not listed</span>';
+    const status = actualUrl ? "Frontend-only deployment · backend status separate" : "Product preview · frontend deployment not listed";
+    return '<article class="project-card product-showcase ' + (featured ? "is-featured" : "") + '" data-project-id="' + escapeHTML(project.id) + '" data-project-index="' + index + '">' +
+      '<div class="project-visual"><div class="project-browser">' +
+        '<div class="project-browser-bar"><span class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="browser-address">' + (actualUrl ? escapeHTML(actualUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")) : "portfolio / product preview") + '</span><span class="browser-live"><i aria-hidden="true"></i>' + (actualUrl ? "LIVE" : "PREVIEW") + '</span></div>' +
+        '<div class="project-browser-content">' + visual + '<div class="project-preview-badge">' + (actualUrl ? "ACTUAL FRONTEND" : "PRODUCT PREVIEW") + '</div></div>' +
+      '</div></div>' +
+      '<div class="project-copy">' +
+        '<div class="project-card-top"><span class="project-number">LAB / ' + escapeHTML(project.number) + '</span><span class="project-domain">' + escapeHTML(project.category) + '</span></div>' +
+        '<p class="project-showcase-kicker">' + escapeHTML(status) + '</p>' +
+        '<h3>' + escapeHTML(project.name) + '</h3>' +
+        '<p class="project-showcase-description">' + escapeHTML(project.oneLiner) + '</p>' +
+        '<div class="project-stack-label">TECHNOLOGY</div><div class="project-stack-list">' +
+          stack.map((tag) => '<span>' + escapeHTML(tag) + '</span>').join("") +
+        '</div>' +
+        '<div class="project-actions">' + actual + demo + '<button class="project-link project-details-button" type="button" data-project-id="' + escapeHTML(project.id) + '">Project lab ↗</button></div>' +
+      '</div>' +
+    '</article>';
   };
 
   const renderProjects = () => {
     if (!projectGrid) return;
     const visible = getFilteredProjects();
     projectGrid.innerHTML = visible.length
-      ? visible.map(renderProjectCard).join("")
+      ? visible.map((project, index) => renderProjectCard(project, index)).join("")
       : "";
     projectEmpty.hidden = visible.length !== 0;
     projectGrid.hidden = visible.length === 0;
@@ -254,7 +289,7 @@
   let previousFocus = null;
 
   const renderProjectDialog = (project) => {
-    const demoPending = project.demoStatus !== "ready" || !project.demoUrl;
+    const demoPending = !project.recruiterDemoUrl;
     const stack = (project.stack || []).map((item) => "<span>" + escapeHTML(item) + "</span>").join("");
     const features = (project.features || []).map((item) => "<li>" + escapeHTML(item) + "</li>").join("");
     const architecture = (project.architecture || []).map((item, index, all) =>
@@ -285,7 +320,7 @@
     const projectLabLink = '<a href="./project-lab.html?id=' + encodeURIComponent(project.id) + '">Open full project lab <span aria-hidden="true">↗</span></a>';
     let publicFrontendLink = "";
     if (project.appUrl) {
-      publicFrontendLink = '<a href="' + escapeHTML(project.appUrl) + '" target="_blank" rel="noopener noreferrer">Listed frontend URL (not verified) <span aria-hidden="true">↗</span></a>';
+      publicFrontendLink = '<a href="' + escapeHTML(project.appUrl) + '" target="_blank" rel="noopener noreferrer">Actual frontend website <span aria-hidden="true">↗</span></a>';
     }
     const recruiterPreviewUrl = /^https:\/\/[a-z0-9.-]+\.vercel\.app(?:\/|$)/i.test(project.recruiterDemoUrl || "")
       ? project.recruiterDemoUrl
@@ -338,7 +373,14 @@
   };
 
   projectGrid?.addEventListener("click", (event) => {
-    const card = event.target.closest("[data-project-id]");
+    if (event.target.closest("a")) return;
+    const details = event.target.closest(".project-details-button");
+    if (details) {
+      event.preventDefault();
+      openProject(details.dataset.projectId);
+      return;
+    }
+    const card = event.target.closest(".project-showcase");
     if (card) openProject(card.dataset.projectId);
   });
   closeDialogButton?.addEventListener("click", () => dialog?.close());
