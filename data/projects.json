@@ -40,7 +40,7 @@
       "appUrl": null,
       "demoStatus": "verification-pending",
       "demoPlan": "A public Vercel recruiter-preview URL has been supplied and is displayed separately from a verified product launch. Its current availability and complete backend path have not been independently verified. The checked demo build uses a seeded browser workspace and an in-memory FastAPI API with representative media placeholders; it does not run PostgreSQL, Redis, ARQ or FFmpeg, so it does not perform real media transcoding. Keep the full-stack demo status pending until the deployed API, data store, workers and clean-browser workflow have been verified.",
-      "previewImage": "assets/site-previews/frameflux-homepage.webp",
+      "previewImage": null,
       "workflow": [
         "Upload a media file in resumable chunks",
         "Validate its type, size and binary signature",

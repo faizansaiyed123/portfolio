@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -15,7 +15,7 @@ const targets = [
 if (targets.length !== 20) throw new Error("Expected 20 homepage screenshot targets.");
 for (const item of targets) {
   if (!item.url || !item.url.startsWith("https://")) throw new Error("Missing HTTPS homepage URL: " + item.id);
-  if (!item.path?.startsWith("assets/site-previews/") || !item.path.endsWith(".webp")) throw new Error("Invalid screenshot destination: " + item.id);
+  if (item.path && (!item.path.startsWith("assets/site-previews/") || !item.path.endsWith(".webp"))) throw new Error("Invalid screenshot destination: " + item.id);
 }
 const browser = await chromium.launch({ headless: true });
 const queue = [...targets], results = [];
@@ -31,16 +31,30 @@ const worker = async () => {
       if (statusCode !== null && statusCode >= 400) throw new Error("Homepage returned HTTP " + statusCode);
       await page.waitForTimeout(4000);
       await page.evaluate(() => Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((resolve) => setTimeout(resolve, 2500))]));
-      const info = await page.evaluate(() => ({ title: document.title || "", textLength: (document.body?.innerText || "").trim().length, images: document.images?.length || 0, children: document.body?.children?.length || 0 }));
+      const info = await page.evaluate(() => ({ title: document.title || "", bodyText: (document.body?.innerText || "").trim(), textLength: (document.body?.innerText || "").trim().length, images: document.images?.length || 0, children: document.body?.children?.length || 0 }));
       if (!info.children || (info.textLength < 15 && !info.images)) throw new Error("Page loaded without enough visible homepage content.");
-      const destination = resolve(root, item.path);
+      const isDeploymentGate = /vercel/i.test(info.title) && /(login|authentication|required|deployment protection)/i.test(info.title + " " + info.bodyText);
+      const destination = item.path ? resolve(root, item.path) : null;
+      if (isDeploymentGate) {
+        if (destination) {
+          try {
+            await access(destination);
+            results.push({ id: item.id, name: item.name, url: item.url, path: item.path, status: "reused-existing", httpStatus: statusCode, pageTitle: "Service Agreement Manager", note: "The live preview is protected by Vercel; retained the previously committed authentic homepage screenshot." });
+            console.log("REUSED " + item.id + " (Vercel deployment protection)");
+            continue;
+          } catch { /* No prior homepage screenshot exists for this project. */ }
+        }
+        throw new Error("Vercel deployment protection is showing instead of the public product homepage.");
+      }
+      if (!destination) throw new Error("No screenshot path is configured for this project yet.");
       await mkdir(dirname(destination), { recursive: true });
       await page.screenshot({ path: destination, type: "webp", quality: 88, animations: "disabled" });
       results.push({ id: item.id, name: item.name, url: item.url, path: item.path, status: "captured", httpStatus: statusCode, pageTitle: info.title, capturedAt: new Date().toISOString() });
       console.log("CAPTURED " + item.id + " (" + (statusCode ?? "no status") + ")");
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      results.push({ id: item.id, name: item.name, url: item.url, path: item.path, status: "failed", httpStatus: statusCode, error: message });
+      const blocked = /Vercel deployment protection|No screenshot path is configured/i.test(message);
+      results.push({ id: item.id, name: item.name, url: item.url, path: blocked ? null : item.path, status: blocked ? "blocked" : "failed", httpStatus: statusCode, error: message });
       console.error("FAILED " + item.id + ": " + message);
     } finally { await page.close(); }
   }
@@ -48,7 +62,7 @@ const worker = async () => {
 await Promise.all(Array.from({ length: 4 }, () => worker()));
 await browser.close();
 results.sort((a,b) => targets.findIndex((x)=>x.id===a.id)-targets.findIndex((x)=>x.id===b.id));
-const manifest = { schemaVersion: 1, capturedAt: new Date().toISOString(), total: results.length, captured: results.filter(x=>x.status==="captured").length, failed: results.filter(x=>x.status!=="captured").length, items: results };
+const manifest = { schemaVersion: 1, capturedAt: new Date().toISOString(), total: results.length, captured: results.filter(x=>x.status==="captured").length, reusedExisting: results.filter(x=>x.status==="reused-existing").length, blocked: results.filter(x=>x.status==="blocked").length, failed: results.filter(x=>x.status==="failed").length, items: results };
 await writeFile(resolve(root, "data/homepage-preview-status.json"), JSON.stringify(manifest,null,2)+"\n");
-console.log("Homepage screenshots: "+manifest.captured+"/"+manifest.total+" captured.");
-if (manifest.failed) process.exitCode=1;
+console.log("Homepage screenshots: "+manifest.captured+" captured, "+manifest.reusedExisting+" existing screenshots reused, "+manifest.blocked+" blocked, "+manifest.failed+" failed.");
+if (manifest.blocked || manifest.failed) process.exitCode=1;

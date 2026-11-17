@@ -33,9 +33,14 @@ if (previewStatus) {
   assert(previewStatus.schemaVersion === 1, "homepage preview manifest schemaVersion must be 1");
   assert(Array.isArray(previewStatus.items) && previewStatus.items.length === 20, "expected 20 homepage screenshots");
   for (const shot of previewStatus.items) {
-    assert(shot.status === "captured", "homepage screenshot was not captured: " + shot.id + " (" + (shot.error || "unknown error") + ")");
-    assert(shot.path && existsSync(resolve(root, shot.path)), "captured homepage screenshot file is missing: " + shot.id);
+    if (shot.status === "blocked") {
+      assert(!shot.path && shot.error, "blocked screenshot must explain that the homepage is unavailable: " + shot.id);
+    } else {
+      assert(["captured", "reused-existing"].includes(shot.status), "homepage screenshot failed: " + shot.id + " (" + (shot.error || "unknown error") + ")");
+      assert(shot.path && existsSync(resolve(root, shot.path)), "homepage screenshot file is missing: " + shot.id);
+    }
   }
+  assert(previewStatus.blocked === previewStatus.items.filter((shot) => shot.status === "blocked").length, "homepage screenshot blocked count is inconsistent");
 }
 
 const expectedCategoryCounts = {
@@ -76,8 +81,12 @@ for (const project of projects) {
   assert(project.demoStatus === "ready" ? /^https:\/\//.test(project.demoUrl || "") : true, "ready demo requires HTTPS demoUrl: " + project.id);
   assert(project.demoStatus !== "ready" || project.demoVerifiedAt, "ready demo requires verification date: " + project.id);
   assert(project.auditPath && existsSync(resolve(root, project.auditPath)), "missing source audit: " + project.id);
-  assert(project.previewImage && project.previewImage.startsWith("assets/site-previews/") && project.previewImage.endsWith(".webp"), "missing homepage preview path: " + project.id);
-  if (previewStatus) assert(existsSync(resolve(root, project.previewImage)), "missing captured homepage preview: " + project.id);
+  if (project.previewImage) {
+    assert(project.previewImage.startsWith("assets/site-previews/") && project.previewImage.endsWith(".webp"), "invalid homepage preview path: " + project.id);
+    if (previewStatus) assert(existsSync(resolve(root, project.previewImage)), "missing captured homepage preview: " + project.id);
+  } else {
+    assert(previewStatus?.items.some((shot) => shot.id === project.id && shot.status === "blocked"), "project without a homepage screenshot needs an explicit blocked record: " + project.id);
+  }
 }
 
 const frameflux = projects.find((project) => project.id === "frameflux");

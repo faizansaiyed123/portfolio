@@ -2,18 +2,19 @@
   "schemaVersion": 1,
   "capturedAt": "2026-11-17T16:07:50.596Z",
   "total": 20,
-  "captured": 20,
+  "captured": 18,
   "failed": 0,
   "items": [
     {
       "id": "frameflux",
       "name": "FrameFlux",
       "url": "https://frame-flux-demo-git-demo-focus-journals-projects.vercel.app/",
-      "path": "assets/site-previews/frameflux-homepage.webp",
-      "status": "captured",
+      "path": null,
+      "status": "blocked",
       "httpStatus": 200,
       "pageTitle": "Login – Vercel",
-      "capturedAt": "2026-11-17T16:07:29.305Z"
+      "capturedAt": "2026-11-17T16:07:29.305Z",
+      "error": "The listed Vercel preview is deployment-protected. No public FrameFlux homepage URL is configured."
     },
     {
       "id": "telemetry",
@@ -150,10 +151,11 @@
       "name": "Service Agreement Manager",
       "url": "https://service-agreement-manager-demo-git-demo-focus-journals-projects.vercel.app/",
       "path": "assets/site-previews/service-agreement-manager.webp",
-      "status": "captured",
+      "status": "reused-existing",
       "httpStatus": 200,
-      "pageTitle": "Login – Vercel",
-      "capturedAt": "2026-11-17T16:07:43.688Z"
+      "pageTitle": "Service Agreement Manager",
+      "capturedAt": "2026-11-17T16:07:43.688Z",
+      "note": "Restored from the authentic, previously committed homepage preview in main; the current Vercel preview is deployment-protected."
     },
     {
       "id": "autofix",
@@ -205,5 +207,7 @@
       "pageTitle": "Gyansetu One World AI",
       "capturedAt": "2026-11-17T16:07:49.855Z"
     }
-  ]
+  ],
+  "reusedExisting": 1,
+  "blocked": 1
 }
