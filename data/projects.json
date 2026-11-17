@@ -102,7 +102,7 @@
       "backendRepo": "telemetry-backend",
       "appUrl": "https://telemetry-frontend-chi.vercel.app/",
       "demoStatus": "verification-pending",
-      "demoPlan": "Use an isolated demo workspace with synthetic telemetry only. Enable safe simulation controls, alert acknowledgement, incident workflows, and WebSocket streaming. Do not expose real host enrollment or unrestricted admin operations.",
+      "demoPlan": "A listed Vercel frontend URL is available for exploration, but its current availability and complete anonymous backend path have not been independently verified. The source audit confirms the current application requires authentication for the control center and that the public backend is not verified as an isolated recruiter workspace. The earlier no-signup isolated demo implementation was reverted from both Telemetry repositories' main branches. Keep the full-stack demo status pending until a current frontend/backend deployment passes two-session isolation, WebSocket routing, reset/revoke/expiry, and the full synthetic telemetry workflow.",
       "previewImage": "assets/site-previews/telemetry.webp",
       "workflow": [
         "Generate synthetic telemetry or ingest host-agent events",
@@ -112,7 +112,8 @@
       ],
       "auditPath": "docs/project-labs/telemetry.md",
       "runtimeType": "Per-visitor telemetry namespace",
-      "runtimeDetail": "Each session receives its own synthetic event stream, alert rules and incident history. Live host-agent access is not exposed to a recruiter's browser."
+      "runtimeDetail": "Each session receives its own synthetic event stream, alert rules and incident history. Live host-agent access is not exposed to a recruiter's browser.",
+      "recruiterDemoUrl": "https://telemetry-frontend-chi.vercel.app/"
     },
     {
       "id": "sayphora",
