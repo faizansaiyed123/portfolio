@@ -31,6 +31,14 @@ const worker = async () => {
       statusCode = response?.status() ?? null;
       if (statusCode !== null && statusCode >= 400) throw new Error("Homepage returned HTTP " + statusCode);
       await page.waitForTimeout(4000);
+      // Dismiss common first-visit cookie consent banners so the screenshot shows the actual homepage.
+      const consentButton = page.getByRole("button", {
+        name: /^(got it!?|accept(?: all)?|allow all|agree|continue)$/i
+      }).first();
+      if (await consentButton.isVisible().catch(() => false)) {
+        await consentButton.click({ timeout: 2000 }).catch(() => {});
+        await page.waitForTimeout(500);
+      }
       await page.evaluate(() => Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((resolve) => setTimeout(resolve, 2500))]));
       const info = await page.evaluate(() => ({ title: document.title || "", bodyText: (document.body?.innerText || "").trim(), textLength: (document.body?.innerText || "").trim().length, images: document.images?.length || 0, children: document.body?.children?.length || 0 }));
       if (!info.children || (info.textLength < 15 && !info.images)) throw new Error("Page loaded without enough visible homepage content.");
