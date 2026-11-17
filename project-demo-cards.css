@@ -14,6 +14,7 @@
 }
 .public-demo-card--frameflux { --card-accent: var(--blue); }
 .public-demo-card--service-agreement { --card-accent: var(--lime); }
+.public-demo-card--telemetry { --card-accent: var(--blue); }
 .public-demo-badge {
   display: inline-flex;
   align-self: flex-start;

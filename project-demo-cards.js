@@ -4,11 +4,21 @@
   const cardConfig = {
     frameflux: {
       className: "public-demo-card--frameflux",
-      ariaLabel: "FrameFlux recruiter preview. Open the supplied preview or view project details."
+      ariaLabel: "FrameFlux recruiter preview. Open the supplied preview or view project details.",
+      badge: "RECRUITER PREVIEW · AVAILABILITY UNVERIFIED",
+      launchLabel: "Open recruiter preview ↗"
     },
     "service-agreement-manager": {
       className: "public-demo-card--service-agreement",
-      ariaLabel: "Service Agreement Manager recruiter preview. Open the supplied preview or view project details."
+      ariaLabel: "Service Agreement Manager recruiter preview. Open the supplied preview or view project details.",
+      badge: "RECRUITER PREVIEW · AVAILABILITY UNVERIFIED",
+      launchLabel: "Open recruiter preview ↗"
+    },
+    telemetry: {
+      className: "public-demo-card--telemetry",
+      ariaLabel: "Telemetry listed frontend preview. Open the frontend URL or view project details.",
+      badge: "LISTED FRONTEND · FULL-STACK DEMO UNVERIFIED",
+      launchLabel: "Open listed frontend ↗"
     }
   };
 
@@ -49,13 +59,13 @@
 
     const badge = document.createElement("span");
     badge.className = "public-demo-badge";
-    badge.textContent = "RECRUITER PREVIEW · AVAILABILITY UNVERIFIED";
+    badge.textContent = config.badge;
     const top = card.querySelector(".project-card-top");
     if (top) top.insertAdjacentElement("afterend", badge);
 
     const actions = document.createElement("div");
     actions.className = "public-demo-actions";
-    actions.append(makeAnchor(url, "Open recruiter preview ↗"));
+    actions.append(makeAnchor(url, config.launchLabel));
 
     const details = document.createElement("button");
     details.type = "button";
