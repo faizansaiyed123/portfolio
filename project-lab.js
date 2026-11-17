@@ -142,16 +142,27 @@
     const demoAction = $("#lab-demo-action");
     demoAction.innerHTML = "";
     const recruiterPreviewUrl = safeHttps(project.recruiterDemoUrl);
+    const recruiterPreviewCheckedAt = /^\d{4}-\d{2}-\d{2}$/.test(project.recruiterDemoCheckedAt || "")
+      ? project.recruiterDemoCheckedAt
+      : "";
     const demoNote = document.createElement("p");
     demoNote.className = "lab-demo-action-note";
     demoNote.textContent = pending
       ? recruiterPreviewUrl
-        ? "A recruiter preview URL was supplied. Its current availability and complete API, database and worker behavior have not been independently verified; use it as an exploratory entry point, not as proof of a verified full-stack deployment."
+        ? recruiterPreviewCheckedAt
+          ? "The public preview returned HTTP 200 on " + formatDate(recruiterPreviewCheckedAt) + ". This confirms page availability only; the full API, database, worker and complete end-to-end workflow remain unverified."
+          : "A recruiter preview URL was supplied. Its current availability and complete API, database and worker behavior have not been independently verified; use it as an exploratory entry point, not as proof of a verified full-stack deployment."
         : "The demo link will appear here after a complete clean-browser verification. A frontend URL alone is not enough."
       : "This opens the actual deployed application, not a browser-only simulation.";
     demoAction.append(demoNote);
     if (!pending) addLink(demoAction, "Open verified product", project.demoUrl);
-    else if (recruiterPreviewUrl) addLink(demoAction, "Open supplied recruiter preview (availability unverified)", recruiterPreviewUrl);
+    else if (recruiterPreviewUrl) addLink(
+      demoAction,
+      recruiterPreviewCheckedAt
+        ? "Open reachable recruiter preview (full-stack status pending)"
+        : "Open supplied recruiter preview (availability unverified)",
+      recruiterPreviewUrl
+    );
 
     const repositories = $("#lab-repository-links");
     repositories.innerHTML = "";
