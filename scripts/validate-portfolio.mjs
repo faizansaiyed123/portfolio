@@ -19,6 +19,34 @@ assert(projectsData.schemaVersion === 1, "projects schemaVersion must be 1");
 assert(Array.isArray(projects) && projects.length === 17, "expected exactly 17 personal projects");
 assert(new Set(projects.map((p) => p.id)).size === projects.length, "project ids must be unique");
 
+const expectedCategoryCounts = {
+  "AI and retrieval": 1,
+  "AI applications": 1,
+  "Business operations": 2,
+  "Commerce": 1,
+  "Data and analytics": 1,
+  "Developer infrastructure": 1,
+  "Field service operations": 2,
+  "Finance operations": 1,
+  "Marketing operations": 1,
+  "Media infrastructure": 1,
+  "Personal productivity": 1,
+  "Price intelligence": 1,
+  "Project operations": 1,
+  "Realtime observability": 1,
+  "Workshop operations": 1
+};
+const actualCategoryCounts = Object.fromEntries(
+  [...projects.reduce((counts, project) => {
+    counts.set(project.category, (counts.get(project.category) || 0) + 1);
+    return counts;
+  }, new Map())].sort(([a], [b]) => a.localeCompare(b))
+);
+assert(
+  JSON.stringify(actualCategoryCounts) === JSON.stringify(expectedCategoryCounts),
+  "project categories and counts must match the published 17-project taxonomy"
+);
+
 for (const project of projects) {
   assert(/^[a-z0-9-]{1,64}$/.test(project.id), "invalid project id: " + project.id);
   assert(project.name && project.oneLiner && project.overview, "missing project copy: " + project.id);
@@ -61,9 +89,14 @@ for (const item of releases.items) {
   assert(["stable", "prerelease"].includes(item.channel || "stable"), "unknown release channel");
 }
 
-for (const path of ["index.html", "script.js", "style.css", "project-lab.html", "project-lab.js", "project-lab.css", "frameflux-demo-preview.js", "frameflux-demo-preview.css"]) {
+for (const path of ["index.html", "script.js", "style.css", "portfolio-polish.css", "project-lab.html", "project-lab.js", "project-lab.css", "frameflux-demo-preview.js", "frameflux-demo-preview.css", "scripts/build-portfolio-preview.sh"]) {
   assert(existsSync(resolve(root, path)), "missing portfolio entrypoint asset: " + path);
 }
+
+const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
+const previewBuildScript = readFileSync(resolve(root, "scripts/build-portfolio-preview.sh"), "utf8");
+assert(indexHtml.includes('href="./portfolio-polish.css'), "index.html must load the portfolio polish stylesheet");
+assert(previewBuildScript.includes('"$ROOT/portfolio-polish.css"'), "Vercel preview packaging must copy portfolio-polish.css into out/");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("Portfolio data validation passed: 17 projects, " + activity.items.length + " external merged PRs, " + releases.items.length + " release credits.");

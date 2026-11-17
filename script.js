@@ -144,22 +144,51 @@
   const projectResults = $("#project-results");
   const projectEmpty = $("#project-empty");
 
+  const categoryOrder = [
+    "AI and retrieval",
+    "AI applications",
+    "Business operations",
+    "Commerce",
+    "Data and analytics",
+    "Developer infrastructure",
+    "Field service operations",
+    "Finance operations",
+    "Marketing operations",
+    "Media infrastructure",
+    "Personal productivity",
+    "Price intelligence",
+    "Project operations",
+    "Realtime observability",
+    "Workshop operations"
+  ];
+
   const categoryCounts = () => {
     const counts = new Map();
     state.projects.forEach((project) => counts.set(project.category, (counts.get(project.category) || 0) + 1));
-    return [...counts.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+    return [...counts.entries()].sort((a, b) => categoryOrder.indexOf(a[0]) - categoryOrder.indexOf(b[0]));
   };
 
   const renderCategoryFilters = () => {
+    if (!projectFilters) return;
     const categories = categoryCounts();
     const filters = [{ key: "all", label: "All work", count: state.projects.length }]
       .concat(categories.map(([label, count]) => ({ key: label, label, count })));
     projectFilters.innerHTML = filters.map((item) => {
       const active = state.selectedCategory === item.key;
+      const countId = item.key === "all" ? ' id="all-projects-count"' : "";
       return '<button class="filter-chip' + (active ? " is-active" : "") + '" type="button" data-category="' +
-        escapeHTML(item.key) + '" aria-pressed="' + String(active) + '">' + escapeHTML(item.label) +
-        " <span>" + item.count + "</span></button>";
+        escapeHTML(item.key) + '" aria-pressed="' + String(active) + '">' +
+        '<span class="filter-chip-label">' + escapeHTML(item.label) + '</span>' +
+        '<span class="filter-chip-count"' + countId + '>' + item.count + '</span></button>';
     }).join("");
+
+    const current = $("#category-filter-current");
+    if (current) {
+      const selected = filters.find((item) => item.key === state.selectedCategory);
+      current.textContent = state.selectedCategory === "all"
+        ? "ALL WORK · " + state.projects.length + " PROJECTS"
+        : (selected ? selected.label.toUpperCase() + " · " + selected.count + (selected.count === 1 ? " PROJECT" : " PROJECTS") : "ALL WORK · " + state.projects.length + " PROJECTS");
+    }
   };
 
   const getFilteredProjects = () => {
@@ -210,7 +239,7 @@
     const actualUrl = safeProjectUrl(project.appUrl);
     const demoUrl = safeProjectUrl(project.recruiterDemoUrl);
     const previewUrl = project.previewImage ? new URL(project.previewImage, window.location.href).href : "";
-    const featured = index < 2;
+    const featured = index === 0;
     const visual = actualUrl
       ? '<iframe class="project-live-frame" src="' + escapeHTML(actualUrl) + '" title="' + escapeHTML(project.name + ' actual frontend preview') + '" loading="' + (featured ? "eager" : "lazy") + '" referrerpolicy="strict-origin-when-cross-origin"></iframe>'
       : (previewUrl
@@ -492,6 +521,12 @@
         return date >= cutoff && date <= now;
       })
       .sort((a, b) => new Date(b.mergedAt) - new Date(a.mergedAt));
+    const resultsSummary = $("#activity-results-summary");
+    if (resultsSummary) {
+      resultsSummary.textContent = items.length === state.activity.length
+        ? "Showing all " + state.activity.length + " verified external merged PRs"
+        : "Showing " + items.length + " of " + state.activity.length + " verified external merged PRs";
+    }
     activityList.innerHTML = items.length ? items.map((item) => {
       const repoLabel = item.repository || "Unknown repository";
       const date = formatDate(item.mergedAt);
@@ -500,7 +535,7 @@
         '<span class="contribution-detail"><strong>' + escapeHTML(item.title) + '</strong><span>' + escapeHTML(item.kind || "Merged contribution") + " · PR #" + Number(item.number) + '</span></span>' +
         '<time class="contribution-date" datetime="' + escapeHTML(item.mergedAt) + '">' + escapeHTML(date) + '</time>' +
         '<span class="contribution-arrow" aria-hidden="true">↗</span></a>';
-    }).join("") : '<div class="loading-card">No matching external merged PRs. Change or clear the filters.</div>';
+    }).join("") : '<div class="loading-card contribution-empty-state">No matching pull requests. Adjust a filter or reset the selection.</div>';
   };
 
   const renderContributionFilters = () => {
@@ -539,6 +574,15 @@
   });
   dateSelect?.addEventListener("change", () => {
     state.selectedContributionDateRange = dateSelect.value;
+    renderContributionList();
+  });
+  $("#clear-contribution-filters")?.addEventListener("click", () => {
+    state.selectedRepository = "all";
+    state.selectedContributionKind = "all";
+    state.selectedContributionDateRange = "all";
+    if (repoSelect) repoSelect.value = "all";
+    if (kindSelect) kindSelect.value = "all";
+    if (dateSelect) dateSelect.value = "all";
     renderContributionList();
   });
 
