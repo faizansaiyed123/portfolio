@@ -14,7 +14,8 @@ const targets = [
 ];
 if (targets.length !== 20) throw new Error("Expected 20 homepage screenshot targets.");
 for (const item of targets) {
-  if (!item.url || !item.url.startsWith("https://")) throw new Error("Missing HTTPS homepage URL: " + item.id);
+  const isApprovedLocalFrameFlux = item.id === "frameflux" && item.source === "source-built-from-pinned-demo-commit" && /^http:\/\/127\.0\.0\.1:3000\/$/.test(item.url || "");
+  if (!item.url || (!item.url.startsWith("https://") && !isApprovedLocalFrameFlux)) throw new Error("Homepage URL must be HTTPS, except the pinned local FrameFlux source build: " + item.id);
   if (item.path && (!item.path.startsWith("assets/site-previews/") || !item.path.endsWith(".webp"))) throw new Error("Invalid screenshot destination: " + item.id);
 }
 const browser = await chromium.launch({ headless: true });
