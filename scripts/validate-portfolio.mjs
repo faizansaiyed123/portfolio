@@ -89,9 +89,14 @@ for (const item of releases.items) {
   assert(["stable", "prerelease"].includes(item.channel || "stable"), "unknown release channel");
 }
 
-for (const path of ["index.html", "script.js", "style.css", "project-lab.html", "project-lab.js", "project-lab.css", "frameflux-demo-preview.js", "frameflux-demo-preview.css"]) {
+for (const path of ["index.html", "script.js", "style.css", "portfolio-polish.css", "project-lab.html", "project-lab.js", "project-lab.css", "frameflux-demo-preview.js", "frameflux-demo-preview.css", "scripts/build-portfolio-preview.sh"]) {
   assert(existsSync(resolve(root, path)), "missing portfolio entrypoint asset: " + path);
 }
+
+const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
+const previewBuildScript = readFileSync(resolve(root, "scripts/build-portfolio-preview.sh"), "utf8");
+assert(indexHtml.includes('href="./portfolio-polish.css'), "index.html must load the portfolio polish stylesheet");
+assert(previewBuildScript.includes('"$ROOT/portfolio-polish.css"'), "Vercel preview packaging must copy portfolio-polish.css into out/");
 
 if (process.exitCode) process.exit(process.exitCode);
 console.log("Portfolio data validation passed: 17 projects, " + activity.items.length + " external merged PRs, " + releases.items.length + " release credits.");
