@@ -65,7 +65,9 @@
         "backendRuntime": "In-memory FastAPI simulation",
         "mediaProcessing": "Representative placeholder outputs; FFmpeg is not executed"
       },
-      "recruiterDemoUrl": "https://frame-flux-demo-git-demo-focus-journals-projects.vercel.app/"
+      "recruiterDemoUrl": "https://frame-flux-demo-git-demo-focus-journals-projects.vercel.app/",
+      "homepageScreenshotUrl": "https://frameflux.io/",
+      "homepageScreenshotPath": "assets/site-previews/frameflux-homepage.webp"
     },
     {
       "id": "telemetry",

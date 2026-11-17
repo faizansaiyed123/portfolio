@@ -8,7 +8,7 @@ const { chromium } = await import(pathToFileURL(modulePath).href);
 const readJson = async (path) => JSON.parse(await readFile(resolve(root, path), "utf8"));
 const [projectData, workData] = await Promise.all([readJson("data/projects.json"), readJson("data/work-showcase.json")]);
 const targets = [
-  ...projectData.projects.map((p) => ({ id: p.id, name: p.name, url: p.appUrl || p.recruiterDemoUrl, path: p.previewImage })),
+  ...projectData.projects.map((p) => ({ id: p.id, name: p.name, url: p.homepageScreenshotUrl || p.appUrl || p.recruiterDemoUrl, path: p.previewImage || p.homepageScreenshotPath })),
   ...workData.clientWork.map((p) => ({ id: p.id, name: p.name, url: p.url, path: p.previewImage })),
   ...workData.internshipWork.map((p) => ({ id: p.id, name: p.name, url: p.url, path: p.previewImage }))
 ];
@@ -33,6 +33,7 @@ const worker = async () => {
       await page.evaluate(() => Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((resolve) => setTimeout(resolve, 2500))]));
       const info = await page.evaluate(() => ({ title: document.title || "", bodyText: (document.body?.innerText || "").trim(), textLength: (document.body?.innerText || "").trim().length, images: document.images?.length || 0, children: document.body?.children?.length || 0 }));
       if (!info.children || (info.textLength < 15 && !info.images)) throw new Error("Page loaded without enough visible homepage content.");
+      if (item.id === "frameflux" && !/frameflux/i.test(info.title + " " + info.bodyText)) throw new Error("Candidate homepage did not identify the FrameFlux product.");
       const isDeploymentGate = /vercel/i.test(info.title) && /(login|authentication|required|deployment protection)/i.test(info.title + " " + info.bodyText);
       const destination = item.path ? resolve(root, item.path) : null;
       if (isDeploymentGate) {
@@ -53,7 +54,7 @@ const worker = async () => {
       console.log("CAPTURED " + item.id + " (" + (statusCode ?? "no status") + ")");
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      const blocked = /Vercel deployment protection|No screenshot path is configured/i.test(message);
+      const blocked = /Vercel deployment protection|No screenshot path is configured|Candidate homepage did not identify|Homepage returned HTTP (403|404)/i.test(message);
       results.push({ id: item.id, name: item.name, url: item.url, path: blocked ? null : item.path, status: blocked ? "blocked" : "failed", httpStatus: statusCode, error: message });
       console.error("FAILED " + item.id + ": " + message);
     } finally { await page.close(); }
@@ -63,6 +64,16 @@ await Promise.all(Array.from({ length: 4 }, () => worker()));
 await browser.close();
 results.sort((a,b) => targets.findIndex((x)=>x.id===a.id)-targets.findIndex((x)=>x.id===b.id));
 const manifest = { schemaVersion: 1, capturedAt: new Date().toISOString(), total: results.length, captured: results.filter(x=>x.status==="captured").length, reusedExisting: results.filter(x=>x.status==="reused-existing").length, blocked: results.filter(x=>x.status==="blocked").length, failed: results.filter(x=>x.status==="failed").length, items: results };
+for (const result of results.filter((item) => item.id === "frameflux" && item.status === "captured")) {
+  const project = projectData.projects.find((item) => item.id === "frameflux");
+  if (project) {
+    project.appUrl = result.url;
+    project.previewImage = result.path;
+    delete project.homepageScreenshotUrl;
+    delete project.homepageScreenshotPath;
+  }
+}
+await writeFile(resolve(root, "data/projects.json"), JSON.stringify(projectData,null,2)+"\n");
 await writeFile(resolve(root, "data/homepage-preview-status.json"), JSON.stringify(manifest,null,2)+"\n");
 console.log("Homepage screenshots: "+manifest.captured+" captured, "+manifest.reusedExisting+" existing screenshots reused, "+manifest.blocked+" blocked, "+manifest.failed+" failed.");
 if (manifest.blocked || manifest.failed) process.exitCode=1;
