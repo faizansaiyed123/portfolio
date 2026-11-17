@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "clientWork": [
+    {
+      "id": "printoscar",
+      "name": "PrintOscar",
+      "roleLabel": "FREELANCE",
+      "projectType": "Client project",
+      "description": "An online storefront for custom trophies, medals, plaques and recognition products.",
+      "url": "https://printoscar.com/",
+      "previewImage": "assets/site-previews/work-printoscar.webp",
+      "repositories": [
+        {
+          "label": "Frontend",
+          "url": "https://github.com/faizansaiyed123/print_oscor_frontend"
+        },
+        {
+          "label": "Backend",
+          "url": "https://github.com/faizansaiyed123/print_oscor_backend"
+        }
+      ]
+    },
+    {
+      "id": "jeca-homes",
+      "name": "JECA Homes",
+      "roleLabel": "FREELANCE",
+      "projectType": "Client project",
+      "description": "A real-estate website for browsing homes and property listings in Florida.",
+      "url": "https://jecahomesforsalefl.com/",
+      "previewImage": "assets/site-previews/work-jeca-homes.webp",
+      "repositories": [
+        {
+          "label": "Frontend",
+          "url": "https://github.com/faizansaiyed123/jeca-real-estate-frontend"
+        },
+        {
+          "label": "Backend",
+          "url": "https://github.com/faizansaiyed123/jeca-real-estate-backend"
+        }
+      ]
+    }
+  ],
+  "internshipWork": [
+    {
+      "id": "gyansetu-ai",
+      "name": "GyanSetu AI",
+      "roleLabel": "INTERNSHIP",
+      "projectType": "Company project",
+      "description": "Project work I contributed to during my internship with GyanSetu AI.",
+      "url": "https://www.gyansetu.ai/",
+      "previewImage": "assets/site-previews/work-gyansetu-ai.webp",
+      "repositories": []
+    }
+  ]
+}

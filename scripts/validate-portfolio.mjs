@@ -13,11 +13,30 @@ const assert = (condition, message) => { if (!condition) fail(message); };
 const projectsData = readJson("data/projects.json");
 const activity = readJson("data/activity.json");
 const releases = readJson("data/release-credits.json");
+const work = readJson("data/work-showcase.json");
+const previewStatusPath = resolve(root, "data/homepage-preview-status.json");
+const previewStatus = existsSync(previewStatusPath) ? readJson("data/homepage-preview-status.json") : null;
 const projects = projectsData.projects;
 
 assert(projectsData.schemaVersion === 1, "projects schemaVersion must be 1");
 assert(Array.isArray(projects) && projects.length === 17, "expected exactly 17 personal projects");
 assert(new Set(projects.map((p) => p.id)).size === projects.length, "project ids must be unique");
+assert(work.schemaVersion === 1, "work showcase schemaVersion must be 1");
+assert(Array.isArray(work.clientWork) && work.clientWork.length === 2, "expected two freelance client projects");
+assert(Array.isArray(work.internshipWork) && work.internshipWork.length === 1, "expected one internship project");
+for (const item of [...work.clientWork, ...work.internshipWork]) {
+  assert(item.id && item.name && item.roleLabel && item.description, "work showcase record is incomplete");
+  assert(/^https:\/\//.test(item.url || ""), "work showcase URL must use HTTPS: " + item.id);
+  assert(item.previewImage && item.previewImage.startsWith("assets/site-previews/") && item.previewImage.endsWith(".webp"), "work showcase needs a homepage screenshot path: " + item.id);
+}
+if (previewStatus) {
+  assert(previewStatus.schemaVersion === 1, "homepage preview manifest schemaVersion must be 1");
+  assert(Array.isArray(previewStatus.items) && previewStatus.items.length === 20, "expected 20 homepage screenshots");
+  for (const shot of previewStatus.items) {
+    assert(shot.status === "captured", "homepage screenshot was not captured: " + shot.id + " (" + (shot.error || "unknown error") + ")");
+    assert(shot.path && existsSync(resolve(root, shot.path)), "captured homepage screenshot file is missing: " + shot.id);
+  }
+}
 
 const expectedCategoryCounts = {
   "AI and retrieval": 1,
@@ -57,7 +76,8 @@ for (const project of projects) {
   assert(project.demoStatus === "ready" ? /^https:\/\//.test(project.demoUrl || "") : true, "ready demo requires HTTPS demoUrl: " + project.id);
   assert(project.demoStatus !== "ready" || project.demoVerifiedAt, "ready demo requires verification date: " + project.id);
   assert(project.auditPath && existsSync(resolve(root, project.auditPath)), "missing source audit: " + project.id);
-  assert(project.previewImage && existsSync(resolve(root, project.previewImage)), "missing preview asset: " + project.id);
+  assert(project.previewImage && project.previewImage.startsWith("assets/site-previews/") && project.previewImage.endsWith(".webp"), "missing homepage preview path: " + project.id);
+  if (previewStatus) assert(existsSync(resolve(root, project.previewImage)), "missing captured homepage preview: " + project.id);
 }
 
 const frameflux = projects.find((project) => project.id === "frameflux");
@@ -89,14 +109,18 @@ for (const item of releases.items) {
   assert(["stable", "prerelease"].includes(item.channel || "stable"), "unknown release channel");
 }
 
-for (const path of ["index.html", "script.js", "style.css", "portfolio-polish.css", "project-lab.html", "project-lab.js", "project-lab.css", "frameflux-demo-preview.js", "frameflux-demo-preview.css", "scripts/build-portfolio-preview.sh"]) {
+for (const path of ["index.html", "script.js", "style.css", "portfolio-polish.css", "work-showcase.css", "data/work-showcase.json", "scripts/capture-homepage-previews.mjs", "project-lab.html", "project-lab.js", "project-lab.css", "frameflux-demo-preview.js", "frameflux-demo-preview.css", "scripts/build-portfolio-preview.sh"]) {
   assert(existsSync(resolve(root, path)), "missing portfolio entrypoint asset: " + path);
 }
 
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
 const previewBuildScript = readFileSync(resolve(root, "scripts/build-portfolio-preview.sh"), "utf8");
 assert(indexHtml.includes('href="./portfolio-polish.css'), "index.html must load the portfolio polish stylesheet");
+assert(previewBuildScript.includes('"$ROOT/work-showcase.css"'), "Vercel preview packaging must copy work-showcase.css into out/");
+assert(indexHtml.includes('href="./work-showcase.css'), "index.html must load the work showcase stylesheet");
+assert(indexHtml.includes('id="client-work-grid"') && indexHtml.includes('id="internship-work-grid"'), "client and internship sections are required");
+assert(!indexHtml.includes("INDEPENDENT SOFTWARE / 2026"), "remove the old generic wordmark tagline");
 assert(previewBuildScript.includes('"$ROOT/portfolio-polish.css"'), "Vercel preview packaging must copy portfolio-polish.css into out/");
 
 if (process.exitCode) process.exit(process.exitCode);
-console.log("Portfolio data validation passed: 17 projects, " + activity.items.length + " external merged PRs, " + releases.items.length + " release credits.");
+console.log("Portfolio data validation passed: " + projects.length + " personal projects, " + work.clientWork.length + " client projects, " + work.internshipWork.length + " internship projects, " + activity.items.length + " external merged PRs, " + releases.items.length + " release credits.");

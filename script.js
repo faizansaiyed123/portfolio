@@ -234,28 +234,59 @@
     }
   };
 
+
+  const renderPortfolioWorkCard = (item) => {
+    const url = safeProjectUrl(item.url);
+    const previewUrl = item.previewImage ? new URL(item.previewImage, window.location.href).href : "";
+    const sourceLinks = (item.repositories || []).map((repo) =>
+      '<a class="work-source-link" href="' + escapeHTML(safeProjectUrl(repo.url)) + '" target="_blank" rel="noopener noreferrer">' + escapeHTML(repo.label) + ' ↗</a>'
+    ).join("");
+    const image = previewUrl
+      ? '<img src="' + escapeHTML(previewUrl) + '" alt="' + escapeHTML(item.name + ' homepage screenshot') + '" loading="lazy" decoding="async">'
+      : '<div class="work-image-missing">Homepage screenshot unavailable</div>';
+    return '<article class="work-card">' +
+      '<a class="work-card-visual" href="' + escapeHTML(url) + '" target="_blank" rel="noopener noreferrer" aria-label="Visit ' + escapeHTML(item.name) + ' website">' +
+        '<div class="work-browser-bar"><span class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="browser-address">' + escapeHTML(url.replace(/^https?:\/\//, "").replace(/\/$/, "")) + '</span><span class="browser-live">HOME</span></div>' +
+        '<div class="work-image-frame">' + image + '<span class="work-image-label">HOMEPAGE</span></div>' +
+      '</a>' +
+      '<div class="work-card-copy">' +
+        '<div class="work-card-meta"><span class="work-role-label">' + escapeHTML(item.roleLabel) + '</span><span class="work-project-type">' + escapeHTML(item.projectType || "") + '</span></div>' +
+        '<h3>' + escapeHTML(item.name) + '</h3>' +
+        '<p>' + escapeHTML(item.description) + '</p>' +
+        '<div class="work-card-actions"><a class="work-website-link" href="' + escapeHTML(url) + '" target="_blank" rel="noopener noreferrer">Visit website ↗</a>' + sourceLinks + '</div>' +
+      '</div>' +
+    '</article>';
+  };
+
+  const renderPortfolioWork = (data) => {
+    const clientGrid = $("#client-work-grid");
+    const internshipGrid = $("#internship-work-grid");
+    if (clientGrid) clientGrid.innerHTML = Array.isArray(data.clientWork) ? data.clientWork.map(renderPortfolioWorkCard).join("") : "";
+    if (internshipGrid) internshipGrid.innerHTML = Array.isArray(data.internshipWork) ? data.internshipWork.map(renderPortfolioWorkCard).join("") : "";
+  };
+
   const renderProjectCard = (project, index) => {
     const stack = project.stack || [];
     const actualUrl = safeProjectUrl(project.appUrl);
     const demoUrl = safeProjectUrl(project.recruiterDemoUrl);
     const previewUrl = project.previewImage ? new URL(project.previewImage, window.location.href).href : "";
     const featured = index === 0;
-    const visual = actualUrl
-      ? '<iframe class="project-live-frame" src="' + escapeHTML(actualUrl) + '" title="' + escapeHTML(project.name + ' actual frontend preview') + '" loading="' + (featured ? "eager" : "lazy") + '" referrerpolicy="strict-origin-when-cross-origin"></iframe>'
-      : (previewUrl
-        ? '<img class="project-preview-image" src="' + escapeHTML(previewUrl) + '" alt="' + escapeHTML(project.name + ' frontend preview') + '" loading="' + (featured ? "eager" : "lazy") + '">'
-        : '<div class="project-preview-empty"><span>FRONTEND PREVIEW</span><strong>Preview unavailable</strong><p>Open the project lab for architecture, source and deployment evidence.</p></div>');
+    const screenshotSource = actualUrl || demoUrl;
+    const browserLabel = screenshotSource ? new URL(screenshotSource).host : "homepage screenshot";
+    const visual = previewUrl
+      ? '<img class="project-preview-image" src="' + escapeHTML(previewUrl) + '" alt="' + escapeHTML(project.name + ' homepage screenshot') + '" loading="' + (featured ? "eager" : "lazy") + '" decoding="async">'
+      : '<div class="project-preview-empty"><span>HOMEPAGE SCREENSHOT</span><strong>Preview unavailable</strong><p>The homepage screenshot has not been captured yet.</p></div>';
     const actual = actualUrl
       ? '<a class="project-link project-link-primary" href="' + escapeHTML(actualUrl) + '" target="_blank" rel="noopener noreferrer">Actual frontend ↗</a>'
       : '<span class="project-link project-link-muted">Actual frontend not listed</span>';
     const demo = demoUrl
       ? '<a class="project-link" href="' + escapeHTML(demoUrl) + '" target="_blank" rel="noopener noreferrer">Recruiter demo ↗</a>'
       : '<span class="project-link project-link-muted">Recruiter demo not listed</span>';
-    const status = actualUrl ? "Frontend-only deployment · backend status separate" : "Product preview · frontend deployment not listed";
+    const status = actualUrl ? "Homepage screenshot · live frontend" : demoUrl ? "Homepage screenshot · recruiter preview" : "Homepage screenshot";
     return '<article class="project-card product-showcase ' + (featured ? "is-featured" : "") + '" data-project-id="' + escapeHTML(project.id) + '" data-project-index="' + index + '">' +
       '<div class="project-visual"><div class="project-browser">' +
-        '<div class="project-browser-bar"><span class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="browser-address">' + (actualUrl ? escapeHTML(actualUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")) : "portfolio / product preview") + '</span><span class="browser-live"><i aria-hidden="true"></i>' + (actualUrl ? "LIVE" : "PREVIEW") + '</span></div>' +
-        '<div class="project-browser-content">' + visual + '<div class="project-preview-badge">' + (actualUrl ? "ACTUAL FRONTEND" : "PRODUCT PREVIEW") + '</div></div>' +
+        '<div class="project-browser-bar"><span class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="browser-address">' + escapeHTML(browserLabel) + '</span><span class="browser-live">IMAGE</span></div>' +
+        '<div class="project-browser-content">' + visual + '<div class="project-preview-badge">HOMEPAGE SCREENSHOT</div></div>' +
       '</div></div>' +
       '<div class="project-copy">' +
         '<div class="project-card-top"><span class="project-number">LAB / ' + escapeHTML(project.number) + '</span><span class="project-domain">' + escapeHTML(project.category) + '</span></div>' +
@@ -646,8 +677,9 @@
 
   const ACTIVITY_DATA_BASE = "data/";
   const loadAll = async () => {
-    const [projectsResult, activityResult, calendarResult, releasesResult] = await Promise.allSettled([
+    const [projectsResult, workResult, activityResult, calendarResult, releasesResult] = await Promise.allSettled([
       loadJSON("data/projects.json"),
+      loadJSON("data/work-showcase.json"),
       loadJSON(ACTIVITY_DATA_BASE + "activity.json"),
       loadJSON(ACTIVITY_DATA_BASE + "contributions-calendar.json"),
       loadJSON("data/release-credits.json")
@@ -659,6 +691,13 @@
       renderProjects();
     } else {
       setLoadingError("#project-grid", "The project library could not be loaded. Please use the source repository links or try again later.");
+    }
+
+    if (workResult.status === "fulfilled" && workResult.value.schemaVersion === 1) {
+      renderPortfolioWork(workResult.value);
+    } else {
+      setLoadingError("#client-work-grid", "Client work records could not be loaded.");
+      setLoadingError("#internship-work-grid", "Internship work records could not be loaded.");
     }
 
     if (activityResult.status === "fulfilled" && Array.isArray(activityResult.value.items)) {

@@ -62,7 +62,7 @@ cp -a "$ROOT/index.html" "$ROOT/project-lab.html" "$ROOT/script.js" \
   "$ROOT/project-lab.js" "$ROOT/style.css" "$ROOT/project-lab.css" \
   "$ROOT/project-demo-cards.js" "$ROOT/project-demo-cards.css" \
   "$ROOT/agencyos-preview.js" "$ROOT/agencyos-preview.css" \
-  "$ROOT/portfolio-polish.css" "$ROOT/out/"
+  "$ROOT/portfolio-polish.css" "$ROOT/work-showcase.css" "$ROOT/out/"
 cp -a "$ROOT/data" "$ROOT/assets" "$ROOT/out/"
 cp -a "$TMP/agencyos/dist/." "$ROOT/out/agencyos-demo/"
 

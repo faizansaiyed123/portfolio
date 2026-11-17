@@ -4,7 +4,8 @@ This repository contains a dark-first, static portfolio designed around **produc
 
 ## Portfolio experience
 
-- **17 personal projects** with searchable/category-filtered discovery.
+- Freelance client work and internship work are shown separately from personal projects.
+- **17 personal projects** with searchable/category-filtered discovery and homepage screenshots.
 - A shareable project lab for each project: product workflow, implemented capabilities, architecture, technologies, runtime/data-isolation model, source repositories and audit evidence.
 - A verified demo action is enabled only when a complete public application path has been checked. A separately supplied recruiter-preview URL may be shown as an exploratory link, but is explicitly labelled availability-unverified and does not change the project's verification status.
 - All recruiter demo records are synthetic. Projects remain `verification-pending` until the real frontend, backend, database and required workers pass a clean-browser journey.
@@ -15,7 +16,7 @@ This repository contains a dark-first, static portfolio designed around **produc
 
 ## Project scope
 
-The personal-project library contains 17 independent projects. Mintline was excluded because its own repository identifies it as an internship assignment. Client work and employer/internship work are not included as personal products.
+The personal-project library contains 17 independent projects. Mintline remains separate because its repository identifies it as an internship assignment. Freelance client work and internship work are presented in their own sections and are not counted as personal projects.
 
 Every project has a source audit in `docs/project-labs/`. These audits record actual user workflows, backend boundaries, worker behavior, tests, integration side effects, deployment constraints and demo safety gates. They are implementation references, not claims that a demo is already hosted.
 

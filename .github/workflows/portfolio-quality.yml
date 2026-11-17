@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - "redesign/**"
+      - "feature/portfolio-client-internship-and-homepage-gallery"
   pull_request:
     branches:
       - main
@@ -29,6 +30,7 @@ jobs:
           node --check script.js
           node --check project-lab.js
           node --check frameflux-demo-preview.js
+          node --check scripts/capture-homepage-previews.mjs
 
       - name: Check validator syntax
         run: node --check scripts/validate-portfolio.mjs
