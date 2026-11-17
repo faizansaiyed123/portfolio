@@ -506,3 +506,12 @@
   .filter-chip,
   .project-link { transition: none; }
 }
+
+/* Use the real GitHub portrait as the orbit's focal point rather than a monogram tile. */
+.profile-orbit-core {
+  border-radius: 50%;
+  border-color: var(--line-strong);
+  background: var(--panel);
+  box-shadow: 0 12px 46px rgba(0,0,0,.25);
+  transform: none;
+}
