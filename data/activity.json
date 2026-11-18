@@ -3,9 +3,17 @@
   "owner": "faizansaiyed123",
   "query": "author:faizansaiyed123 is:pr is:merged -user:faizansaiyed123",
   "scope": "Merged pull requests authored by this account in repositories not owned by the account. This is a complete external merged-PR list, not a count of every GitHub contribution type.",
-  "fetchedAt": "2026-11-17T08:11:22Z",
-  "total": 19,
+  "fetchedAt": "2026-11-18T05:36:44Z",
+  "total": 20,
   "items": [
+    {
+      "title": "fix: detect agents launched with uv run",
+      "repository": "layer8labs8/ci-agent-audit",
+      "number": 59,
+      "url": "https://github.com/layer8labs8/ci-agent-audit/pull/59",
+      "mergedAt": "2026-11-17T21:59:20Z",
+      "kind": "Security and CI tooling"
+    },
     {
       "title": "feat: add Factory Droid signature",
       "repository": "layer8labs8/ci-agent-audit",
