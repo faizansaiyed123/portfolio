@@ -17,7 +17,10 @@
   const description = $("[data-showcase-description]");
   const address = $("[data-showcase-address]");
   const progress = $("[data-showcase-progress]");
+  const timerCopy = $("[data-showcase-timer-copy]");
+  const countdown = $("[data-showcase-countdown]");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const ROTATION_SECONDS = 5;
 
   const state = {
     projects: [],
@@ -25,6 +28,7 @@
     currentImage: initialImage,
     pendingImage: null,
     interval: null,
+    remainingSeconds: ROTATION_SECONDS,
     paused: false,
     hovered: false,
     focused: false,
@@ -73,35 +77,55 @@
   };
 
   const updateProgress = () => {
-    if (!progress) return;
-    progress.style.animation = "none";
-    void progress.offsetWidth;
-    progress.style.animation = "";
-    if (state.paused || document.hidden || reducedMotion.matches) {
-      root.classList.add("is-paused");
-    } else {
-      root.classList.remove("is-paused");
+    if (progress) {
+      const elapsed = ROTATION_SECONDS - state.remainingSeconds;
+      progress.style.width = ((elapsed / ROTATION_SECONDS) * 100) + "%";
     }
+    if (timerCopy) timerCopy.textContent = state.paused ? "AUTO-PLAY PAUSED" : "NEXT PROJECT IN";
+    if (countdown) countdown.textContent = state.remainingSeconds + "S";
+    root.classList.toggle("is-paused", state.paused);
   };
 
   const shouldPause = () => state.hovered || state.focused || document.hidden || reducedMotion.matches;
 
   const startRotation = () => {
     window.clearInterval(state.interval);
-    state.interval = null;
-    if (reducedMotion.matches || state.projects.length < 2) {
-      root.classList.add("is-paused");
-      return;
-    }
-    state.interval = window.setInterval(() => {
-      if (!shouldPause()) showProject(state.index + 1, true);
-    }, 30000);
+    state.remainingSeconds = ROTATION_SECONDS;
+    state.paused = shouldPause();
     updateProgress();
+
+    if (reducedMotion.matches || state.projects.length < 2) return;
+
+    state.interval = window.setInterval(() => {
+      if (shouldPause()) {
+        if (!state.paused) {
+          state.paused = true;
+          updateProgress();
+        }
+        return;
+      }
+
+      if (state.paused) {
+        state.paused = false;
+        updateProgress();
+      }
+
+      state.remainingSeconds = Math.max(0, state.remainingSeconds - 1);
+      updateProgress();
+
+      if (state.remainingSeconds === 0) {
+        showProject(state.index + 1, true);
+        state.remainingSeconds = ROTATION_SECONDS;
+        updateProgress();
+      }
+    }, 1000);
   };
 
   const setPausedState = () => {
-    state.paused = shouldPause();
-    root.classList.toggle("is-paused", state.paused);
+    const paused = shouldPause();
+    if (paused === state.paused) return;
+    state.paused = paused;
+    updateProgress();
   };
 
   const updateLink = (project) => {
