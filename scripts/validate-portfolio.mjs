@@ -123,7 +123,13 @@ for (const path of ["index.html", "script.js", "style.css", "portfolio-polish.cs
 }
 
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
+const appScript = readFileSync(resolve(root, "script.js"), "utf8");
+const portfolioPolishStyles = readFileSync(resolve(root, "portfolio-polish.css"), "utf8");
 const previewBuildScript = readFileSync(resolve(root, "scripts/build-portfolio-preview.sh"), "utf8");
+assert(indexHtml.includes('<html lang="en" data-theme="dark">'), "portfolio must start in dark mode for every visitor");
+assert(appScript.includes('applyTheme("dark");') && !appScript.includes("faizan-product-lab-theme"), "portfolio must not restore an old saved light theme on page load");
+assert(portfolioPolishStyles.includes('html[data-theme="dark"] { color-scheme: dark; }'), "dark theme must set the native browser color scheme");
+assert(portfolioPolishStyles.includes('.contribution-filters .select-wrap select option'), "opened contribution dropdown options must receive theme styling");
 assert(indexHtml.includes('href="./portfolio-polish.css'), "index.html must load the portfolio polish stylesheet");
 assert(previewBuildScript.includes('"$ROOT/work-showcase.css"'), "Vercel preview packaging must copy work-showcase.css into out/");
 assert(indexHtml.includes('href="./work-showcase.css'), "index.html must load the work showcase stylesheet");

@@ -41,8 +41,7 @@
   };
 
   /* ---------- Theme ---------- */
-  const THEME_KEY = "faizan-product-lab-theme";
-  const applyTheme = (theme, persist = false) => {
+  const applyTheme = (theme) => {
     const next = theme === "light" ? "light" : "dark";
     root.dataset.theme = next;
     const button = $(".theme-toggle");
@@ -55,16 +54,12 @@
     }
     const meta = $("meta[name='theme-color']");
     meta?.setAttribute("content", next === "dark" ? "#111016" : "#f3eee8");
-    if (persist) {
-      try { localStorage.setItem(THEME_KEY, next); } catch { /* Theme still applies for this visit. */ }
-    }
   };
 
-  let storedTheme = null;
-  try { storedTheme = localStorage.getItem(THEME_KEY); } catch { /* Storage is optional. */ }
-  applyTheme(storedTheme === "light" || storedTheme === "dark" ? storedTheme : "dark");
+  // Always start dark for every visitor; the toggle can still change the current visit.
+  applyTheme("dark");
   $(".theme-toggle")?.addEventListener("click", () => {
-    applyTheme(root.dataset.theme === "dark" ? "light" : "dark", true);
+    applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
   });
 
   /* ---------- Mobile navigation ---------- */

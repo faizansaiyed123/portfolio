@@ -453,7 +453,23 @@
 }
 .contribution-filters .select-wrap select:hover { border-color: color-mix(in srgb, var(--lime) 45%, var(--line-strong)); }
 .contribution-filters .select-wrap select:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
-.contribution-filters select option { background: var(--panel); color: var(--text); }
+/* Keep the native contribution menus styled in the same theme as the page. */
+html[data-theme="dark"] { color-scheme: dark; }
+.contribution-filters .select-wrap select { color-scheme: inherit; }
+.contribution-filters .select-wrap select option {
+  background-color: var(--panel-strong);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 650;
+}
+.contribution-filters .select-wrap select option:checked {
+  background-color: var(--bg-raised);
+  color: var(--text);
+}
+.contribution-filters .select-wrap select option:hover {
+  background-color: var(--panel-strong);
+  color: var(--text);
+}
 .activity-results-summary {
   margin: 11px 0 0;
   color: var(--faint);
