@@ -29,6 +29,7 @@ jobs:
         run: |
           node --check script.js
           node --check project-lab.js
+          node --check explorer-showcase.js
           node --check frameflux-demo-preview.js
           node --check scripts/capture-homepage-previews.mjs
 
