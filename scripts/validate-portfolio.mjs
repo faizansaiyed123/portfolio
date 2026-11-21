@@ -12,6 +12,7 @@ const assert = (condition, message) => { if (!condition) fail(message); };
 
 const projectsData = readJson("data/projects.json");
 const activity = readJson("data/activity.json");
+const calendar = readJson("data/contributions-calendar.json");
 const releases = readJson("data/release-credits.json");
 const work = readJson("data/work-showcase.json");
 const previewStatusPath = resolve(root, "data/homepage-preview-status.json");
@@ -100,6 +101,20 @@ assert(Number.isInteger(framefluxDemo?.backendApiTestsPassed) && framefluxDemo.b
 assert(/^https:\/\/github\.com\/faizansaiyed123\/FrameFlux-Frontend\/actions\/runs\//.test(framefluxDemo?.browserIntegrationWorkflowUrl || ""), "FrameFlux browser integration workflow link is missing");
 assert(/^https:\/\/github\.com\/faizansaiyed123\/FrameFlux-Backend\/actions\/runs\//.test(framefluxDemo?.backendApiWorkflowUrl || ""), "FrameFlux backend API workflow link is missing");
 
+assert(calendar.schemaVersion === 1 && calendar.owner === "faizansaiyed123", "public contribution calendar schema or owner is invalid");
+assert(calendar.fetchedAt && !Number.isNaN(Date.parse(calendar.fetchedAt)), "public contribution calendar requires a valid fetchedAt timestamp");
+assert(calendar.range?.from && calendar.range?.to && Date.parse(calendar.range.from) <= Date.parse(calendar.range.to), "public contribution calendar date range is invalid");
+assert(Array.isArray(calendar.weeks) && calendar.weeks.length > 0, "public contribution calendar requires week data");
+assert(Number.isInteger(calendar.totalContributions) && calendar.totalContributions >= 0, "public contribution total must be a non-negative integer");
+for (const week of calendar.weeks) {
+  assert(Array.isArray(week.contributionDays) && week.contributionDays.length > 0, "calendar week is missing contribution days");
+  for (const day of week.contributionDays) {
+    assert(/^\\d{4}-\\d{2}-\\d{2}$/.test(day.date || ""), "calendar day date is invalid");
+    assert(Number.isInteger(day.contributionCount) && day.contributionCount >= 0, "calendar day count must be a non-negative integer");
+    assert(Number.isInteger(day.weekday) && day.weekday >= 0 && day.weekday <= 6, "calendar weekday is invalid");
+  }
+}
+
 assert(activity.schemaVersion === 1, "activity schemaVersion must be 1");
 assert(Array.isArray(activity.items) && activity.total === activity.items.length, "activity total must match items");
 assert(new Set(activity.items.map((item) => item.url)).size === activity.items.length, "duplicate PR URLs");
@@ -137,7 +152,9 @@ assert(appScript.includes('custom-select-option') && appScript.includes('ArrowDo
 assert(portfolioPolishStyles.includes('.custom-select-menu') && portfolioPolishStyles.includes('.custom-select-option[aria-selected="true"]'), "custom contribution dropdown menus and options must be styled");
 assert(appScript.includes('CALENDAR_REFRESH_INTERVAL') && appScript.includes('cache: "no-store"'), "the public contribution calendar must poll the latest published snapshot");
 assert(portfolioPolishStyles.includes('@keyframes contribution-cell-reveal') && portfolioPolishStyles.includes('@keyframes contribution-calendar-sweep'), "the contribution calendar must include its animated reveal");
-assert(activityWorkflow.includes('git push origin HEAD:refs/heads/main') && !activityWorkflow.includes('gh pr create'), "verified snapshots must publish automatically without Actions-created pull requests");
+assert(activityWorkflow.includes('gh pr create --base main --head "$update_branch"') && activityWorkflow.includes('gh pr merge "$pr_number" --auto --squash'), "verified snapshots must be published through an automatically merged pull request");
+assert(activityWorkflow.includes('schedule:') && activityWorkflow.includes('23 */3 * * *'), "public GitHub snapshots must refresh on the three-hour schedule");
+assert(activityWorkflow.includes('pull-requests: write'), "snapshot updater requires pull-request write permission");
 assert(indexHtml.includes('href="./portfolio-polish.css?v=20261121-custom-contribution-menus"'), "index.html must load the custom contribution menu stylesheet");
 assert(previewBuildScript.includes('"$ROOT/work-showcase.css"'), "Vercel preview packaging must copy work-showcase.css into out/");
 assert(indexHtml.includes('href="./work-showcase.css'), "index.html must load the work showcase stylesheet");
