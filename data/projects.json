@@ -65,7 +65,30 @@
         "backendRuntime": "In-memory FastAPI simulation",
         "mediaProcessing": "Representative placeholder outputs; FFmpeg is not executed"
       },
-      "recruiterDemoUrl": "https://frame-flux-demo-git-demo-focus-journals-projects.vercel.app/"
+      "recruiterDemoUrl": "https://frame-flux-demo-git-demo-focus-journals-projects.vercel.app/",
+      "techGroups": {
+        "frontend": [
+          "Next.js",
+          "React",
+          "TypeScript"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL",
+          "Redis"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "SQLAlchemy",
+          "ARQ",
+          "FFmpeg"
+        ]
+      }
     },
     {
       "id": "telemetry",
@@ -114,7 +137,29 @@
       "runtimeType": "Per-visitor telemetry namespace",
       "runtimeDetail": "Each session receives its own synthetic event stream, alert rules and incident history. Live host-agent access is not exposed to a recruiter's browser.",
       "recruiterDemoUrl": "https://telemetry-demo-git-demo-focus-journals-projects.vercel.app/",
-      "recruiterDemoCheckedAt": "2026-11-17"
+      "recruiterDemoCheckedAt": "2026-11-17",
+      "techGroups": {
+        "frontend": [
+          "React",
+          "TypeScript",
+          "Vite"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL",
+          "Redis"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "WebSockets",
+          "Prometheus"
+        ]
+      }
     },
     {
       "id": "sayphora",
@@ -161,7 +206,29 @@
       ],
       "auditPath": "docs/project-labs/sayphora.md",
       "runtimeType": "Temporary guest/customer session",
-      "runtimeDetail": "The product catalogue can be shared as read-only seed data, while cart, checkout, order and loyalty state belongs to one temporary visitor identity. No real payment or fulfilment."
+      "runtimeDetail": "The product catalogue can be shared as read-only seed data, while cart, checkout, order and loyalty state belongs to one temporary visitor identity. No real payment or fulfilment.",
+      "techGroups": {
+        "frontend": [
+          "React",
+          "TypeScript",
+          "Vite",
+          "Tailwind CSS"
+        ],
+        "backend": [
+          "Express",
+          "Node.js"
+        ],
+        "database": [
+          "PostgreSQL"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "Playwright",
+          "PWA / Service Worker"
+        ]
+      }
     },
     {
       "id": "focus-journal",
@@ -207,7 +274,31 @@
       ],
       "auditPath": "docs/project-labs/focus-journal.md",
       "runtimeType": "Per-visitor private journal space",
-      "runtimeDetail": "Synthetic check-ins and focus history are scoped to a temporary identity. No real journal content is used; optional AI processing stays consent-gated."
+      "runtimeDetail": "Synthetic check-ins and focus history are scoped to a temporary identity. No real journal content is used; optional AI processing stays consent-gated.",
+      "techGroups": {
+        "frontend": [
+          "React",
+          "Vite",
+          "JavaScript"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "SQLAlchemy",
+          "Zustand",
+          "Axios",
+          "Chart.js",
+          "OAuth"
+        ]
+      }
     },
     {
       "id": "nexora",
@@ -256,7 +347,34 @@
       ],
       "auditPath": "docs/project-labs/nexora.md",
       "runtimeType": "Per-visitor tenant and collection namespace",
-      "runtimeDetail": "Offerings, competitor matches, observations and alerts are isolated per session. Collection is restricted to approved public fixture sources and bounded jobs."
+      "runtimeDetail": "Offerings, competitor matches, observations and alerts are isolated per session. Collection is restricted to approved public fixture sources and bounded jobs.",
+      "techGroups": {
+        "frontend": [
+          "React",
+          "TypeScript",
+          "Vite"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL",
+          "Redis"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "SQLAlchemy",
+          "Alembic",
+          "Celery",
+          "Playwright",
+          "HTTPX",
+          "BeautifulSoup",
+          "lxml"
+        ]
+      }
     },
     {
       "id": "flagship",
@@ -303,7 +421,28 @@
       ],
       "auditPath": "docs/project-labs/flagship.md",
       "runtimeType": "Per-visitor organization and project",
-      "runtimeDetail": "A temporary org owns its flags, environments, segments, evaluation keys and audit history. Protected or production-like environments are never shared."
+      "runtimeDetail": "A temporary org owns its flags, environments, segments, evaluation keys and audit history. Protected or production-like environments are never shared.",
+      "techGroups": {
+        "frontend": [
+          "Next.js",
+          "React",
+          "TypeScript"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "SQLAlchemy",
+          "Alembic"
+        ]
+      }
     },
     {
       "id": "fieldline-crm",
@@ -352,7 +491,30 @@
       "runtimeType": "Per-visitor CRM organization",
       "runtimeDetail": "Each session gets its own organization, membership, synthetic contacts, opportunities, imports, saved views, merge history and automation runs.",
       "recruiterDemoUrl": "https://fieldline-crm-demo-git-demo-focus-journals-projects.vercel.app/",
-      "recruiterDemoCheckedAt": "2026-11-17"
+      "recruiterDemoCheckedAt": "2026-11-17",
+      "techGroups": {
+        "frontend": [
+          "Next.js",
+          "React",
+          "TypeScript"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "TanStack Query",
+          "SQLAlchemy",
+          "Alembic",
+          "Playwright"
+        ]
+      }
     },
     {
       "id": "orbit-campaigns",
@@ -399,7 +561,29 @@
       ],
       "auditPath": "docs/project-labs/orbit-campaigns.md",
       "runtimeType": "Per-visitor campaign workspace",
-      "runtimeDetail": "Each session has its own audiences, contacts, templates, campaigns and delivery history. Outbound email is captured in a private no-relay inbox, never sent to real recipients."
+      "runtimeDetail": "Each session has its own audiences, contacts, templates, campaigns and delivery history. Outbound email is captured in a private no-relay inbox, never sent to real recipients.",
+      "techGroups": {
+        "frontend": [
+          "React",
+          "TypeScript",
+          "Vite"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL",
+          "Redis"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "SQLAlchemy",
+          "Alembic"
+        ]
+      }
     },
     {
       "id": "product-analytics",
@@ -446,7 +630,32 @@
       ],
       "auditPath": "docs/project-labs/product-analytics.md",
       "runtimeType": "Per-visitor analytics project",
-      "runtimeDetail": "Each session receives a temporary organization, project and SDK key. Events are synthetic, quotas are bounded, retention is finite, and expiry revokes the key and purges data."
+      "runtimeDetail": "Each session receives a temporary organization, project and SDK key. Events are synthetic, quotas are bounded, retention is finite, and expiry revokes the key and purges data.",
+      "techGroups": {
+        "frontend": [
+          "React",
+          "TypeScript",
+          "Vite"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL",
+          "Redis"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "TanStack Query",
+          "Zustand",
+          "Recharts",
+          "SQLAlchemy",
+          "Alembic"
+        ]
+      }
     },
     {
       "id": "gemini-chat",
@@ -496,7 +705,28 @@
       "runtimeType": "Per-visitor chat identity",
       "runtimeDetail": "Rooms, queued prompts and conversation history are scoped to one temporary user. A model response is called live only when the deployed OpenAI worker and provider have passed verification.",
       "recruiterDemoUrl": "https://gemini-clone-demo-git-demo-focus-journals-projects.vercel.app/",
-      "recruiterDemoCheckedAt": "2026-11-17"
+      "recruiterDemoCheckedAt": "2026-11-17",
+      "techGroups": {
+        "frontend": [
+          "React",
+          "TypeScript",
+          "Vite"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL",
+          "Upstash Redis"
+        ],
+        "devops": [],
+        "tools": [
+          "SQLAlchemy",
+          "OpenAI API",
+          "Stripe"
+        ]
+      }
     },
     {
       "id": "agencyos",
@@ -544,7 +774,29 @@
       ],
       "auditPath": "docs/project-labs/agencyos.md",
       "runtimeType": "Per-visitor RLS-protected organization",
-      "runtimeDetail": "A dedicated synthetic organization exercises the actual PostgreSQL row-level security, roles, proposal/project lifecycle and billing records. Email and webhook effects are captured safely."
+      "runtimeDetail": "A dedicated synthetic organization exercises the actual PostgreSQL row-level security, roles, proposal/project lifecycle and billing records. Email and webhook effects are captured safely.",
+      "techGroups": {
+        "frontend": [
+          "React",
+          "TypeScript",
+          "Vite"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "TanStack Query",
+          "SQLAlchemy",
+          "Alembic"
+        ]
+      }
     },
     {
       "id": "cleanflow",
@@ -592,7 +844,28 @@
       "runtimeType": "Per-visitor disposable database",
       "runtimeDetail": "The current schema models one cleaning company, not multiple tenants. Recruiters therefore need separate disposable databases and storage roots; shared writable business records are not safe.",
       "recruiterDemoUrl": "https://cleanflow-demo-git-demo-focus-journals-projects.vercel.app/",
-      "recruiterDemoCheckedAt": "2026-11-17"
+      "recruiterDemoCheckedAt": "2026-11-17",
+      "techGroups": {
+        "frontend": [
+          "React",
+          "Vite"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "SQLite"
+        ],
+        "devops": [],
+        "tools": [
+          "SQLAlchemy",
+          "Alembic",
+          "APScheduler",
+          "ReportLab",
+          "Prometheus"
+        ]
+      }
     },
     {
       "id": "flowdesk",
@@ -641,7 +914,32 @@
       "runtimeType": "Per-visitor tenant",
       "runtimeDetail": "The existing tenant and membership model scopes clients, projects, tasks, time, invoices and attachments. Each temporary tenant is deleted on expiry; arbitrary webhook targets stay disabled.",
       "recruiterDemoUrl": "https://flow-desk-demo-git-demo-focus-journals-projects.vercel.app/",
-      "recruiterDemoCheckedAt": "2026-11-17"
+      "recruiterDemoCheckedAt": "2026-11-17",
+      "techGroups": {
+        "frontend": [
+          "React",
+          "TypeScript",
+          "Vite"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "TanStack Query",
+          "Zustand",
+          "dnd-kit",
+          "Recharts",
+          "SQLAlchemy",
+          "Alembic"
+        ]
+      }
     },
     {
       "id": "supportai",
@@ -691,7 +989,32 @@
       "runtimeType": "Per-visitor RAG organization",
       "runtimeDetail": "Each session has an isolated synthetic knowledge base, conversations and tickets. The persistent AI host and model cache are shared infrastructure, but retrieved documents and vectors are tenant-filtered.",
       "recruiterDemoUrl": "https://supportai-demo-git-demo-focus-journals-projects.vercel.app/",
-      "recruiterDemoCheckedAt": "2026-11-17"
+      "recruiterDemoCheckedAt": "2026-11-17",
+      "techGroups": {
+        "frontend": [
+          "Next.js",
+          "React",
+          "TypeScript"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL",
+          "pgvector"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "SQLAlchemy",
+          "Alembic",
+          "Procrastinate",
+          "Ollama",
+          "Sentence Transformers"
+        ]
+      }
     },
     {
       "id": "service-agreement-manager",
@@ -741,7 +1064,30 @@
       "auditPath": "docs/project-labs/service-agreement-manager.md",
       "runtimeType": "Per-visitor service company",
       "runtimeDetail": "A temporary company owns branches, staff/customer identities, agreements, work orders, invoices and portal tokens. Email uses a capture sink, SMS is off and Stripe is test-only.",
-      "recruiterDemoUrl": "https://service-agreement-manager-demo-git-demo-focus-journals-projects.vercel.app/"
+      "recruiterDemoUrl": "https://service-agreement-manager-demo-git-demo-focus-journals-projects.vercel.app/",
+      "techGroups": {
+        "frontend": [
+          "React",
+          "TypeScript",
+          "Vite"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL",
+          "Redis"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "SQLAlchemy",
+          "Alembic",
+          "Stripe"
+        ]
+      }
     },
     {
       "id": "autofix",
@@ -791,7 +1137,28 @@
       "runtimeType": "Per-visitor disposable database",
       "runtimeDetail": "The current schema represents one workshop with global business data, so each recruiter needs a separate disposable database and seed fixture. A shared workshop DB would expose other visitors' records.",
       "recruiterDemoUrl": "https://autofix-demo-git-demo-focus-journals-projects.vercel.app/",
-      "recruiterDemoCheckedAt": "2026-11-17"
+      "recruiterDemoCheckedAt": "2026-11-17",
+      "techGroups": {
+        "frontend": [
+          "Next.js",
+          "React",
+          "TypeScript"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "SQLAlchemy",
+          "Alembic"
+        ]
+      }
     },
     {
       "id": "ledgerpulse",
@@ -842,7 +1209,29 @@
       "runtimeType": "Per-visitor Firebase identity and organization",
       "runtimeDetail": "A unique temporary Firebase identity maps to an Owner membership and PostgreSQL organization. The browser-local Explore mode is separate; the recruiter lab must use the real Flask API and scheduler.",
       "recruiterDemoUrl": "https://ledgerpulse-demo-git-demo-focus-journals-projects.vercel.app/",
-      "recruiterDemoCheckedAt": "2026-11-17"
+      "recruiterDemoCheckedAt": "2026-11-17",
+      "techGroups": {
+        "frontend": [
+          "React",
+          "TypeScript",
+          "Vite"
+        ],
+        "backend": [
+          "Python",
+          "Flask"
+        ],
+        "database": [
+          "PostgreSQL"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "Firebase Auth",
+          "SQLAlchemy",
+          "Alembic"
+        ]
+      }
     }
   ]
 }

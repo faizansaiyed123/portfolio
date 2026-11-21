@@ -18,7 +18,31 @@
           "label": "Backend",
           "url": "https://github.com/faizansaiyed123/print_oscor_backend"
         }
-      ]
+      ],
+      "techGroups": {
+        "frontend": [
+          "React",
+          "Vite",
+          "Tailwind CSS"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL"
+        ],
+        "devops": [],
+        "tools": [
+          "SQLAlchemy",
+          "Alembic",
+          "TanStack Query",
+          "Axios",
+          "Framer Motion",
+          "Stripe",
+          "PayPal"
+        ]
+      }
     },
     {
       "id": "jeca-homes",
@@ -37,7 +61,33 @@
           "label": "Backend",
           "url": "https://github.com/faizansaiyed123/jeca-real-estate-backend"
         }
-      ]
+      ],
+      "techGroups": {
+        "frontend": [
+          "React",
+          "TypeScript",
+          "Vite",
+          "Tailwind CSS"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI"
+        ],
+        "database": [
+          "PostgreSQL"
+        ],
+        "devops": [
+          "Docker"
+        ],
+        "tools": [
+          "TanStack Query",
+          "Zustand",
+          "Axios",
+          "React Hook Form",
+          "SQLAlchemy",
+          "Alembic"
+        ]
+      }
     }
   ],
   "internshipWork": [
@@ -49,7 +99,24 @@
       "description": "Project work I contributed to during my internship with GyanSetu AI.",
       "url": "https://www.gyansetu.ai/",
       "previewImage": "assets/site-previews/work-gyansetu-ai.webp",
-      "repositories": []
+      "repositories": [],
+      "techGroups": {
+        "frontend": [
+          "React.js",
+          "Tailwind CSS"
+        ],
+        "backend": [
+          "Python",
+          "Flask"
+        ],
+        "database": [
+          "PostgreSQL"
+        ],
+        "devops": [
+          "AWS"
+        ],
+        "tools": []
+      }
     }
   ]
 }
