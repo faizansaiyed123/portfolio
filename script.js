@@ -41,7 +41,8 @@
   };
 
   /* ---------- Theme ---------- */
-  const applyTheme = (theme) => {
+  const THEME_KEY = "faizan-product-lab-theme-v2";
+  const applyTheme = (theme, persist = false) => {
     const next = theme === "light" ? "light" : "dark";
     root.dataset.theme = next;
     const button = $(".theme-toggle");
@@ -54,12 +55,17 @@
     }
     const meta = $("meta[name='theme-color']");
     meta?.setAttribute("content", next === "dark" ? "#111016" : "#f3eee8");
+    if (persist) {
+      try { localStorage.setItem(THEME_KEY, next); } catch { /* Theme still applies for this visit. */ }
+    }
   };
 
-  // Always start dark for every visitor; the toggle can still change the current visit.
-  applyTheme("dark");
+  // Ignore the legacy saved theme once; a new visitor choice is saved normally.
+  let storedTheme = null;
+  try { storedTheme = localStorage.getItem(THEME_KEY); } catch { /* Storage is optional. */ }
+  applyTheme(storedTheme === "light" || storedTheme === "dark" ? storedTheme : "dark");
   $(".theme-toggle")?.addEventListener("click", () => {
-    applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    applyTheme(root.dataset.theme === "dark" ? "light" : "dark", true);
   });
 
   /* ---------- Mobile navigation ---------- */
