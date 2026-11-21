@@ -453,24 +453,206 @@
     if (previousFocus instanceof HTMLElement) previousFocus.focus();
   });
 
-  /* ---------- External contribution graph ---------- */
+  /* ---------- Public GitHub contribution calendar and upstream filters ---------- */
   const activityList = $("#activity-list");
   const heatmap = $("#contribution-heatmap");
   const heatmapMonths = $("#heatmap-months");
   const repoSelect = $("#contribution-repository");
   const kindSelect = $("#contribution-kind");
   const dateSelect = $("#contribution-date-range");
+  const customSelects = [repoSelect, kindSelect, dateSelect].filter(Boolean);
+
+  const getCustomMenu = (trigger) => document.getElementById(trigger?.getAttribute("aria-controls") || "");
+  const customMenuOptions = (trigger) => $$(".custom-select-option", getCustomMenu(trigger));
+
+  const closeCustomSelect = (trigger, restoreFocus = false) => {
+    const menu = getCustomMenu(trigger);
+    if (!trigger || !menu) return;
+    trigger.setAttribute("aria-expanded", "false");
+    trigger.closest(".custom-select")?.classList.remove("is-open");
+    menu.hidden = true;
+    if (restoreFocus) trigger.focus();
+  };
+
+  const closeAllCustomSelects = (except = null) => {
+    customSelects.forEach((trigger) => {
+      if (trigger !== except) closeCustomSelect(trigger);
+    });
+  };
+
+  const updateCustomSelectValue = (trigger, value) => {
+    if (!trigger) return;
+    const menu = getCustomMenu(trigger);
+    const options = menu ? customMenuOptions(trigger) : [];
+    const selected = options.find((option) => option.dataset.value === String(value)) || options[0];
+    const nextValue = selected?.dataset.value ?? String(value);
+    trigger.dataset.value = nextValue;
+    const valueNode = $(".custom-select-value", trigger);
+    if (valueNode) {
+      valueNode.textContent = selected?.dataset.label || (nextValue === "all" ? "All" : nextValue);
+    }
+    options.forEach((option) => {
+      const active = option === selected;
+      option.setAttribute("aria-selected", String(active));
+      option.classList.toggle("is-selected", active);
+    });
+  };
+
+  const setCustomSelectOptions = (trigger, options, selectedValue) => {
+    if (!trigger) return;
+    const menu = getCustomMenu(trigger);
+    if (!menu) return;
+    menu.innerHTML = options.map((option) =>
+      '<div class="custom-select-option" role="option" tabindex="-1" data-value="' +
+      escapeHTML(option.value) + '" data-label="' + escapeHTML(option.label) +
+      '" aria-selected="false"><span class="custom-select-option-label">' +
+      escapeHTML(option.label) + '</span><span class="custom-select-option-mark" aria-hidden="true">✓</span></div>'
+    ).join("");
+    updateCustomSelectValue(trigger, selectedValue);
+  };
+
+  const focusCustomOption = (trigger, direction = 1, edge = null) => {
+    const options = customMenuOptions(trigger);
+    if (!options.length) return;
+    const currentIndex = options.indexOf(document.activeElement);
+    const selectedIndex = options.findIndex((option) => option.getAttribute("aria-selected") === "true");
+    let nextIndex = currentIndex >= 0 ? currentIndex : Math.max(0, selectedIndex);
+    if (edge === "first") nextIndex = 0;
+    else if (edge === "last") nextIndex = options.length - 1;
+    else if (currentIndex >= 0) nextIndex = (currentIndex + direction + options.length) % options.length;
+    else if (direction < 0) nextIndex = Math.max(0, nextIndex);
+    options[nextIndex]?.focus();
+  };
+
+  const openCustomSelect = (trigger, direction = 1) => {
+    if (!trigger) return;
+    closeAllCustomSelects(trigger);
+    const menu = getCustomMenu(trigger);
+    if (!menu) return;
+    menu.hidden = false;
+    trigger.setAttribute("aria-expanded", "true");
+    trigger.closest(".custom-select")?.classList.add("is-open");
+    requestAnimationFrame(() => {
+      const selected = customMenuOptions(trigger).find((option) => option.getAttribute("aria-selected") === "true");
+      if (direction < 0 && !selected) focusCustomOption(trigger, -1, "last");
+      else (selected || customMenuOptions(trigger)[0])?.focus();
+    });
+  };
+
+  const chooseCustomOption = (trigger, option) => {
+    if (!trigger || !option) return;
+    updateCustomSelectValue(trigger, option.dataset.value);
+    closeCustomSelect(trigger, true);
+    trigger.dispatchEvent(new Event("change", { bubbles: true }));
+  };
+
+  customSelects.forEach((trigger) => {
+    const menu = getCustomMenu(trigger);
+    if (!menu) return;
+
+    trigger.addEventListener("click", () => {
+      const isOpen = trigger.getAttribute("aria-expanded") === "true";
+      if (isOpen) closeCustomSelect(trigger);
+      else openCustomSelect(trigger);
+    });
+
+    trigger.addEventListener("keydown", (event) => {
+      if (["ArrowDown", "ArrowUp", "Enter", " "].includes(event.key)) {
+        event.preventDefault();
+        openCustomSelect(trigger, event.key === "ArrowUp" ? -1 : 1);
+      } else if (event.key === "Escape") {
+        closeCustomSelect(trigger);
+      }
+    });
+
+    menu.addEventListener("click", (event) => {
+      const option = event.target.closest(".custom-select-option");
+      if (option && menu.contains(option)) chooseCustomOption(trigger, option);
+    });
+
+    menu.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        focusCustomOption(trigger, event.key === "ArrowDown" ? 1 : -1);
+      } else if (event.key === "Home" || event.key === "End") {
+        event.preventDefault();
+        focusCustomOption(trigger, 1, event.key === "Home" ? "first" : "last");
+      } else if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        const option = event.target.closest(".custom-select-option");
+        if (option) chooseCustomOption(trigger, option);
+      } else if (event.key === "Escape") {
+        event.preventDefault();
+        closeCustomSelect(trigger, true);
+      } else if (event.key === "Tab") {
+        closeCustomSelect(trigger);
+      }
+    });
+  });
+
+  document.addEventListener("pointerdown", (event) => {
+    if (!(event.target instanceof Element) || !event.target.closest(".custom-select")) {
+      closeAllCustomSelects();
+    }
+  });
+
+  const animateContributionTotal = (value) => {
+    const element = $("#public-contribution-total");
+    if (!element) return;
+    const target = Math.max(0, Number(value) || 0);
+    const start = Number(element.dataset.countValue || 0);
+    element.dataset.countValue = String(target);
+    if (reducedMotion.matches || start === target) {
+      element.textContent = target.toLocaleString("en");
+      return;
+    }
+    const startedAt = performance.now();
+    const duration = 850;
+    const tick = (now) => {
+      const progress = Math.min(1, (now - startedAt) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      element.textContent = Math.round(start + (target - start) * eased).toLocaleString("en");
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const updateCalendarFreshness = () => {
+    const updated = $("#activity-updated");
+    if (!updated || !state.calendar?.fetchedAt) return;
+    const timestamp = new Date(state.calendar.fetchedAt).getTime();
+    if (!Number.isFinite(timestamp)) {
+      updated.textContent = "Update time unavailable";
+      updated.classList.add("is-stale");
+      return;
+    }
+    const ageMs = Math.max(0, Date.now() - timestamp);
+    const ageMinutes = Math.floor(ageMs / 60000);
+    let label = "Updated just now";
+    if (ageMinutes >= 60) {
+      const hours = Math.floor(ageMinutes / 60);
+      label = hours >= 48 ? "Updated " + Math.floor(hours / 24) + "d ago" : "Updated " + hours + "h ago";
+    } else if (ageMinutes > 0) {
+      label = "Updated " + ageMinutes + "m ago";
+    }
+    updated.textContent = label;
+    updated.title = "Last successful GitHub public-calendar snapshot: " + new Date(timestamp).toLocaleString();
+    updated.classList.toggle("is-stale", ageMs > 6 * 60 * 60 * 1000);
+  };
 
   const renderContributionGraph = () => {
     if (!heatmap || !heatmapMonths) return;
     const calendar = state.calendar;
     const total = $("#public-contribution-total");
     const breakdown = $("#contribution-breakdown");
-    const updated = $("#activity-updated");
     if (!calendar || !Array.isArray(calendar.weeks) || !calendar.weeks.length || !calendar.fetchedAt) {
       if (total) total.textContent = "—";
       if (breakdown) breakdown.textContent = "Waiting for the first verified public-calendar snapshot.";
-      if (updated) updated.textContent = "Calendar snapshot pending";
+      const updated = $("#activity-updated");
+      if (updated) {
+        updated.textContent = "Calendar snapshot pending";
+        updated.classList.add("is-stale");
+      }
       heatmap.innerHTML = "";
       heatmapMonths.innerHTML = "";
       heatmap.setAttribute("aria-label", "Public GitHub contribution calendar is not available yet");
@@ -478,7 +660,7 @@
     }
 
     const totals = calendar.totals || {};
-    if (total) total.textContent = Number(calendar.totalContributions || 0).toLocaleString("en");
+    animateContributionTotal(calendar.totalContributions);
     if (breakdown) {
       const types = [
         ["commits", "commits"],
@@ -490,13 +672,15 @@
         '<span><strong>' + Number(totals[key] || 0).toLocaleString("en") + '</strong>' + label + '</span>'
       ).join("");
     }
-    if (updated) updated.textContent = "Updated · " + formatDate(calendar.fetchedAt);
+    updateCalendarFreshness();
 
     const weeks = calendar.weeks;
     const dailyCounts = weeks.flatMap((week) => week.contributionDays || []).map((day) => Number(day.contributionCount || 0));
     const maxCount = Math.max(1, ...dailyCounts);
     const monthNames = [];
     const cells = [];
+    let cellIndex = 0;
+
     weeks.forEach((week, index) => {
       const days = Array.isArray(week.contributionDays) ? week.contributionDays : [];
       const firstOfMonth = days.find((day) => String(day.date || "").slice(8, 10) === "01");
@@ -507,7 +691,8 @@
       for (let weekday = 0; weekday < 7; weekday += 1) {
         const day = days.find((item) => Number(item.weekday) === weekday);
         if (!day) {
-          cells.push('<span class="heat-cell heat-cell-empty" aria-hidden="true" style="grid-column:' + (index + 1) + ';grid-row:' + (weekday + 1) + '"></span>');
+          cells.push('<span class="heat-cell heat-cell-empty" aria-hidden="true" style="grid-column:' +
+            (index + 1) + ';grid-row:' + (weekday + 1) + ';--cell-index:' + cellIndex++ + '"></span>');
           continue;
         }
         const count = Number(day.contributionCount || 0);
@@ -515,9 +700,10 @@
         const date = String(day.date || "");
         const label = count + " public " + (count === 1 ? "contribution" : "contributions") + " on " + formatDate(date);
         cells.push(
-          '<span class="heat-cell" data-level="' + level + '" title="' + escapeHTML(label) +
-          '" aria-label="' + escapeHTML(label) + '" style="grid-column:' + (index + 1) +
-          ';grid-row:' + (weekday + 1) + '"></span>'
+          '<span class="heat-cell" data-level="' + level + '" data-date="' + escapeHTML(date) +
+          '" title="' + escapeHTML(label) + '" aria-label="' + escapeHTML(label) +
+          '" style="grid-column:' + (index + 1) + ';grid-row:' + (weekday + 1) +
+          ';--cell-index:' + cellIndex++ + '"></span>'
         );
       }
     });
@@ -533,6 +719,57 @@
       " public GitHub contributions over the 12-month profile calendar"
     );
   };
+
+  /* The snapshot is refreshed by GitHub Actions every three hours. Re-check the
+     same-origin published file while the visitor keeps the portfolio open. */
+  const CALENDAR_REFRESH_INTERVAL = 15 * 60 * 1000;
+  let lastCalendarRefreshAt = Date.now();
+  const refreshContributionCalendar = async () => {
+    if (!heatmap || document.hidden) return;
+    lastCalendarRefreshAt = Date.now();
+    try {
+      const url = new URL("data/contributions-calendar.json", document.baseURI);
+      url.searchParams.set("refresh", String(lastCalendarRefreshAt));
+      const response = await fetch(url, {
+        headers: { Accept: "application/json" },
+        cache: "no-store"
+      });
+      if (!response.ok) throw new Error("Calendar refresh returned HTTP " + response.status + ".");
+      const nextCalendar = await response.json();
+      if (
+        nextCalendar.schemaVersion !== 1 ||
+        nextCalendar.owner !== "faizansaiyed123" ||
+        !Array.isArray(nextCalendar.weeks) ||
+        !nextCalendar.weeks.length ||
+        !nextCalendar.fetchedAt
+      ) throw new Error("The refreshed calendar did not pass validation.");
+
+      const changed = nextCalendar.fetchedAt !== state.calendar?.fetchedAt;
+      state.calendar = nextCalendar;
+      state.calendarLoaded = true;
+      if (changed) renderContributionGraph();
+      else updateCalendarFreshness();
+    } catch (error) {
+      const updated = $("#activity-updated");
+      if (updated) updated.title = "The latest refresh check failed. The displayed values remain the last verified snapshot.";
+      console.warn("Could not refresh the public GitHub contribution calendar:", error);
+    }
+  };
+
+  window.setInterval(() => {
+    updateCalendarFreshness();
+    if (!document.hidden && Date.now() - lastCalendarRefreshAt >= CALENDAR_REFRESH_INTERVAL) {
+      refreshContributionCalendar();
+    }
+  }, 60 * 1000);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) return;
+    updateCalendarFreshness();
+    if (Date.now() - lastCalendarRefreshAt >= CALENDAR_REFRESH_INTERVAL) {
+      refreshContributionCalendar();
+    }
+  });
 
   const renderContributionList = () => {
     if (!activityList) return;
@@ -572,49 +809,53 @@
 
   const renderContributionFilters = () => {
     const repos = [...new Set(state.activity.map((item) => item.repository).filter(Boolean))].sort();
-    repoSelect.innerHTML = '<option value="all">All repositories (' + state.activity.length + ')</option>' +
-      repos.map((repo) => {
-        const count = state.activity.filter((item) => item.repository === repo).length;
-        return '<option value="' + escapeHTML(repo) + '">' + escapeHTML(repo) + " (" + count + ")</option>";
-      }).join("");
+    setCustomSelectOptions(repoSelect, [
+      { value: "all", label: "All repositories (" + state.activity.length + ")" },
+      ...repos.map((repo) => ({
+        value: repo,
+        label: repo + " (" + state.activity.filter((item) => item.repository === repo).length + ")"
+      }))
+    ], state.selectedRepository);
 
     const kinds = [...new Set(state.activity.map((item) => item.kind).filter(Boolean))].sort();
-    kindSelect.innerHTML = '<option value="all">All types (' + state.activity.length + ')</option>' +
-      kinds.map((kind) => {
-        const count = state.activity.filter((item) => item.kind === kind).length;
-        return '<option value="' + escapeHTML(kind) + '">' + escapeHTML(kind) + " (" + count + ")</option>";
-      }).join("");
+    setCustomSelectOptions(kindSelect, [
+      { value: "all", label: "All types (" + state.activity.length + ")" },
+      ...kinds.map((kind) => ({
+        value: kind,
+        label: kind + " (" + state.activity.filter((item) => item.kind === kind).length + ")"
+      }))
+    ], state.selectedContributionKind);
 
     const years = [...new Set(state.activity.map((item) => new Date(item.mergedAt).getUTCFullYear()).filter(Number.isFinite))].sort((a, b) => b - a);
-    const fixedRanges = [
-      ["all", "All dates"],
-      ["last-30", "Last 30 days"],
-      ["last-90", "Last 90 days"],
-      ["last-365", "Last 12 months"]
+    const dateOptions = [
+      { value: "all", label: "All dates" },
+      { value: "last-30", label: "Last 30 days" },
+      { value: "last-90", label: "Last 90 days" },
+      { value: "last-365", label: "Last 12 months" },
+      ...years.map((year) => ({ value: "year:" + year, label: String(year) }))
     ];
-    dateSelect.innerHTML = fixedRanges.map(([value, label]) => '<option value="' + value + '">' + label + '</option>').join("") +
-      years.map((year) => '<option value="year:' + year + '">' + year + '</option>').join("");
+    setCustomSelectOptions(dateSelect, dateOptions, state.selectedContributionDateRange);
   };
 
   repoSelect?.addEventListener("change", () => {
-    state.selectedRepository = repoSelect.value;
+    state.selectedRepository = repoSelect.dataset.value || "all";
     renderContributionList();
   });
   kindSelect?.addEventListener("change", () => {
-    state.selectedContributionKind = kindSelect.value;
+    state.selectedContributionKind = kindSelect.dataset.value || "all";
     renderContributionList();
   });
   dateSelect?.addEventListener("change", () => {
-    state.selectedContributionDateRange = dateSelect.value;
+    state.selectedContributionDateRange = dateSelect.dataset.value || "all";
     renderContributionList();
   });
   $("#clear-contribution-filters")?.addEventListener("click", () => {
     state.selectedRepository = "all";
     state.selectedContributionKind = "all";
     state.selectedContributionDateRange = "all";
-    if (repoSelect) repoSelect.value = "all";
-    if (kindSelect) kindSelect.value = "all";
-    if (dateSelect) dateSelect.value = "all";
+    updateCustomSelectValue(repoSelect, "all");
+    updateCustomSelectValue(kindSelect, "all");
+    updateCustomSelectValue(dateSelect, "all");
     renderContributionList();
   });
 
@@ -716,6 +957,7 @@
     if (calendarResult.status === "fulfilled" && Array.isArray(calendarResult.value.weeks)) {
       state.calendar = calendarResult.value;
       state.calendarLoaded = Boolean(calendarResult.value.fetchedAt);
+      lastCalendarRefreshAt = Date.now();
       renderContributionGraph();
     } else {
       state.calendar = null;
@@ -750,6 +992,6 @@
         }
       });
     }, { threshold: 0.08 });
-    $$(".section-heading, .method-lead, .method-step, .closing-card").forEach((element) => observer.observe(element));
+    $(".section-heading, .closing-card").forEach((element) => observer.observe(element));
   }
 })();

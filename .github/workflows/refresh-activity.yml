@@ -215,20 +215,36 @@ jobs:
             pr_number="$(gh pr list --base main --head "$update_branch" --state open --json number --jq '.[0].number // empty')"
             pr_title="chore: refresh public GitHub activity snapshots"
             pr_body="$(cat <<'BODY'
-          This pull request contains only the refreshed public GitHub contribution snapshots:
+          This pull request contains only the refreshed public GitHub contribution snapshots and is queued for automatic squash merge after required checks pass:
 
           - data/activity.json: verified external merged pull requests.
           - data/contributions-calendar.json: public profile contributions from GitHub GraphQL.
 
           The snapshots are validated before this pull request is created. The portfolio reads them from the same main branch as the frontend. This workflow deliberately opens or updates a pull request rather than writing directly to protected main.
 
-          Review the fetchedAt timestamps and public-only scope before merging.
+          The repository must allow GitHub Actions to create pull requests and must have auto-merge enabled. The main-branch owner-only ruleset remains in place.
           BODY
           )"
 
             if [ -n "$pr_number" ]; then
               gh pr edit "$pr_number" --title "$pr_title" --body "$pr_body"
             else
-              gh pr create --base main --head "$update_branch" --title "$pr_title" --body "$pr_body"
+              if ! gh pr create --base main --head "$update_branch" --title "$pr_title" --body "$pr_body"; then
+                echo "::error::Enable Settings > Actions > General > Workflow permissions > Allow GitHub Actions to create and approve pull requests." >&2
+                exit 1
+              fi
+            fi
+
+            pr_number="$(gh pr list --base main --head "$update_branch" --state open --json number --jq '.[0].number // empty')"
+            if [ -z "$pr_number" ]; then
+              echo "Could not find the automated public-snapshot pull request after publishing its branch." >&2
+              exit 1
+            fi
+
+            # Keep main protected: GitHub merges this validated PR only after
+            # auto-merge is enabled for the repository and required checks pass.
+            if ! gh pr merge "$pr_number" --auto --squash; then
+              echo "::error::Enable Settings > General > Pull Requests > Allow auto-merge so the verified snapshot PR can merge after checks pass." >&2
+              exit 1
             fi
           fi
