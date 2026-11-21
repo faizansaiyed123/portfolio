@@ -229,7 +229,10 @@ jobs:
             if [ -n "$pr_number" ]; then
               gh pr edit "$pr_number" --title "$pr_title" --body "$pr_body"
             else
-              gh pr create --base main --head "$update_branch" --title "$pr_title" --body "$pr_body"
+              if ! gh pr create --base main --head "$update_branch" --title "$pr_title" --body "$pr_body"; then
+                echo "::error::Enable Settings > Actions > General > Workflow permissions > Allow GitHub Actions to create and approve pull requests." >&2
+                exit 1
+              fi
             fi
 
             pr_number="$(gh pr list --base main --head "$update_branch" --state open --json number --jq '.[0].number // empty')"
@@ -240,5 +243,8 @@ jobs:
 
             # Keep main protected: GitHub merges this validated PR only after
             # auto-merge is enabled for the repository and required checks pass.
-            gh pr merge "$pr_number" --auto --squash
+            if ! gh pr merge "$pr_number" --auto --squash; then
+              echo "::error::Enable Settings > General > Pull Requests > Allow auto-merge so the verified snapshot PR can merge after checks pass." >&2
+              exit 1
+            fi
           fi
