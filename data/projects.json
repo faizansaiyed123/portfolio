@@ -73,6 +73,7 @@
           "TypeScript"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -144,6 +145,7 @@
           "Vite"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -280,6 +282,7 @@
           "JavaScript"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -352,6 +355,7 @@
           "Vite"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -425,6 +429,7 @@
           "TypeScript"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -494,6 +499,7 @@
           "TypeScript"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -563,6 +569,7 @@
           "Vite"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -631,6 +638,7 @@
           "Vite"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -705,6 +713,7 @@
           "Vite"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -773,6 +782,7 @@
           "Vite"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -841,6 +851,7 @@
           "Vite"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -911,6 +922,7 @@
           "Vite"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -985,6 +997,7 @@
           "TypeScript"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -1059,6 +1072,7 @@
           "Vite"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -1131,6 +1145,7 @@
           "TypeScript"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -1202,6 +1217,7 @@
           "Vite"
         ],
         "backend": [
+          "Python",
           "Flask"
         ],
         "database": [
