@@ -15,6 +15,7 @@
   const category = $("[data-showcase-category]");
   const name = $("[data-showcase-name]");
   const description = $("[data-showcase-description]");
+  const technologyStack = $("[data-showcase-technologies]");
   const address = $("[data-showcase-address]");
   const progress = $("[data-showcase-progress]");
   const timerCopy = $("[data-showcase-timer-copy]");
@@ -47,18 +48,20 @@
       description: item.description,
       image: item.previewImage,
       url: item.url,
-      external: true
+      external: true,
+      techGroups: item.techGroups || {}
     }));
 
     const internshipProjects = (Array.isArray(work.internshipWork) ? work.internshipWork : []).map((item) => ({
       id: item.id,
       name: item.name,
-      type: "INTERNSHIP",
+      type: "INTERNSHIP PROJECT",
       category: item.projectType || "COMPANY PROJECT",
       description: item.description,
       image: item.previewImage,
       url: item.url,
-      external: true
+      external: true,
+      techGroups: item.techGroups || {}
     }));
 
     const personalProjects = (Array.isArray(personal.projects) ? personal.projects : []).map((item) => ({
@@ -69,7 +72,8 @@
       description: item.oneLiner || item.overview || "A personal software project.",
       image: item.previewImage,
       url: item.appUrl || ("./project-lab.html?id=" + encodeURIComponent(item.id)),
-      external: Boolean(item.appUrl)
+      external: Boolean(item.appUrl),
+      techGroups: item.techGroups || {}
     }));
 
     return [...clientProjects, ...internshipProjects, ...personalProjects]
@@ -144,6 +148,70 @@
     });
   };
 
+
+  const technologyGroupLabels = [
+    ["frontend", "FRONTEND"],
+    ["backend", "BACKEND"],
+    ["database", "DATA & CACHE"],
+    ["devops", "CLOUD / DEVOPS"],
+    ["tools", "TOOLS & LIBRARIES"]
+  ];
+
+  const renderTechnologyStack = (groups) => {
+    if (!technologyStack) return;
+    technologyStack.replaceChildren();
+
+    const populatedGroups = technologyGroupLabels
+      .map(([key, label]) => ({ key, label, values: Array.isArray(groups?.[key]) ? groups[key] : [] }))
+      .filter((group) => group.values.length > 0);
+
+    if (!populatedGroups.length) {
+      technologyStack.hidden = true;
+      return;
+    }
+
+    const heading = document.createElement("div");
+    heading.className = "showcase-tech-heading";
+
+    const headingTitle = document.createElement("span");
+    headingTitle.className = "showcase-tech-title";
+    headingTitle.textContent = "TECHNOLOGY STACK";
+
+    const headingNote = document.createElement("span");
+    headingNote.className = "showcase-tech-note";
+    headingNote.textContent = "BUILT WITH";
+
+    heading.append(headingTitle, headingNote);
+
+    const groupGrid = document.createElement("div");
+    groupGrid.className = "showcase-tech-groups";
+
+    populatedGroups.forEach(({ key, label, values }) => {
+      const group = document.createElement("div");
+      group.className = "showcase-tech-group showcase-tech-group--" + key;
+
+      const groupLabel = document.createElement("span");
+      groupLabel.className = "showcase-tech-group-label";
+      groupLabel.textContent = label;
+
+      const chips = document.createElement("div");
+      chips.className = "showcase-tech-chips";
+
+      values.forEach((value) => {
+        const chip = document.createElement("span");
+        chip.className = "showcase-tech-chip";
+        chip.textContent = value;
+        chips.append(chip);
+      });
+
+      group.append(groupLabel, chips);
+      groupGrid.append(group);
+    });
+
+    technologyStack.append(heading, groupGrid);
+    technologyStack.hidden = false;
+  };
+
   const updateCopy = (project) => {
     const number = pad(state.index + 1);
     const total = pad(state.projects.length);
@@ -152,6 +220,7 @@
     if (category) category.textContent = project.type + " · " + project.category;
     if (name) name.textContent = project.name;
     if (description) description.textContent = project.description;
+    renderTechnologyStack(project.techGroups);
     if (address) address.textContent = project.external ? "PROJECT HOMEPAGE" : "PROJECT LAB / DETAILS";
     updateLink(project);
     updateIndicators();
