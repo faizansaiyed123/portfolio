@@ -128,6 +128,7 @@ const portfolioPolishStyles = readFileSync(resolve(root, "portfolio-polish.css")
 const previewBuildScript = readFileSync(resolve(root, "scripts/build-portfolio-preview.sh"), "utf8");
 assert(indexHtml.includes('<html lang="en" data-theme="dark">'), "portfolio must start in dark mode for every visitor");
 assert(appScript.includes('const THEME_KEY = "faizan-product-lab-theme-v2";') && appScript.includes('storedTheme === "light" || storedTheme === "dark" ? storedTheme : "dark"') && appScript.includes('localStorage.setItem(THEME_KEY, next)'), "portfolio must default dark for existing visitors while remembering new explicit theme choices");
+assert(indexHtml.includes('src="./script.js?v=20261121-dark-default-theme-persist"'), "index.html must cache-bust the persisted dark-default theme script");
 assert(portfolioPolishStyles.includes('html[data-theme="dark"] { color-scheme: dark; }'), "dark theme must set the native browser color scheme");
 assert(portfolioPolishStyles.includes('.contribution-filters .select-wrap select option'), "opened contribution dropdown options must receive theme styling");
 assert(indexHtml.includes('href="./portfolio-polish.css'), "index.html must load the portfolio polish stylesheet");
