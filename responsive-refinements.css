@@ -3,7 +3,7 @@
 
 /* Keep every layout shrink-safe and prevent accidental page-level horizontal scrolling. */
 html { scroll-padding-top: 84px; }
-body { max-width: 100%; overflow-x: clip; }
+body { max-width: 100%; overflow-x: hidden; overflow-x: clip; }
 main, section, header, footer, .section-shell, .opening-layout,
 .work-grid, .project-grid, .contribution-overview, .closing-card {
   min-width: 0;
@@ -355,7 +355,7 @@ button, input, select, textarea { max-width: 100%; }
   .closing-copy h2 { font-size: clamp(30px, 9vw, 38px); }
   .closing-index { right: 14px; left: 14px; }
   .project-dialog { width: calc(100% - 14px); max-height: 94dvh; border-radius: 14px; }
-  .dialog-shell { padding-inline: 13px; }
+  .dialog-shell { padding: 17px 13px calc(26px + env(safe-area-inset-bottom)); }
   .dialog-hero h2 { font-size: clamp(31px, 10vw, 40px); }
   .site-footer { flex-direction: column; gap: 8px; padding: 18px 0 22px; }
   .site-footer span:nth-child(2) { order: initial; width: auto; }
@@ -371,7 +371,7 @@ button, input, select, textarea { max-width: 100%; }
   .wordmark-avatar img { width: 28px; height: 28px; }
   .wordmark-copy strong { font-size: 8px; }
   .theme-toggle,
-  .mobile-menu-button { width: 38px; height: 38px; flex-basis: 38px; }
+  .mobile-menu-button { width: 44px; height: 44px; flex-basis: 44px; }
   .opening h1 { font-size: 44px; }
   .opening-kicker { font-size: 6.5px; }
   #project-explorer.project-showcase-card { padding: 14px 12px 13px; }
@@ -385,7 +385,7 @@ button, input, select, textarea { max-width: 100%; }
   #project-explorer .showcase-tech-group--tools { grid-column: auto; }
   #project-explorer .showcase-tech-chip { min-height: 22px; font-size: 7px; }
   #project-explorer .showcase-control-row { align-items: center; }
-  #project-explorer .showcase-arrow { width: 36px; height: 36px; }
+  #project-explorer .showcase-arrow { width: 44px; height: 44px; }
   #project-explorer .showcase-timer-label { gap: 5px; padding-inline: 6px; font-size: 6px; }
   #project-explorer .showcase-foot { gap: 6px; font-size: 6px; }
   #project-explorer .showcase-indicators { grid-template-columns: repeat(10, minmax(0, 1fr)); }
