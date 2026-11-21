@@ -801,3 +801,7 @@
     transition: none;
   }
 }
+
+/* Keep browser-native surfaces aligned with the portfolio's selected theme. */
+html[data-theme="dark"] { color-scheme: dark; }
+html[data-theme="light"] { color-scheme: light; }
