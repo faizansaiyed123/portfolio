@@ -118,7 +118,7 @@ for (const item of releases.items) {
   assert(["stable", "prerelease"].includes(item.channel || "stable"), "unknown release channel");
 }
 
-for (const path of ["index.html", "script.js", "style.css", "portfolio-polish.css", "work-showcase.css", "data/work-showcase.json", "scripts/capture-homepage-previews.mjs", "project-lab.html", "project-lab.js", "project-lab.css", "frameflux-demo-preview.js", "frameflux-demo-preview.css", "scripts/build-portfolio-preview.sh"]) {
+for (const path of ["index.html", "script.js", "style.css", "portfolio-polish.css", "work-showcase.css", "explorer-showcase.css", "explorer-showcase.js", "data/work-showcase.json", "scripts/capture-homepage-previews.mjs", "project-lab.html", "project-lab.js", "project-lab.css", "frameflux-demo-preview.js", "frameflux-demo-preview.css", "scripts/build-portfolio-preview.sh"]) {
   assert(existsSync(resolve(root, path)), "missing portfolio entrypoint asset: " + path);
 }
 
@@ -127,6 +127,9 @@ const previewBuildScript = readFileSync(resolve(root, "scripts/build-portfolio-p
 assert(indexHtml.includes('href="./portfolio-polish.css'), "index.html must load the portfolio polish stylesheet");
 assert(previewBuildScript.includes('"$ROOT/work-showcase.css"'), "Vercel preview packaging must copy work-showcase.css into out/");
 assert(indexHtml.includes('href="./work-showcase.css'), "index.html must load the work showcase stylesheet");
+assert(indexHtml.includes('href="./explorer-showcase.css'), "index.html must load the Explorer showcase stylesheet");
+assert(indexHtml.includes('src="./explorer-showcase.js'), "index.html must load the Explorer showcase script");
+assert(previewBuildScript.includes('"$ROOT/explorer-showcase.css"') && previewBuildScript.includes('"$ROOT/explorer-showcase.js"'), "Vercel preview packaging must copy the Explorer showcase assets into out/");
 assert(indexHtml.includes('id="client-work-grid"') && indexHtml.includes('id="internship-work-grid"'), "client and internship sections are required");
 assert(!indexHtml.includes("INDEPENDENT SOFTWARE / 2026"), "remove the old generic wordmark tagline");
 assert(previewBuildScript.includes('"$ROOT/portfolio-polish.css"'), "Vercel preview packaging must copy portfolio-polish.css into out/");
