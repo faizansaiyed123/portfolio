@@ -777,3 +777,27 @@
   .contribution-filters .select-wrap { transition: none; }
 }
 
+/* Explicitly protect calendar motion while honoring system reduced-motion preferences. */
+.graph-heading .graph-live-badge {
+  color: var(--lime);
+  font-size: 7px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .graph-live-badge i,
+  .heat-cell:not(.heat-cell-empty),
+  .heatmap::after,
+  .custom-select-menu {
+    animation: none !important;
+  }
+  .heat-cell:not(.heat-cell-empty) {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+  .heat-cell:not(.heat-cell-empty):hover { transform: none; }
+  .custom-select-trigger,
+  .custom-select-option,
+  .custom-select-chevron {
+    transition: none;
+  }
+}
