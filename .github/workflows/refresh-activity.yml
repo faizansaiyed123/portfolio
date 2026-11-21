@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: refresh-github-activity-snapshots
@@ -188,20 +189,56 @@ jobs:
           mv data/contributions-calendar.json.tmp data/contributions-calendar.json
           rm data/contributions-calendar-raw.json.tmp
 
-      - name: Publish validated snapshots directly to main
+      - name: Publish snapshot updates through a pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           git config user.name "portfolio-bot"
           git config user.email "portfolio-bot@users.noreply.github.com"
           git add data/activity.json data/contributions-calendar.json
 
-          if git diff --cached --quiet; then
-            echo "Verified GitHub contribution data is already current."
-            exit 0
-          fi
+          if ! git diff --cached --quiet; then
+            update_branch="automation/public-github-snapshots"
+            git switch --create "$update_branch"
+            git commit -m "chore: refresh public GitHub activity data"
 
-          git commit -m "chore: refresh public GitHub activity data"
-          git fetch origin main
-          git rebase origin/main
-          git push origin HEAD:refs/heads/main
-          echo "Published the verified public contribution snapshot to main."
+            # Only replace this dedicated automation branch, and only if it
+            # still has the remote SHA observed immediately before the push.
+            remote_sha="$(git ls-remote --heads origin "refs/heads/$update_branch" | awk 'NR == 1 { print $1 }')"
+            if [ -n "$remote_sha" ]; then
+              git push --force-with-lease="refs/heads/$update_branch:$remote_sha" origin "HEAD:refs/heads/$update_branch"
+            else
+              git push origin "HEAD:refs/heads/$update_branch"
+            fi
+
+            pr_number="$(gh pr list --base main --head "$update_branch" --state open --json number --jq '.[0].number // empty')"
+            pr_title="chore: refresh public GitHub activity snapshots"
+            pr_body="$(cat <<'BODY'
+          This pull request contains only the refreshed public GitHub contribution snapshots and is queued for automatic squash merge after required checks pass:
+
+          - data/activity.json: verified external merged pull requests.
+          - data/contributions-calendar.json: public profile contributions from GitHub GraphQL.
+
+          The snapshots are validated before this pull request is created. The portfolio reads them from the same main branch as the frontend. This workflow deliberately opens or updates a pull request rather than writing directly to protected main.
+
+          The repository must allow GitHub Actions to create pull requests and must have auto-merge enabled. The main-branch owner-only ruleset remains in place.
+          BODY
+          )"
+
+            if [ -n "$pr_number" ]; then
+              gh pr edit "$pr_number" --title "$pr_title" --body "$pr_body"
+            else
+              gh pr create --base main --head "$update_branch" --title "$pr_title" --body "$pr_body"
+            fi
+
+            pr_number="$(gh pr list --base main --head "$update_branch" --state open --json number --jq '.[0].number // empty')"
+            if [ -z "$pr_number" ]; then
+              echo "Could not find the automated public-snapshot pull request after publishing its branch." >&2
+              exit 1
+            fi
+
+            # Keep main protected: GitHub merges this validated PR only after
+            # auto-merge is enabled for the repository and required checks pass.
+            gh pr merge "$pr_number" --auto --squash
+          fi
