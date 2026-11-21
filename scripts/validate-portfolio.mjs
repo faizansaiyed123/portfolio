@@ -109,7 +109,7 @@ assert(Number.isInteger(calendar.totalContributions) && calendar.totalContributi
 for (const week of calendar.weeks) {
   assert(Array.isArray(week.contributionDays) && week.contributionDays.length > 0, "calendar week is missing contribution days");
   for (const day of week.contributionDays) {
-    assert(/^\\d{4}-\\d{2}-\\d{2}$/.test(day.date || ""), "calendar day date is invalid");
+    assert(/^\d{4}-\d{2}-\d{2}$/.test(day.date || ""), "calendar day date is invalid");
     assert(Number.isInteger(day.contributionCount) && day.contributionCount >= 0, "calendar day count must be a non-negative integer");
     assert(Number.isInteger(day.weekday) && day.weekday >= 0 && day.weekday <= 6, "calendar weekday is invalid");
   }
