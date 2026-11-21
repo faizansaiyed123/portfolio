@@ -44,7 +44,7 @@
       id: item.id,
       name: item.name,
       type: "FREELANCE / CLIENT PROJECT",
-      category: item.projectType || "CLIENT PROJECT",
+      category: "",
       description: item.description,
       image: item.previewImage,
       url: item.url,
@@ -56,7 +56,7 @@
       id: item.id,
       name: item.name,
       type: "INTERNSHIP PROJECT",
-      category: item.projectType || "COMPANY PROJECT",
+      category: "",
       description: item.description,
       image: item.previewImage,
       url: item.url,
@@ -217,7 +217,7 @@
     const total = pad(state.projects.length);
     if (counter) counter.innerHTML = number + ' <span>/ ' + total + '</span>';
     if (position) position.textContent = number + " / " + total + " PROJECTS";
-    if (category) category.textContent = project.type + " · " + project.category;
+    if (category) category.textContent = project.category ? project.type + " · " + project.category : project.type;
     if (name) name.textContent = project.name;
     if (description) description.textContent = project.description;
     renderTechnologyStack(project.techGroups);
