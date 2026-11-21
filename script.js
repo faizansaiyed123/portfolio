@@ -41,8 +41,7 @@
   };
 
   /* ---------- Theme ---------- */
-  const THEME_KEY = "faizan-product-lab-theme";
-  const applyTheme = (theme, persist = false) => {
+  const applyTheme = (theme) => {
     const next = theme === "light" ? "light" : "dark";
     root.dataset.theme = next;
     const button = $(".theme-toggle");
@@ -50,21 +49,17 @@
       button.setAttribute("aria-label", next === "dark" ? "Switch to light theme" : "Switch to dark theme");
       button.setAttribute("title", next === "dark" ? "Switch to light theme" : "Switch to dark theme");
       button.innerHTML = next === "dark"
-        ? '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path></svg>'
+        ? '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l-1.42-1.42m11.3-11.3 1.42-1.42"></path></svg>'
         : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.4 8.4 0 0 1 9.8 3.5 8.7 8.7 0 1 0 20.5 14.2Z"></path></svg>';
     }
     const meta = $("meta[name='theme-color']");
     meta?.setAttribute("content", next === "dark" ? "#111016" : "#f3eee8");
-    if (persist) {
-      try { localStorage.setItem(THEME_KEY, next); } catch { /* Theme still applies for this visit. */ }
-    }
   };
 
-  let storedTheme = null;
-  try { storedTheme = localStorage.getItem(THEME_KEY); } catch { /* Storage is optional. */ }
-  applyTheme(storedTheme === "light" || storedTheme === "dark" ? storedTheme : "dark");
+  // Always start dark for every visitor; the toggle can still change the current visit.
+  applyTheme("dark");
   $(".theme-toggle")?.addEventListener("click", () => {
-    applyTheme(root.dataset.theme === "dark" ? "light" : "dark", true);
+    applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
   });
 
   /* ---------- Mobile navigation ---------- */
