@@ -242,11 +242,27 @@
   width: 0;
   height: 100%;
   background: linear-gradient(90deg, var(--orange), var(--blue), var(--lime));
-  animation: explorer-showcase-progress 30s linear forwards;
+  transition: width 1s linear;
 }
-#project-explorer.is-paused .showcase-progress-track span { animation-play-state: paused; }
+#project-explorer.is-paused .showcase-progress-track span { transition: none; }
 #project-explorer .showcase-image-link:active .showcase-open-label { transform: scale(.97); }
-@keyframes explorer-showcase-progress { to { width: 100%; } }
+#project-explorer .showcase-timer-label {
+  min-height: 24px;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--bg-raised) 86%, transparent);
+  white-space: nowrap;
+}
+#project-explorer .showcase-timer-label .showcase-timer-copy { color: var(--faint); }
+#project-explorer .showcase-timer-label strong {
+  color: var(--orange);
+  font-size: 9px;
+  font-weight: 950;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+}
+#project-explorer.is-paused .showcase-timer-label i { background: var(--faint); box-shadow: none; }
 
 /* Each incoming project has its own entrance language; index maps to its own effect. */
 #project-explorer .showcase-slide-image.effect-00 { animation-name: explorer-transition-00; }
