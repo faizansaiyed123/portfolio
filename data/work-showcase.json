@@ -26,6 +26,7 @@
           "Tailwind CSS"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -69,6 +70,7 @@
           "Tailwind CSS"
         ],
         "backend": [
+          "Python",
           "FastAPI"
         ],
         "database": [
@@ -104,6 +106,7 @@
           "Tailwind CSS"
         ],
         "backend": [
+          "Python",
           "Flask"
         ],
         "database": [
