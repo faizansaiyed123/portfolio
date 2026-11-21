@@ -39,7 +39,7 @@
       id: item.id,
       name: item.name,
       type: "FREELANCE / CLIENT WORK",
-      category: item.roleLabel || "FREELANCE",
+      category: item.projectType || "CLIENT PROJECT",
       description: item.description,
       image: item.previewImage,
       url: item.url,
