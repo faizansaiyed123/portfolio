@@ -43,7 +43,7 @@
     const clientProjects = (Array.isArray(work.clientWork) ? work.clientWork : []).map((item) => ({
       id: item.id,
       name: item.name,
-      type: "FREELANCE / CLIENT WORK",
+      type: "FREELANCE / CLIENT PROJECT",
       category: item.projectType || "CLIENT PROJECT",
       description: item.description,
       image: item.previewImage,
