@@ -12,10 +12,10 @@
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
   <link rel="stylesheet" href="./style.css?v=20261117-premium-product-gallery">
   <link rel="stylesheet" href="./agencyos-preview.css?v=20261115-agencyos-preview">
-  <link rel="stylesheet" href="./portfolio-polish.css?v=20261121-dark-contribution-menus">
+  <link rel="stylesheet" href="./portfolio-polish.css?v=20261121-custom-contribution-menus">
   <link rel="stylesheet" href="./work-showcase.css?v=20261117-work-sections">
   <link rel="stylesheet" href="./explorer-showcase.css?v=20261121-five-second-countdown">
-  <script type="module" src="./script.js?v=20261121-dark-default-theme-persist"></script>
+  <script type="module" src="./script.js?v=20261121-live-contribution-calendar"></script>
   <script type="module" src="./agencyos-preview.js?v=20261115-agencyos-preview"></script>
   <script type="module" src="./explorer-showcase.js?v=20261121-five-second-countdown"></script>
   <title>Faizan Saiyed — Software you can explore</title>
@@ -193,41 +193,10 @@
       </div>
     </section>
 
-    <section class="method-section section-shell" aria-labelledby="method-title">
-      <div class="method-lead">
-        <p class="eyebrow">04 / PROJECT DETAILS</p>
-        <h2 id="method-title">Look beyond the homepage.</h2>
-        <p>Open a project to read about the problem, follow its main workflows and inspect the implementation and source code.</p>
-      </div>
-      <div class="method-steps">
-        <article class="method-step">
-          <span class="step-number">01</span>
-          <div class="step-icon step-icon-orange">↗</div>
-          <h3>Operate it</h3>
-          <p>Use a safe demo environment with fictional records and realistic workflows. No personal account or setup should be required.</p>
-          <span class="step-label">PRODUCT EXPERIENCE</span>
-        </article>
-        <article class="method-step">
-          <span class="step-number">02</span>
-          <div class="step-icon step-icon-blue">⌘</div>
-          <h3>Follow the system</h3>
-          <p>Move from the user action into the API, data model, background work, and state transitions that make it happen.</p>
-          <span class="step-label">ENGINEERING TOUR</span>
-        </article>
-        <article class="method-step">
-          <span class="step-number">03</span>
-          <div class="step-icon step-icon-lime">✓</div>
-          <h3>Check the evidence</h3>
-          <p>Inspect repositories, tests, release history, and documented constraints. Claims stay connected to their source.</p>
-          <span class="step-label">SOURCE AND TESTS</span>
-        </article>
-      </div>
-    </section>
-
     <section class="contributions-section section-shell" id="contributions" aria-labelledby="contributions-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">05 / OPEN SOURCE</p>
+          <p class="eyebrow">04 / OPEN SOURCE</p>
           <h2 id="contributions-title">Open-source contributions</h2>
         </div>
         <p class="section-intro-copy">A record of merged pull requests in repositories maintained by other people and teams. The calendar shows public GitHub activity separately.</p>
@@ -245,7 +214,10 @@
         <div class="contribution-graph-panel">
           <div class="graph-heading">
             <div><strong>GitHub contribution calendar</strong><span>Daily public commits, pull requests, issues and reviews · rolling year</span></div>
-            <span class="graph-source" id="activity-updated">Snapshot date pending</span>
+            <div class="graph-live-meta">
+              <span class="graph-live-badge"><i aria-hidden="true"></i>AUTO SYNC</span>
+              <span class="graph-source" id="activity-updated" aria-live="polite">Connecting to GitHub…</span>
+            </div>
           </div>
           <div class="heatmap-wrap">
             <div class="heatmap-months" id="heatmap-months" aria-hidden="true"></div>
@@ -272,17 +244,27 @@
           <button class="filter-reset-button" id="clear-contribution-filters" type="button">Reset filters <span aria-hidden="true">↺</span></button>
         </div>
         <div class="contribution-filters">
-          <label class="select-wrap"><span class="select-label">Repository</span>
-            <select id="contribution-repository" aria-label="Filter external merged pull requests by repository"><option value="all">All repositories</option></select>
-          </label>
-          <label class="select-wrap"><span class="select-label">Contribution type</span>
-            <select id="contribution-kind" aria-label="Filter external merged pull requests by contribution type"><option value="all">All types</option></select>
-          </label>
-          <label class="select-wrap"><span class="select-label">Merge date</span>
-            <select id="contribution-date-range" aria-label="Filter external merged pull requests by merge date">
-              <option value="all">All dates</option><option value="last-30">Last 30 days</option><option value="last-90">Last 90 days</option><option value="last-365">Last 12 months</option>
-            </select>
-          </label>
+          <div class="select-wrap custom-select">
+            <span class="select-label" id="repository-filter-label">Repository</span>
+            <button class="custom-select-trigger" id="contribution-repository" type="button" data-value="all" aria-haspopup="listbox" aria-expanded="false" aria-controls="repository-filter-menu" aria-labelledby="repository-filter-label repository-filter-value">
+              <span class="custom-select-value" id="repository-filter-value">All repositories</span><span class="custom-select-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="custom-select-menu" id="repository-filter-menu" role="listbox" aria-labelledby="repository-filter-label" hidden></div>
+          </div>
+          <div class="select-wrap custom-select">
+            <span class="select-label" id="kind-filter-label">Contribution type</span>
+            <button class="custom-select-trigger" id="contribution-kind" type="button" data-value="all" aria-haspopup="listbox" aria-expanded="false" aria-controls="kind-filter-menu" aria-labelledby="kind-filter-label kind-filter-value">
+              <span class="custom-select-value" id="kind-filter-value">All types</span><span class="custom-select-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="custom-select-menu" id="kind-filter-menu" role="listbox" aria-labelledby="kind-filter-label" hidden></div>
+          </div>
+          <div class="select-wrap custom-select">
+            <span class="select-label" id="date-filter-label">Merge date</span>
+            <button class="custom-select-trigger" id="contribution-date-range" type="button" data-value="all" aria-haspopup="listbox" aria-expanded="false" aria-controls="date-filter-menu" aria-labelledby="date-filter-label date-filter-value">
+              <span class="custom-select-value" id="date-filter-value">All dates</span><span class="custom-select-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="custom-select-menu" id="date-filter-menu" role="listbox" aria-labelledby="date-filter-label" hidden></div>
+          </div>
         </div>
         <p class="activity-results-summary" id="activity-results-summary" aria-live="polite">Showing all 20 verified external merged PRs</p>
       </div>
@@ -295,7 +277,7 @@
     <section class="achievements-section section-shell" id="achievements" aria-labelledby="achievements-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">06 / MILESTONES</p>
+          <p class="eyebrow">05 / MILESTONES</p>
           <h2 id="achievements-title">Milestones from open-source work</h2>
         </div>
         <p class="section-intro-copy">Evidence-backed milestones calculated from merged upstream work and published release notes. These are not self-awarded badges or unverified profile claims.</p>
@@ -309,7 +291,7 @@
     <section class="release-section section-shell" id="releases" aria-labelledby="releases-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">07 / RELEASE CREDITS</p>
+          <p class="eyebrow">06 / RELEASE CREDITS</p>
           <h2 id="releases-title">Changes included in published releases</h2>
         </div>
         <p class="section-intro-copy">A merged pull request is one milestone. Seeing the change included in an official release or prerelease is another. Each credit links to the published notes and the original merged change.</p>
@@ -324,7 +306,7 @@
       <div class="closing-card">
         <div class="closing-orbit profile-closing-orbit"><img src="https://avatars.githubusercontent.com/u/194621340?v=4" alt="Faizan Saiyed" loading="lazy"></div>
         <div class="closing-copy">
-          <p class="eyebrow">08 / ABOUT</p>
+          <p class="eyebrow">07 / ABOUT</p>
           <h2 id="closing-title">Curious about the person, or the implementation?</h2>
           <p>I'm Faizan Saiyed, a product-minded engineer interested in backend systems, reliable workflows, data, and the details that make software usable.</p>
           <div class="closing-links">
