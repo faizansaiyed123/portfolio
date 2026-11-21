@@ -515,3 +515,113 @@
   box-shadow: 0 12px 46px rgba(0,0,0,.25);
   transform: none;
 }
+
+/* Header portrait: the image stays crisp while its accent ring orbits continuously. */
+.wordmark-avatar {
+  position: relative;
+  display: grid;
+  width: 39px;
+  height: 39px;
+  flex: 0 0 39px;
+  place-items: center;
+  isolation: isolate;
+  border-radius: 50%;
+}
+.wordmark-avatar::before {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(from 0deg, var(--orange), transparent 48deg, var(--blue) 132deg, transparent 205deg, var(--lime) 278deg, transparent 330deg, var(--orange));
+  content: "";
+  animation: wordmark-avatar-orbit 4.5s linear infinite;
+}
+.wordmark-avatar img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 35px;
+  height: 35px;
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Give the three contribution filters clear individual control surfaces. */
+.contribution-filter-panel {
+  border-color: color-mix(in srgb, var(--line-strong) 76%, var(--blue));
+  background:
+    radial-gradient(circle at 4% 0%, color-mix(in srgb, var(--orange) 8%, transparent), transparent 38%),
+    linear-gradient(145deg, color-mix(in srgb, var(--panel-strong) 72%, transparent), color-mix(in srgb, var(--panel) 88%, transparent));
+}
+.contribution-filters { gap: 13px; }
+.contribution-filters .select-wrap {
+  padding: 12px;
+  gap: 9px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: linear-gradient(155deg, color-mix(in srgb, var(--panel-strong) 82%, transparent), color-mix(in srgb, var(--bg-raised) 94%, transparent));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025), 0 7px 19px rgba(0,0,0,.08);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.contribution-filters .select-wrap:hover {
+  transform: translateY(-2px);
+  border-color: var(--line-strong);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 11px 25px rgba(0,0,0,.13);
+}
+.contribution-filters .select-wrap:nth-child(1) .select-label::before,
+.contribution-filters .select-wrap:nth-child(2) .select-label::before,
+.contribution-filters .select-wrap:nth-child(3) .select-label::before {
+  display: inline-grid;
+  width: 19px;
+  height: 19px;
+  margin-right: 6px;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--bg);
+  font-size: 7px;
+  font-weight: 950;
+  letter-spacing: 0;
+}
+.contribution-filters .select-wrap:nth-child(1) .select-label::before { content: "01"; color: var(--orange); }
+.contribution-filters .select-wrap:nth-child(2) .select-label::before { content: "02"; color: var(--blue); }
+.contribution-filters .select-wrap:nth-child(3) .select-label::before { content: "03"; color: var(--lime); }
+.contribution-filters .select-wrap::after {
+  right: 28px;
+  bottom: 30px;
+  width: 8px;
+  height: 8px;
+  border-color: var(--orange);
+}
+.contribution-filters .select-wrap select {
+  min-height: 49px;
+  padding-left: 13px;
+  border-color: color-mix(in srgb, var(--line-strong) 82%, var(--blue));
+  border-radius: 10px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-raised) 96%, white 4%), var(--bg-raised));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
+  font-size: 11px;
+  font-weight: 780;
+}
+.contribution-filters .select-wrap select:hover {
+  border-color: color-mix(in srgb, var(--orange) 62%, var(--line-strong));
+  background: var(--panel-strong);
+}
+.contribution-filters .select-wrap select:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--orange) 78%, transparent);
+  outline-offset: 2px;
+}
+.contribution-filters .select-wrap:focus-within {
+  border-color: color-mix(in srgb, var(--orange) 48%, var(--line-strong));
+}
+@keyframes wordmark-avatar-orbit { to { transform: rotate(360deg); } }
+
+@media (max-width: 760px) {
+  .contribution-filters .select-wrap { padding: 10px; }
+  .contribution-filters .select-wrap::after { right: 26px; bottom: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wordmark-avatar::before { animation: none; }
+  .contribution-filters .select-wrap { transition: none; }
+}
+
