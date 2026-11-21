@@ -152,9 +152,11 @@ assert(appScript.includes('custom-select-option') && appScript.includes('ArrowDo
 assert(portfolioPolishStyles.includes('.custom-select-menu') && portfolioPolishStyles.includes('.custom-select-option[aria-selected="true"]'), "custom contribution dropdown menus and options must be styled");
 assert(appScript.includes('CALENDAR_REFRESH_INTERVAL') && appScript.includes('cache: "no-store"'), "the public contribution calendar must poll the latest published snapshot");
 assert(portfolioPolishStyles.includes('@keyframes contribution-cell-reveal') && portfolioPolishStyles.includes('@keyframes contribution-calendar-sweep'), "the contribution calendar must include its animated reveal");
-assert(activityWorkflow.includes('gh pr create --base main --head "$update_branch"') && activityWorkflow.includes('gh pr merge "$pr_number" --auto --squash'), "verified snapshots must be published through an automatically merged pull request");
+assert(activityWorkflow.includes('gh pr create --base main --head "$update_branch"') && activityWorkflow.includes('gh pr merge "$pr_number" --auto --squash'), "verified snapshots must be published and queued for automatic PR merge");
+assert(activityWorkflow.includes('Allow GitHub Actions to create and approve pull requests') && activityWorkflow.includes('Allow auto-merge'), "snapshot workflow must explain the repository settings required for automation");
 assert(activityWorkflow.includes('schedule:') && activityWorkflow.includes('23 */3 * * *'), "public GitHub snapshots must refresh on the three-hour schedule");
 assert(activityWorkflow.includes('pull-requests: write'), "snapshot updater requires pull-request write permission");
+assert(!activityWorkflow.includes('git push origin HEAD:refs/heads/main'), "snapshot automation must preserve the owner-only main-branch ruleset");
 assert(indexHtml.includes('href="./portfolio-polish.css?v=20261121-custom-contribution-menus"'), "index.html must load the custom contribution menu stylesheet");
 assert(previewBuildScript.includes('"$ROOT/work-showcase.css"'), "Vercel preview packaging must copy work-showcase.css into out/");
 assert(indexHtml.includes('href="./work-showcase.css'), "index.html must load the work showcase stylesheet");
