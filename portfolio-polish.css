@@ -846,3 +846,170 @@ html[data-theme="light"] { color-scheme: light; }
     min-width: 620px;
   }
 }
+
+
+/* Contribution activity signal — isolated to the left contribution panel */
+.contribution-signal-panel {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 18px;
+  isolation: isolate;
+}
+
+.contribution-signal-panel::before {
+  content: "";
+  position: absolute;
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--lime) 10%, transparent) 0 24%, transparent 62%),
+    conic-gradient(from 0deg, transparent 0 72%, color-mix(in srgb, var(--lime) 16%, transparent) 84%, transparent 94% 100%);
+  filter: blur(.2px);
+  animation: contribution-signal-rotate 12s linear infinite;
+  z-index: -1;
+}
+
+.contribution-signal {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  display: grid;
+  place-items: center;
+}
+
+.signal-orbit {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--lime) 22%, var(--line));
+  border-radius: 50%;
+}
+
+.signal-orbit-outer {
+  transform: scale(.96);
+  opacity: .8;
+  animation: contribution-signal-orbit 5.5s ease-in-out infinite;
+}
+
+.signal-orbit-inner {
+  inset: 17px;
+  border-color: color-mix(in srgb, var(--lime) 28%, var(--line));
+  opacity: .7;
+  animation: contribution-signal-orbit 4s ease-in-out infinite reverse;
+}
+
+.signal-core {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow:
+    0 0 0 7px color-mix(in srgb, var(--lime) 10%, transparent),
+    0 0 32px color-mix(in srgb, var(--lime) 30%, transparent);
+  animation: contribution-signal-breathe 2.6s ease-in-out infinite;
+}
+
+.signal-pulse {
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  border: 1px solid color-mix(in srgb, var(--lime) 38%, transparent);
+  border-radius: 50%;
+  animation: contribution-signal-pulse 2.6s ease-out infinite;
+}
+
+.signal-node {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--lime) 34%, transparent);
+}
+
+.signal-node-top { top: 3px; left: 50%; transform: translateX(-50%); }
+.signal-node-right { right: 3px; top: 50%; transform: translateY(-50%); }
+.signal-node-bottom { bottom: 3px; left: 50%; transform: translateX(-50%); }
+.signal-node-left { left: 3px; top: 50%; transform: translateY(-50%); }
+
+.signal-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 67px;
+  height: 1px;
+  transform-origin: left center;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--lime) 42%, transparent), transparent);
+  opacity: .65;
+}
+
+.signal-line-a { transform: rotate(-90deg); }
+.signal-line-b { transform: rotate(0deg); }
+.signal-line-c { transform: rotate(90deg); }
+.signal-line-d { transform: rotate(180deg); }
+
+.signal-bars {
+  position: absolute;
+  right: 7px;
+  bottom: 10px;
+  display: flex;
+  align-items: end;
+  gap: 3px;
+  height: 27px;
+  opacity: .78;
+}
+
+.signal-bars i {
+  display: block;
+  width: 3px;
+  height: var(--bar-height);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--lime) 78%, var(--text));
+  transform-origin: bottom;
+  animation: contribution-signal-bar 1.4s ease-in-out infinite;
+}
+
+.signal-bars i:nth-child(1) { --bar-height: 8px; animation-delay: -.9s; }
+.signal-bars i:nth-child(2) { --bar-height: 16px; animation-delay: -.7s; }
+.signal-bars i:nth-child(3) { --bar-height: 11px; animation-delay: -.5s; }
+.signal-bars i:nth-child(4) { --bar-height: 22px; animation-delay: -.3s; }
+.signal-bars i:nth-child(5) { --bar-height: 14px; animation-delay: -.1s; }
+.signal-bars i:nth-child(6) { --bar-height: 24px; animation-delay: -.8s; }
+.signal-bars i:nth-child(7) { --bar-height: 12px; animation-delay: -.6s; }
+.signal-bars i:nth-child(8) { --bar-height: 18px; animation-delay: -.4s; }
+
+@keyframes contribution-signal-rotate {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes contribution-signal-orbit {
+  0%, 100% { transform: scale(.96); opacity: .55; }
+  50% { transform: scale(1); opacity: .95; }
+}
+
+@keyframes contribution-signal-breathe {
+  0%, 100% { transform: scale(.92); }
+  50% { transform: scale(1); }
+}
+
+@keyframes contribution-signal-pulse {
+  0% { transform: scale(.72); opacity: .75; }
+  80%, 100% { transform: scale(1.45); opacity: 0; }
+}
+
+@keyframes contribution-signal-bar {
+  0%, 100% { transform: scaleY(.72); opacity: .58; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contribution-signal-panel::before,
+  .signal-orbit,
+  .signal-core,
+  .signal-pulse,
+  .signal-bars i {
+    animation: none;
+  }
+}
