@@ -3,9 +3,17 @@
   "owner": "faizansaiyed123",
   "query": "author:faizansaiyed123 is:pr is:merged -user:faizansaiyed123",
   "scope": "Merged pull requests authored by this account in repositories not owned by the account. This is a complete external merged-PR list, not a count of every GitHub contribution type.",
-  "fetchedAt": "2026-11-21T02:35:57Z",
-  "total": 20,
+  "fetchedAt": "2026-11-28T11:22:34.741Z",
+  "total": 21,
   "items": [
+    {
+      "title": "Fix Kafka ack commits for unacked fetched messages",
+      "repository": "celery/kombu",
+      "number": 2835,
+      "url": "https://github.com/celery/kombu/pull/2835",
+      "mergedAt": "2026-11-28T08:41:36Z",
+      "kind": "Open-source contribution"
+    },
     {
       "title": "fix: detect agents launched with uv run",
       "repository": "layer8labs8/ci-agent-audit",
