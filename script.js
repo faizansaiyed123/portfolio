@@ -595,7 +595,7 @@
     }
   });
 
-  const GITHUB_CONTRIBUTION_GRAPH_URL = "https://github.com/users/faizansaiyed123/contributions";
+  const GITHUB_CONTRIBUTION_GRAPH_URL = "https://contribkit.app/user/faizansaiyed123.svg";
   const CALENDAR_REFRESH_INTERVAL = 15 * 60 * 1000;
   let lastCalendarRefreshAt = 0;
 
@@ -621,7 +621,7 @@
     if (!updated) return;
     const timestamp = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     updated.textContent = "Live GitHub graph · " + timestamp;
-    updated.title = "Loaded directly from GitHub's public contribution graph.";
+    updated.title = "Loaded from a live SVG renderer backed by GitHub's public contribution graph.";
     updated.classList.remove("is-stale");
   });
 
