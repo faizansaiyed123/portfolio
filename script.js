@@ -455,8 +455,7 @@
 
   /* ---------- Public GitHub contribution calendar and upstream filters ---------- */
   const activityList = $("#activity-list");
-  const heatmap = $("#contribution-heatmap");
-  const heatmapMonths = $("#heatmap-months");
+  const githubContributionGraph = $("#github-live-contribution-graph");
   const repoSelect = $("#contribution-repository");
   const kindSelect = $("#contribution-kind");
   const dateSelect = $("#contribution-date-range");
@@ -596,179 +595,50 @@
     }
   });
 
-  const animateContributionTotal = (value) => {
-    const element = $("#public-contribution-total");
-    if (!element) return;
-    const target = Math.max(0, Number(value) || 0);
-    const start = Number(element.dataset.countValue || 0);
-    element.dataset.countValue = String(target);
-    if (reducedMotion.matches || start === target) {
-      element.textContent = target.toLocaleString("en");
-      return;
-    }
-    const startedAt = performance.now();
-    const duration = 850;
-    const tick = (now) => {
-      const progress = Math.min(1, (now - startedAt) / duration);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      element.textContent = Math.round(start + (target - start) * eased).toLocaleString("en");
-      if (progress < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
+  const GITHUB_CONTRIBUTION_GRAPH_URL = "https://github.com/users/faizansaiyed123/contributions";
+  const CALENDAR_REFRESH_INTERVAL = 15 * 60 * 1000;
+  let lastCalendarRefreshAt = 0;
+
+  const updateCalendarFreshness = (message = "Connecting to GitHub…", isStale = false) => {
+    const updated = $("#activity-updated");
+    if (!updated) return;
+    updated.textContent = message;
+    updated.classList.toggle("is-stale", isStale);
   };
 
-  const updateCalendarFreshness = () => {
-    const updated = $("#activity-updated");
-    if (!updated || !state.calendar?.fetchedAt) return;
-    const timestamp = new Date(state.calendar.fetchedAt).getTime();
-    if (!Number.isFinite(timestamp)) {
-      updated.textContent = "Update time unavailable";
-      updated.classList.add("is-stale");
-      return;
-    }
-    const ageMs = Math.max(0, Date.now() - timestamp);
-    const ageMinutes = Math.floor(ageMs / 60000);
-    let label = "Updated just now";
-    if (ageMinutes >= 60) {
-      const hours = Math.floor(ageMinutes / 60);
-      label = hours >= 48 ? "Updated " + Math.floor(hours / 24) + "d ago" : "Updated " + hours + "h ago";
-    } else if (ageMinutes > 0) {
-      label = "Updated " + ageMinutes + "m ago";
-    }
-    updated.textContent = label;
-    updated.title = "Last successful GitHub public-calendar snapshot: " + new Date(timestamp).toLocaleString();
-    updated.classList.toggle("is-stale", ageMs > 6 * 60 * 60 * 1000);
+  const refreshContributionCalendar = ({ force = false } = {}) => {
+    if (!githubContributionGraph || document.hidden && !force) return;
+    const now = Date.now();
+    if (!force && now - lastCalendarRefreshAt < CALENDAR_REFRESH_INTERVAL) return;
+    lastCalendarRefreshAt = now;
+    updateCalendarFreshness("Refreshing GitHub graph…");
+    const separator = GITHUB_CONTRIBUTION_GRAPH_URL.includes("?") ? "&" : "?";
+    githubContributionGraph.src = GITHUB_CONTRIBUTION_GRAPH_URL + separator + "_=" + now;
   };
+
+  githubContributionGraph?.addEventListener("load", () => {
+    const updated = $("#activity-updated");
+    if (!updated) return;
+    const timestamp = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    updated.textContent = "Live GitHub graph · " + timestamp;
+    updated.title = "Loaded directly from GitHub's public contribution graph.";
+    updated.classList.remove("is-stale");
+  });
+
+  githubContributionGraph?.addEventListener("error", () => {
+    updateCalendarFreshness("GitHub graph unavailable", true);
+  });
 
   const renderContributionGraph = () => {
-    if (!heatmap || !heatmapMonths) return;
-    const calendar = state.calendar;
-    const total = $("#public-contribution-total");
-    const breakdown = $("#contribution-breakdown");
-    if (!calendar || !Array.isArray(calendar.weeks) || !calendar.weeks.length || !calendar.fetchedAt) {
-      if (total) total.textContent = "—";
-      if (breakdown) breakdown.textContent = "Waiting for the first verified public-calendar snapshot.";
-      const updated = $("#activity-updated");
-      if (updated) {
-        updated.textContent = "Calendar snapshot pending";
-        updated.classList.add("is-stale");
-      }
-      heatmap.innerHTML = "";
-      heatmapMonths.innerHTML = "";
-      heatmap.setAttribute("aria-label", "Public GitHub contribution calendar is not available yet");
-      return;
-    }
-
-    const totals = calendar.totals || {};
-    animateContributionTotal(calendar.totalContributions);
-    if (breakdown) {
-      const types = [
-        ["commits", "commits"],
-        ["pullRequests", "pull requests"],
-        ["issues", "issues"],
-        ["pullRequestReviews", "reviews"]
-      ];
-      breakdown.innerHTML = types.map(([key, label]) =>
-        '<span><strong>' + Number(totals[key] || 0).toLocaleString("en") + '</strong>' + label + '</span>'
-      ).join("");
-    }
-    updateCalendarFreshness();
-
-    const weeks = calendar.weeks;
-    const dailyCounts = weeks.flatMap((week) => week.contributionDays || []).map((day) => Number(day.contributionCount || 0));
-    const maxCount = Math.max(1, ...dailyCounts);
-    const monthNames = [];
-    const cells = [];
-    let cellIndex = 0;
-
-    weeks.forEach((week, index) => {
-      const days = Array.isArray(week.contributionDays) ? week.contributionDays : [];
-      const firstOfMonth = days.find((day) => String(day.date || "").slice(8, 10) === "01");
-      monthNames.push(firstOfMonth
-        ? monthFormatter.format(new Date(firstOfMonth.date + "T00:00:00Z"))
-        : "");
-
-      for (let weekday = 0; weekday < 7; weekday += 1) {
-        const day = days.find((item) => Number(item.weekday) === weekday);
-        if (!day) {
-          cells.push('<span class="heat-cell heat-cell-empty" aria-hidden="true" style="grid-column:' +
-            (index + 1) + ';grid-row:' + (weekday + 1) + ';--cell-index:' + cellIndex++ + '"></span>');
-          continue;
-        }
-        const count = Number(day.contributionCount || 0);
-        const level = count === 0 ? 0 : Math.min(3, Math.max(1, Math.ceil((count / maxCount) * 3)));
-        const date = String(day.date || "");
-        const label = count + " public " + (count === 1 ? "contribution" : "contributions") + " on " + formatDate(date);
-        cells.push(
-          '<span class="heat-cell" data-level="' + level + '" data-date="' + escapeHTML(date) +
-          '" title="' + escapeHTML(label) + '" aria-label="' + escapeHTML(label) +
-          '" style="grid-column:' + (index + 1) + ';grid-row:' + (weekday + 1) +
-          ';--cell-index:' + cellIndex++ + '"></span>'
-        );
-      }
-    });
-
-    const columns = "repeat(" + weeks.length + ", 10px)";
-    heatmapMonths.style.gridTemplateColumns = columns;
-    heatmap.style.gridTemplateColumns = columns;
-    heatmapMonths.innerHTML = monthNames.map((label) => "<span>" + escapeHTML(label) + "</span>").join("");
-    heatmap.innerHTML = cells.join("");
-    heatmap.setAttribute(
-      "aria-label",
-      Number(calendar.totalContributions || 0).toLocaleString("en") +
-      " public GitHub contributions over the 12-month profile calendar"
-    );
-  };
-
-  /* The snapshot is refreshed by GitHub Actions every three hours. Re-check the
-     same-origin published file while the visitor keeps the portfolio open. */
-  const CALENDAR_REFRESH_INTERVAL = 15 * 60 * 1000;
-  let lastCalendarRefreshAt = Date.now();
-  const refreshContributionCalendar = async () => {
-    if (!heatmap || document.hidden) return;
-    lastCalendarRefreshAt = Date.now();
-    try {
-      const url = new URL("data/contributions-calendar.json", document.baseURI);
-      url.searchParams.set("refresh", String(lastCalendarRefreshAt));
-      const response = await fetch(url, {
-        headers: { Accept: "application/json" },
-        cache: "no-store"
-      });
-      if (!response.ok) throw new Error("Calendar refresh returned HTTP " + response.status + ".");
-      const nextCalendar = await response.json();
-      if (
-        nextCalendar.schemaVersion !== 1 ||
-        nextCalendar.owner !== "faizansaiyed123" ||
-        !Array.isArray(nextCalendar.weeks) ||
-        !nextCalendar.weeks.length ||
-        !nextCalendar.fetchedAt
-      ) throw new Error("The refreshed calendar did not pass validation.");
-
-      const changed = nextCalendar.fetchedAt !== state.calendar?.fetchedAt;
-      state.calendar = nextCalendar;
-      state.calendarLoaded = true;
-      if (changed) renderContributionGraph();
-      else updateCalendarFreshness();
-    } catch (error) {
-      const updated = $("#activity-updated");
-      if (updated) updated.title = "The latest refresh check failed. The displayed values remain the last verified snapshot.";
-      console.warn("Could not refresh the public GitHub contribution calendar:", error);
-    }
+    refreshContributionCalendar({ force: true });
   };
 
   window.setInterval(() => {
-    updateCalendarFreshness();
-    if (!document.hidden && Date.now() - lastCalendarRefreshAt >= CALENDAR_REFRESH_INTERVAL) {
-      refreshContributionCalendar();
-    }
+    if (!document.hidden) refreshContributionCalendar();
   }, 60 * 1000);
 
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden) return;
-    updateCalendarFreshness();
-    if (Date.now() - lastCalendarRefreshAt >= CALENDAR_REFRESH_INTERVAL) {
-      refreshContributionCalendar();
-    }
+    if (!document.hidden) refreshContributionCalendar();
   });
 
   const renderContributionList = () => {
@@ -919,11 +789,10 @@
 
   const ACTIVITY_DATA_BASE = "data/";
   const loadAll = async () => {
-    const [projectsResult, workResult, activityResult, calendarResult, releasesResult] = await Promise.allSettled([
+    const [projectsResult, workResult, activityResult, releasesResult] = await Promise.allSettled([
       loadJSON("data/projects.json"),
       loadJSON("data/work-showcase.json"),
       loadJSON(ACTIVITY_DATA_BASE + "activity.json"),
-      loadJSON(ACTIVITY_DATA_BASE + "contributions-calendar.json"),
       loadJSON("data/release-credits.json")
     ]);
 
@@ -954,16 +823,7 @@
       heatmap && (heatmap.innerHTML = "");
     }
 
-    if (calendarResult.status === "fulfilled" && Array.isArray(calendarResult.value.weeks)) {
-      state.calendar = calendarResult.value;
-      state.calendarLoaded = Boolean(calendarResult.value.fetchedAt);
-      lastCalendarRefreshAt = Date.now();
-      renderContributionGraph();
-    } else {
-      state.calendar = null;
-      state.calendarLoaded = false;
-      renderContributionGraph();
-    }
+    renderContributionGraph();
 
     if (releasesResult.status === "fulfilled" && Array.isArray(releasesResult.value.items)) {
       state.releases = releasesResult.value.items;
