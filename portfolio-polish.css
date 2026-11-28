@@ -805,3 +805,44 @@
 /* Keep browser-native surfaces aligned with the portfolio's selected theme. */
 html[data-theme="dark"] { color-scheme: dark; }
 html[data-theme="light"] { color-scheme: light; }
+
+
+/* Live GitHub contribution graph */
+.live-github-graph-wrap {
+  min-width: 0;
+  padding: 10px 0 2px;
+}
+
+.github-live-graph-link {
+  display: block;
+  min-width: 0;
+  border-radius: 10px;
+}
+
+.github-live-graph {
+  display: block;
+  width: 100%;
+  min-width: 700px;
+  height: auto;
+  min-height: 150px;
+  object-fit: contain;
+  object-position: left center;
+  border-radius: 8px;
+}
+
+.live-github-graph-note {
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.github-live-graph-link:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 5px;
+}
+
+@media (max-width: 720px) {
+  .github-live-graph {
+    min-width: 620px;
+  }
+}

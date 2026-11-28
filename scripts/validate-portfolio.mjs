@@ -12,7 +12,6 @@ const assert = (condition, message) => { if (!condition) fail(message); };
 
 const projectsData = readJson("data/projects.json");
 const activity = readJson("data/activity.json");
-const calendar = readJson("data/contributions-calendar.json");
 const releases = readJson("data/release-credits.json");
 const work = readJson("data/work-showcase.json");
 const previewStatusPath = resolve(root, "data/homepage-preview-status.json");
@@ -101,20 +100,6 @@ assert(Number.isInteger(framefluxDemo?.backendApiTestsPassed) && framefluxDemo.b
 assert(/^https:\/\/github\.com\/faizansaiyed123\/FrameFlux-Frontend\/actions\/runs\//.test(framefluxDemo?.browserIntegrationWorkflowUrl || ""), "FrameFlux browser integration workflow link is missing");
 assert(/^https:\/\/github\.com\/faizansaiyed123\/FrameFlux-Backend\/actions\/runs\//.test(framefluxDemo?.backendApiWorkflowUrl || ""), "FrameFlux backend API workflow link is missing");
 
-assert(calendar.schemaVersion === 1 && calendar.owner === "faizansaiyed123", "public contribution calendar schema or owner is invalid");
-assert(calendar.fetchedAt && !Number.isNaN(Date.parse(calendar.fetchedAt)), "public contribution calendar requires a valid fetchedAt timestamp");
-assert(calendar.range?.from && calendar.range?.to && Date.parse(calendar.range.from) <= Date.parse(calendar.range.to), "public contribution calendar date range is invalid");
-assert(Array.isArray(calendar.weeks) && calendar.weeks.length > 0, "public contribution calendar requires week data");
-assert(Number.isInteger(calendar.totalContributions) && calendar.totalContributions >= 0, "public contribution total must be a non-negative integer");
-for (const week of calendar.weeks) {
-  assert(Array.isArray(week.contributionDays) && week.contributionDays.length > 0, "calendar week is missing contribution days");
-  for (const day of week.contributionDays) {
-    assert(/^\d{4}-\d{2}-\d{2}$/.test(day.date || ""), "calendar day date is invalid");
-    assert(Number.isInteger(day.contributionCount) && day.contributionCount >= 0, "calendar day count must be a non-negative integer");
-    assert(Number.isInteger(day.weekday) && day.weekday >= 0 && day.weekday <= 6, "calendar weekday is invalid");
-  }
-}
-
 assert(activity.schemaVersion === 1, "activity schemaVersion must be 1");
 assert(Array.isArray(activity.items) && activity.total === activity.items.length, "activity total must match items");
 assert(new Set(activity.items.map((item) => item.url)).size === activity.items.length, "duplicate PR URLs");
@@ -144,20 +129,20 @@ const activityWorkflow = readFileSync(resolve(root, ".github/workflows/refresh-a
 const previewBuildScript = readFileSync(resolve(root, "scripts/build-portfolio-preview.sh"), "utf8");
 assert(indexHtml.includes('<html lang="en" data-theme="dark">'), "portfolio must start in dark mode for every visitor");
 assert(appScript.includes('const THEME_KEY = "faizan-product-lab-theme-v2";') && appScript.includes('storedTheme === "light" || storedTheme === "dark" ? storedTheme : "dark"') && appScript.includes('localStorage.setItem(THEME_KEY, next)'), "portfolio must default dark for existing visitors while remembering new explicit theme choices");
-assert(indexHtml.includes('src="./script.js?v=20261121-live-contribution-calendar"'), "index.html must cache-bust the live contribution calendar script");
+assert(indexHtml.includes('src="./script.js?v=20261128-live-github-contribution-graph"'), "index.html must cache-bust the live GitHub contribution graph script");
 assert(portfolioPolishStyles.includes('html[data-theme="dark"] { color-scheme: dark; }'), "dark theme must set the native browser color scheme");
 assert(!indexHtml.includes('method-section') && !indexHtml.includes('04 / PROJECT DETAILS'), "the unnecessary project-details section must be removed");
 assert(indexHtml.includes('class="custom-select-trigger"') && indexHtml.includes('role="listbox"'), "contribution filters must use custom accessible dropdown menus");
 assert(appScript.includes('custom-select-option') && appScript.includes('ArrowDown') && appScript.includes('aria-selected'), "custom contribution dropdowns must support keyboard navigation and selected states");
 assert(portfolioPolishStyles.includes('.custom-select-menu') && portfolioPolishStyles.includes('.custom-select-option[aria-selected="true"]'), "custom contribution dropdown menus and options must be styled");
-assert(appScript.includes('CALENDAR_REFRESH_INTERVAL') && appScript.includes('cache: "no-store"'), "the public contribution calendar must poll the latest published snapshot");
-assert(portfolioPolishStyles.includes('@keyframes contribution-cell-reveal') && portfolioPolishStyles.includes('@keyframes contribution-calendar-sweep'), "the contribution calendar must include its animated reveal");
-assert(activityWorkflow.includes('gh pr create --base main --head "$update_branch"') && activityWorkflow.includes('gh pr merge "$pr_number" --auto --squash'), "verified snapshots must be published and queued for automatic PR merge");
+assert(appScript.includes('GITHUB_CONTRIBUTION_GRAPH_URL') && appScript.includes('CALENDAR_REFRESH_INTERVAL') && appScript.includes('github-live-contribution-graph'), "the public contribution calendar must use the live GitHub graph and refresh it in-browser");
+assert(portfolioPolishStyles.includes('.github-live-graph') && portfolioPolishStyles.includes('.live-github-graph-wrap'), "the live GitHub contribution graph must have dedicated styling");
+assert(activityWorkflow.includes('gh pr create --base main --head "$update_branch"') && activityWorkflow.includes('gh pr merge "$pr_number" --auto --squash'), "verified external-PR snapshots must be published and queued for automatic PR merge");
 assert(activityWorkflow.includes('Allow GitHub Actions to create and approve pull requests') && activityWorkflow.includes('Allow auto-merge'), "snapshot workflow must explain the repository settings required for automation");
-assert(activityWorkflow.includes('schedule:') && activityWorkflow.includes('23 */3 * * *'), "public GitHub snapshots must refresh on the three-hour schedule");
+assert(activityWorkflow.includes('schedule:') && activityWorkflow.includes('23 */3 * * *'), "external contribution snapshots must refresh on the three-hour schedule");
 assert(activityWorkflow.includes('pull-requests: write'), "snapshot updater requires pull-request write permission");
 assert(!activityWorkflow.includes('git push origin HEAD:refs/heads/main'), "snapshot automation must preserve the owner-only main-branch ruleset");
-assert(indexHtml.includes('href="./portfolio-polish.css?v=20261121-custom-contribution-menus"'), "index.html must load the custom contribution menu stylesheet");
+assert(indexHtml.includes('href="./portfolio-polish.css?v=20261128-live-github-contribution-graph"'), "index.html must load the live contribution graph stylesheet");
 assert(previewBuildScript.includes('"$ROOT/work-showcase.css"'), "Vercel preview packaging must copy work-showcase.css into out/");
 assert(indexHtml.includes('href="./work-showcase.css'), "index.html must load the work showcase stylesheet");
 assert(indexHtml.includes('href="./explorer-showcase.css'), "index.html must load the Explorer showcase stylesheet");
