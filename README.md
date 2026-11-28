@@ -25,7 +25,7 @@ Every project has a source audit in `docs/project-labs/`. These audits record ac
 - `data/projects.json` stores personal-project metadata and per-project lab details.
 - `data/release-credits.json` stores the currently verified published release credits.
 - `data/activity.json` stores the verified external merged-PR snapshot in the same `main` branch as the portfolio.
-- The contribution calendar is not stored as a generated portfolio snapshot. The frontend loads GitHub's own public contribution graph at `https://github.com/users/faizansaiyed123/contributions` and refreshes the image in-browser, so new GitHub activity does not require a portfolio data commit, a scheduled snapshot, or a new automation branch.
+- The contribution calendar is not stored as a generated portfolio snapshot. The frontend loads a live SVG renderer backed by GitHub's public contribution graph and refreshes the image in-browser, so new GitHub activity does not require a portfolio data commit, a scheduled snapshot, or a new automation branch.
 - `.github/workflows/refresh-activity.yml` refreshes the verified external merged-PR snapshot every three hours and supports `workflow_dispatch`. It creates or updates the dedicated `automation/public-github-snapshots` branch only when that verified PR dataset changes.
 - The external merged-PR snapshot uses GitHub's public REST Search API. The live contribution graph uses GitHub's public profile contribution calendar, so it reflects the same public calendar GitHub renders on the profile.
 
