@@ -25,11 +25,9 @@ Every project has a source audit in `docs/project-labs/`. These audits record ac
 - `data/projects.json` stores personal-project metadata and per-project lab details.
 - `data/release-credits.json` stores the currently verified published release credits.
 - `data/activity.json` stores the verified external merged-PR snapshot in the same `main` branch as the portfolio.
-- `data/contributions-calendar.json` stores the public profile contribution calendar in `main`.
-- The frontend reads both snapshots from local `data/` paths. It does not depend on a separate data branch or a cross-branch raw GitHub URL.
-- `.github/workflows/refresh-activity.yml` refreshes both snapshots every three hours and supports `workflow_dispatch`. It validates the generated data, then creates or updates a pull request from the dedicated `automation/public-github-snapshots` branch. It never writes directly to protected `main`.
-- Merge the snapshot-update pull request to publish the new data to the portfolio. Each file's `fetchedAt` field is the authoritative freshness timestamp.
-- The external merged-PR snapshot uses GitHub's public REST Search API. The calendar query uses the repository Actions token without the optional `read:user` scope, so private/internal contributions are excluded.
+- The contribution calendar is not stored as a generated portfolio snapshot. The frontend loads GitHub's own public contribution graph at `https://github.com/users/faizansaiyed123/contributions` and refreshes the image in-browser, so new GitHub activity does not require a portfolio data commit, a scheduled snapshot, or a new automation branch.
+- `.github/workflows/refresh-activity.yml` refreshes the verified external merged-PR snapshot every three hours and supports `workflow_dispatch`. It creates or updates the dedicated `automation/public-github-snapshots` branch only when that verified PR dataset changes.
+- The external merged-PR snapshot uses GitHub's public REST Search API. The live contribution graph uses GitHub's public profile contribution calendar, so it reflects the same public calendar GitHub renders on the profile.
 
 ## Local preview
 
