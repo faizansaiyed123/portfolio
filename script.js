@@ -27,7 +27,6 @@
   const state = {
     projects: [],
     activity: [],
-    calendar: null,
     releases: [],
     selectedCategory: "all",
     search: "",
@@ -36,7 +35,6 @@
     selectedContributionDateRange: "all",
     activeProject: null,
     activityLoaded: false,
-    calendarLoaded: false,
     releasesLoaded: false
   };
 
@@ -820,7 +818,6 @@
       renderContributionList();
     } else {
       setLoadingError("#activity-list", "Contribution records are temporarily unavailable.");
-      heatmap && (heatmap.innerHTML = "");
     }
 
     renderContributionGraph();
